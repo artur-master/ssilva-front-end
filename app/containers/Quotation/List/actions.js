@@ -1,0 +1,48 @@
+/*
+ *
+ * Quotation actions
+ *
+ */
+
+import {
+  FETCH_QUOTATIONS,
+  FETCH_QUOTATIONS_ERROR,
+  FETCH_QUOTATIONS_SUCCESS,
+  SEARCH_QUOTATIONS,
+  TOGGLE_QUOTATION_FORM,
+} from './constants';
+
+export function toggleQuotationForm(toggle) {
+  return {
+    type: TOGGLE_QUOTATION_FORM,
+    toggle,
+  };
+}
+
+export function searchQuotations(filter) {
+  return {
+    type: SEARCH_QUOTATIONS,
+    filter,
+  };
+}
+
+export function fetchQuotations(projectId) {
+  return {
+    type: FETCH_QUOTATIONS,
+    projectId,
+  };
+}
+
+export function fetchQuotationsError(error) {
+  return {
+    type: FETCH_QUOTATIONS_ERROR,
+    error,
+  };
+}
+
+export function fetchQuotationsSuccess(quotations) {
+  return {
+    type: FETCH_QUOTATIONS_SUCCESS,
+    quotations,
+  };
+}
