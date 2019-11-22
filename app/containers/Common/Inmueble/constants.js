@@ -1,0 +1,17 @@
+/*
+ *
+ * Inmueble constants
+ *
+ */
+
+export const FETCH_ENTITIES = 'app/containers/Common/Inmueble/FETCH_ENTITIES';
+export const FETCH_ENTITIES_ERROR =
+  'app/containers/Common/Inmueble/FETCH_ENTITIES_ERROR';
+export const FETCH_ENTITIES_SUCCESS =
+  'app/containers/Common/Inmueble/FETCH_ENTITIES_SUCCESS';
+
+export const SELECT_ENTITY = 'app/containers/Common/Inmueble/SELECT_ENTITY';
+export const RESET_SELECT = 'app/containers/Common/Inmueble/RESET_SELECT';
+
+export const MATCH_RESTRICTION =
+  'app/containers/Common/Inmueble/MATCH_RESTRICTION';

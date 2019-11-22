@@ -1,0 +1,71 @@
+/**
+ *
+ * Quotation
+ *
+ */
+
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import { Helmet } from 'react-helmet';
+import InitData from 'containers/Common/InitData';
+import makeSelectInitProject from 'containers/Project/Init/selectors';
+import WithLoading from 'components/WithLoading';
+import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
+import makeSelectQuotation from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+import { fetchQuotations } from './actions';
+import List from './List';
+
+const ListWithLoading = WithLoading(List);
+
+export function Quotation({ match, selectorProject, quotation, dispatch }) {
+  const { project } = selectorProject;
+
+  useInjectReducer({ key: 'quotation', reducer });
+  useInjectSaga({ key: 'quotation', saga });
+
+  useEffect(() => {
+    if (match.params.id) dispatch(fetchQuotations(match.params.id));
+  }, []);
+
+  return (
+    <>
+      <InitData Project={{ ProyectoID: match.params.id }} />
+      <Helmet title={`Cotizaciones - ${project.Name || '...'}`} />
+      <ProjectMeta action="view" project={project} active="quotation" />
+      <ListWithLoading {...quotation} project={project} dispatch={dispatch} />
+    </>
+  );
+}
+
+Quotation.propTypes = {
+  match: PropTypes.object,
+  quotation: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  selectorProject: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  quotation: makeSelectQuotation(),
+  selectorProject: makeSelectInitProject(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(Quotation);
