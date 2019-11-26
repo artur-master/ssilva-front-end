@@ -9,9 +9,9 @@ import { Box, BoxContent, BoxHeader } from 'components/Box';
 import RadioGroup from 'components/ExForm/RadioGroup';
 import DocumentItem from '../DocumentItem';
 
-export function Garantia({ entity, canUpload }) {
+export function Garantia({ isCollapse, entity, canUpload }) {
   return (
-    <Box collapse isOpen>
+    <Box collapse isOpen={isCollapse}>
       <BoxHeader>
         <b>PAGO DE GARANTÍA</b>
       </BoxHeader>
@@ -40,6 +40,7 @@ export function Garantia({ entity, canUpload }) {
 }
 
 Garantia.propTypes = {
+  isCollapse: PropTypes.bool,
   canUpload: PropTypes.bool,
   entity: PropTypes.object,
 };

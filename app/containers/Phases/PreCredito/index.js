@@ -11,8 +11,9 @@ const PhasePreCredito = ({
   initialValues,
   onContinue,
   dispatch,
+  showScreen,
 }) => {
-  if (!initialValues.ReservaID)
+  if (showScreen === 'form')
     return (
       <PhasePreCreditoForm
         isConfirmed={isConfirmed}
@@ -33,6 +34,7 @@ const PhasePreCredito = ({
 
 PhasePreCredito.propTypes = {
   isConfirmed: PropTypes.bool,
+  showScreen: PropTypes.string,
   canEdit: PropTypes.bool,
   step: PropTypes.number,
   initialValues: PropTypes.object,

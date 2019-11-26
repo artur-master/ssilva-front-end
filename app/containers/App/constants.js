@@ -90,6 +90,14 @@ export const RESERVA_STATE = [
   'Cancelada',
 ];
 
+export const OFERTA_STATE = [
+  'Pendiente aprobaciones',
+  'Pendiente legal',
+  'Rechazada por legal',
+  'Promesa',
+  'Cancelada',
+];
+
 export const REQUIRED_DOCUMENTS = [
   'DocumentCotizacion',
   'DocumentPagoGarantia',

@@ -33,6 +33,7 @@ export const initialState = {
   error: false,
   success: false,
   reservation: false,
+  redirect: false,
   // screen: 'view',
 };
 
@@ -103,6 +104,7 @@ const reservationReducer = (state = initialState, action) =>
           ...state.reservation,
           ...action.response.reserva,
         };
+        draft.redirect = 'list';
         break;
       case GET_RESERVATION_SUCCESS:
         draft.loading = false;

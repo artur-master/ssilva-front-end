@@ -16,6 +16,7 @@ import CarpetaDigitalReviewActions from './ReviewActions';
 const SyncMessage = WithLoading();
 
 export function PhaseDocument({
+  isCollapse = false,
   entity,
   selector,
   canUpload,
@@ -50,8 +51,13 @@ export function PhaseDocument({
     <ExForm initialValues={initialValues} onSubmit={onSendControl}>
       {form => (
         <>
-          <Garantia entity={entity} canUpload={canUpload} />
+          <Garantia
+            isCollapse={isCollapse}
+            entity={entity}
+            canUpload={canUpload}
+          />
           <CarpetaDigital
+            isCollapse={isCollapse}
             entity={entity}
             form={form}
             isReview={isReview}
@@ -89,6 +95,7 @@ export function PhaseDocument({
 }
 
 PhaseDocument.propTypes = {
+  isCollapse: PropTypes.bool,
   canUpload: PropTypes.bool,
   canReview: PropTypes.bool,
   entity: PropTypes.object,

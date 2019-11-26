@@ -40,8 +40,8 @@ export function Reservations({ match, selectorProject, selector, dispatch }) {
 
       <Helmet title={`Reservas - ${project.Name || '...'}`} />
       <ProjectMeta action="view" project={project} active="reservation" />
-      {!selector.reservations && <SyncMessage {...selector} />}
-      {selector.reservations && (
+      {selector.loading && <SyncMessage {...selector} />}
+      {!selector.loading && selector.reservations && (
         <>
           <Filter
             project={project}

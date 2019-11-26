@@ -11,11 +11,13 @@ import {
   FETCH_OFFERS_SUCCESS,
   SEARCH_OFFERS,
 } from './constants';
+import { getReports, initReports } from './helper';
 
 export const initialState = {
   loading: false,
   error: false,
   offers: false,
+  reports: initReports(),
   origin_offers: false,
   filter: { txtSearch: '' },
 };
@@ -26,10 +28,6 @@ const offerReducer = (state = initialState, action) =>
       case SEARCH_OFFERS:
         draft.filter = { ...state.filter, ...action.filter };
         draft.offers = [...(state.origin_offers || [])];
-        if (draft.filter.status)
-          draft.offers = draft.offers.filter(
-            item => item.OfertaState === draft.filter.status,
-          );
 
         /* eslint-disable-next-line */
         const fuse = new Fuse(draft.offers, {
@@ -38,6 +36,13 @@ const offerReducer = (state = initialState, action) =>
 
         if (draft.filter.textSearch)
           draft.offers = fuse.search(draft.filter.textSearch);
+        draft.reports = getReports(draft.offers);
+
+        if (draft.filter.status && draft.filter.status !== 'All')
+          draft.offers = draft.offers.filter(
+            item => item.OfertaState === draft.filter.status,
+          );
+
         break;
       case FETCH_OFFERS:
         draft.loading = true;
@@ -50,8 +55,32 @@ const offerReducer = (state = initialState, action) =>
       case FETCH_OFFERS_SUCCESS:
         draft.loading = false;
         draft.error = false;
-        draft.offers = action.offers;
-        draft.origin_offers = action.offers;
+        draft.origin_offers = action.offers.map(offer => {
+          const OfertaStateLabel = offer.OfertaState;
+          let OfertaStateColor = '';
+          switch (offer.OfertaState) {
+            case 'Pendiente aprobaciones':
+            case 'Pendiente legal':
+              OfertaStateColor = 'badge-caution';
+              break;
+            case 'Rechazada por legal':
+              OfertaStateColor = 'badge-danger';
+              break;
+            case 'Cancelada':
+              OfertaStateColor = 'badge-warning';
+              break;
+            default:
+              OfertaStateColor = 'badge-caution';
+              break;
+          }
+          return {
+            ...offer,
+            OfertaStateLabel,
+            OfertaStateColor,
+          };
+        });
+        draft.offers = draft.origin_offers;
+        draft.reports = getReports(draft.offers);
         break;
     }
   });

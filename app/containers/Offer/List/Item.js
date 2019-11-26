@@ -13,41 +13,24 @@ import {
   DropdownMenu,
   DropdownToggle,
 } from 'reactstrap';
-import { inmuebleWithRestrictions } from 'containers/Common/Inmueble/helper';
-import moment from 'components/moment';
+import {
+  inmuebleWithRestrictions,
+  matchRestrictionsFromAList,
+} from 'containers/Common/Inmueble/helper';
+import { clientFullname } from 'containers/Common/Client/helper';
+import { canEditOffer } from '../Form/helper';
 
 const Item = ({ project, offer, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, Inmuebles, OfertaState, Date } = offer;
-  let ColorBadge = 'badge-caution';
-
-  switch (OfertaState) {
-    case 'Rechazada por legal':
-      ColorBadge = 'badge-success';
-      break;
-    case 'Promesa':
-      ColorBadge = '';
-      break;
-    case 'Pendiente legal':
-      ColorBadge = 'badge-warning';
-      break;
-    case 'Pendiente aprobaciones':
-      ColorBadge = 'badge-caution';
-      break;
-    case 'Cancelada':
-      ColorBadge = 'badge-warning';
-      break;
-    default:
-      ColorBadge = '';
-      break;
-  }
-  let dateAgo;
-  if (
-    OfertaState === 'Pendiente legal' ||
-    OfertaState === 'Pendiente aprobaciones'
-  ) {
-    dateAgo = moment(Date).fromNow();
-  }
+  const {
+    Proyecto,
+    Folio,
+    Inmuebles,
+    OfertaStateColor,
+    OfertaStateLabel,
+    Cliente,
+  } = offer;
+  const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
 
   return (
     <tr className="font-14 align-middle-group">
@@ -55,34 +38,19 @@ const Item = ({ project, offer, dispatch }) => {
         <b>{`${Proyecto} / ${Folio}`}</b>
       </td>
       <td className="px-3">
-        {Inmuebles.map(Inmueble => (
+        {tmpInmuebles.map(Inmueble => (
           <div className="d-block" key={Inmueble.InmuebleID}>
             {inmuebleWithRestrictions(Inmueble)}
           </div>
         ))}
       </td>
-      <td className="">
-        Cliente: {offer.ClienteName} {offer.ClienteLastNames} /{' '}
-        {offer.ClienteRut}
-      </td>
+      <td className="">Cliente: {clientFullname(Cliente)}</td>
       <td />
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          {dateAgo && (
-            <span className="badge px-2 badge-danger icon icon-alert mr-2">
-              <span>{dateAgo.toUpperCase()}</span>
-            </span>
-          )}
-          <span className={`badge px-2 ${ColorBadge}`}>
-            {OfertaState.toUpperCase()}
+          <span className={`badge px-2 ${OfertaStateColor}`}>
+            {OfertaStateLabel.toUpperCase()}
           </span>
-          {OfertaState === 'Pendiente aprobaciones' && (
-            <>
-              <span className="badge px-2 badge-success rounded-0">IN</span>
-              <span className="badge px-2 badge-danger rounded-0">FI</span>
-              <span className="badge px-2 badge-success rounded-0">AC</span>
-            </>
-          )}
         </div>
       </td>
       <td className="font-21 px-3">
@@ -97,7 +65,7 @@ const Item = ({ project, offer, dispatch }) => {
               onClick={() => {
                 dispatch(
                   push(
-                    `/proyectos/${project.ProyectoID}/ofertas/edit?OfertaID=${
+                    `/proyectos/${project.ProyectoID}/oferta?OfertaID=${
                       offer.OfertaID
                     }`,
                   ),
@@ -106,20 +74,22 @@ const Item = ({ project, offer, dispatch }) => {
             >
               Ver datos
             </DropdownItem>
-            <DropdownItem
-              tag="a"
-              onClick={() =>
-                dispatch(
-                  push(
-                    `/proyectos/${project.ProyectoID}/ofertas/edit?OfertaID=${
-                      offer.OfertaID
-                    }`,
-                  ),
-                )
-              }
-            >
-              Editar
-            </DropdownItem>
+            {canEditOffer(offer) && (
+              <DropdownItem
+                tag="a"
+                onClick={() =>
+                  dispatch(
+                    push(
+                      `/proyectos/${project.ProyectoID}/oferta/edit?OfertaID=${
+                        offer.OfertaID
+                      }`,
+                    ),
+                  )
+                }
+              >
+                Editar
+              </DropdownItem>
+            )}
           </DropdownMenu>
         </Dropdown>
       </td>

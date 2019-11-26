@@ -15,6 +15,7 @@ import { inmuebleLabel } from 'containers/Common/Inmueble/helper';
 import PhaseInmuebleForm from './Form';
 
 export function PhaseInmueble({
+  isCollapse=false,
   canEdit,
   canConfirm,
   onConfirm,
@@ -29,7 +30,7 @@ export function PhaseInmueble({
       onSubmit={values => onUpdate({ Inmuebles: values.Inmuebles })}
     >
       {({ values, setFieldValue, submitForm }) => (
-        <Box collapse isOpen={false}>
+        <Box collapse isOpen={isCollapse}>
           <BoxHeader>
             <b>DATOS INMUEBLE</b>
             {canConfirm && (
@@ -153,6 +154,7 @@ export function PhaseInmueble({
 }
 
 PhaseInmueble.propTypes = {
+  isCollapse: PropTypes.bool,
   canEdit: PropTypes.bool,
   canConfirm: PropTypes.bool,
   initialValues: PropTypes.object,

@@ -16,18 +16,21 @@ import InitData from 'containers/Common/InitData';
 import { Helmet } from 'react-helmet';
 import PageHeader from 'containers/Common/PageHeader';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
+import { makeSelectPreload } from 'containers/App/selectors';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import WithLoading from 'components/WithLoading';
 import makeSelectOfferForm from './selectors';
+import OfferDocForm from './Document';
 import Form from './Form';
 import reducer from './reducer';
 import saga from './saga';
-import { getActionTitle } from './helper';
-import { getQuotation, getOffer, resetContainer, updateOffer } from './actions';
+import { currentResevationStep, getActionTitle } from './helper';
+import { saveOffer, getOffer, resetContainer } from './actions';
 import Steps from './Steps';
 const SyncMessage = WithLoading();
 export function OfferForm({
   match,
+  preload,
   selectorProject,
   selector,
   dispatch,
@@ -35,14 +38,15 @@ export function OfferForm({
 }) {
   useInjectReducer({ key: 'offerform', reducer });
   useInjectSaga({ key: 'offerform', saga });
-  const query = queryString.parse(location.search);
-  const { OfertaID } = query;
+  const parsed = queryString.parse(location.search);
+  useEffect(() => {
+    dispatch(resetContainer());
+    dispatch(getOffer(parsed.OfertaID));
+  }, []);
   const { project } = selectorProject;
   const { Folio } = selector.offer;
-  useEffect(() => {
-    if (OfertaID) dispatch(getOffer(OfertaID));
-    return () => dispatch(resetContainer());
-  }, [location.search]);
+
+  const currentStep = currentResevationStep(selector.offer);
 
   return (
     <>
@@ -65,7 +69,34 @@ export function OfferForm({
               {getActionTitle(selector.offer)}
             </span>
           </h5>
-          <Form project={project} selector={selector} dispatch={dispatch} />
+          <Form
+            preload={preload}
+            project={project}
+            selector={selector}
+            dispatch={dispatch}
+            onSubmit={values => {
+              dispatch(
+                saveOffer({
+                  ...values,
+                  PayType: (
+                    (preload.paymentUtils || []).find(
+                      payment =>
+                        payment.PayTypeID === values.PayType ||
+                        payment.Name === values.PayType,
+                    ) || {}
+                  ).Name,
+                }),
+              );
+            }}
+          />
+
+          {currentStep > 1 && (
+            <OfferDocForm
+              offer={selector.offer}
+              project={project}
+              currentStep={currentStep}
+            />
+          )}
         </>
       )}
     </>
@@ -75,12 +106,14 @@ export function OfferForm({
 OfferForm.propTypes = {
   match: PropTypes.object,
   location: PropTypes.object,
+  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
+  preload: makeSelectPreload(),
   selector: makeSelectOfferForm(),
   selectorProject: makeSelectInitProject(),
 });

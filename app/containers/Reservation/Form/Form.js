@@ -51,6 +51,7 @@ export function Form({ project, selector, dispatch }) {
       [data]: confirm,
     });
   };
+
   return (
     <>
       <PhaseGeneral
@@ -85,6 +86,7 @@ export function Form({ project, selector, dispatch }) {
 
       <PhasePreCredito
         canEdit={canEdit}
+        showScreen={!initialValues.ReservaID ? 'form' : 'view'}
         isConfirmed={
           !Object.keys(confirmes).find(confirm => !confirmes[confirm])
         }
@@ -98,6 +100,7 @@ export function Form({ project, selector, dispatch }) {
       />
       {(step === 3 || entity.ReservaID) && (
         <PhaseDocument
+          isCollapse
           entity={initialValues}
           canUpload={canUpload}
           canReview={canReview}
