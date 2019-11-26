@@ -14,6 +14,7 @@ import PhaseGeneralView from './View';
 import PhaseGeneralForm from './Form';
 
 export function PhaseGeneral({
+  isCollapse = false,
   canEdit,
   canConfirm,
   onConfirm,
@@ -22,7 +23,7 @@ export function PhaseGeneral({
 }) {
   const [isOpen, setOpen] = useState(false);
   return (
-    <Box collapse isOpen={false}>
+    <Box collapse isOpen={isCollapse}>
       <BoxHeader>
         <b>DATOS GENERALES</b>
         {canConfirm && (
@@ -70,6 +71,7 @@ export function PhaseGeneral({
 }
 
 PhaseGeneral.propTypes = {
+  isCollapse: PropTypes.bool,
   canEdit: PropTypes.bool,
   canConfirm: PropTypes.bool,
   initialValues: PropTypes.object,

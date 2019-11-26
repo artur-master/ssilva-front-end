@@ -9,7 +9,6 @@ import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
 import Renta from './Renta';
-import Summary from './Summary';
 import PhasePreCreditoFormModal from '../Form/modal';
 const PhasePreCreditoView = ({ canEdit, initialValues, onSubmit }) => {
   const [isOpen, setOpen] = useState(false);

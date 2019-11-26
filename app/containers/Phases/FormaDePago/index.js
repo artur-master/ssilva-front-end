@@ -15,6 +15,7 @@ import FormaDePagoView from './View';
 import FormModal from './FormModal';
 
 export function PhaseFormaDePago({
+  isCollapse=false,
   onConfirm,
   initialValues,
   canEdit,
@@ -27,7 +28,7 @@ export function PhaseFormaDePago({
       {form => {
         const { total, discount, balance, moneyErr } = calculates(form.values);
         return (
-          <Box collapse isOpen={false}>
+          <Box collapse isOpen={isCollapse}>
             <BoxHeader className={moneyErr ? 'background-color-warning' : ''}>
               <b>FORMA DE PAGO VALOR FINAL UF</b>
               <span className="order-1 mx-4 font-21">
@@ -91,6 +92,7 @@ export function PhaseFormaDePago({
 }
 
 PhaseFormaDePago.propTypes = {
+  isCollapse: PropTypes.bool,
   canEdit: PropTypes.bool,
   canConfirm: PropTypes.bool,
   initialValues: PropTypes.object,

@@ -15,7 +15,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { Helmet } from 'react-helmet';
 import InitData from 'containers/Common/InitData';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
-// import PageHeader from 'containers/Common/PageHeader';
 import WithLoading from 'components/WithLoading';
 import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
 import makeSelectOffers from './selectors';
@@ -25,32 +24,35 @@ import { fetchOffers, searchOffers } from './actions';
 import List from './List';
 import Filter from './Filter';
 
-const ListWithLoading = WithLoading(List);
+const SyncMessage = WithLoading();
 
-export function Offers({ match, selectorProject, offers, dispatch }) {
+export function Offers({ match, selectorProject, selector, dispatch }) {
   const { project } = selectorProject;
-
   useInjectReducer({ key: 'offers', reducer });
   useInjectSaga({ key: 'offers', saga });
 
   useEffect(() => {
     if (match.params.id) dispatch(fetchOffers(match.params.id));
   }, []);
-
   return (
     <>
       <InitData Project={{ ProyectoID: match.params.id }} />
 
       <Helmet title={`Ofertas - ${project.Name || '...'}`} />
       <ProjectMeta action="view" project={project} active="offer" />
-
-      <Filter
-        filter={offers.filter}
-        searchOffers={(txtSearch, status) =>
-          dispatch(searchOffers(txtSearch, status))
-        }
-      />
-      <ListWithLoading {...offers} project={project} dispatch={dispatch} />
+      {selector.loading && <SyncMessage {...selector} />}
+      {!selector.loading && selector.offers && (
+        <>
+          <Filter
+            project={project}
+            selector={selector}
+            searchOffers={(txtSearch, status) =>
+              dispatch(searchOffers(txtSearch, status))
+            }
+          />
+          <List {...selector} project={project} dispatch={dispatch} />
+        </>
+      )}
     </>
   );
 }
@@ -58,12 +60,12 @@ export function Offers({ match, selectorProject, offers, dispatch }) {
 Offers.propTypes = {
   match: PropTypes.object,
   selectorProject: PropTypes.object,
-  offers: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  selector: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  offers: makeSelectOffers(),
+  selector: makeSelectOffers(),
   selectorProject: makeSelectInitProject(),
 });
 

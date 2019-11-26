@@ -1,6 +1,8 @@
 /* eslint-disable array-callback-return */
+import React from 'react';
 import { RESERVA_STATE } from 'containers/App/constants';
 import { Auth } from 'containers/App/helpers';
+import { UserProject } from '../../Project/helper';
 
 export const currentResevationStep = (offer = {}) => {
   const { OfertaID, OfertaState } = offer;
@@ -8,7 +10,7 @@ export const currentResevationStep = (offer = {}) => {
   // 1. create new (general)
   if (!OfertaID) return 1;
 
-  // 2. Have reserva but dont send to control
+  // 2. Have oferta but dont send to control
   if (OfertaID && OfertaState === RESERVA_STATE[0]) return 2;
 
   // 3. Oferta send to control
@@ -26,53 +28,51 @@ export const currentResevationStep = (offer = {}) => {
   return 1;
 };
 
-export const calculateRenta = (reserva = {}) => {
-  const Cliente = reserva.Cliente || {};
-  const Codeudor = reserva.Codeudor || {};
-  const { Extra = { Values: {} } } = Cliente;
-  const CoExtra = Codeudor.Extra || { Values: {} };
-  if (Codeudor.Extra && !Codeudor.Extra.Values) Codeudor.Extra.Values = {};
-  const Renta =
-    (Extra.Values.LiquidIncome || 0) +
-    (Extra.Values.VariableSalary || 0) +
-    (Extra.Values.Honoraries || 0) +
-    (Extra.Values.RealStateLeasing || 0) +
-    (Extra.Values.Retirements || 0) +
-    (Extra.Values.Pension || 0);
-  const CoRenta =
-    (CoExtra.Values.LiquidIncome || 0) +
-    (CoExtra.Values.VariableSalary || 0) +
-    (CoExtra.Values.Honoraries || 0) +
-    (CoExtra.Values.RealStateLeasing || 0) +
-    (CoExtra.Values.Retirements || 0) +
-    (CoExtra.Values.Pension || 0);
-  return {
-    Renta,
-    CoRenta,
-    SumRenta: Renta + CoRenta,
-  };
-};
-
 export const canReviewOffer = offer =>
-  Auth.isPM() && offer.OfertaState === RESERVA_STATE[1];
+  !window.project
+    ? false
+    : UserProject.in(window.project) &&
+      Auth.hasOneOfPermissions(['Es asistente comercial']) &&
+      offer.OfertaState === RESERVA_STATE[1];
 
 export const canUploadOffer = offer =>
-  Auth.isVendor() && offer.OfertaState === RESERVA_STATE[0];
+  !window.project
+    ? false
+    : UserProject.in(window.project) &&
+      Auth.hasOneOfPermissions(['Es vendedor']) &&
+      (!offer.OfertaState ||
+        [RESERVA_STATE[0], RESERVA_STATE[3]].includes(
+          offer.OfertaState,
+        ));
 
 export const canEditOffer = offer =>
-  Auth.isVendor() &&
-  (!offer.OfertaID || offer.OfertaState === RESERVA_STATE[0]);
+  !window.project
+    ? false
+    : UserProject.in(window.project) &&
+      Auth.hasOneOfPermissions(['Es vendedor']) &&
+      (!offer.OfertaID ||
+        [RESERVA_STATE[0]].includes(offer.OfertaState));
 
-export const canConfirmOffer = offer => Auth.isVendor() && !offer.OfertaID;
+export const canConfirmOffer = offer =>
+  !window.project
+    ? false
+    : UserProject.in(window.project) &&
+      Auth.hasOneOfPermissions(['Es vendedor']) &&
+      !offer.OfertaID;
 
 export const getActionTitle = (offer = {}) => {
   const { Graph } = offer;
+  if (offer.OfertaState === RESERVA_STATE[3])
+    return <span className="color-warning-magent">Confirmar </span>;
   if (Graph) {
     if (Graph.Node) {
       const node = Graph.Node.find(item => item.Color === 'red');
-      if (node) return node.Description;
+      if (node)
+        return node.Description.trim() === 'Pendiente información/Rechazada'
+          ? 'Pendiente información'
+          : node.Description;
       return offer.OfertaState;
     }
   }
-  return 'Crear reserva';
+  return 'Crear oferta';
 };

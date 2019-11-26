@@ -27,6 +27,7 @@ export function PhaseClient({
   onEdit,
   onConfirm,
   onUpdate,
+  isCollapse = false,
 }) {
   useEffect(() => {
     if (selectorClient.success) onUpdate(selectorClient.client);
@@ -37,7 +38,7 @@ export function PhaseClient({
     payType === window.preload.paymentUtils[0].PayTypeID ||
     payType === window.preload.paymentUtils[0].Name;
   return (
-    <Box collapse isOpen={false}>
+    <Box collapse isOpen={isCollapse}>
       <BoxHeader className={!isValid ? 'background-color-warning' : ''}>
         <b>DATOS CLIENTE</b>
         {!isValid && (
@@ -90,6 +91,7 @@ export function PhaseClient({
 }
 
 PhaseClient.propTypes = {
+  isCollapse: PropTypes.bool,
   payType: PropTypes.string,
   canEdit: PropTypes.bool,
   canConfirm: PropTypes.bool,

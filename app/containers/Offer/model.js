@@ -1,29 +1,30 @@
 import moment from 'components/moment';
+import { Auth } from '../App/helpers';
 
-export default function model({ preload = {}, project = {}, offer = {} }) {
-  const { Cuotas = [] } = offer;
+export default function model({ project = {}, entity = {} }) {
+  const { Cuotas = [] } = entity;
   if (Cuotas.length < 1)
     Cuotas.push({
       Amount: 0,
-      Date: moment().format(),
+      Date: new Date(),
       Observacion: '',
     });
   return {
-    ReservaID: offer.ReservaID || null,
-    ValueProductoFinanciero: offer.ValueProductoFinanciero || 0,
-    Condition: offer.Condition || [],
-    CotizacionID: offer.CotizacionID || '',
+    ReservaID: entity.ReservaID || null,
+    ValueProductoFinanciero: entity.ValueProductoFinanciero || 0,
+    Condition: entity.Condition || [],
+    CotizacionID: entity.CotizacionID || null,
     ProyectoID: project.ProyectoID,
-    Folio: offer.Folio,
+    Folio: entity.Folio,
 
-    EmpresaCompradora: offer.EmpresaCompradora || {
+    EmpresaCompradora: entity.EmpresaCompradora || {
       Rut: '',
       RazonSocial: '',
       Address: '',
     },
-
-    IsOwner: offer.IsOwner || 1,
-    Patrimony: offer.Patrimony || {
+    Documents: entity.Documents || {},
+    IsOwner: !(entity.Patrimony && entity.Patrimony.Rent),
+    Patrimony: entity.Patrimony || {
       RealState: 0,
       Rent: 0,
       CreditoHipotecario: {
@@ -65,49 +66,60 @@ export default function model({ preload = {}, project = {}, offer = {} }) {
         Saldo: 0,
       },
     },
-    ContactMethodTypeID: offer.ContactMethodTypeID || null,
-    Inmuebles: offer.Inmuebles || [],
-    VendedorID: offer.VendedorID || '',
-    Vendedor: offer.Vendedor || {},
+    ContactMethodTypeID: entity.ContactMethodTypeID || null,
+    Inmuebles: entity.Inmuebles || [],
+    VendedorID: entity.VendedorID || Auth.get('user_id'),
+    Vendedor: entity.Vendedor || Auth.get('user'),
     UserID: null,
-    ClienteID: offer.ClienteID || '',
+    ClienteID: entity.ClienteID || '',
     Cliente: {
-      UserID: (offer.Cliente || {}).UserID || '',
-      FindingTypeID: (offer.Cliente || {}).FindingTypeID || null,
-      InterestedTypeID: (offer.Cliente || {}).InterestedTypeID || null,
-      ...(offer.Cliente || {}),
+      UserID: (entity.Cliente || {}).UserID || '',
+      FindingTypeID: (entity.Cliente || {}).FindingTypeID || null,
+      InterestedTypeID: (entity.Cliente || {}).InterestedTypeID || null,
+      ...(entity.Cliente || {}),
       Extra: {
         Values: {
           Honoraries:
-            (((offer.Cliente || {}).Extra || {}).Values || {}).Honoraries || '',
+            (((entity.Cliente || {}).Extra || {}).Values || {}).Honoraries ||
+            '',
         },
-        Independent: ((offer.Cliente || {}).Extra || {}).Independent || 0,
-        ...((offer.Cliente || {}).Extra || {}),
+        Independent: ((entity.Cliente || {}).Extra || {}).Independent || 0,
+        ...((entity.Cliente || {}).Extra || {}),
       },
     },
-    Empleador: offer.Empleador || {
+    Empleador: entity.Empleador || {
       Rut: '',
       RazonSocial: '',
       Extra: { Address: '', CurrentPosition: '', Phone: '' },
     },
-    CodeudorID: offer.CodeudorID || null,
-    Codeudor: offer.Codeudor || null,
-    CoEmpleador: offer.CoEmpleador || {
+    CodeudorID: entity.CodeudorID || null,
+    Codeudor: entity.Codeudor || null,
+    CoEmpleador: entity.CoEmpleador || {
       Rut: '',
       RazonSocial: '',
       Extra: { Address: '', CurrentPosition: '', Phone: '' },
     },
     CotizacionType:
-      offer.CotizacionTypeID || preload.quotationUtils.CotizacionTypes[0].Name,
-    IsNotInvestment: (offer.IsNotInvestment ? '1' : '0') || '',
-    CotizacionStateID: offer.CotizacionStateID || null,
-    PayType: offer.PayType || preload.paymentUtils[0].PayTypeID,
+      entity.CotizacionTypeID ||
+      window.preload.quotationUtils.CotizacionTypes[0].Name,
+    IsNotInvestment: (entity.IsNotInvestment ? '1' : '0') || false,
+    CotizacionStateID: entity.CotizacionStateID || '',
+    PayType: entity.PayType || window.preload.paymentUtils[0].PayTypeID,
     Cuotas,
-    PaymentFirmaPromesa: offer.PaymentFirmaPromesa || 0,
-    PaymentFirmaEscritura: offer.PaymentFirmaEscritura || 0,
-    PaymentInstitucionFinanciera: offer.PaymentInstitucionFinanciera || 0,
-    DateFirmaPromesa: moment(offer.DateFirmaPromesa || new Date()).format(),
-    percent: offer.percent || {},
-    convert: offer.convert || {},
+    PaymentFirmaPromesa: entity.PaymentFirmaPromesa || 0,
+    PaymentFirmaEscritura: entity.PaymentFirmaEscritura || 0,
+    PaymentInstitucionFinanciera: entity.PaymentInstitucionFinanciera || 0,
+    AhorroPlus: entity.AhorroPlus || 0,
+    DateFirmaPromesa: entity.DateFirmaPromesa
+      ? moment(entity.DateFirmaPromesa).format()
+      : new Date(),
+    percent: entity.percent || {},
+    convert: entity.convert || {},
+    confirmes: {
+      general: false,
+      client: false,
+      inmueble: false,
+      forma: false,
+    },
   };
 }

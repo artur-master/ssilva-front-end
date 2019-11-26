@@ -53,6 +53,10 @@ export function ReservationForm({
     return () => dispatch(resetContainer());
   }, [location.search]);
 
+  if (selector.success && selector.redirect) {
+    return <Redirect to={`/proyectos/${project.ProyectoID}/reservas`} />;
+  }
+
   if (!ReservaID && selector.reservation.ReservaID) {
     return (
       <Redirect

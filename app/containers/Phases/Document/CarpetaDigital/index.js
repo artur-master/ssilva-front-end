@@ -3,7 +3,7 @@
  * Reservation Upload Form
  *
  */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Tab from 'components/Tab';
@@ -14,6 +14,7 @@ import Promise from './Promise';
 import Offer from './Offer';
 
 export function CarpetaDigital({
+  isCollapse,
   canEit,
   canReview,
   entity,
@@ -22,7 +23,7 @@ export function CarpetaDigital({
 }) {
   return (
     <>
-      <Box collapse>
+      <Box collapse isOpen={isCollapse}>
         <BoxHeader>
           <b>CARPETA DIGITAL</b>
         </BoxHeader>
@@ -84,6 +85,7 @@ export function CarpetaDigital({
 }
 
 CarpetaDigital.propTypes = {
+  isCollapse: PropTypes.bool,
   isReview: PropTypes.bool,
   canEit: PropTypes.bool,
   canReview: PropTypes.bool,

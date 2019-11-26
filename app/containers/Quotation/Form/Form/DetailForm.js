@@ -81,7 +81,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
                     </td>
                   </tr>
                 )}
-                <InmueblesElement form={form} required />
+                <InmueblesElement {...form} required />
 
                 <tr className="resume">
                   <td />
