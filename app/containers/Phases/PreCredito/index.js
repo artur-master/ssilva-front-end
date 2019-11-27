@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import PhasePreCreditoForm from './Form';
 import PhasePreCreditoView from './View';
 const PhasePreCredito = ({
+  isCollapse,
   isConfirmed,
   canEdit,
   step,
@@ -16,6 +17,7 @@ const PhasePreCredito = ({
   if (showScreen === 'form')
     return (
       <PhasePreCreditoForm
+        isCollapse={isCollapse}
         isConfirmed={isConfirmed}
         initialValues={initialValues}
         step={step}
@@ -25,6 +27,7 @@ const PhasePreCredito = ({
     );
   return (
     <PhasePreCreditoView
+      isCollapse={isCollapse}
       initialValues={initialValues}
       canEdit={canEdit}
       onSubmit={onContinue}
@@ -33,6 +36,7 @@ const PhasePreCredito = ({
 };
 
 PhasePreCredito.propTypes = {
+  isCollapse: PropTypes.bool,
   isConfirmed: PropTypes.bool,
   showScreen: PropTypes.string,
   canEdit: PropTypes.bool,

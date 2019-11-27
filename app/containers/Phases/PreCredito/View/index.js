@@ -10,7 +10,12 @@ import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
 import Renta from './Renta';
 import PhasePreCreditoFormModal from '../Form/modal';
-const PhasePreCreditoView = ({ canEdit, initialValues, onSubmit }) => {
+const PhasePreCreditoView = ({
+  isCollapse,
+  canEdit,
+  initialValues,
+  onSubmit,
+}) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <>
@@ -20,7 +25,7 @@ const PhasePreCreditoView = ({ canEdit, initialValues, onSubmit }) => {
           const isContado = isContadoPayment(values.PayType);
           return (
             <>
-              <Box collapse isOpen={!values.ReservaID}>
+              <Box collapse isOpen={values.ReservaID || isCollapse}>
                 <BoxHeader>
                   <b>PRE APROBACIÓN DE CRÉDITO</b>
                   {canEdit && (
@@ -72,6 +77,7 @@ const PhasePreCreditoView = ({ canEdit, initialValues, onSubmit }) => {
 };
 
 PhasePreCreditoView.propTypes = {
+  isCollapse: PropTypes.bool,
   canEdit: PropTypes.bool,
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,

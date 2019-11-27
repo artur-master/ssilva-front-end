@@ -29,7 +29,7 @@ export function SendToLegal({ selector, project, dispatch, hasFullData }) {
   useEffect(() => () => dispatch(resetContainer()), []);
   return (
     <>
-      <div className="my-3 p-3 d-flex justify-content-end align-items-center">
+      <div className="my-3 d-flex justify-content-end align-items-center">
         <Button
           disabled={!isReady}
           onClick={() => {

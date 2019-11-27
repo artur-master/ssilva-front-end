@@ -49,4 +49,4 @@ export const shouldShowField = (fieldName, focusHide) =>
   !(focusHide && focusHide.includes(fieldName));
 
 export const clientFullname = client =>
-  client ? `${client.Name} ${client.LastNames} - ${client.Rut}` : '';
+  client ? `${client.Name} ${client.LastNames} / ${client.Rut}` : '';

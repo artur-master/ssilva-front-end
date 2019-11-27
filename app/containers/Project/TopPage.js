@@ -72,11 +72,13 @@ export function TopPage({ action, project = {}, dispatch }) {
   }
   // subtitle
   const subtitle = getSubtitle(project, action);
-  const responers = (
-    <span className="color-warning">
-      [{getNextResponer(project).join(', ')}]
-    </span>
-  );
+  const nextResponer = getNextResponer(project);
+  const responers =
+    nextResponer.length > 0 ? (
+      <span className="color-warning">[{nextResponer.join(', ')}]</span>
+    ) : (
+      ''
+    );
   return (
     <div className="mt-3">
       <Helmet title={action === 'create' ? 'Nuevo Proyecto' : project.Name} />

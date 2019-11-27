@@ -27,7 +27,7 @@ import Comment from './Comment';
 import GeneralApprove from './GeneralApprove';
 import SendToLegal from './SendToLegal';
 import makeSelectFinance from './Documents/Finance/selectors';
-import InstitucionFinanciera from '../Common/InstitucionFinanciera/init';
+import { PROYECTO_APPROVAL_STATE } from '../App/constants';
 
 const SyncMessage = WithLoading();
 
@@ -72,17 +72,20 @@ export function Project({
               <Inmueble project={project} action={action} />
               <Comment project={project} action={action} />
               {UserProject.isPM(project) &&
-                ((!project.IsFinished || action !== 'view') && (
-                  <SendToLegal hasFullData={hasFullData} project={project} />
-                ))}
+                (project.ProyectoApprovalState !== PROYECTO_APPROVAL_STATE[2] &&
+                  ((!project.IsFinished || action !== 'view') && (
+                    <SendToLegal hasFullData={hasFullData} project={project} />
+                  )))}
             </>
           )}
-          {!project.IsFinished && hasFullData && (
-            <LegalApprove project={project} action={action} />
-          )}
+          {!project.IsFinished &&
+            (hasFullData &&
+              (project.ProyectoApprovalState !== PROYECTO_APPROVAL_STATE[2] && (
+                <LegalApprove project={project} action={action} />
+              )))}
           {!project.IsFinished && <GeneralApprove />}
           {project.IsFinished && (
-            <div className="my-3 p-3 d-flex justify-content-end align-items-center">
+            <div className="my-3 d-flex justify-content-end align-items-center">
               <Button
                 color="white"
                 onClick={() => dispatch(push('/proyectos'))}

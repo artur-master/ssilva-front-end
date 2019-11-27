@@ -123,7 +123,7 @@ const List = ({
 };
 
 List.propTypes = {
-  canEdit: PropTypes.object,
+  canEdit: PropTypes.bool,
   selector: PropTypes.object,
   onQuery: PropTypes.func,
   onCreate: PropTypes.func,

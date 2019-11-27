@@ -6,18 +6,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import PageHeader from 'containers/Common/PageHeader';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 
 export function ProjectMeta({ project = {}, active }) {
-  // header
-  const header = ['Proyectos'];
-
-  if (project.Name) header.push(project.Name);
-
   return (
     <>
-      <PageHeader header={header} />
       <div className="heading row justify-content-between">
         <h2 className="title-01 col-auto">Metas {project.Name}</h2>
       </div>

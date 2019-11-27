@@ -100,7 +100,7 @@ const Item = ({ project, dispatch }) => {
             <li className="row justify-content-between">
               <span className="col-auto">Reservas</span>
               <Link
-                to={`/project/${project.ProyectoID}/reservas`}
+                to={`/proyectos/${project.ProyectoID}/reservas`}
                 className="col-auto icon icon-arrow-complete icon-right"
               >
                 Ver reservas
@@ -109,7 +109,7 @@ const Item = ({ project, dispatch }) => {
             <li className="row justify-content-between">
               <span className="col-auto">Promesas</span>
               <Link
-                to={`/project/${project.ProyectoID}/promesas`}
+                to={`/proyectos/${project.ProyectoID}/promesas`}
                 className="col-auto icon icon-arrow-complete icon-right"
               >
                 Ver promesas
@@ -118,7 +118,7 @@ const Item = ({ project, dispatch }) => {
             <li className="row justify-content-between">
               <span className="col-auto">Escrituración</span>
               <Link
-                to={`/project/${project.ProyectoID}/escrituras`}
+                to={`/proyectos/${project.ProyectoID}/escrituras`}
                 className="col-auto icon icon-arrow-complete icon-right"
               >
                 Ver escrituración

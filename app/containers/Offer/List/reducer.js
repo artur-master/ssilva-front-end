@@ -11,7 +11,12 @@ import {
   FETCH_OFFERS_SUCCESS,
   SEARCH_OFFERS,
 } from './constants';
-import { getReports, initReports } from './helper';
+import {
+  getReports,
+  initReports,
+  formatOffer,
+  isPendienteContacto,
+} from '../helper';
 
 export const initialState = {
   loading: false,
@@ -38,10 +43,19 @@ const offerReducer = (state = initialState, action) =>
           draft.offers = fuse.search(draft.filter.textSearch);
         draft.reports = getReports(draft.offers);
 
-        if (draft.filter.status && draft.filter.status !== 'All')
-          draft.offers = draft.offers.filter(
-            item => item.OfertaState === draft.filter.status,
-          );
+        if (draft.filter.status && draft.filter.status !== 'All') {
+          if (draft.filter.status === 'Pendiente Contacto') {
+            draft.offers = draft.offers.filter(item =>
+              isPendienteContacto(item),
+            );
+          } else {
+            draft.offers = draft.offers.filter(
+              item =>
+                item.OfertaState === draft.filter.status &&
+                !isPendienteContacto(item),
+            );
+          }
+        }
 
         break;
       case FETCH_OFFERS:
@@ -55,30 +69,7 @@ const offerReducer = (state = initialState, action) =>
       case FETCH_OFFERS_SUCCESS:
         draft.loading = false;
         draft.error = false;
-        draft.origin_offers = action.offers.map(offer => {
-          const OfertaStateLabel = offer.OfertaState;
-          let OfertaStateColor = '';
-          switch (offer.OfertaState) {
-            case 'Pendiente aprobaciones':
-            case 'Pendiente legal':
-              OfertaStateColor = 'badge-caution';
-              break;
-            case 'Rechazada por legal':
-              OfertaStateColor = 'badge-danger';
-              break;
-            case 'Cancelada':
-              OfertaStateColor = 'badge-warning';
-              break;
-            default:
-              OfertaStateColor = 'badge-caution';
-              break;
-          }
-          return {
-            ...offer,
-            OfertaStateLabel,
-            OfertaStateColor,
-          };
-        });
+        draft.origin_offers = action.offers.map(offer => formatOffer(offer));
         draft.offers = draft.origin_offers;
         draft.reports = getReports(draft.offers);
         break;
