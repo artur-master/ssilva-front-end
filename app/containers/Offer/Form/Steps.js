@@ -89,11 +89,13 @@ function Steps({ offer }) {
                 color = 'success';
                 if (colorStep > 1) color += `-0${colorStep}`;
                 break;
+              case 'yellow':
+              case 'orange':
               case 'red':
                 color = 'caution';
                 break;
               default:
-                color = '';
+                color = node.Color;
             }
             return (
               <li key={node.Description} className={`m-counter-plus ${color}`}>
@@ -102,13 +104,7 @@ function Steps({ offer }) {
                   onClick={evt => evt.preventDefault()}
                   className="m-counter-item"
                 >
-                  <span>
-                    {node.Description.trim() ===
-                    'Pendiente información/Rechazada'
-                      ? 'Pendiente información'
-                      : node.Description}{' '}
-                    [{node.Label}]
-                  </span>
+                  <span>{`${node.Description.trim()} [${node.Label}]`}</span>
                 </Link>
               </li>
             );

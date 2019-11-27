@@ -9,23 +9,14 @@ import {
   GET_OFFER,
   GET_OFFER_ERROR,
   GET_OFFER_SUCCESS,
-  SAVE_OFFER,
-  SAVE_OFFER_ERROR,
-  SAVE_OFFER_SUCCESS,
-  GET_QUOTATION,
-  GET_QUOTATION_ERROR,
-  GET_QUOTATION_SUCCESS,
   UPDATE_OFFER,
   RESET_CONTAINER,
-  SEND_TO_CONTROL,
-  SEND_TO_CONTROL_ERROR,
-  SEND_TO_CONTROL_SUCCESS,
-  CANCEL_OFFER,
-  CANCEL_OFFER_ERROR,
-  CANCEL_OFFER_SUCCESS,
-  CONTROL_REVIEW,
-  CONTROL_REVIEW_ERROR,
-  CONTROL_REVIEW_SUCCESS,
+  CONFIRM,
+  CONFIRM_ERROR,
+  CONFIRM_SUCCESS,
+  APPROVE_IN,
+  APPROVE_IN_ERROR,
+  APPROVE_IN_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -33,7 +24,7 @@ export const initialState = {
   error: false,
   success: false,
   offer: false,
-  // screen: 'view',
+  redirect: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -43,66 +34,28 @@ const offerReducer = (state = initialState, action) =>
     switch (action.type) {
       case RESET_CONTAINER:
         return initialState;
-      case GET_QUOTATION:
-        draft.loading = true;
-        draft.error = false;
-        draft.success = false;
-        draft.offer = false;
-        break;
       case GET_OFFER:
-      case SAVE_OFFER:
-      case SEND_TO_CONTROL:
-      case CONTROL_REVIEW:
-      case CANCEL_OFFER:
+      case CONFIRM:
+      case APPROVE_IN:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
+        draft.redirect = '';
         break;
-      case GET_QUOTATION_ERROR:
       case GET_OFFER_ERROR:
-      case SAVE_OFFER_ERROR:
-      case SEND_TO_CONTROL_ERROR:
-      case CONTROL_REVIEW_ERROR:
-      case CANCEL_OFFER_ERROR:
+      case CONFIRM_ERROR:
+      case APPROVE_IN_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
+        draft.redirect = '';
         break;
-      case GET_QUOTATION_SUCCESS:
-        draft.loading = false;
-        draft.error = false;
-        draft.offer = {
-          ...action.response.quotation,
-          Cliente: action.response.client,
-          Empleador: action.response.client.Empleador,
-          ...draft.offer,
-          percent: calculates(action.response.quotation).percent,
-          convert: calculates(action.response.quotation).convert,
-        };
-        break;
-      case SAVE_OFFER_SUCCESS:
-      case SEND_TO_CONTROL_SUCCESS:
-      case CANCEL_OFFER_SUCCESS:
-        draft.loading = false;
-        draft.error = false;
-        // draft.screen = 'view';
-        draft.success = action.response.detail;
-        draft.offer = {
-          ...action.response.oferta,
-          Empleador: action.response.oferta.Cliente.Empleador,
-          CoEmpleador: (action.response.oferta.Codeudor || {}).Empleador,
-          percent: calculates(action.response).percent,
-          convert: calculates(action.response).convert,
-        };
-        break;
-      case CONTROL_REVIEW_SUCCESS:
+      case CONFIRM_SUCCESS:
+      case APPROVE_IN_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = action.response.detail;
-        draft.offer = {
-          ...state.offer,
-          ...action.response.oferta,
-        };
+        draft.redirect = 'list';
         break;
       case GET_OFFER_SUCCESS:
         draft.loading = false;

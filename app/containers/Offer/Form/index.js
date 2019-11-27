@@ -6,6 +6,7 @@
  */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -18,13 +19,17 @@ import PageHeader from 'containers/Common/PageHeader';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import WithLoading from 'components/WithLoading';
+import { Auth } from 'containers/App/helpers';
 import makeSelectOfferForm from './selectors';
 import Form from './Form';
 import reducer from './reducer';
 import saga from './saga';
-import { getActionTitle } from './helper';
-import { getQuotation, getOffer, resetContainer, updateOffer } from './actions';
+import { getOffer, resetContainer } from './actions';
 import Steps from './Steps';
+import { canConfirmOffer, getActionTitle } from '../helper';
+import OfferConfirm from './Confirm';
+import OfferInForm from './InForm';
+import InSteps from './InForm/Steps';
 const SyncMessage = WithLoading();
 export function OfferForm({
   match,
@@ -39,33 +44,64 @@ export function OfferForm({
   const { OfertaID } = query;
   const { project } = selectorProject;
   const { Folio } = selector.offer;
+
+  const canConfirm = canConfirmOffer(selector.offer);
+
   useEffect(() => {
     if (OfertaID) dispatch(getOffer(OfertaID));
     return () => dispatch(resetContainer());
   }, [location.search]);
+
+  if (selector.redirect) {
+    return <Redirect to={`/proyectos/${project.ProyectoID}/ofertas`} />;
+  }
 
   return (
     <>
       <Helmet title={`Oferta - ${project.Name || '...'}`} />
       <PageHeader header={['Proyectos', project.Name || '...']} />
       <InitData
-        User
         Project={{ ProyectoID: match.params.id }}
-        Client
         Inmueble={{ ProyectoID: match.params.id }}
       />
       {!(project && selector.offer) && <SyncMessage loading />}
       {project && selector.offer && (
         <>
-          <ProjectPhases project={project} active="offer" />
-          <Steps offer={selector.offer} />
+          {!Auth.isInmobiliario() && (
+            <>
+              <ProjectPhases project={project} active="offer" />
+              <Steps offer={selector.offer} />
+            </>
+          )}
+          {Auth.isInmobiliario() && <InSteps offer={selector.offer} />}
           <h4 className="font-21 mt-3">{`${project.Name} / ${Folio}`}</h4>
           <h5 className="mb-3 d-flex align-items-center justify-content-between">
             <span className="font-16-rem line-height-1 color-success">
               {getActionTitle(selector.offer)}
             </span>
           </h5>
-          <Form project={project} selector={selector} dispatch={dispatch} />
+          {canConfirm && (
+            <OfferConfirm
+              selector={selector}
+              project={project}
+              dispatch={dispatch}
+            />
+          )}
+
+          {!canConfirm && !Auth.isInmobiliario() && (
+            <>
+              <InitData User Client />
+              <Form project={project} selector={selector} dispatch={dispatch} />
+            </>
+          )}
+
+          {!canConfirm && Auth.isInmobiliario() && (
+            <OfferInForm
+              project={project}
+              selector={selector}
+              dispatch={dispatch}
+            />
+          )}
         </>
       )}
     </>

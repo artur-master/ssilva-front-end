@@ -98,6 +98,39 @@ export const OFERTA_STATE = [
   'Cancelada',
 ];
 
+export const APROBACION_INMOBILIARIA_STATE = [
+  'Pendiente jefe de proyecto',
+  'Pendiente aprobador inmobiliario',
+  'Aprobada',
+  'Rechazada',
+];
+
+export const PRE_APROBACION_CREDITO_STATE = [
+  'No aplica',
+  'Pendiente asistente comercial',
+  'Aprobada',
+  'Rechazada',
+];
+
+export const RECEPCION_GARANTIA_STATE = [
+  'Pendiente recepcion en finanzas',
+  'Aprobada',
+];
+
+export const PROMESA_STATE = [
+  'Pendiente confección',
+  'Pendiente firma comprador',
+  'Pendiente envío a inmobiliaria',
+  'Pendiente control',
+  'Pendiente firma inmobiliaria',
+  'Pendiente legalizacion',
+  'Pendiente envio de copias',
+  'Pendiente escrituracion',
+  'Escritura',
+  'Pendiente aprobación de maqueta',
+  'Promesa modificada',
+];
+
 export const REQUIRED_DOCUMENTS = [
   'DocumentCotizacion',
   'DocumentPagoGarantia',

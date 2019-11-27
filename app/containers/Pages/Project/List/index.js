@@ -16,13 +16,13 @@ import { Helmet } from 'react-helmet';
 import PageHeader from 'containers/Common/PageHeader';
 import WithLoading from 'components/WithLoading';
 import { UserProject } from 'containers/Project/helper';
+import { Auth } from 'containers/App/helpers';
 import makeSelectProjectList from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import Filter from './Filter';
-import { fetchEntities, filterEntites } from './actions';
-import Item from './Item';
-import ItemPending from './ItemPending';
+import { fetchEntities } from './actions';
+import List from './List';
+import InList from './InList';
 
 const SyncMessage = WithLoading();
 
@@ -51,41 +51,11 @@ export function ProjectListPage({ dispatch, selector }) {
       <Helmet title="Project list" />
       <PageHeader>Proyectos</PageHeader>
       {!entities && <SyncMessage {...selector} />}
-      {entities && !loading && (
-        <>
-          <Filter onFilter={query => dispatch(filterEntites(query))} />
-          <hr />
-          <section className="proyect-group row mx-n2">
-            <h3 className="title col-12 px-2">Proyectos Asignados</h3>
-            {assignEntities.map(project => (
-              <Item
-                key={project.ProyectoID}
-                project={project}
-                dispatch={dispatch}
-              />
-            ))}
-          </section>
-          <section className="proyect-group row mx-n2">
-            <h3 className="title col-12 px-2">Proyectos Empresa</h3>
-            {otherEntities.map(project => (
-              <Item
-                key={project.ProyectoID}
-                project={project}
-                dispatch={dispatch}
-              />
-            ))}
-          </section>
-          <section className="proyect-group row mx-n2">
-            <h3 className="title col-12 px-2">Proyectos en Creación</h3>
-            {creationEntities.map(project => (
-              <ItemPending
-                key={project.ProyectoID}
-                project={project}
-                dispatch={dispatch}
-              />
-            ))}
-          </section>
-        </>
+      {entities && !loading && !Auth.isInmobiliario() && (
+        <List dispatch={dispatch} selector={selector} />
+      )}
+      {entities && !loading && Auth.isInmobiliario() && (
+        <InList dispatch={dispatch} selector={selector} />
       )}
     </div>
   );

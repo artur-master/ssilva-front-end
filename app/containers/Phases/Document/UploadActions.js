@@ -5,7 +5,6 @@
  */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
 import { Auth } from 'containers/App/helpers';
 import DocumentCondition from './Conditions';

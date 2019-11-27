@@ -22,14 +22,7 @@ import { canEditOffer } from '../Form/helper';
 
 const Item = ({ project, offer, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const {
-    Proyecto,
-    Folio,
-    Inmuebles,
-    OfertaStateColor,
-    OfertaStateLabel,
-    Cliente,
-  } = offer;
+  const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
 
   return (
@@ -48,9 +41,20 @@ const Item = ({ project, offer, dispatch }) => {
       <td />
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          <span className={`badge px-2 ${OfertaStateColor}`}>
-            {OfertaStateLabel.toUpperCase()}
-          </span>
+          {OfertaStateFormat.map((state, index) => (
+            <span
+              key={String(index)}
+              className={`badge px-2 ${state.Color} ${
+                index > 0 ? 'rounded-0' : ''
+              } ${
+                index === 0 && OfertaStateFormat.length > 1
+                  ? 'rounded-left rounded-0'
+                  : ''
+              }`}
+            >
+              {state.Label.toUpperCase()}
+            </span>
+          ))}
         </div>
       </td>
       <td className="font-21 px-3">

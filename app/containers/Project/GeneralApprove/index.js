@@ -25,9 +25,10 @@ const SyncMessage = WithLoading();
 export function GeneralApprove({ selector, selectorProject, dispatch }) {
   useInjectReducer({ key: 'generalApprove', reducer });
   useInjectSaga({ key: 'generalApprove', saga });
+  useEffect(() => () => dispatch(resetContainer()), []);
+
   const { project, reviews } = selectorProject;
   const { loading, ...restSelector } = selector;
-  useEffect(() => () => dispatch(resetContainer()), []);
   const canApprove = canApproveGeneral(project);
   if (!canApprove) return <SyncMessage {...restSelector} />;
   return (

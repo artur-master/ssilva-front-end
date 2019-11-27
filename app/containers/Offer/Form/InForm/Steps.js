@@ -7,22 +7,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { isAprobacionInmobiliariaState } from '../../helper';
 
-function Steps({ offer }) {
-  const {
-    Graph = {
-      Node: [
-        { Label: 'V', Description: 'Oferta', Color: 'green' },
-        {
-          Label: 'V',
-          Description: 'Pendiente información ',
-          Color: 'white',
-        },
-        { Label: 'AC', Description: 'Pendiente control', Color: 'white' },
-        { Label: 'AC', Description: 'Promesa', Color: 'white' },
-      ],
-    },
-  } = offer;
+function InSteps({ offer }) {
+  const Graph = {
+    Node: [
+      { Label: 'V', Description: 'Oferta', Color: 'green' },
+      {
+        Label: 'I',
+        Description: 'Pendiente Aprobador Inmobiliario',
+        Color: 'red',
+      },
+    ],
+  };
+
+  if (isAprobacionInmobiliariaState(offer))
+    Graph.Node[1] = {
+      Label: 'I',
+      Description: 'Aprobada Inmobiliario',
+      Color: 'green',
+    };
+
   let colorStep = 0;
   return (
     <nav className="breadcrumb-step">
@@ -60,8 +65,8 @@ function Steps({ offer }) {
   );
 }
 
-Steps.propTypes = {
+InSteps.propTypes = {
   offer: PropTypes.object,
 };
 
-export default Steps;
+export default InSteps;

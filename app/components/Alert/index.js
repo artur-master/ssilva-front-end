@@ -46,6 +46,11 @@ const Alert = ({
       color = 'caution';
       iconColor = 'color-caution-02-icon';
       break;
+    case 'default':
+      showIcon = icon === true ? '' : icon;
+      color = 'white';
+      iconColor = 'color-regular';
+      break;
     default:
       showIcon = icon === true ? 'alert' : icon;
       color = 'warning';
@@ -57,7 +62,9 @@ const Alert = ({
     <div
       className={`background-color-${color} text-left ${
         type === 'danger' ? 'border-color-danger' : ''
-      } ${space} mt-2  rounded-lg  alert fade show p-0 ${className}`}
+      } ${space} ${
+        isChecked ? 'border-color-danger' : ''
+      } mt-2  rounded-lg  alert fade show p-0 ${className}`}
     >
       <table className="table table-responsive-md table-borderless m-0 rounded-lg">
         <tbody>

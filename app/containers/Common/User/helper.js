@@ -32,4 +32,4 @@ export const doQuery = (entities, query = {}) => {
 };
 
 export const userFullname = user =>
-  user ? `${user.Name} ${user.LastNames} - ${user.Rut}` : '';
+  user ? `${user.Name} ${user.LastNames} / ${user.Rut}` : '';

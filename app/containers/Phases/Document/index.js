@@ -85,7 +85,7 @@ export function PhaseDocument({
               onControlReview={onControlReview}
             />
           )}
-          <div className="py-3">
+          <div className="mt-3">
             <SyncMessage {...selector} />
           </div>
         </>

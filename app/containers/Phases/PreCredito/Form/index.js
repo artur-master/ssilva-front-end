@@ -14,6 +14,7 @@ import Renta from './Renta';
 import Summary from './Summary';
 import { calculateRenta } from '../helper';
 const PhasePreCreditoForm = ({
+  isCollapse,
   isConfirmed,
   step,
   initialValues,
@@ -101,6 +102,7 @@ const PhasePreCreditoForm = ({
 );
 
 PhasePreCreditoForm.propTypes = {
+  isCollapse: PropTypes.bool,
   isConfirmed: PropTypes.bool,
   step: PropTypes.number,
   initialValues: PropTypes.object,
