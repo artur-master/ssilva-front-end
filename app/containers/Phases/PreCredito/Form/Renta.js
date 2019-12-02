@@ -11,14 +11,12 @@ const Renta = ({ group = 'Cliente', form }) => (
         <span className="w-50 border-bottom py-3 d-block">Renta</span>
       </h4>
 
-      <span className="font-14-rem color-main px-3 mt-3 col-12">
+      <span className=" color-main px-3 mt-3 col-12">
         <b>¿CUÁL ES SU SUELDO?</b>
       </span>
 
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>Sueldo Fijo Líquido</b>
-        </Label>
+        <Label className="w-50 m-0 ">Sueldo Fijo Líquido</Label>
         <ExField
           className="w-50"
           name={`${group}.Extra.Values.LiquidIncome`}
@@ -27,9 +25,7 @@ const Renta = ({ group = 'Cliente', form }) => (
         />
       </FormGroup>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>Sueldo Variable</b>
-        </Label>
+        <Label className="w-50 m-0 ">Sueldo Variable</Label>
         <ExField
           className="w-50"
           name={`${group}.Extra.Values.VariableSalary`}
@@ -38,9 +34,7 @@ const Renta = ({ group = 'Cliente', form }) => (
         />
       </FormGroup>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>Honorarios Bruto</b>
-        </Label>
+        <Label className="w-50 m-0 ">Honorarios Bruto</Label>
         <ExField
           className="caution w-50"
           name={`${group}.Extra.Values.Honoraries`}
@@ -51,14 +45,12 @@ const Renta = ({ group = 'Cliente', form }) => (
       </FormGroup>
     </div>
     <div className="row pb-3 border-top">
-      <span className="font-14-rem color-main px-3 mt-3 col-12">
+      <span className=" color-main px-3 mt-3 col-12">
         <b>¿TIENE ALGUNA ENTRADA EXTRA DE DINERO?</b>
       </span>
 
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>Arriendo Bienes Raíces</b>
-        </Label>
+        <Label className="w-50 m-0 ">Arriendo Bienes Raíces</Label>
         <ExField
           className="w-50"
           name={`${group}.Extra.Values.RealStateLeasing`}
@@ -67,9 +59,7 @@ const Renta = ({ group = 'Cliente', form }) => (
         />
       </FormGroup>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>Retiros</b>
-        </Label>
+        <Label className="w-50 m-0 ">Retiros</Label>
         <ExField
           className="w-50"
           name={`${group}.Extra.Values.Retirements`}
@@ -78,9 +68,7 @@ const Renta = ({ group = 'Cliente', form }) => (
         />
       </FormGroup>
       <FormGroup className="col-12 offset-md-6 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>Pensión</b>
-        </Label>
+        <Label className="w-50 m-0 ">Pensión</Label>
         <ExField
           className="w-50"
           name={`${group}.Extra.Values.Pension`}

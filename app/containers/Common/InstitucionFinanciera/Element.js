@@ -24,6 +24,7 @@ const Element = ({
   isInvalid = false,
   onSelect,
   openModal = false,
+  applyPropertyName = 'InstitucionFinancieraID',
 }) => {
   const [isOpen, setIsOpen] = useState(openModal);
   const defaultComponent = () => {
@@ -33,8 +34,8 @@ const Element = ({
     if (value) {
       const entity = (selector.origin_entities || []).find(
         u =>
-          u.InstitucionFinancieraID === value.InstitucionFinancieraID ||
-          u.InstitucionFinancieraID === value,
+          u[applyPropertyName] === value[applyPropertyName] ||
+          u[applyPropertyName] === value,
       );
       if (entity) text = entity.Name;
     }
@@ -85,6 +86,7 @@ const Element = ({
 
 Element.propTypes = {
   query: PropTypes.object,
+  applyPropertyName: PropTypes.string,
   openModal: PropTypes.bool,
   selector: PropTypes.object,
   value: PropTypes.string,

@@ -7,53 +7,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { RESERVA_STATE } from '../../App/constants';
+import {
+  OFERTA_STATE,
+  APROBACION_INMOBILIARIA_STATE,
+} from 'containers/App/constants';
+import { isAprobacionInmobiliariaState, isPendienteContacto } from '../helper';
 
 function SubSteps({ offer }) {
-  const { OfertaState } = offer;
-  if (OfertaState === RESERVA_STATE[3]) {
-    return (
-      <ul className="m-counter mt-3" style={{ marginLeft: '9.6em' }}>
-        <li className="m-counter-plus warning-magent">
-          <Link
-            to="/"
-            onClick={evt => evt.preventDefault()}
-            className="m-counter-item"
-          >
-            <span>Rechazada</span>
-          </Link>
-        </li>
-        <li className="m-counter-plus">
-          <Link
-            to="/"
-            onClick={evt => evt.preventDefault()}
-            className="m-counter-item"
-          >
-            <span>Pendiente Aprobación</span>
-          </Link>
-        </li>
-        <li className="m-counter-plus">
-          <Link
-            to="/"
-            onClick={evt => evt.preventDefault()}
-            className="m-counter-item"
-          >
-            <span>Pendiente Control</span>
-          </Link>
-        </li>
-        <li className="m-counter-plus">
-          <Link
-            to="/"
-            onClick={evt => evt.preventDefault()}
-            className="m-counter-item"
-          >
-            <span>Oferta</span>
-          </Link>
-        </li>
-      </ul>
-    );
-  }
-  return null;
+  const { OfertaState, AprobacionInmobiliariaState } = offer;
+  return (
+    <ul className="m-counter mt-3" style={{ marginLeft: '9.6em' }}>
+      <li
+        className={`m-counter-plus ${
+          isPendienteContacto(offer) ? 'caution' : 'success'
+        }`}
+      >
+        <Link to="/" onClick={evt => evt.preventDefault()}>
+          <span>Pendiente Contacto [JP]</span>
+        </Link>
+      </li>
+      <li
+        className={`m-counter-plus ${
+          isAprobacionInmobiliariaState(offer) ? 'success-02' : 'white'
+        }`}
+      >
+        <Link to="/" onClick={evt => evt.preventDefault()}>
+          <span>Aprobación inmobiliaria [IN]</span>
+        </Link>
+      </li>
+      <li className="m-counter-plus">
+        <Link
+          to="/"
+          onClick={evt => evt.preventDefault()}
+          className="m-counter-item"
+        >
+          <span>Preaprobación crédito [AC]</span>
+        </Link>
+      </li>
+      <li className="m-counter-plus">
+        <Link
+          to="/"
+          onClick={evt => evt.preventDefault()}
+          className="m-counter-item"
+        >
+          <span>Recepción de garantía [FI]</span>
+        </Link>
+      </li>
+    </ul>
+  );
 }
 
 SubSteps.propTypes = {
@@ -61,20 +62,29 @@ SubSteps.propTypes = {
 };
 
 function Steps({ offer }) {
-  const {
-    Graph = {
-      Node: [
-        { Label: 'V', Description: 'Crear oferta', Color: 'red' },
-        {
-          Label: 'V',
-          Description: 'Pendiente información ',
-          Color: 'white',
-        },
-        { Label: 'AC', Description: 'Pendiente control', Color: 'white' },
-        { Label: 'AC', Description: 'Oferta', Color: 'white' },
-      ],
-    },
-  } = offer;
+  const { OfertaState } = offer;
+  const Graph = {
+    Node: [
+      { Label: 'AC', Description: 'Oferta', Color: 'green' },
+      {
+        Label: 'JP, IN, AC, FI',
+        Description: 'Pendiente Información',
+        Color: 'red',
+      },
+      { Label: 'LG', Description: 'Pendiente Control', Color: 'white' },
+      { Label: 'LG', Description: 'Promesa', Color: 'white' },
+    ],
+  };
+  if (OfertaState !== OFERTA_STATE[0] && OfertaState !== OFERTA_STATE[4]) {
+    Graph.Node[1].Color = 'green';
+  }
+
+  if (OfertaState === OFERTA_STATE[2]) {
+    Graph.Node[2].Color = 'red';
+  } else if (OfertaState === OFERTA_STATE[3]) {
+    Graph.Node[2].Color = 'green';
+  }
+
   let colorStep = 0;
   return (
     <nav className="breadcrumb-step">
@@ -110,7 +120,7 @@ function Steps({ offer }) {
             );
           })}
       </ul>
-      <SubSteps offer={offer} />
+      {/* <SubSteps offer={offer} /> */}
     </nav>
   );
 }

@@ -11,7 +11,7 @@ import Element from 'containers/Common/InstitucionFinanciera/Element';
 import ExField from './ExField';
 
 const ExInstitucionFinancieras = props => {
-  const { style = {} } = props;
+  const { style = {}, applyPropertyName = 'InstitucionFinancieraID' } = props;
   let className = props.className || '';
 
   return (
@@ -32,10 +32,11 @@ const ExInstitucionFinancieras = props => {
               value={field.value}
               onSelect={item =>
                 form
-                  ? form.setFieldValue(field.name, item.InstitucionFinancieraID)
+                  ? form.setFieldValue(field.name, item[applyPropertyName])
                   : ''
               }
               {...props}
+              applyPropertyName={applyPropertyName}
               className={className}
               isInvalid={!!(getInTouched && getInErrors)}
             />
@@ -53,6 +54,7 @@ ExInstitucionFinancieras.propTypes = {
   className: PropTypes.string,
   required: PropTypes.bool,
   style: PropTypes.object,
+  applyPropertyName: PropTypes.string,
 };
 
 export default ExInstitucionFinancieras;

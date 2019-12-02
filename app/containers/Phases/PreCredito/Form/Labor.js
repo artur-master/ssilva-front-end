@@ -40,9 +40,7 @@ const Labor = ({ group = 'Cliente', values }) => {
             />
           </div>
           <FormGroup className="col-12 col-md-6 d-flex">
-            <Label className="w-50 m-0 font-14-rem">
-              <b>Cargo Actual Cliente</b>
-            </Label>
+            <Label className="w-50 m-0">Cargo Actual Cliente</Label>
             <ExField
               className="w-50"
               name={`${Empleador}.Extra.CurrentPosition`}
@@ -54,9 +52,7 @@ const Labor = ({ group = 'Cliente', values }) => {
                 <b>¿DURANTE CUANTO TIEMPO?</b>
               </span>
               <FormGroup className="col-12 col-md-6 mt-3 d-flex">
-                <Label className="w-50 m-0 font-14-rem">
-                  <b>Antigüedad Laboral</b>
-                </Label>
+                <Label className="w-50 m-0">Antigüedad Laboral</Label>
                 <ExField
                   type="select"
                   name={`${Empleador}.Extra.Antiguedad`}
@@ -77,9 +73,7 @@ const Labor = ({ group = 'Cliente', values }) => {
         <b>¿DÓNDE TRABAJA?</b>
       </span>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>Nombre Empleador</b>
-        </Label>
+        <Label className="w-50 m-0">Nombre Empleador</Label>
         <ExField
           className="caution w-50"
           name={`${Empleador}.RazonSocial`}
@@ -87,16 +81,12 @@ const Labor = ({ group = 'Cliente', values }) => {
         />
       </FormGroup>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>RUT Empleador</b>
-        </Label>
+        <Label className="w-50 m-0">RUT Empleador</Label>
         <ExField className="w-50 caution" name={`${Empleador}.Rut`} required />
       </FormGroup>
       {!IsCompany && (
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
-          <Label className="w-50 m-0 font-14-rem">
-            <b>Teléfono Empleador</b>
-          </Label>
+          <Label className="w-50 m-0">Teléfono Empleador</Label>
           <ExField
             className="caution w-50"
             name={`${Empleador}.Extra.Phone`}
@@ -106,9 +96,7 @@ const Labor = ({ group = 'Cliente', values }) => {
         </FormGroup>
       )}
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
-        <Label className="w-50 m-0 font-14-rem">
-          <b>Dirección Empleador</b>
-        </Label>
+        <Label className="w-50 m-0">Dirección Empleador</Label>
         <ExField
           className="w-50"
           name={`${

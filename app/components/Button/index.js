@@ -17,6 +17,7 @@ const Button = ({
   ...props
 }) => (
   <ReactButton
+    color=""
     to="/"
     className={`font-14-rem shadow-sm m-btn ml-2 m-btn m-btn-${color} ${className} ${
       loading ? 'disabled' : ''
