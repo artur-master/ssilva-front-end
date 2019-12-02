@@ -33,7 +33,7 @@ const PureRadioGroup = ({ options = [], name, value, ...props }) => (
 
 PureRadioGroup.propTypes = {
   name: PropTypes.string,
-  value: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   options: PropTypes.array,
 };
 

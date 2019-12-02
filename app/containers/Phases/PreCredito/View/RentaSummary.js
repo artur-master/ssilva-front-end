@@ -6,13 +6,7 @@ import Button from 'components/Button';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
 import { calculateRenta } from '../helper';
 
-const RentaSummary = ({
-  form,
-  group = 'Cliente',
-  addCodeudor,
-  canAddCodeudor = true,
-}) => {
-  const { values } = form;
+const RentaSummary = ({ values, group = 'Cliente' }) => {
   const { Renta, CoRenta, SumRenta } = calculateRenta(values);
   let renta = Renta;
   if (group === 'Codeudor') {
@@ -75,17 +69,6 @@ const RentaSummary = ({
                     <b>La Renta no es Suficiente</b>
                   </span>
                 </td>
-                <td>
-                  {canAddCodeudor && (
-                    <Button
-                      className="m-btn-plus no-whitespace"
-                      color="white"
-                      onClick={addCodeudor}
-                    >
-                      Agregar Co-deudor
-                    </Button>
-                  )}
-                </td>
               </tr>
             </tbody>
           </table>
@@ -97,8 +80,6 @@ const RentaSummary = ({
 
 RentaSummary.propTypes = {
   group: PropTypes.string,
-  canAddCodeudor: PropTypes.bool,
-  form: PropTypes.object,
-  addCodeudor: PropTypes.func,
+  values: PropTypes.object,
 };
 export default RentaSummary;

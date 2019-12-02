@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Button from 'components/Button';
-import { Form as ExForm } from 'components/ExForm';
-import { isContadoPayment } from 'containers/App/helpers';
+import { isContadoPayment, isCreditPayment } from 'containers/App/helpers';
+import { PRE_APROBACION_CREDITO_STATE } from 'containers/App/constants';
 import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
 import Renta from './Renta';
 import PhasePreCreditoFormModal from '../Form/modal';
+import PhaseCredit from '../Credit';
+
 const PhasePreCreditoView = ({
   isCollapse,
   canEdit,
@@ -17,52 +19,44 @@ const PhasePreCreditoView = ({
   onSubmit,
 }) => {
   const [isOpen, setOpen] = useState(false);
+  const isContado = isContadoPayment(initialValues.PayType);
+  const isCredit = isCreditPayment(initialValues.PayType);
   return (
     <>
-      <ExForm initialValues={initialValues} onSubmit={onSubmit}>
-        {form => {
-          const { values } = form;
-          const isContado = isContadoPayment(values.PayType);
-          return (
+      <Box collapse isOpen={initialValues.ReservaID || isCollapse}>
+        <BoxHeader>
+          <b>PRE APROBACIÓN DE CRÉDITO</b>
+          {canEdit && (
+            <Button
+              color="white"
+              className="m-btn-pen order-3"
+              onClick={() => setOpen(true)}
+            >
+              Editar
+            </Button>
+          )}
+        </BoxHeader>
+        <BoxContent className="p-0">
+          {!isContado && (
             <>
-              <Box collapse isOpen={values.ReservaID || isCollapse}>
-                <BoxHeader>
-                  <b>PRE APROBACIÓN DE CRÉDITO</b>
-                  {canEdit && (
-                    <Button
-                      color="white"
-                      className="m-btn-pen order-3"
-                      onClick={() => setOpen(true)}
-                    >
-                      Editar
-                    </Button>
-                  )}
-                </BoxHeader>
-                <BoxContent className="p-0">
-                  {!isContado && (
-                    <>
-                      <Labor values={values} group="Cliente" />
-                      <Renta group="Cliente" form={form} />
-                      {values.Codeudor && (
-                        <Codeudor
-                          form={form}
-                          removeCodeudor={evt => {
-                            evt.preventDefault();
-                            form.setFieldValue('Codeudor', null);
-                            form.setFieldValue('CodeudorID', null);
-                            form.setFieldValue('CoEmpleador', null);
-                          }}
-                        />
-                      )}
-                    </>
-                  )}
-                  <Patrimony form={form} />
-                </BoxContent>
-              </Box>
+              <Labor values={initialValues} group="Cliente" />
+              <Renta group="Cliente" values={initialValues} />
+              {initialValues.Codeudor && <Codeudor values={initialValues} />}
             </>
-          );
-        }}
-      </ExForm>
+          )}
+          <Patrimony values={initialValues} />
+          {isCredit && (initialValues.OfertaID || initialValues.PromesaID) && (
+            <PhaseCredit
+              canEdit={
+                initialValues.OfertaID &&
+                initialValues.PreAprobacionCreditoState ===
+                  PRE_APROBACION_CREDITO_STATE[1]
+              }
+              EntityID={initialValues.OfertaID}
+            />
+          )}
+        </BoxContent>
+      </Box>
       <PhasePreCreditoFormModal
         isOpen={isOpen}
         initialValues={initialValues}

@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, Label, Field as ExField } from 'components/ExForm';
+import { FormGroup, Label } from 'components/ExForm';
 import { Collapse, CollapseContent, CollapseHeader } from 'components/Collapse';
+import IntlFormatNumber from 'components/IntlFormat/Number';
 import RentaSummary from './RentaSummary';
 
-const Renta = ({ group = 'Cliente', form }) => (
+const Renta = ({ group = 'Cliente', values }) => (
   <Collapse>
     <CollapseHeader>Renta</CollapseHeader>
     <CollapseContent>
@@ -15,37 +16,24 @@ const Renta = ({ group = 'Cliente', form }) => (
         </span>
 
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
-          <Label className="w-50 m-0 font-14-rem">
-            <b>Sueldo Fijo Líquido</b>
-          </Label>
-          <ExField
-            className="w-50"
-            name={`${group}.Extra.Values.LiquidIncome`}
-            placeholder="$"
-            type="number"
+          <Label className="w-50 p-0">Sueldo Fijo Líquido</Label>
+          <IntlFormatNumber
+            value={values[group].Extra.Values.LiquidIncome}
+            prefix="$"
           />
         </FormGroup>
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
-          <Label className="w-50 m-0 font-14-rem">
-            <b>Sueldo Variable</b>
-          </Label>
-          <ExField
-            className="w-50"
-            name={`${group}.Extra.Values.VariableSalary`}
-            placeholder="$"
-            type="number"
+          <Label className="w-50 ">Sueldo Variable</Label>
+          <IntlFormatNumber
+            value={values[group].Extra.Values.VariableSalary}
+            prefix="$"
           />
         </FormGroup>
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
-          <Label className="w-50 m-0 font-14-rem">
-            <b>Honorarios Bruto</b>
-          </Label>
-          <ExField
-            className="caution w-50"
-            name={`${group}.Extra.Values.Honoraries`}
-            required
-            placeholder="$"
-            type="number"
+          <Label className="w-50 ">Honorarios Bruto</Label>
+          <IntlFormatNumber
+            value={values[group].Extra.Values.Honoraries}
+            prefix="$"
           />
         </FormGroup>
       </div>
@@ -55,65 +43,34 @@ const Renta = ({ group = 'Cliente', form }) => (
         </span>
 
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
-          <Label className="w-50 m-0 font-14-rem">
-            <b>Arriendo Bienes Raíces</b>
-          </Label>
-          <ExField
-            className="w-50"
-            name={`${group}.Extra.Values.RealStateLeasing`}
-            placeholder="$"
-            type="number"
+          <Label className="w-50">Arriendo Bienes Raíces</Label>
+          <IntlFormatNumber
+            value={values[group].Extra.Values.RealStateLeasing}
+            prefix="$"
           />
         </FormGroup>
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
-          <Label className="w-50 m-0 font-14-rem">
-            <b>Retiros</b>
-          </Label>
-          <ExField
-            className="w-50"
-            name={`${group}.Extra.Values.Retirements`}
-            placeholder="$"
-            type="number"
+          <Label className="w-50">Retiros</Label>
+          <IntlFormatNumber
+            value={values[group].Extra.Values.Retirements}
+            prefix="$"
           />
         </FormGroup>
         <FormGroup className="col-12 offset-md-6 col-md-6 d-flex mt-3">
-          <Label className="w-50 m-0 font-14-rem">
-            <b>Pensión</b>
-          </Label>
-          <ExField
-            className="w-50"
-            name={`${group}.Extra.Values.Pension`}
-            placeholder="$"
-            type="number"
+          <Label className="w-50">Pensión</Label>
+          <IntlFormatNumber
+            value={values[group].Extra.Values.Pension}
+            prefix="$"
           />
         </FormGroup>
       </div>
-      <RentaSummary
-        group={group}
-        form={form}
-        addCodeudor={evt => {
-          evt.preventDefault();
-          form.setFieldValue('Codeudor', {
-            Extra: {
-              Values: {
-                Honoraries: '',
-              },
-              Independent: false,
-            },
-          });
-        }}
-        canAddCodeudor={
-          !form.values.Codeudor &&
-          !form.values.Cliente.IsCompany &&
-          group === 'Cliente'
-        }
-      />
+      <RentaSummary group={group} values={values} />
     </CollapseContent>
   </Collapse>
 );
 
 Renta.propTypes = {
   group: PropTypes.string,
-  form: PropTypes.object,
+  values: PropTypes.object,
 };
 export default Renta;

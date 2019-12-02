@@ -55,7 +55,6 @@ export function OfferForm({
   if (selector.redirect) {
     return <Redirect to={`/proyectos/${project.ProyectoID}/ofertas`} />;
   }
-
   return (
     <>
       <Helmet title={`Oferta - ${project.Name || '...'}`} />
@@ -63,6 +62,7 @@ export function OfferForm({
       <InitData
         Project={{ ProyectoID: match.params.id }}
         Inmueble={{ ProyectoID: match.params.id }}
+        InstitucionFinanciera
       />
       {!(project && selector.offer) && <SyncMessage loading />}
       {project && selector.offer && (

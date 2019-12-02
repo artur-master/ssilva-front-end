@@ -1,3 +1,5 @@
+import React from 'react';
+import { FormattedNumber } from 'react-intl';
 import { PERMISSIONS } from './constants';
 
 export const Storage = {

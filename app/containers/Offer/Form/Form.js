@@ -16,7 +16,6 @@ import model from '../model';
 export function Form({ project, selector }) {
   const entity = selector.offer;
   const initialValues = model({ project, entity });
-
   return (
     <>
       <PhaseGeneral initialValues={initialValues} />
