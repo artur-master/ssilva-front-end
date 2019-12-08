@@ -16,9 +16,6 @@ import {
   APPROVE_IN,
   APPROVE_IN_ERROR,
   APPROVE_IN_SUCCESS,
-  APPROVE_CONFECCION_PROMESA,
-  APPROVE_CONFECCION_PROMESA_ERROR,
-  APPROVE_CONFECCION_PROMESA_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -65,27 +62,6 @@ export function approveInError(error) {
 export function approveInSuccess(response) {
   return {
     type: APPROVE_IN_SUCCESS,
-    response,
-  };
-}
-
-export function approveConfeccionPromesa(values) {
-  return {
-    type: APPROVE_CONFECCION_PROMESA,
-    values,
-  };
-}
-
-export function approveConfeccionPromesaError(error) {
-  return {
-    type: APPROVE_CONFECCION_PROMESA_ERROR,
-    error,
-  };
-}
-
-export function approveConfeccionPromesaSuccess(response) {
-  return {
-    type: APPROVE_CONFECCION_PROMESA_SUCCESS,
     response,
   };
 }

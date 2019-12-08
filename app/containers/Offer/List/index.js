@@ -26,6 +26,8 @@ import List from './List';
 import Filter from './Filter';
 import { Auth } from '../../App/helpers';
 import InList from './InList';
+import FiList from './FiList';
+import OfferGarantia from '../Form/FiForm/Garantia';
 
 const SyncMessage = WithLoading();
 
@@ -47,7 +49,7 @@ export function Offers({ match, selectorProject, selector, dispatch }) {
       <InitData Project={{ ProyectoID: match.params.id }} />
       <Helmet title={`Ofertas - ${project.Name || '...'}`} />
       <PageHeader header={header} />
-      {!Auth.isInmobiliario() && (
+      {!(Auth.isInmobiliario() || Auth.isFinanza()) && (
         <>
           <ProjectMeta action="view" project={project} active="offer" />
           {selector.loading && <SyncMessage {...selector} />}
@@ -78,6 +80,25 @@ export function Offers({ match, selectorProject, selector, dispatch }) {
                 <span className="line-height-1">Oferta</span>
               </h5>
               <InList {...selector} project={project} dispatch={dispatch} />
+            </>
+          )}
+        </>
+      )}
+      {Auth.isFinanza() && (
+        <>
+          {selector.loading && <SyncMessage {...selector} />}
+          {!selector.loading && selector.offers && (
+            <>
+              <ProjectMeta action="view" project={project} active="offer" />
+              <h4 className="color-regular mt-3">
+                {`${project.Name} - ${project.Symbol}`}
+              </h4>
+              <OfferGarantia />
+              <FiList
+                offers={selector.offers}
+                project={project}
+                dispatch={dispatch}
+              />
             </>
           )}
         </>

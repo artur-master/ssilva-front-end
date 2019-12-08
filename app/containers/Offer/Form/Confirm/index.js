@@ -17,7 +17,8 @@ import { confirmToClient, updateOffer } from '../actions';
 import OfferConfirmObservation from './Observation';
 import OfferConfirmActions from './Actions';
 
-export function OfferConfirm({ project, selector, dispatch }) {
+export function OfferConfirm({ selector, dispatch }) {
+  const { project = {} } = window;
   const entity = selector.offer;
   const initialValues = model({ project, entity });
 
@@ -58,7 +59,6 @@ export function OfferConfirm({ project, selector, dispatch }) {
 }
 
 OfferConfirm.propTypes = {
-  project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   selector: PropTypes.object,
   dispatch: PropTypes.func,
 };

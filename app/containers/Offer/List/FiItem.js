@@ -18,15 +18,23 @@ import {
   matchRestrictionsFromAList,
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
-import { OFERTA_STATE } from 'containers/App/constants';
 import Button from 'components/Button';
-import { canEditOffer } from '../Form/helper';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { recepcionGarantia } from 'containers/Offer/Form/FiForm/Garantia/actions';
+import makeSelectOfferGarantia from 'containers/Offer/Form/FiForm/Garantia/selectors';
+import WithLoading from 'components/WithLoading';
+import { RECEPCION_GARANTIA_STATE } from 'containers/App/constants';
+import Badge from 'reactstrap/es/Badge';
 
-const Item = ({ project, offer, dispatch }) => {
+const SyncMessage = WithLoading();
+
+const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente } = offer;
+  const { Proyecto, Folio, Inmuebles, Cliente } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
-
+  const { loading, error, success } = selectorGarantia;
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
@@ -42,29 +50,25 @@ const Item = ({ project, offer, dispatch }) => {
       <td className="">Cliente: {clientFullname(Cliente)}</td>
       <td />
       <td className="px-3">
-        <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          {OfertaStateFormat.map((state, index) => {
-            if (state.Label === OFERTA_STATE[3])
-              return (
-                <Button size="sm" key={String(index)}>
-                  {state.Label}
+        <div className=" d-flex justify-content-end align-items-center">
+          {offer.RecepcionGarantiaState !== RECEPCION_GARANTIA_STATE[1] &&
+            (!success[offer.OfertaID] && (
+              <>
+                <SyncMessage error={error[offer.OfertaID]} />
+                <Button
+                  loading={loading[offer.OfertaID]}
+                  onClick={() => dispatch(recepcionGarantia(offer.OfertaID))}
+                >
+                  Recibí Garantía
                 </Button>
-              );
-            return (
-              <span
-                key={String(index)}
-                className={`badge px-2 ${state.Color} ${
-                  index > 0 ? 'rounded-0' : ''
-                } ${
-                  index === 0 && OfertaStateFormat.length > 1
-                    ? 'rounded-left rounded-0'
-                    : ''
-                }`}
-              >
-                {state.Label.toUpperCase()}
-              </span>
-            );
-          })}
+              </>
+            ))}
+          {(offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1] ||
+            success[offer.OfertaID]) && (
+            <Badge className="p-2" color="success">
+              Aprobada
+            </Badge>
+          )}
         </div>
       </td>
       <td className="font-21 px-3">
@@ -88,22 +92,6 @@ const Item = ({ project, offer, dispatch }) => {
             >
               Ver datos
             </DropdownItem>
-            {canEditOffer(offer) && (
-              <DropdownItem
-                tag="a"
-                onClick={() =>
-                  dispatch(
-                    push(
-                      `/proyectos/${
-                        project.ProyectoID
-                      }/oferta/editar?OfertaID=${offer.OfertaID}`,
-                    ),
-                  )
-                }
-              >
-                Editar
-              </DropdownItem>
-            )}
           </DropdownMenu>
         </Dropdown>
       </td>
@@ -111,9 +99,26 @@ const Item = ({ project, offer, dispatch }) => {
   );
 };
 
-Item.propTypes = {
+FiItem.propTypes = {
   offer: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  selectorGarantia: PropTypes.object,
   dispatch: PropTypes.func,
 };
-export default Item;
+
+const mapStateToProps = createStructuredSelector({
+  selectorGarantia: makeSelectOfferGarantia(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(FiItem);

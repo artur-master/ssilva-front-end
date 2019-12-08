@@ -67,19 +67,19 @@ function Steps({ offer }) {
     Node: [
       { Label: 'AC', Description: 'Oferta', Color: 'green' },
       {
-        Label: 'JP, IN, AC, FI',
-        Description: 'Pendiente Información',
-        Color: 'red',
+        Label: 'IN, FI, AC',
+        Description: 'Pendiente Aprobación',
+        Color: isPendienteContacto(offer) ? 'white' : 'red',
       },
-      { Label: 'LG', Description: 'Pendiente Control', Color: 'white' },
-      { Label: 'LG', Description: 'Promesa', Color: 'white' },
+      { Label: 'JP', Description: 'Pendiente Control', Color: 'white' },
+      { Label: '', Description: 'Promesa', Color: 'white' },
     ],
   };
   if (OfertaState !== OFERTA_STATE[0] && OfertaState !== OFERTA_STATE[4]) {
     Graph.Node[1].Color = 'green';
   }
 
-  if (OfertaState === OFERTA_STATE[2]) {
+  if (OfertaState === OFERTA_STATE[1]) {
     Graph.Node[2].Color = 'red';
   } else if (OfertaState === OFERTA_STATE[3]) {
     Graph.Node[2].Color = 'green';
@@ -114,7 +114,9 @@ function Steps({ offer }) {
                   onClick={evt => evt.preventDefault()}
                   className="m-counter-item"
                 >
-                  <span>{`${node.Description.trim()} [${node.Label}]`}</span>
+                  <span>{`${node.Description.trim()} ${
+                    node.Label ? `[${node.Label}]` : ''
+                  }`}</span>
                 </Link>
               </li>
             );

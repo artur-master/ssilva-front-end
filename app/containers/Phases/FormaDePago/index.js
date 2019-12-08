@@ -15,7 +15,7 @@ import FormaDePagoView from './View';
 import FormModal from './FormModal';
 
 export function PhaseFormaDePago({
-  isCollapse=false,
+  isCollapse = false,
   onConfirm,
   initialValues,
   canEdit,

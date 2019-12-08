@@ -8,6 +8,7 @@ const PhasePreCredito = ({
   isCollapse,
   isConfirmed,
   canEdit,
+  canEditCredit,
   step,
   initialValues,
   onContinue,
@@ -30,6 +31,7 @@ const PhasePreCredito = ({
       isCollapse={isCollapse}
       initialValues={initialValues}
       canEdit={canEdit}
+      canEditCredit={canEditCredit}
       onSubmit={onContinue}
     />
   );
@@ -40,6 +42,7 @@ PhasePreCredito.propTypes = {
   isConfirmed: PropTypes.bool,
   showScreen: PropTypes.string,
   canEdit: PropTypes.bool,
+  canEditCredit: PropTypes.bool,
   step: PropTypes.number,
   initialValues: PropTypes.object,
   onContinue: PropTypes.func,

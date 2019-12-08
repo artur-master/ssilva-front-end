@@ -76,13 +76,22 @@ export const currentProjectStep = (project = {}) => {
 };
 
 export const UserProject = {
-  in: ({ UsersProyecto = [] }) =>
-    UsersProyecto.find(user => user.UserID === Auth.get('user').UserID),
-  isPM: project => isUserProjectType(USER_PROYECTO_TYPE[1], project),
-  isMarketing: project => isUserProjectType(USER_PROYECTO_TYPE[5], project),
-  isLegal: project => isUserProjectType(USER_PROYECTO_TYPE[6], project),
-  isFinanza: project => isUserProjectType(USER_PROYECTO_TYPE[7], project),
-  isAssistance: project => isUserProjectType(USER_PROYECTO_TYPE[3], project),
+  in: (project = window.project || {}) =>
+    project.UsersProyecto.find(user => user.UserID === Auth.get('user').UserID),
+  isPM: (project = window.project || {}) =>
+    isUserProjectType(USER_PROYECTO_TYPE[1], project),
+  isMarketing: (project = window.project || {}) =>
+    isUserProjectType(USER_PROYECTO_TYPE[5], project),
+  isLegal: (project = window.project || {}) =>
+    isUserProjectType(USER_PROYECTO_TYPE[6], project),
+  isFinanza: (project = window.project || {}) =>
+    isUserProjectType(USER_PROYECTO_TYPE[7], project),
+  isAssistance: (project = window.project || {}) =>
+    isUserProjectType(USER_PROYECTO_TYPE[3], project),
+  isInmobiliario: (project = window.project || {}) =>
+    isUserProjectType(USER_PROYECTO_TYPE[0], project) ||
+    isUserProjectType(USER_PROYECTO_TYPE[4], project) ||
+    (isUserProjectType('Inmobiliario', project) && UserProject.in()),
 };
 
 export const isCollectedDatos = project =>

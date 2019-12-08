@@ -38,3 +38,4 @@ export function fetchOffersSuccess(offers) {
     offers,
   };
 }
+

@@ -8,12 +8,27 @@ import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import RadioGroup from 'components/ExForm/RadioGroup';
 import DocumentItem from '../DocumentItem';
+import Button from '../../../../components/Button';
 
-export function Garantia({ isCollapse, entity, canUpload }) {
+export function Garantia({
+  isCollapse,
+  entity,
+  canUpload,
+  onCancel,
+  onGarantia,
+}) {
   return (
     <Box collapse isOpen={isCollapse}>
       <BoxHeader>
         <b>PAGO DE GARANTÍA</b>
+        {onGarantia && (
+          <div className="d-flex align-items-center justify-content-end mr-3 order-3">
+            <Button onClick={onGarantia}>Recibí Garantía</Button>
+            <Button color="white" onClick={onCancel}>
+              cancelar
+            </Button>
+          </div>
+        )}
       </BoxHeader>
       <BoxContent>
         <div className="row m-0 w-50 border-bottom pb-2 d-none">
@@ -43,6 +58,8 @@ Garantia.propTypes = {
   isCollapse: PropTypes.bool,
   canUpload: PropTypes.bool,
   entity: PropTypes.object,
+  onGarantia: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+  onCancel: PropTypes.func,
 };
 
 export default Garantia;
