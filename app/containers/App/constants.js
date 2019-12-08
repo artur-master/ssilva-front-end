@@ -53,7 +53,7 @@ export const USER_PROYECTO_TYPE = [
   'Aprobador',
   'Marketing',
   'Legal',
-  'Finanza',
+  'Finanzas',
   'Autorizador',
   'Arquitecto',
 ];

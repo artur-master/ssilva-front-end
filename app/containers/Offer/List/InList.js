@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from 'components/Box';
 import Empty from 'components/Empty';
-import Item from './Item';
+import InItem from './InItem';
 import { isPendienteContacto } from '../helper';
 
 const InList = ({ project, offers, dispatch }) => {
@@ -21,7 +21,7 @@ const InList = ({ project, offers, dispatch }) => {
         <table className="table table-responsive-sm table-fixed table-sm border-bottom">
           <tbody>
             {showOffers.map(offer => (
-              <Item
+              <InItem
                 key={offer.OfertaID}
                 offer={offer}
                 project={project}

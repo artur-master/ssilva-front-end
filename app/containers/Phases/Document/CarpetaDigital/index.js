@@ -66,15 +66,14 @@ export function CarpetaDigital({
                     entity={entity}
                     onReview={onReview}
                   />
-                ),
-              },
+                ),              },
               {
                 label: 'PROMESA',
-                content: <Promise />,
+                content: <Promise entity={entity} />,
               },
               {
                 label: 'OFERTA',
-                content: <Offer />,
+                content: <Offer canUpload={canEit} entity={entity} />,
               },
             ]}
           />

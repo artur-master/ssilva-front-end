@@ -52,6 +52,7 @@ export const Auth = {
   isPM: () => Auth.hasOneOfRoles(['Jefe de Proyecto']),
   isGerenteComercial: () => Auth.hasOneOfRoles(['Gerente Comercial']),
   isLegal: () => Auth.hasOneOfRoles(['Legal']),
+  isFinanza: () => Auth.hasOneOfRoles(['Finanzas']),
   isVendor: () => Auth.hasOneOfRoles(['Vendedor']),
   isAssistance: () => Auth.hasOneOfRoles(['Asistente Comercial']),
   isInmobiliario: () => Auth.hasOneOfRoles(['Inmobiliario']),
@@ -74,12 +75,15 @@ export const Auth = {
   isLoggedIn: () => Auth.getUser() != null,
 };
 
-export const isUserProjectType = (userProjectType = '', project = {}) => {
+export const isUserProjectType = (
+  userProjectType = '',
+  project = window.project,
+) => {
+  if (!project) return false;
   const { UsersProyecto = [] } = project;
-  return !!UsersProyecto.find(
-    user =>
-      user.UserProyectoType === userProjectType &&
-      user.UserID === Auth.get('user').UserID,
+  return (
+    !!UsersProyecto.find(user => user.UserID === Auth.get('user').UserID) &&
+    Auth.hasOneOfRoles([userProjectType])
   );
 };
 

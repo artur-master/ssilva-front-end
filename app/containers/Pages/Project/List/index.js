@@ -23,6 +23,7 @@ import saga from './saga';
 import { fetchEntities } from './actions';
 import List from './List';
 import InList from './InList';
+import FiList from './FIList';
 
 const SyncMessage = WithLoading();
 
@@ -51,11 +52,14 @@ export function ProjectListPage({ dispatch, selector }) {
       <Helmet title="Project list" />
       <PageHeader>Proyectos</PageHeader>
       {!entities && <SyncMessage {...selector} />}
-      {entities && !loading && !Auth.isInmobiliario() && (
+      {entities && !loading && !Auth.isInmobiliario() && !Auth.isFinanza() && (
         <List dispatch={dispatch} selector={selector} />
       )}
       {entities && !loading && Auth.isInmobiliario() && (
         <InList dispatch={dispatch} selector={selector} />
+      )}
+      {entities && !loading && Auth.isFinanza() && (
+        <FiList dispatch={dispatch} selector={selector} />
       )}
     </div>
   );

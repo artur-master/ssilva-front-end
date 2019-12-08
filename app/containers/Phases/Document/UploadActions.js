@@ -32,7 +32,12 @@ export function CarpetaDigitalUploadActions({
         >
           Cargando
         </Button>
-        <Button disabled={loading} className="order-3 m-btn mr-2" type="submit">
+        <Button
+          disabled={loading}
+          onClick={() => form.submitForm()}
+          className="order-3 m-btn mr-2"
+          type="submit"
+        >
           Reservar
         </Button>
         <Button
@@ -79,7 +84,12 @@ export function CarpetaDigitalUploadActions({
         <div className="p-0">
           <DocumentCondition form={form} />
           <div className="py-3 text-right">
-            <Button className="m-btn" type="submit" disabled={loading}>
+            <Button
+              className="m-btn"
+              type="submit"
+              onClick={() => form.submitForm()}
+              disabled={loading}
+            >
               Reservar con Observaciones
             </Button>
           </div>

@@ -5,32 +5,90 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { push } from 'connected-react-router';
 import PhaseGeneral from 'containers/Phases/General';
 import PhaseClient from 'containers/Phases/Client';
 import PhaseInmueble from 'containers/Phases/Inmueble';
 import PhaseFormaDePago from 'containers/Phases/FormaDePago';
 import PhasePreCredito from 'containers/Phases/PreCredito';
 import PhaseDocument from 'containers/Phases/Document';
+import { PRE_APROBACION_CREDITO_STATE } from 'containers/App/constants';
+import { UserProject } from 'containers/Project/helper';
+import ProjectPhases from 'containers/Common/ProjectPhases';
+import InitData from 'containers/Common/InitData';
 import model from '../model';
+import {
+  canApproveConfeccionPromesa,
+  getActionTitle,
+  isPendienteContacto,
+} from '../helper';
+import Steps from './Steps';
+import ApproveConfeccionPromesa from './ApproveConfeccionPromesa';
+import { approveConfeccionPromesa } from './actions';
 
-export function Form({ project, selector }) {
+export function Form({ selector, dispatch }) {
+  const { project = {} } = window;
   const entity = selector.offer;
   const initialValues = model({ project, entity });
+
+  const controlAction = (
+    <ApproveConfeccionPromesa
+      selector={selector}
+      onControl={values =>
+        dispatch(
+          approveConfeccionPromesa({
+            ...values,
+            OfertaID: initialValues.OfertaID,
+          }),
+        )
+      }
+      onEdit={() =>
+        dispatch(
+          push(
+            `/proyectos/${project.ProyectoID}/oferta/editar?OfertaID=${
+              initialValues.OfertaID
+            }`,
+          ),
+        )
+      }
+    />
+  );
+
   return (
     <>
+      <InitData User Client />
+      <ProjectPhases project={project} active="offer" />
+      <Steps offer={selector.offer} />
+      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
+      <h5 className="mb-3 d-flex align-items-center justify-content-between">
+        <span className="font-16-rem line-height-1 color-success">
+          {getActionTitle(selector.offer)}
+        </span>
+        {canApproveConfeccionPromesa(initialValues) && controlAction}
+      </h5>
       <PhaseGeneral initialValues={initialValues} />
       <PhaseClient payType={entity.PayType} client={entity.Cliente} />
       <PhaseInmueble initialValues={initialValues} />
       <PhaseFormaDePago initialValues={initialValues} />
-      <PhasePreCredito initialValues={initialValues} />
+      <PhasePreCredito
+        initialValues={initialValues}
+        canEditCredit={
+          initialValues.OfertaID &&
+          initialValues.PreAprobacionCreditoState ===
+            PRE_APROBACION_CREDITO_STATE[1] &&
+          UserProject.isAssistance(window.project) &&
+          !isPendienteContacto(initialValues)
+        }
+      />
       <PhaseDocument entity={initialValues} />
+      {canApproveConfeccionPromesa(initialValues) && controlAction}
     </>
   );
 }
 
 Form.propTypes = {
-  project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   selector: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
 export default Form;

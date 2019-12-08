@@ -4,6 +4,7 @@ import {
   OFERTA_STATE,
   PRE_APROBACION_CREDITO_STATE,
   RECEPCION_GARANTIA_STATE,
+  PERMISSIONS,
 } from 'containers/App/constants';
 import { UserProject } from 'containers/Project/helper';
 import { Auth } from 'containers/App/helpers';
@@ -79,6 +80,7 @@ export const formatOffer = offer => {
         });
       }
       break;
+    case 'Pendiente control':
     case 'Pendiente legal':
       OfertaStateFormat[0].Color = 'badge-caution';
       break;
@@ -123,10 +125,16 @@ export const getActionTitle = (offer = {}) => {
 
   if (canConfirmOffer(offer))
     return <span className="color-warning-magent">Confirmar Oferta</span>;
+
+  if (isPendienteContacto(offer)) return <span>Pendiente Contacto</span>;
+
   if (Graph) {
     if (Graph.Node) {
       const node = Graph.Node.find(
-        item => item.Color === 'red' || item.Color === 'white',
+        item =>
+          item.Color === 'red' ||
+          item.Color === 'white' ||
+          item.Color === 'orange',
       );
       if (node) return node.Description.trim();
       return 'Oferta';
@@ -134,3 +142,8 @@ export const getActionTitle = (offer = {}) => {
   }
   return 'Crear oferta';
 };
+
+export const canApproveConfeccionPromesa = (offer = {}) =>
+  UserProject.in() &&
+  Auth.hasPermission(PERMISSIONS[21]) &&
+  offer.OfertaState === OFERTA_STATE[1];

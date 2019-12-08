@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Button from 'components/Button';
 import { isContadoPayment, isCreditPayment } from 'containers/App/helpers';
-import { PRE_APROBACION_CREDITO_STATE } from 'containers/App/constants';
 import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
@@ -15,6 +14,7 @@ import PhaseCredit from '../Credit';
 const PhasePreCreditoView = ({
   isCollapse,
   canEdit,
+  canEditCredit,
   initialValues,
   onSubmit,
 }) => {
@@ -23,7 +23,7 @@ const PhasePreCreditoView = ({
   const isCredit = isCreditPayment(initialValues.PayType);
   return (
     <>
-      <Box collapse isOpen={initialValues.ReservaID || isCollapse}>
+      <Box collapse isOpen={!!initialValues.ReservaID || isCollapse}>
         <BoxHeader>
           <b>PRE APROBACIÓN DE CRÉDITO</b>
           {canEdit && (
@@ -47,11 +47,7 @@ const PhasePreCreditoView = ({
           <Patrimony values={initialValues} />
           {isCredit && (initialValues.OfertaID || initialValues.PromesaID) && (
             <PhaseCredit
-              canEdit={
-                initialValues.OfertaID &&
-                initialValues.PreAprobacionCreditoState ===
-                  PRE_APROBACION_CREDITO_STATE[1]
-              }
+              canEdit={canEditCredit}
               EntityID={initialValues.OfertaID}
             />
           )}
@@ -73,6 +69,7 @@ const PhasePreCreditoView = ({
 PhasePreCreditoView.propTypes = {
   isCollapse: PropTypes.bool,
   canEdit: PropTypes.bool,
+  canEditCredit: PropTypes.bool,
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
 };

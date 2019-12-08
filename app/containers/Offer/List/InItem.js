@@ -22,7 +22,7 @@ import { OFERTA_STATE } from 'containers/App/constants';
 import Button from 'components/Button';
 import { canEditOffer } from '../Form/helper';
 
-const Item = ({ project, offer, dispatch }) => {
+const InItem = ({ project, offer, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
@@ -88,22 +88,6 @@ const Item = ({ project, offer, dispatch }) => {
             >
               Ver datos
             </DropdownItem>
-            {canEditOffer(offer) && (
-              <DropdownItem
-                tag="a"
-                onClick={() =>
-                  dispatch(
-                    push(
-                      `/proyectos/${
-                        project.ProyectoID
-                      }/oferta/editar?OfertaID=${offer.OfertaID}`,
-                    ),
-                  )
-                }
-              >
-                Editar
-              </DropdownItem>
-            )}
           </DropdownMenu>
         </Dropdown>
       </td>
@@ -111,9 +95,9 @@ const Item = ({ project, offer, dispatch }) => {
   );
 };
 
-Item.propTypes = {
+InItem.propTypes = {
   offer: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dispatch: PropTypes.func,
 };
-export default Item;
+export default InItem;

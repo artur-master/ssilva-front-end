@@ -6,16 +6,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { UserProject } from 'containers/Project/helper';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'components/ProgressBar';
-export function InList({ dispatch, selector }) {
+export function FiList({ dispatch, selector }) {
   const { entities = [] } = selector;
   return (
     <section className="proyect-group row mx-n2">
       {entities
-        .filter(entity => UserProject.in(entity) && entity.IsFinished)
+        //.filter(entity => UserProject.in(entity))
         .map(project => (
           <article
             key={project.ProyectoID}
@@ -97,9 +96,9 @@ export function InList({ dispatch, selector }) {
   );
 }
 
-InList.propTypes = {
+FiList.propTypes = {
   selector: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default InList;
+export default FiList;

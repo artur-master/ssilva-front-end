@@ -28,12 +28,12 @@ import CreateProjectPage from 'containers/Pages/Project/Create/Loadable';
 import DetailProjectPage from 'containers/Pages/Project/Detail/Loadable';
 import QuotationsPage from 'containers/Pages/Quotation/List/Loadable';
 import ReservationForm from 'containers/Reservation/Form/Loadable';
-import OfferForm from 'containers/Offer/Form/Loadable';
 import CreateQuotationPage from 'containers/Pages/Quotation/Create/Loadable';
 import QuotationPage from 'containers/Pages/Quotation/Detail/Loadable';
 import ReservationsPage from 'containers/Pages/Reservation/List/Loadable';
 import CreateReservationPage from 'containers/Pages/Reservation/Create/Loadable';
 import EditReservationPage from 'containers/Pages/Reservation/Edit/Loadable';
+import OfferPage from 'containers/Pages/Offer/View/Loadable';
 import OffersPage from 'containers/Pages/Offer/List/Loadable';
 import EditOfferPage from 'containers/Pages/Offer/Edit/Loadable';
 import { Auth } from './helpers';
@@ -165,14 +165,14 @@ function App() {
         />
         <AppRoute
           exact
-          path="/proyectos/:id/oferta/edit"
+          path="/proyectos/:id/oferta/editar"
           component={EditOfferPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
         <AppRoute
           exact
           path="/proyectos/:id/oferta"
-          component={OfferForm}
+          component={OfferPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
         <AppRoute

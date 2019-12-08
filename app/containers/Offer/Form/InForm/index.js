@@ -16,16 +16,29 @@ import model from '../../model';
 import { approveIn } from '../actions';
 import OfferInFormObservation from './Observation';
 import OfferInFormActions from './Actions';
+import InSteps from './Steps';
 
-export function OfferInForm({ project, selector, dispatch }) {
-  const entity = selector.offer;
-  const initialValues = model({ project, entity });
+export function OfferInForm({ selector, dispatch }) {
+  const initialValues = model({
+    project: window.project,
+    entity: selector.offer,
+  });
 
   return (
     <>
+      <InSteps offer={selector.offer} />
+      <h4 className="font-21 mt-3">{`${window.project.Name} / ${
+        selector.offer.Folio
+      }`}</h4>
+      <h5 className="mb-3 d-flex align-items-center justify-content-between">
+        <span className="font-16-rem line-height-1 color-success">Oferta</span>
+      </h5>
       <OfferInFormObservation entity={selector.offer} />
       <PhaseGeneral initialValues={initialValues} />
-      <PhaseClient payType={entity.PayType} client={entity.Cliente} />
+      <PhaseClient
+        payType={selector.offer.PayType}
+        client={selector.offer.Cliente}
+      />
       <PhaseInmueble initialValues={initialValues} />
       <PhaseFormaDePago initialValues={initialValues} />
       <PhasePreCredito initialValues={initialValues} />
@@ -33,7 +46,7 @@ export function OfferInForm({ project, selector, dispatch }) {
       <OfferInFormActions
         selector={selector}
         onCancel={() =>
-          dispatch(push(`/proyectos/${project.ProyectoID}/ofertas`))
+          dispatch(push(`/proyectos/${window.project.ProyectoID}/ofertas`))
         }
         onApprove={values => {
           dispatch(
@@ -41,7 +54,7 @@ export function OfferInForm({ project, selector, dispatch }) {
               OfertaID: selector.offer.OfertaID,
               ...values,
               Comment: values.Comment || '',
-              Conditions: entity.Condition.map(condition => ({
+              Conditions: selector.offer.Condition.map(condition => ({
                 ...condition,
                 IsApprove: true,
               })),
@@ -54,7 +67,6 @@ export function OfferInForm({ project, selector, dispatch }) {
 }
 
 OfferInForm.propTypes = {
-  project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   selector: PropTypes.object,
   dispatch: PropTypes.func,
 };

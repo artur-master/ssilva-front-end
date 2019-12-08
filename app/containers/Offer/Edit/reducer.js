@@ -17,9 +17,6 @@ import {
   APPROVE_IN,
   APPROVE_IN_ERROR,
   APPROVE_IN_SUCCESS,
-  APPROVE_CONFECCION_PROMESA,
-  APPROVE_CONFECCION_PROMESA_ERROR,
-  APPROVE_CONFECCION_PROMESA_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -40,7 +37,6 @@ const offerReducer = (state = initialState, action) =>
       case GET_OFFER:
       case CONFIRM:
       case APPROVE_IN:
-      case APPROVE_CONFECCION_PROMESA:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
@@ -49,7 +45,6 @@ const offerReducer = (state = initialState, action) =>
       case GET_OFFER_ERROR:
       case CONFIRM_ERROR:
       case APPROVE_IN_ERROR:
-      case APPROVE_CONFECCION_PROMESA_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -57,7 +52,6 @@ const offerReducer = (state = initialState, action) =>
         break;
       case CONFIRM_SUCCESS:
       case APPROVE_IN_SUCCESS:
-      case APPROVE_CONFECCION_PROMESA_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = action.response.detail;
