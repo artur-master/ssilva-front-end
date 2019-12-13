@@ -32,13 +32,19 @@ export const APPROVE_CONFECCION_PROMESA_ERROR =
 export const APPROVE_CONFECCION_PROMESA_SUCCESS =
   'app/containers/Offer/Form/APPROVE_CONFECCION_PROMESA_SUCCESS';
 
+export const DELETE_OFFER = 'app/containers/Offer/Form/DELETE_OFFER';
+export const DELETE_OFFER_ERROR =
+  'app/containers/Offer/Form/DELETE_OFFER_ERROR';
+export const DELETE_OFFER_SUCCESS =
+  'app/containers/Offer/Edit/DELETE_OFFER_SUCCESS';
+
 export const SAVE_OFFER = 'app/containers/Offer/Form/SAVE_OFFER';
 export const SAVE_OFFER_ERROR = 'app/containers/Offer/Form/SAVE_OFFER_ERROR';
 export const SAVE_OFFER_SUCCESS =
   'app/containers/Offer/Form/SAVE_OFFER_SUCCESS';
 
-export const CANCEL_OFFER = 'app/containers/Offer/Form/CANCEL_OFFER';
-export const CANCEL_OFFER_ERROR =
-  'app/containers/Offer/Form/CANCEL_OFFER_ERROR';
-export const CANCEL_OFFER_SUCCESS =
-  'app/containers/Offer/Form/CANCEL_OFFER_SUCCESS';
+export const APPROVE_MODIFY = 'app/containers/Offer/Form/APPROVE_MODIFY';
+export const APPROVE_MODIFY_ERROR =
+  'app/containers/Offer/Form/APPROVE_MODIFY_ERROR';
+export const APPROVE_MODIFY_SUCCESS =
+  'app/containers/Offer/Form/APPROVE_MODIFY_SUCCESS';

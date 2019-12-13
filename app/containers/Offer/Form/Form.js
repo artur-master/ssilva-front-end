@@ -19,17 +19,31 @@ import InitData from 'containers/Common/InitData';
 import model from '../model';
 import {
   canApproveConfeccionPromesa,
+  canEditOffer,
   getActionTitle,
   isPendienteContacto,
 } from '../helper';
 import Steps from './Steps';
 import ApproveConfeccionPromesa from './ApproveConfeccionPromesa';
 import { approveConfeccionPromesa } from './actions';
+import FormActions from './FormActions';
 
 export function Form({ selector, dispatch }) {
   const { project = {} } = window;
   const entity = selector.offer;
   const initialValues = model({ project, entity });
+
+  const onEdit = () =>
+    dispatch(
+      push(
+        `/proyectos/${project.ProyectoID}/oferta/editar?OfertaID=${
+          initialValues.OfertaID
+        }`,
+      ),
+    );
+
+  const onCancel = () =>
+    dispatch(push(`/proyectos/${project.ProyectoID}/ofertas`));
 
   const controlAction = (
     <ApproveConfeccionPromesa
@@ -42,15 +56,7 @@ export function Form({ selector, dispatch }) {
           }),
         )
       }
-      onEdit={() =>
-        dispatch(
-          push(
-            `/proyectos/${project.ProyectoID}/oferta/editar?OfertaID=${
-              initialValues.OfertaID
-            }`,
-          ),
-        )
-      }
+      onEdit={onEdit}
     />
   );
 
@@ -82,6 +88,13 @@ export function Form({ selector, dispatch }) {
       />
       <PhaseDocument entity={initialValues} />
       {canApproveConfeccionPromesa(initialValues) && controlAction}
+      {!canApproveConfeccionPromesa(initialValues) && (
+        <FormActions
+          canEdit={canEditOffer(entity)}
+          onCancel={onCancel}
+          onEdit={onEdit}
+        />
+      )}
     </>
   );
 }

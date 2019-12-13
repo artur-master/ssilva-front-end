@@ -18,7 +18,7 @@ export function OfferConfirmActions({ selector, onCancel, onConfirm }) {
           className="order-3 m-btn mr-2"
           onClick={onConfirm}
         >
-          Confirmar
+          Contacte al cliente
         </Button>
         <Button
           disabled={loading}

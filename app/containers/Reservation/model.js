@@ -67,6 +67,7 @@ export default function model({ project = {}, entity = {} }) {
       },
     },
     ContactMethodTypeID: entity.ContactMethodTypeID || null,
+    ContactMethodType: entity.ContactMethodType || null,
     Inmuebles: entity.Inmuebles || [],
     VendedorID: entity.VendedorID || Auth.get('user_id'),
     Vendedor: entity.Vendedor || Auth.get('user'),
@@ -100,7 +101,7 @@ export default function model({ project = {}, entity = {} }) {
       Extra: { Address: '', CurrentPosition: '', Phone: '' },
     },
     CotizacionType:
-      entity.CotizacionTypeID ||
+      entity.CotizacionType ||
       window.preload.quotationUtils.CotizacionTypes[0].Name,
     IsNotInvestment: (entity.IsNotInvestment ? '1' : '0') || false,
     CotizacionStateID: entity.CotizacionStateID || '',

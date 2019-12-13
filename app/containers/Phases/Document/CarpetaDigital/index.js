@@ -66,7 +66,8 @@ export function CarpetaDigital({
                     entity={entity}
                     onReview={onReview}
                   />
-                ),              },
+                ),
+              },
               {
                 label: 'PROMESA',
                 content: <Promise entity={entity} />,

@@ -6,15 +6,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Ban from 'components/Ban';
-import { Auth } from 'containers/App/helpers';
 import OfferForm from 'containers/Offer/Form';
 import { Helmet } from 'react-helmet';
 import InitData from 'containers/Common/InitData';
 import PageHeader from 'containers/Common/PageHeader';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import makeSelectInitProject from 'containers/Project/Init/selectors';
 
-export function OfferPage({ match, location }) {
-  const { project = {} } = window;
+export function OfferPage({ match, location, selectorProject }) {
+  const { project = {} } = selectorProject;
   return (
     <>
       <Helmet title={`Oferta - ${project.Name || '...'}`} />
@@ -32,6 +34,21 @@ export function OfferPage({ match, location }) {
 OfferPage.propTypes = {
   match: PropTypes.object,
   location: PropTypes.object,
+  selectorProject: PropTypes.object,
 };
+const mapStateToProps = createStructuredSelector({
+  selectorProject: makeSelectInitProject(),
+});
 
-export default OfferPage;
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(OfferPage);

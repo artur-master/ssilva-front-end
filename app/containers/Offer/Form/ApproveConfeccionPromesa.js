@@ -29,7 +29,7 @@ export function ApproveConfeccionPromesa({ selector, onControl, onEdit }) {
           })
         }
       >
-        Aprobar
+        Confección de Promesa
       </Button>
     </div>
   );

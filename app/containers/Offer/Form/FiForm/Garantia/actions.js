@@ -16,10 +16,11 @@ export function resetContainer() {
     type: RESET_CONTAINER,
   };
 }
-export function recepcionGarantia(OfertaID) {
+export function recepcionGarantia(OfertaID, refund = false) {
   return {
     type: RECEPCION_GRANTIA,
     OfertaID,
+    refund,
   };
 }
 

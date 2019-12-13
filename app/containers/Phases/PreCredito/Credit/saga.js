@@ -101,7 +101,7 @@ function* sagaRegisterSelectIF(action) {
         action.values.OfertaID
       }/`,
       {
-        method: 'patch',
+        method: 'PATCH',
         body: JSON.stringify(action.values),
       },
     );

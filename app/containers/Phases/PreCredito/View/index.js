@@ -45,10 +45,11 @@ const PhasePreCreditoView = ({
             </>
           )}
           <Patrimony values={initialValues} />
-          {isCredit && (initialValues.OfertaID || initialValues.PromesaID) && (
+          {(initialValues.OfertaID || initialValues.PromesaID) && (
             <PhaseCredit
               canEdit={canEditCredit}
               EntityID={initialValues.OfertaID}
+              PayType={initialValues.PayType}
             />
           )}
         </BoxContent>

@@ -18,13 +18,11 @@ import {
   matchRestrictionsFromAList,
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
-import { OFERTA_STATE } from 'containers/App/constants';
-import Button from 'components/Button';
-import { canEditOffer } from '../Form/helper';
+import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
 
 const InItem = ({ project, offer, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente } = offer;
+  const { Proyecto, Folio, Inmuebles, Cliente, Condition = [] } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
 
   return (
@@ -32,42 +30,42 @@ const InItem = ({ project, offer, dispatch }) => {
       <td className="px-3 main_color">
         <b>{`${Proyecto} / ${Folio}`}</b>
       </td>
-      <td className="px-3">
+      <td>
         {tmpInmuebles.map(Inmueble => (
           <div className="d-block" key={Inmueble.InmuebleID}>
             {inmuebleWithRestrictions(Inmueble)}
           </div>
         ))}
       </td>
-      <td className="">Cliente: {clientFullname(Cliente)}</td>
-      <td />
-      <td className="px-3">
+      <td>Cliente: {clientFullname(Cliente)}</td>
+      <td>
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          {OfertaStateFormat.map((state, index) => {
-            if (state.Label === OFERTA_STATE[3])
-              return (
-                <Button size="sm" key={String(index)}>
-                  {state.Label}
-                </Button>
-              );
-            return (
-              <span
-                key={String(index)}
-                className={`badge px-2 ${state.Color} ${
-                  index > 0 ? 'rounded-0' : ''
-                } ${
-                  index === 0 && OfertaStateFormat.length > 1
-                    ? 'rounded-left rounded-0'
-                    : ''
-                }`}
-              >
-                {state.Label.toUpperCase()}
-              </span>
-            );
-          })}
+          {offer.AprobacionInmobiliariaState ===
+            APROBACION_INMOBILIARIA_STATE[1] && (
+            <span className="badge px-2 badge-warning">
+              {Condition.length > 0 && 'CONTROL APROBADO CON OBS.'}
+              {Condition.length < 1 && 'CONTROL APROBADO'}
+            </span>
+          )}
+          {offer.AprobacionInmobiliariaState ===
+            APROBACION_INMOBILIARIA_STATE[2] && (
+            <span className="badge px-2 badge-success">CONTROL APROBADO</span>
+          )}
+          {offer.AprobacionInmobiliariaState ===
+            APROBACION_INMOBILIARIA_STATE[3] && (
+            <span className="badge px-2 badge-danger">RECHAZADA</span>
+          )}
         </div>
       </td>
-      <td className="font-21 px-3">
+      <td className="no-whitespace">
+        <span>
+          <b>FIRMAS</b> |{' '}
+          {`${Condition.filter(cond => cond.IsImportant).length} de ${
+            Condition.length
+          }`}
+        </span>
+      </td>
+      <td className="px-3 font-21">
         <Dropdown
           isOpen={dropdownOpen}
           toggle={() => setDropdownOpen(!dropdownOpen)}

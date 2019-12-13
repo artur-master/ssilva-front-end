@@ -10,6 +10,7 @@ import {
   FETCH_QUOTATIONS,
   FETCH_QUOTATIONS_ERROR,
   FETCH_QUOTATIONS_SUCCESS,
+  RESET_CONTAINER,
   SEARCH_QUOTATIONS,
   TOGGLE_QUOTATION_FORM,
 } from './constants';
@@ -28,6 +29,8 @@ export const initialState = {
 const quotationReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case RESET_CONTAINER:
+        return initialState;
       case SEARCH_QUOTATIONS:
         draft.filter = { ...state.filter, ...action.filter };
         draft.quotations = [...(draft.origin_quotations || [])];

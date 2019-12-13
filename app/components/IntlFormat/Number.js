@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedNumber } from 'react-intl';
 
-const IntlFormatNumber = props => (
-  <span>
-    {!props.value && '-'}
-    {props.value && (
-      <>
+const IntlFormatNumber = props => {
+  if (props.value)
+    return (
+      <span>
         {props.prefix || ' '}
         <FormattedNumber {...props} />
-      </>
-    )}
-  </span>
-);
+      </span>
+    );
+
+  return '-';
+};
 
 IntlFormatNumber.propTypes = {
   value: PropTypes.number,

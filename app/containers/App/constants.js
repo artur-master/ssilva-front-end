@@ -96,6 +96,7 @@ export const OFERTA_STATE = [
   'Rechazada por legal',
   'Promesa',
   'Cancelada',
+  'Modificado',
 ];
 
 export const APROBACION_INMOBILIARIA_STATE = [
@@ -115,6 +116,7 @@ export const PRE_APROBACION_CREDITO_STATE = [
 export const RECEPCION_GARANTIA_STATE = [
   'Pendiente recepcion en finanzas',
   'Aprobada',
+  'Refund',
 ];
 
 export const PROMESA_STATE = [
@@ -166,4 +168,7 @@ export const VENTA_LOG_TYPE = [
   'Envio copias',
   'Modificacion promesa(Antes de firma comprador)',
   'Modificacion promesa(Despues de firma comprador)',
+  'Rechazo Modificacion oferta',
+  'Aprobacion Modificacion oferta',
+  'Refund garantia',
 ];

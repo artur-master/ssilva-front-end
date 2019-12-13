@@ -7,7 +7,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { RECEPCION_GARANTIA_STATE } from 'containers/App/constants';
+import {
+  RECEPCION_GARANTIA_STATE,
+  OFERTA_STATE,
+} from 'containers/App/constants';
 import { isPendienteContacto } from '../../helper';
 
 function FiSteps({ offer }) {
@@ -28,6 +31,30 @@ function FiSteps({ offer }) {
       Description: 'RECIBO DE GARANTÍA',
       Color: 'green',
     };
+
+  if (offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[2])
+    Graph.Node[1] = {
+      Label: 'I',
+      Description: 'DEVOLUVIÓN DE GARANTÍA',
+      Color: 'green',
+    };
+
+  if (
+    offer.OfertaState === OFERTA_STATE[4] &&
+    offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1]
+  ) {
+    Graph.Node[1] = {
+      Label: 'I',
+      Description: 'DEVOLUVIÓN DE GARANTÍA',
+      Color: 'red',
+    };
+  }
+
+  if (
+    offer.OfertaState === OFERTA_STATE[4] &&
+    offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[0]
+  )
+    return null;
 
   let colorStep = 0;
   return (

@@ -11,9 +11,11 @@ export function OfferConfirmObservation({ entity, onChange }) {
   const { Condition = [] } = entity;
   return (
     <>
-      <Alert type="warning">
-        Debes seleccionar las observaciones importantes
-      </Alert>
+      {Condition.length > 0 && (
+        <Alert type="warning">
+          Debes seleccionar las observaciones importantes
+        </Alert>
+      )}
       {Condition.map((condition, index) => (
         <Alert
           onChange={isChecked => {
