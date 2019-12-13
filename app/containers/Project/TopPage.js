@@ -105,9 +105,9 @@ export function TopPage({ action, project = {}, dispatch }) {
           </span>
           {action === 'view' && (
             <div className="d-flex">
-              {project.ProyectoApprovalState === PROYECTO_APPROVAL_STATE[3] && (
+              {/* project.ProyectoApprovalState === PROYECTO_APPROVAL_STATE[3] && (
                 <Button className="m-btn-plus mr-2">Promesar</Button>
-              )}
+              ) */}
               {canEdit && (
                 <Button
                   onClick={() =>
@@ -118,9 +118,11 @@ export function TopPage({ action, project = {}, dispatch }) {
                   Editar Proyecto
                 </Button>
               )}
+              {/*
               <Button color="white" className="m-btn-time">
                 Historial
               </Button>
+              */}
             </div>
           )}
           {action === 'edit' && (

@@ -25,7 +25,7 @@ function PhaseGeneralView({ values }) {
       <li className="col-md-6 d-flex align-items-center my-2">
         <span
           className="font-14-rem color-regular mr-3"
-          style={{ width: '8.5em' }}
+          style={{ width: '10em' }}
         >
           <b>Vendedor</b>
         </span>
@@ -37,7 +37,7 @@ function PhaseGeneralView({ values }) {
       <li className="col-md-6 d-flex align-items-center my-2">
         <span
           className="font-14-rem color-regular mr-3"
-          style={{ width: '8.5em' }}
+          style={{ width: '10em' }}
         >
           <b>Cliente</b>
         </span>
@@ -49,12 +49,12 @@ function PhaseGeneralView({ values }) {
       <li className="col-md-6 d-flex align-items-center my-2">
         <span
           className="font-14-rem color-regular mr-3"
-          style={{ width: '8.5em' }}
+          style={{ width: '10em' }}
         >
           <b>Fecha</b>
         </span>
         <span className="font-14-rem color-regular">
-          {moment(DateFirmaPromesa).format('MM-DD-YYYY')}
+          {moment(DateFirmaPromesa).format('DD MMM YYYY')}
         </span>
       </li>
       {CotizacionType ===
@@ -63,7 +63,7 @@ function PhaseGeneralView({ values }) {
           <li className="col-md-6 d-flex align-items-center my-2">
             <span
               className="font-14-rem color-regular mr-3"
-              style={{ width: '8.5em' }}
+              style={{ width: '10em' }}
             >
               <b>Interés del Cliente</b>
             </span>
@@ -75,7 +75,7 @@ function PhaseGeneralView({ values }) {
           <li className="col-md-6 d-flex align-items-center my-2">
             <span
               className="font-14-rem color-regular mr-3"
-              style={{ width: '8.5em' }}
+              style={{ width: '10em' }}
             >
               <b>Cómo se Enteró</b>
             </span>
@@ -94,7 +94,7 @@ function PhaseGeneralView({ values }) {
         <li className="col-md-6 d-flex align-items-center my-2">
           <span
             className="font-14-rem color-regular mr-3"
-            style={{ width: '8.5em' }}
+            style={{ width: '10em' }}
           >
             <b>Medio de Contacto</b>
           </span>

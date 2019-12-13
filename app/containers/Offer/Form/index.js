@@ -15,24 +15,31 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import WithLoading from 'components/WithLoading';
 import { UserProject } from 'containers/Project/helper';
+import makeSelectInitProject from 'containers/Project/Init/selectors';
 import makeSelectOfferForm from './selectors';
 import Form from './Form';
 import reducer from './reducer';
 import saga from './saga';
 import { getOffer, resetContainer } from './actions';
-import { canConfirmOffer } from '../helper';
+import { canApproveModifyOffer, canConfirmOffer, isModified } from '../helper';
 import OfferConfirm from './Confirm';
 import OfferInForm from './InForm';
 import OfferFiForm from './FiForm';
+import OfferEditForm from './Edit';
+import OfferApproveEditForm from './ApproveEdit';
 const SyncMessage = WithLoading();
-export function OfferForm({ selector, dispatch, location }) {
+export function OfferForm({
+  selector,
+  selectorProject,
+  dispatch,
+  location,
+  action,
+}) {
   useInjectReducer({ key: 'offerform', reducer });
   useInjectSaga({ key: 'offerform', saga });
   const query = queryString.parse(location.search);
   const { OfertaID } = query;
-  const { project } = window;
-
-  const canConfirm = canConfirmOffer(selector.offer);
+  const { project = {} } = selectorProject;
 
   useEffect(() => {
     if (OfertaID) dispatch(getOffer(OfertaID));
@@ -42,8 +49,13 @@ export function OfferForm({ selector, dispatch, location }) {
   if (selector.redirect) {
     return <Redirect to={`/proyectos/${project.ProyectoID}/ofertas`} />;
   }
+  if (!project || !selector.offer) return <SyncMessage loading />;
 
-  if (!(project && selector.offer)) return <SyncMessage loading />;
+  if (action === 'edit')
+    return <OfferEditForm selector={selector} dispatch={dispatch} />;
+
+  if (isModified(selector.offer))
+    return <OfferApproveEditForm selector={selector} dispatch={dispatch} />;
 
   // Inmobiliario screen
   if (UserProject.isInmobiliario()) {
@@ -55,20 +67,23 @@ export function OfferForm({ selector, dispatch, location }) {
     return <OfferFiForm selector={selector} dispatch={dispatch} />;
   }
 
-  if (canConfirm)
+  if (canConfirmOffer(selector.offer))
     return <OfferConfirm selector={selector} dispatch={dispatch} />;
 
   return <Form selector={selector} dispatch={dispatch} />;
 }
 
 OfferForm.propTypes = {
+  action: PropTypes.string,
   location: PropTypes.object,
   selector: PropTypes.object,
+  selectorProject: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   selector: makeSelectOfferForm(),
+  selectorProject: makeSelectInitProject(),
 });
 
 function mapDispatchToProps(dispatch) {

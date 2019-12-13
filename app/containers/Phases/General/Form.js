@@ -27,7 +27,6 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
       value: Name,
     }),
   );
-
   return (
     <Modal isOpen={isOpen} size="xl" scrollable>
       <ModalHeader>Editar Generals</ModalHeader>
@@ -35,13 +34,14 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
         {({ values, submitForm }) => (
           <>
             <ModalBody className="p-3">
-              <div className="p-2 d-flex align-items-center pl-3">
-                <RadioGroup
-                  required
-                  name="CotizacionType"
-                  options={cotizacionTypeIDs}
-                />
-              </div>
+              {!initialValues.CotizacionType && (
+                <div className="p-2 d-flex align-items-center pl-3">
+                  <RadioGroup
+                    name="CotizacionType"
+                    options={cotizacionTypeIDs}
+                  />
+                </div>
+              )}
               <ul className="row m-0 p-0">
                 <FormGroup className="col-md-6 my-2">
                   <Label style={{ width: '10em' }}>Vendedor</Label>

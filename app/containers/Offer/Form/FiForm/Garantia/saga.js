@@ -11,6 +11,7 @@ export function* sagaRecepcionGarantian(action) {
   try {
     const response = yield call(request, requestURL, {
       method: 'PATCH',
+      body: JSON.stringify({ Refund: action.refund }),
     });
     yield put(recepcionGarantiaSuccess(action.OfertaID, response));
   } catch (error) {

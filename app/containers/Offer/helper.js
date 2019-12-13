@@ -60,14 +60,17 @@ export const formatOffer = offer => {
           Label: 'IN',
           Color: isAprobacionInmobiliariaState(offer)
             ? 'badge-success'
-            : 'badge-danger',
+            : offer.AprobacionInmobiliariaState ===
+              APROBACION_INMOBILIARIA_STATE[3]
+              ? 'badge-danger'
+              : 'badge-warning',
         });
         OfertaStateFormat.push({
           Label: 'FI',
           Color:
             offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1]
               ? 'badge-success'
-              : 'badge-danger',
+              : 'badge-warning',
         });
         OfertaStateFormat.push({
           Label: 'AC',
@@ -76,19 +79,28 @@ export const formatOffer = offer => {
               PRE_APROBACION_CREDITO_STATE[0] ||
             offer.PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2]
               ? 'badge-success'
-              : 'badge-danger',
+              : offer.PreAprobacionCreditoState ===
+                PRE_APROBACION_CREDITO_STATE[3]
+                ? 'badge-danger'
+                : 'badge-warning',
         });
       }
       break;
     case 'Pendiente control':
     case 'Pendiente legal':
       OfertaStateFormat[0].Color = 'badge-caution';
+      OfertaStateFormat[0].Label = 'Pendiente control';
       break;
     case 'Rechazada por legal':
       OfertaStateFormat[0].Color = 'badge-danger';
+      OfertaStateFormat[0].Label = 'Rechazada';
       break;
     case 'Cancelada':
       OfertaStateFormat[0].Color = 'badge-warning';
+      break;
+    case 'Modificado':
+      OfertaStateFormat[0].Color = 'badge-caution';
+      OfertaStateFormat[0].Label = 'Pendiente Aprobación Modificado';
       break;
     default:
       OfertaStateFormat[0].Color = 'badge-caution';
@@ -113,6 +125,8 @@ export const isAprobacionInmobiliariaState = offer =>
 export const isRejectAprobacionInmobiliariaState = offer =>
   offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[3];
 
+export const isModified = offer => offer.OfertaState === OFERTA_STATE[5];
+
 export const canConfirmOffer = offer =>
   isPendienteContacto(offer) &&
   UserProject.in(window.project) &&
@@ -120,6 +134,9 @@ export const canConfirmOffer = offer =>
 
 export const getActionTitle = (offer = {}) => {
   const { Graph } = offer;
+  if (offer.OfertaState === OFERTA_STATE[4])
+    return <span className="color-warning">Cancelar Oferta</span>;
+
   if (Auth.isInmobiliario())
     return <span className="color-caution-03">Confirmar Oferta</span>;
 
@@ -136,14 +153,36 @@ export const getActionTitle = (offer = {}) => {
           item.Color === 'white' ||
           item.Color === 'orange',
       );
-      if (node) return node.Description.trim();
+      if (node) {
+        switch (node.Description.trim()) {
+          case 'Pendiente legal':
+            return 'Pendiente Control';
+          case 'Rechazada por legal':
+            return 'Rechazada';
+          default:
+            return node.Description.trim();
+        }
+      }
       return 'Oferta';
     }
   }
-  return 'Crear oferta';
+  return 'Oferta';
 };
 
 export const canApproveConfeccionPromesa = (offer = {}) =>
   UserProject.in() &&
   Auth.hasPermission(PERMISSIONS[21]) &&
   offer.OfertaState === OFERTA_STATE[1];
+
+export const canEditOffer = offer =>
+  !window.project
+    ? false
+    : !!(
+      UserProject.in(window.project) &&
+        Auth.hasOneOfPermissions(['Es vendedor']) &&
+        offer.OfertaState !== OFERTA_STATE[3] &&
+        offer.OfertaState !== OFERTA_STATE[4]
+    );
+
+export const canApproveModifyOffer = offer =>
+  !window.project ? false : UserProject.isPM() && isModified(offer);

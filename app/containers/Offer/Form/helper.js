@@ -22,10 +22,4 @@ export const canUploadOffer = offer =>
       (!offer.OfertaState ||
         [RESERVA_STATE[0], RESERVA_STATE[3]].includes(offer.OfertaState));
 
-export const canEditOffer = offer =>
-  !window.project
-    ? false
-    : UserProject.in(window.project) &&
-      Auth.hasOneOfPermissions(['Es vendedor', 'Consulta proyectos']) &&
-      (offer.OfertaID &&
-        offer.AprobacionInmobiliariaState !== APROBACION_INMOBILIARIA_STATE[2]);
+

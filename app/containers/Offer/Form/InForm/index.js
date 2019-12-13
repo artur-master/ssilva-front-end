@@ -12,6 +12,7 @@ import PhaseFormaDePago from 'containers/Phases/FormaDePago';
 import PhasePreCredito from 'containers/Phases/PreCredito';
 import PhaseDocument from 'containers/Phases/Document';
 import { push } from 'connected-react-router';
+import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
 import model from '../../model';
 import { approveIn } from '../actions';
 import OfferInFormObservation from './Observation';
@@ -31,7 +32,9 @@ export function OfferInForm({ selector, dispatch }) {
         selector.offer.Folio
       }`}</h4>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">
-        <span className="font-16-rem line-height-1 color-success">Oferta</span>
+        <span className="font-16-rem line-height-1 color-success">
+          {selector.offer.AprobacionInmobiliariaState}
+        </span>
       </h5>
       <OfferInFormObservation entity={selector.offer} />
       <PhaseGeneral initialValues={initialValues} />
@@ -43,25 +46,28 @@ export function OfferInForm({ selector, dispatch }) {
       <PhaseFormaDePago initialValues={initialValues} />
       <PhasePreCredito initialValues={initialValues} />
       <PhaseDocument entity={initialValues} isCollapse />
-      <OfferInFormActions
-        selector={selector}
-        onCancel={() =>
-          dispatch(push(`/proyectos/${window.project.ProyectoID}/ofertas`))
-        }
-        onApprove={values => {
-          dispatch(
-            approveIn({
-              OfertaID: selector.offer.OfertaID,
-              ...values,
-              Comment: values.Comment || '',
-              Conditions: selector.offer.Condition.map(condition => ({
-                ...condition,
-                IsApprove: true,
-              })),
-            }),
-          );
-        }}
-      />
+      {selector.offer.AprobacionInmobiliariaState ===
+        APROBACION_INMOBILIARIA_STATE[1] && (
+        <OfferInFormActions
+          selector={selector}
+          onCancel={() =>
+            dispatch(push(`/proyectos/${window.project.ProyectoID}/ofertas`))
+          }
+          onApprove={values => {
+            dispatch(
+              approveIn({
+                OfertaID: selector.offer.OfertaID,
+                ...values,
+                Comment: values.Comment || '',
+                Conditions: selector.offer.Condition.map(condition => ({
+                  ...condition,
+                  IsApprove: true,
+                })),
+              }),
+            );
+          }}
+        />
+      )}
     </>
   );
 }

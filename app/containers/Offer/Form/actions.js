@@ -19,6 +19,15 @@ import {
   APPROVE_CONFECCION_PROMESA,
   APPROVE_CONFECCION_PROMESA_ERROR,
   APPROVE_CONFECCION_PROMESA_SUCCESS,
+  DELETE_OFFER,
+  DELETE_OFFER_ERROR,
+  DELETE_OFFER_SUCCESS,
+  SAVE_OFFER,
+  SAVE_OFFER_ERROR,
+  SAVE_OFFER_SUCCESS,
+  APPROVE_MODIFY,
+  APPROVE_MODIFY_ERROR,
+  APPROVE_MODIFY_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -115,5 +124,69 @@ export function updateOffer(data) {
   return {
     type: UPDATE_OFFER,
     data,
+  };
+}
+
+export function deleteOffer(values) {
+  return {
+    type: DELETE_OFFER,
+    values,
+  };
+}
+
+export function deleteOfferError(error) {
+  return {
+    type: DELETE_OFFER_ERROR,
+    error,
+  };
+}
+
+export function deleteOfferSuccess(response) {
+  return {
+    type: DELETE_OFFER_SUCCESS,
+    response,
+  };
+}
+
+export function saveOffer(values, documents = false) {
+  return {
+    type: SAVE_OFFER,
+    values,
+    documents,
+  };
+}
+
+export function saveOfferError(error) {
+  return {
+    type: SAVE_OFFER_ERROR,
+    error,
+  };
+}
+
+export function saveOfferSuccess(response) {
+  return {
+    type: SAVE_OFFER_SUCCESS,
+    response,
+  };
+}
+
+export function approveModifyOffer(values) {
+  return {
+    type: APPROVE_MODIFY,
+    values,
+  };
+}
+
+export function approveModifyOfferError(error) {
+  return {
+    type: APPROVE_MODIFY_ERROR,
+    error,
+  };
+}
+
+export function approveModifyOfferSuccess(response) {
+  return {
+    type: APPROVE_MODIFY_SUCCESS,
+    response,
   };
 }

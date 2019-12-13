@@ -15,6 +15,8 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import WithLoading from 'components/WithLoading';
+import { Collapse, CollapseHeader, CollapseContent } from 'components/Collapse';
+import { isContadoPayment } from 'containers/App/helpers';
 import makeSelectCredit from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -26,8 +28,15 @@ import {
   resetContainer,
 } from './actions';
 import CreditView from './View';
+
 const SyncMessage = WithLoading();
-export function PhaseCredit({ canEdit, EntityID, selector, dispatch }) {
+export function PhaseCredit({
+  canEdit,
+  EntityID,
+  PayType,
+  selector,
+  dispatch,
+}) {
   useInjectReducer({ key: 'credit', reducer });
   useInjectSaga({ key: 'credit', saga });
 
@@ -35,8 +44,19 @@ export function PhaseCredit({ canEdit, EntityID, selector, dispatch }) {
     dispatch(fetchIF(EntityID));
     return () => dispatch(resetContainer());
   }, [EntityID]);
+
+  const isContado = isContadoPayment(PayType);
+
   if (selector.redirect === 'refresh') return <Redirect to={window.location} />;
   if (!selector.entities) return <SyncMessage {...selector} />;
+  if (isContado)
+    return (
+      <Collapse>
+        <CollapseHeader>APROBACIÓN FORMAL</CollapseHeader>
+        <CollapseContent><span className="px-3 badge color-success">Aprobada</span></CollapseContent>
+      </Collapse>
+    );
+
   if (canEdit)
     return (
       <CreditForm
@@ -68,6 +88,7 @@ export function PhaseCredit({ canEdit, EntityID, selector, dispatch }) {
 
 PhaseCredit.propTypes = {
   canEdit: PropTypes.bool,
+  PayType: PropTypes.string,
   EntityID: PropTypes.string,
   selector: PropTypes.object,
   dispatch: PropTypes.func.isRequired,

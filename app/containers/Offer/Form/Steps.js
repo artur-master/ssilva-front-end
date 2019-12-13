@@ -71,7 +71,7 @@ function Steps({ offer }) {
         Description: 'Pendiente Aprobación',
         Color: isPendienteContacto(offer) ? 'white' : 'red',
       },
-      { Label: 'JP', Description: 'Pendiente Control', Color: 'white' },
+      { Label: 'AC', Description: 'Pendiente Control', Color: 'white' },
       { Label: '', Description: 'Promesa', Color: 'white' },
     ],
   };
@@ -84,6 +84,8 @@ function Steps({ offer }) {
   } else if (OfertaState === OFERTA_STATE[3]) {
     Graph.Node[2].Color = 'green';
   }
+
+  if(OfertaState === OFERTA_STATE[4]) return null;
 
   let colorStep = 0;
   return (

@@ -13,7 +13,10 @@ import PhaseInmueble from 'containers/Phases/Inmueble';
 import PhaseFormaDePago from 'containers/Phases/FormaDePago';
 import PhasePreCredito from 'containers/Phases/PreCredito';
 import PhaseDocument from 'containers/Phases/Document';
-import { RECEPCION_GARANTIA_STATE } from 'containers/App/constants';
+import {
+  RECEPCION_GARANTIA_STATE,
+  OFERTA_STATE,
+} from 'containers/App/constants';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import Button from 'components/Button';
 import { createStructuredSelector } from 'reselect';
@@ -32,9 +35,17 @@ export function OfferFiForm({ selector, selectorGarantia, dispatch }) {
   const { project = {} } = window;
   const entity = selector.offer;
   const onGarantia =
+    entity.OfertaState !== OFERTA_STATE[4] &&
+    entity.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[0]
+      ? () => dispatch(recepcionGarantia(entity.OfertaID))
+      : false;
+
+  const onRefund =
+    entity.OfertaState === OFERTA_STATE[4] &&
     entity.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1]
-      ? false
-      : () => dispatch(recepcionGarantia(entity.OfertaID));
+      ? () => dispatch(recepcionGarantia(entity.OfertaID, true))
+      : false;
+
   const onCancel = () =>
     dispatch(push(`/proyectos/${project.ProyectoID}/ofertas`));
 
@@ -52,9 +63,10 @@ export function OfferFiForm({ selector, selectorGarantia, dispatch }) {
         <span className="font-16-rem line-height-1 color-success">
           {isPendienteContacto(entity) ? 'Pendiente Contacto' : 'Oferta'}
         </span>
-        {onGarantia && (
-          <div className="d-flex align-items-center justify-content-end mr-3 order-3">
-            {!isPendienteContacto(entity) && (
+
+        <div className="d-flex align-items-center justify-content-end mr-3 order-3">
+          {onGarantia &&
+            (!isPendienteContacto(entity) && (
               <Button
                 disabled={isPendienteContacto(entity)}
                 loading={selectorGarantia.loading[entity.OfertaID]}
@@ -62,16 +74,25 @@ export function OfferFiForm({ selector, selectorGarantia, dispatch }) {
               >
                 Recibí Garantía
               </Button>
-            )}
+            ))}
+
+          {onRefund && (
             <Button
+              disabled={isPendienteContacto(entity)}
               loading={selectorGarantia.loading[entity.OfertaID]}
-              color="white"
-              onClick={onCancel}
+              onClick={onRefund}
             >
-              cancelar
+              Devolución Garantía
             </Button>
-          </div>
-        )}
+          )}
+          <Button
+            loading={selectorGarantia.loading[entity.OfertaID]}
+            color="white"
+            onClick={onCancel}
+          >
+            Cancelar
+          </Button>
+        </div>
       </h5>
       <SyncMessage
         error={selectorGarantia.error[entity.OfertaID]}
@@ -85,7 +106,6 @@ export function OfferFiForm({ selector, selectorGarantia, dispatch }) {
       <PhaseDocument
         entity={entity}
         isCollapse
-        onCancel={oncancel}
         onGarantia={isPendienteContacto(entity) ? false : onGarantia}
       />
     </>
@@ -95,7 +115,6 @@ export function OfferFiForm({ selector, selectorGarantia, dispatch }) {
 OfferFiForm.propTypes = {
   selector: PropTypes.object,
   selectorGarantia: PropTypes.object,
-  project: PropTypes.object,
   dispatch: PropTypes.func,
 };
 

@@ -7,35 +7,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { isAprobacionInmobiliariaState } from '../../helper';
-import { APROBACION_INMOBILIARIA_STATE } from '../../../App/constants';
+import { OFERTA_STATE } from 'containers/App/constants';
 
-function InSteps({ offer }) {
+function Steps({ offer }) {
+  const { OfertaState } = offer;
   const Graph = {
     Node: [
-      { Label: 'V', Description: 'Oferta', Color: 'green' },
+      { Label: 'AC', Description: 'Modificar Oferta', Color: 'green' },
       {
-        Label: 'I',
-        Description: 'Pendiente Aprobador Inmobiliario',
-        Color: 'orange',
+        Label: 'JP, IN, AC, FI',
+        Description: 'Pendiente Aprobación',
+        Color: 'red',
       },
+      { Label: 'LG', Description: 'Pendiente Control', Color: 'white' },
+      { Label: '', Description: 'Promesa', Color: 'white' },
     ],
   };
+  /*
+  if (OfertaState !== OFERTA_STATE[0] && OfertaState !== OFERTA_STATE[4]) {
+    Graph.Node[1].Color = 'green';
+  }
 
-  if (isAprobacionInmobiliariaState(offer))
-    Graph.Node[1] = {
-      Label: 'I',
-      Description: 'Aprobada Inmobiliario',
-      Color: 'green',
-    };
-
-  if (offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[3])
-    Graph.Node[1] = {
-      Label: 'I',
-      Description: 'Aprobada Inmobiliario',
-      Color: 'red',
-    };
-
+  if (OfertaState === OFERTA_STATE[1]) {
+    Graph.Node[2].Color = 'red';
+  } else if (OfertaState === OFERTA_STATE[3]) {
+    Graph.Node[2].Color = 'green';
+  }
+  */
   let colorStep = 0;
   return (
     <nav className="breadcrumb-step">
@@ -50,14 +48,13 @@ function InSteps({ offer }) {
                 color = 'success';
                 if (colorStep > 1) color += `-0${colorStep}`;
                 break;
+              case 'yellow':
               case 'orange':
+              case 'red':
                 color = 'caution';
                 break;
-              case 'red':
-                color = 'warning-magent';
-                break;
               default:
-                color = '';
+                color = node.Color;
             }
             return (
               <li key={node.Description} className={`m-counter-plus ${color}`}>
@@ -66,7 +63,7 @@ function InSteps({ offer }) {
                   onClick={evt => evt.preventDefault()}
                   className="m-counter-item"
                 >
-                  <span>{node.Description}</span>
+                  <span>{node.Description.trim()}</span>
                 </Link>
               </li>
             );
@@ -76,8 +73,8 @@ function InSteps({ offer }) {
   );
 }
 
-InSteps.propTypes = {
+Steps.propTypes = {
   offer: PropTypes.object,
 };
 
-export default InSteps;
+export default Steps;

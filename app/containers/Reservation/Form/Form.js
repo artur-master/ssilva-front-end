@@ -124,9 +124,7 @@ export function Form({ project, selector, dispatch }) {
           onControlReview={values =>
             dispatch(controlReview({ ...values, ReservaID: entity.ReservaID }))
           }
-        >
-
-        </PhaseDocument>
+        />
       )}
     </>
   );

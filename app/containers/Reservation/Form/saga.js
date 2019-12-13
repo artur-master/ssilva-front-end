@@ -50,7 +50,7 @@ function* getReservation(action) {
   }
 }
 
-function* uploadDocument(documents) {
+export function* sagaUploadVentasDocument(documents) {
   const data = new FormData();
   Object.keys(documents)
     .filter(type => documents[type])
@@ -79,7 +79,7 @@ function* save(action) {
     }),
   });
   if (documents) {
-    const resDocuments = yield call(uploadDocument, documents);
+    const resDocuments = yield call(sagaUploadVentasDocument, documents);
     response.reserva.Documents = resDocuments.documentos;
   }
   return response;

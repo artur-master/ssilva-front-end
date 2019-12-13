@@ -25,8 +25,11 @@ import { compose } from 'redux';
 import { recepcionGarantia } from 'containers/Offer/Form/FiForm/Garantia/actions';
 import makeSelectOfferGarantia from 'containers/Offer/Form/FiForm/Garantia/selectors';
 import WithLoading from 'components/WithLoading';
-import { RECEPCION_GARANTIA_STATE } from 'containers/App/constants';
-import Badge from 'reactstrap/es/Badge';
+import {
+  RECEPCION_GARANTIA_STATE,
+  OFERTA_STATE,
+} from 'containers/App/constants';
+import { isPendienteContacto } from '../helper';
 
 const SyncMessage = WithLoading();
 
@@ -35,6 +38,7 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
   const { Proyecto, Folio, Inmuebles, Cliente } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   const { loading, error, success } = selectorGarantia;
+
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
@@ -51,7 +55,9 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
       <td />
       <td className="px-3">
         <div className=" d-flex justify-content-end align-items-center">
-          {offer.RecepcionGarantiaState !== RECEPCION_GARANTIA_STATE[1] &&
+          {offer.OfertaState !== OFERTA_STATE[4] &&
+            offer.RecepcionGarantiaState !== RECEPCION_GARANTIA_STATE[1] &&
+            !isPendienteContacto(offer) &&
             (!success[offer.OfertaID] && (
               <>
                 <SyncMessage error={error[offer.OfertaID]} />
@@ -63,37 +69,67 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
                 </Button>
               </>
             ))}
-          {(offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1] ||
-            success[offer.OfertaID]) && (
-            <Badge className="p-2" color="success">
-              Aprobada
-            </Badge>
+          {isPendienteContacto(offer) && (
+            <span className="badge px-2 badge-warning">Pendiente Contacto</span>
+          )}
+          {offer.OfertaState !== OFERTA_STATE[4] &&
+            (offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1] ||
+              success[offer.OfertaID]) && (
+              <span className="badge px-2 badge-success">Aprobada</span>
+            )}
+
+          {offer.OfertaState === OFERTA_STATE[4] &&
+            (offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[2] ||
+              success[offer.OfertaID]) && (
+            <span className="badge px-2 badge-info">Devolución</span>
+            )}
+
+          {offer.OfertaState === OFERTA_STATE[4] &&
+            offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1] &&
+            !success[offer.OfertaID] && (
+              <>
+                <SyncMessage error={error[offer.OfertaID]} />
+                <Button
+                  color="white"
+                  loading={loading[offer.OfertaID]}
+                  onClick={() =>
+                    dispatch(recepcionGarantia(offer.OfertaID, true))
+                  }
+                >
+                  Devolución
+                </Button>
+              </>
           )}
         </div>
       </td>
       <td className="font-21 px-3">
-        <Dropdown
-          isOpen={dropdownOpen}
-          toggle={() => setDropdownOpen(!dropdownOpen)}
-        >
-          <DropdownToggle tag="a" className="icon icon-dots main_color ml-1" />
-          <DropdownMenu right>
-            <DropdownItem
+        {!isPendienteContacto(offer) && (
+          <Dropdown
+            isOpen={dropdownOpen}
+            toggle={() => setDropdownOpen(!dropdownOpen)}
+          >
+            <DropdownToggle
               tag="a"
-              onClick={() => {
-                dispatch(
-                  push(
-                    `/proyectos/${project.ProyectoID}/oferta?OfertaID=${
-                      offer.OfertaID
-                    }`,
-                  ),
-                );
-              }}
-            >
-              Ver datos
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+              className="icon icon-dots main_color ml-1"
+            />
+            <DropdownMenu right>
+              <DropdownItem
+                tag="a"
+                onClick={() => {
+                  dispatch(
+                    push(
+                      `/proyectos/${project.ProyectoID}/oferta?OfertaID=${
+                        offer.OfertaID
+                      }`,
+                    ),
+                  );
+                }}
+              >
+                Ver datos
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        )}
       </td>
     </tr>
   );

@@ -20,7 +20,7 @@ import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
 import makeSelectQuotation from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { fetchQuotations } from './actions';
+import { fetchQuotations, resetContainer } from './actions';
 import List from './List';
 
 const ListWithLoading = WithLoading(List);
@@ -33,7 +33,8 @@ export function Quotation({ match, selectorProject, quotation, dispatch }) {
 
   useEffect(() => {
     if (match.params.id) dispatch(fetchQuotations(match.params.id));
-  }, []);
+    return () => dispatch(resetContainer());
+  }, [match.params.id]);
 
   return (
     <>

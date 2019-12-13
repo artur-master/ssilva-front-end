@@ -4,6 +4,7 @@
  *
  */
 /* Quotations */
+export const RESET_CONTAINER = 'app/containers/Quotation/List/RESET_CONTAINER';
 export const SEARCH_QUOTATIONS =
   'app/containers/Quotation/List/SEARCH_QUOTATIONS';
 export const TOGGLE_QUOTATION_FORM =

@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { Auth } from '../../containers/App/helpers';
 
 const Menu = ({ collapse, dispatch }) => (
   <Collapse isOpen={window.innerWidth > 991 || collapse}>
@@ -28,59 +29,61 @@ const Menu = ({ collapse, dispatch }) => (
         <span>Proyectos</span>
         <Link to="/proyectos" />
       </li>
-      <UncontrolledDropdown tag="li">
-        <i className="icon icon-z-settings">
-          <i className="icon icon-z-settings-dtail" />
-        </i>
-        <span>Admin</span>
-        <DropdownToggle tag="a" />
-        <DropdownMenu>
-          <DropdownItem header>Administración</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem
-            tag="a"
-            onClick={() => dispatch(push('/admin/usuarios'))}
-          >
-            Usuarios
-          </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem
-            tag="a"
-            onClick={() => dispatch(push('/admin/clientes'))}
-          >
-            Clientes
-          </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem
-            tag="a"
-            onClick={() => dispatch(push('/admin/inmobiliarias'))}
-          >
-            Inmobiliarias
-          </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem
-            tag="a"
-            onClick={() => dispatch(push('/admin/constructoras'))}
-          >
-            Constructoras
-          </DropdownItem>
+      {Auth.isAdmin() && (
+        <UncontrolledDropdown tag="li">
+          <i className="icon icon-z-settings">
+            <i className="icon icon-z-settings-dtail" />
+          </i>
+          <span>Admin</span>
+          <DropdownToggle tag="a" />
+          <DropdownMenu>
+            <DropdownItem header>Administración</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem
+              tag="a"
+              onClick={() => dispatch(push('/admin/usuarios'))}
+            >
+              Usuarios
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem
+              tag="a"
+              onClick={() => dispatch(push('/admin/clientes'))}
+            >
+              Clientes
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem
+              tag="a"
+              onClick={() => dispatch(push('/admin/inmobiliarias'))}
+            >
+              Inmobiliarias
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem
+              tag="a"
+              onClick={() => dispatch(push('/admin/constructoras'))}
+            >
+              Constructoras
+            </DropdownItem>
 
-          <DropdownItem divider />
-          <DropdownItem
-            tag="a"
-            onClick={() => dispatch(push('/admin/aseguradoras'))}
-          >
-            Aseguradoras
-          </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem
-            tag="a"
-            onClick={() => dispatch(push('/admin/InstitucionFinanciera'))}
-          >
-            Institucion Financieras
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
+            <DropdownItem divider />
+            <DropdownItem
+              tag="a"
+              onClick={() => dispatch(push('/admin/aseguradoras'))}
+            >
+              Aseguradoras
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem
+              tag="a"
+              onClick={() => dispatch(push('/admin/InstitucionFinanciera'))}
+            >
+              Institucion Financieras
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      )}
       <li>
         <i className="icon icon-files">
           <i className="icon icon-files-dtail" />
