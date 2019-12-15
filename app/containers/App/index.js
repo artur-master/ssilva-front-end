@@ -37,6 +37,9 @@ import OfferPage from 'containers/Pages/Offer/View/Loadable';
 import OffersPage from 'containers/Pages/Offer/List/Loadable';
 import EditOfferPage from 'containers/Pages/Offer/Edit/Loadable';
 import EditProjectPage from 'containers/Pages/Project/Edit';
+import PromesasPage from 'containers/Pages/Promesa/List';
+import PromesaPage from 'containers/Pages/Promesa/View/Loadable';
+
 import { Auth } from './helpers';
 import AppRoute from './AppRoute';
 import saga from './saga';
@@ -179,6 +182,19 @@ function App() {
           exact
           path="/proyectos/:id/ofertas"
           component={OffersPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />
+
+        <AppRoute
+          exact
+          path="/proyectos/:id/promesas"
+          component={PromesasPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />
+        <AppRoute
+          exact
+          path="/proyectos/:id/promesa"
+          component={PromesaPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
         <AppRoute
