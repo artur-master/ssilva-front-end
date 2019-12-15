@@ -28,7 +28,9 @@ export const inmuebleSortDetail = entity => {
 export const inmuebleLabel = entity => {
   const UsoyGoceLabel = entity.IsNotUsoyGoce ? 'Tandem' : 'Uso Gose';
   const Floor = entity.Floor > 0 ? entity.Floor : 'G';
-  const Orientation = entity.Orientation.map(ori => ori.Description).join('-');
+  const Orientation = entity.Orientation
+    ? entity.Orientation.map(ori => ori.Description).join('-')
+    : '';
   const Room = `${entity.BedroomsQuantity}D${entity.BathroomQuantity}B`;
   const Type = `${entity.InmuebleType} ${entity.Number}`;
   switch (entity.InmuebleType) {

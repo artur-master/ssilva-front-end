@@ -15,7 +15,7 @@ import { inmuebleLabel } from 'containers/Common/Inmueble/helper';
 import PhaseInmuebleForm from './Form';
 
 export function PhaseInmueble({
-  isCollapse=false,
+  isCollapse = false,
   canEdit,
   canConfirm,
   onConfirm,
