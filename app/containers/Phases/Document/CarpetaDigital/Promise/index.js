@@ -14,22 +14,10 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
 } from 'reactstrap';
+import { getPromesa } from 'containers/Project/helper';
 
 export function Promise({ entity }) {
-  const { project = {} } = window;
-  const { Documentos = {} } = project;
-  let maquetaWord;
-  let maquetaPdf;
-  if (entity.Cliente.IsCompany) {
-    maquetaWord = Documentos.company_word;
-    maquetaPdf = Documentos.company_pdf;
-  } else if (entity.PayType === 'Contado') {
-    maquetaWord = Documentos.counter_word;
-    maquetaPdf = Documentos.counter_pdf;
-  } else {
-    maquetaWord = Documentos.credit_word;
-    maquetaPdf = Documentos.credit_pdf;
-  }
+  const { maquetaWord, maquetaPdf } = getPromesa(entity);
   return (
     <List>
       <Item>

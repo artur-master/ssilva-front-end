@@ -11,7 +11,7 @@ import Element from 'containers/Common/Aseguradora/Element';
 import ExField from './ExField';
 
 const ExAseguradoras = props => {
-  const { style = {} } = props;
+  const { style = {}, ...restProps } = props;
   let className = props.className || '';
 
   return (
@@ -33,7 +33,7 @@ const ExAseguradoras = props => {
               onSelect={user =>
                 form ? form.setFieldValue(field.name, user.AseguradoraID) : ''
               }
-              {...props}
+              {...restProps}
               className={className}
               isInvalid={!!(getInTouched && getInErrors)}
             />

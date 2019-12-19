@@ -70,7 +70,7 @@ const defaultValidate = (value, props) => {
   if (props.required && (value === '' || value === null)) return 'Este campo es requerido';
 
   // rut validate
-  //if (props.rut || props.name.toLowerCase() === 'rut') return checkRut(value);
+  // if (props.rut || props.name.toLowerCase() === 'rut') return checkRut(value);
 
   // email validate
   if (
@@ -111,6 +111,7 @@ const ExField = ({
   label,
   style,
   component,
+  inputClass = '',
   ...props
 }) => (
   <FormikField
@@ -139,9 +140,9 @@ const ExField = ({
           <Input
             {...field}
             {...props}
-            className={` ${getInTouched && getInErrors ? 'is-invalid' : ''} ${
-              className.includes('caution') ? 'caution' : ''
-            }`}
+            className={` ${
+              getInTouched && getInErrors ? 'is-invalid' : ''
+            } ${inputClass} ${className.includes('caution') ? 'caution' : ''}`}
           >
             {children && children}
           </Input>
@@ -168,6 +169,7 @@ ExField.propTypes = {
   type: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  inputClass: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   children: PropTypes.node,
   name: PropTypes.string,

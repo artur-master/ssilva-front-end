@@ -1,4 +1,5 @@
 import { PROMESA_STATE } from 'containers/App/constants';
+import { UserProject } from '../Project/helper';
 
 export const initReports = () =>
   PROMESA_STATE.reduce(
@@ -24,4 +25,10 @@ export const getReports = (entities = []) =>
     return acc;
   }, initReports());
 
-export const canEditPromesa = () => true;
+export const canEditConfeccionPromesa = promesa =>
+  promesa.PromesaState === PROMESA_STATE[0] ||
+  promesa.PromesaState === PROMESA_STATE[9];
+
+export const isPendingApproveConfeccionPromesa = promesa =>
+  (UserProject.isAssistance() || UserProject.isPM()) &&
+  promesa.PromesaState === PROMESA_STATE[9];

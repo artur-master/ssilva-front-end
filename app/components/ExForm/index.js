@@ -14,6 +14,7 @@ import RadioGroup from './RadioGroup';
 import UserInmobiliaria from './UserInmobiliaria';
 import Checkbox from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';
+import Provincia from './Provincia';
 
 const Field = ({ type = 'text', ...props }) => {
   switch (type) {
@@ -36,7 +37,11 @@ const Field = ({ type = 'text', ...props }) => {
     case 'datepicker':
       return <DatePicker {...props} />;
     case 'comunas':
+    case 'comuna':
       return <Comunas {...props} />;
+    case 'provincias':
+    case 'provincia':
+      return <Provincia {...props} />;
     case 'file':
       return <File {...props} />;
     default:

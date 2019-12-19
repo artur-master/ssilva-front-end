@@ -11,7 +11,11 @@ import Element from 'containers/Common/InstitucionFinanciera/Element';
 import ExField from './ExField';
 
 const ExInstitucionFinancieras = props => {
-  const { style = {}, applyPropertyName = 'InstitucionFinancieraID' } = props;
+  const {
+    style = {},
+    applyPropertyName = 'InstitucionFinancieraID',
+    ...restProps
+  } = props;
   let className = props.className || '';
 
   return (
@@ -35,7 +39,7 @@ const ExInstitucionFinancieras = props => {
                   ? form.setFieldValue(field.name, item[applyPropertyName])
                   : ''
               }
-              {...props}
+              {...restProps}
               applyPropertyName={applyPropertyName}
               className={className}
               isInvalid={!!(getInTouched && getInErrors)}

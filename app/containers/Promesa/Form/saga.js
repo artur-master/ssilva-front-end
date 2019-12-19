@@ -4,7 +4,7 @@ import { API_ROOT } from 'containers/App/constants';
 import { sagaUploadVentasDocument } from 'containers/Reservation/Form/saga';
 import {
   GET_PROMESA,
-  CONFIRM,
+  UPLOAD_CONFECCION_PROMESA,
   APPROVE_IN,
   APPROVE_CONFECCION_PROMESA,
   DELETE_PROMESA,
@@ -12,21 +12,21 @@ import {
   APPROVE_MODIFY,
 } from './constants';
 import {
-  approveInError,
-  approveInSuccess,
-  approveConfeccionPromesaError,
-  approveConfeccionPromesaSuccess,
-  confirmError,
-  confirmSuccess,
   getPromesaError,
   getPromesaSuccess,
+  uploadConfeccionPromesaError,
+  uploadConfeccionPromesaSuccess,
   deletePromesaSuccess,
   deletePromesaError,
   savePromesaSuccess,
   savePromesaError,
+  approveInError,
+  approveInSuccess,
+  approveConfeccionPromesaError,
+  approveConfeccionPromesaSuccess,
 } from './actions';
 
-function* getPromesa(action) {
+function* sagaGetPromesa(action) {
   const requestURL = `${API_ROOT}/ventas/promesas/${action.PromesaID}/`;
   try {
     const response = yield call(request, requestURL);
@@ -36,20 +36,33 @@ function* getPromesa(action) {
   }
 }
 
-function* sagaConfirm(action) {
-  const requestURL = `${API_ROOT}/ventas/promesas-send-control/${
-    action.values.PromesaID
-  }/`;
+function* sagaUploadConfeccionPromesa(action) {
+  const data = new FormData();
+  Object.keys(action.values).forEach(name => {
+    data.append(name, action.values[name]);
+  });
   try {
-    const response = yield call(request, requestURL, {
-      method: 'PATCH',
-      body: JSON.stringify(action.values),
-    });
-    yield put(confirmSuccess(response));
+    const response = yield call(
+      request,
+      `${API_ROOT}/ventas/promesas-upload-confeccion-promesa/${
+        action.PromesaID
+      }/`,
+      {
+        method: 'PATCH',
+        body: data,
+        headers: {
+          'content-type': null,
+        },
+      },
+    );
+
+    yield put(uploadConfeccionPromesaSuccess(response));
   } catch (error) {
-    yield put(confirmError(error));
+    yield put(uploadConfeccionPromesaError(error));
   }
 }
+
+/* remove --> */
 
 function* sagaApproveIn(action) {
   const requestURL = `${API_ROOT}/ventas/promesas-inmobiliarias-approve-control/${
@@ -140,10 +153,11 @@ function* sagaApproveModifyPromesa(action) {
 }
 
 export default function* projectSaga() {
-  yield takeLatest(CONFIRM, sagaConfirm);
+  yield takeLatest(GET_PROMESA, sagaGetPromesa);
+  yield takeLatest(UPLOAD_CONFECCION_PROMESA, sagaUploadConfeccionPromesa);
+
   yield takeLatest(APPROVE_IN, sagaApproveIn);
   yield takeLatest(APPROVE_CONFECCION_PROMESA, sagaApproveLegal);
-  yield takeLatest(GET_PROMESA, getPromesa);
   yield takeLatest(DELETE_PROMESA, sagaDeletePromesa);
   yield takeLatest(SAVE_PROMESA, sagaSavePromesa);
   yield takeLatest(APPROVE_MODIFY, sagaApproveModifyPromesa);

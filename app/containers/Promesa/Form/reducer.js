@@ -29,6 +29,9 @@ import {
   APPROVE_MODIFY,
   APPROVE_MODIFY_ERROR,
   APPROVE_MODIFY_SUCCESS,
+  UPLOAD_CONFECCION_PROMESA,
+  UPLOAD_CONFECCION_PROMESA_ERROR,
+  UPLOAD_CONFECCION_PROMESA_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -44,9 +47,42 @@ const promesaReducer = (state = initialState, action) =>
   /* eslint-disable-next-line */
   produce(state, draft => {
     switch (action.type) {
+      case GET_PROMESA:
+      case UPLOAD_CONFECCION_PROMESA:
+        draft.loading = true;
+        draft.error = false;
+        draft.success = false;
+        draft.redirect = '';
+        break;
+      case GET_PROMESA_ERROR:
+      case UPLOAD_CONFECCION_PROMESA_ERROR:
+        draft.loading = false;
+        draft.error = action.error;
+        draft.success = false;
+        draft.redirect = '';
+        break;
+      case GET_PROMESA_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.promesa = {
+          ...action.response,
+          Empleador: action.response.Cliente.Empleador,
+          CoEmpleador: (action.response.Codeudor || {}).Empleador,
+          percent: calculates(action.response).percent,
+          convert: calculates(action.response).convert,
+        };
+        break;
+      case UPLOAD_CONFECCION_PROMESA_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.success = action.response.detail;
+        draft.promesa = { ...draft.promesa, ...action.response.promesa };
+        break;
+
+      /* remove --> */
       case RESET_CONTAINER:
         return initialState;
-      case GET_PROMESA:
+
       case CONFIRM:
       case APPROVE_IN:
       case APPROVE_CONFECCION_PROMESA:
@@ -58,7 +94,7 @@ const promesaReducer = (state = initialState, action) =>
         draft.success = false;
         draft.redirect = '';
         break;
-      case GET_PROMESA_ERROR:
+
       case CONFIRM_ERROR:
       case APPROVE_IN_ERROR:
       case APPROVE_CONFECCION_PROMESA_ERROR:
@@ -81,18 +117,7 @@ const promesaReducer = (state = initialState, action) =>
         draft.success = action.response.detail;
         draft.redirect = 'list';
         break;
-      case GET_PROMESA_SUCCESS:
-        draft.loading = false;
-        draft.error = false;
-        // draft.screen = 'edit';
-        draft.promesa = {
-          ...action.response,
-          Empleador: action.response.Cliente.Empleador,
-          CoEmpleador: (action.response.Codeudor || {}).Empleador,
-          percent: calculates(action.response).percent,
-          convert: calculates(action.response).convert,
-        };
-        break;
+
       case UPDATE_PROMESA:
         draft.promesa = { ...draft.promesa, ...action.data };
         break;

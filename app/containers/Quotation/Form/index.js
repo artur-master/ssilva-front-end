@@ -24,6 +24,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { saveQuotation, resetContainer, getQuotation } from './actions';
 import QuotationView from './View';
+import InstitucionFinanciera from '../../Common/InstitucionFinanciera/init';
 const SyncMassage = WithLoading();
 const SyncQuotationView = WithLoading(QuotationView);
 
@@ -67,6 +68,7 @@ export function QuotationForm({
         User
         Project={{ ProyectoID: match.params.id }}
         Inmueble={{ ProyectoID: project.ProyectoID }}
+        InstitucionFinanciera
       />
       {selectorProject.loading && <SyncMassage {...selectorProject} />}
       {selectorProject.project && (

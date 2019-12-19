@@ -252,3 +252,20 @@ export const pending = project => {
   if (progress > 80) color = 'green';
   return { pendings, progress, color };
 };
+
+export const getPromesa = entity => {
+  const { Documentos = {} } = window.project;
+  let maquetaWord;
+  let maquetaPdf;
+  if (entity.Cliente.IsCompany) {
+    maquetaWord = Documentos.company_word;
+    maquetaPdf = Documentos.company_pdf;
+  } else if (entity.PayType === 'Contado') {
+    maquetaWord = Documentos.counter_word;
+    maquetaPdf = Documentos.counter_pdf;
+  } else {
+    maquetaWord = Documentos.credit_word;
+    maquetaPdf = Documentos.credit_pdf;
+  }
+  return { maquetaWord, maquetaPdf };
+};

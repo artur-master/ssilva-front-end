@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for Offer
+ * Asynchronously loads the component for Cheque
  *
  */
 
