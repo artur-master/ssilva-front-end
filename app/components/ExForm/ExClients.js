@@ -11,7 +11,7 @@ import Element from 'containers/Common/Client/Element';
 import ExField from './ExField';
 
 const ExClients = props => {
-  const { style = { width: '11.65em' }, onSelect } = props;
+  const { style = { width: '11.65em' }, onSelect, ...restProps } = props;
   let className = props.className || '';
 
   return (
@@ -30,7 +30,7 @@ const ExClients = props => {
                 if (onSelect) onSelect(client);
                 else if (form) form.setFieldValue(field.name, client.UserID);
               }}
-              {...props}
+              {...restProps}
               className={className}
               isInvalid={!!(getInTouched && getInErrors)}
             />

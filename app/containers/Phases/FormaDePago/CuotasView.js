@@ -12,6 +12,7 @@ import moment from 'moment';
 import Button from 'components/Button';
 import { ModalFooter, ModalHeader, ModalBody } from 'components/Modal';
 import { calculates } from './helper';
+import Cheque from './Cheque';
 
 // eslint-disable-next-line no-unused-vars
 function CuotasView({ values, onHide, onEdit }) {
@@ -24,6 +25,9 @@ function CuotasView({ values, onHide, onEdit }) {
           <Button color="white" className="order-3" onClick={onEdit}>
             Editar Cuotas
           </Button>
+          <div className="order-3">
+            <Cheque cuotas={values.Cuotas}>Cheques</Cheque>
+          </div>
         </div>
 
         <div className="p-3">

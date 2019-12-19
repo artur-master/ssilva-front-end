@@ -28,6 +28,9 @@ import {
   APPROVE_MODIFY,
   APPROVE_MODIFY_ERROR,
   APPROVE_MODIFY_SUCCESS,
+  UPLOAD_CONFECCION_PROMESA,
+  UPLOAD_CONFECCION_PROMESA_ERROR,
+  UPLOAD_CONFECCION_PROMESA_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -36,6 +39,56 @@ export function resetContainer() {
   };
 }
 
+export function getPromesa(PromesaID) {
+  return {
+    type: GET_PROMESA,
+    PromesaID,
+  };
+}
+
+export function getPromesaError(error) {
+  return {
+    type: GET_PROMESA_ERROR,
+    error,
+  };
+}
+
+export function getPromesaSuccess(response) {
+  return {
+    type: GET_PROMESA_SUCCESS,
+    response,
+  };
+}
+
+export function uploadConfeccionPromesa(PromesaID, values) {
+  return {
+    type: UPLOAD_CONFECCION_PROMESA,
+    PromesaID,
+    values,
+  };
+}
+
+export function uploadConfeccionPromesaError(error) {
+  return {
+    type: UPLOAD_CONFECCION_PROMESA_ERROR,
+    error,
+  };
+}
+
+export function uploadConfeccionPromesaSuccess(response) {
+  return {
+    type: UPLOAD_CONFECCION_PROMESA_SUCCESS,
+    response,
+  };
+}
+
+/* remove ---> */
+export function updatePromesa(values) {
+  return {
+    type: UPDATE_PROMESA,
+    values,
+  };
+}
 export function confirmToClient(values) {
   return {
     type: CONFIRM,
@@ -96,34 +149,6 @@ export function approveConfeccionPromesaSuccess(response) {
   return {
     type: APPROVE_CONFECCION_PROMESA_SUCCESS,
     response,
-  };
-}
-
-export function getPromesa(PromesaID) {
-  return {
-    type: GET_PROMESA,
-    PromesaID,
-  };
-}
-
-export function getPromesaError(error) {
-  return {
-    type: GET_PROMESA_ERROR,
-    error,
-  };
-}
-
-export function getPromesaSuccess(response) {
-  return {
-    type: GET_PROMESA_SUCCESS,
-    response,
-  };
-}
-
-export function updatePromesa(data) {
-  return {
-    type: UPDATE_PROMESA,
-    data,
   };
 }
 

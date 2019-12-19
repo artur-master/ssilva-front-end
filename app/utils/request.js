@@ -18,7 +18,7 @@ function parseJSON(response) {
     return response.json();
   }
 
-  if (contentType && contentType.indexOf('text/xml') > -1) {
+  if (contentType && contentType.indexOf('application/json') < 0) {
     return response.blob();
   }
   return null;

@@ -1,5 +1,3 @@
-import React from 'react';
-import { FormattedNumber } from 'react-intl';
 import { PERMISSIONS } from './constants';
 
 export const Storage = {
@@ -185,3 +183,6 @@ export const isCreditPayment = PayType => {
     PayType === paymentUtils[1].PayTypeID || PayType === paymentUtils[1].Name
   );
 };
+
+export const convertUfToPeso = uf =>
+  formatNumber(uf * window.preload.uf.valor, 0);

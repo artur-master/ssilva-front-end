@@ -33,7 +33,7 @@ SubSteps.propTypes = {
 function Steps({ promesa }) {
   const Graph = {
     Node: [
-      { Label: '', Description: 'Confección Promesa', Color: 'green' },
+      { Label: 'LG', Description: 'Confección Promesa', Color: 'green' },
       { Label: 'AC', Description: 'Pendiente Control', Color: 'white' },
     ],
   };

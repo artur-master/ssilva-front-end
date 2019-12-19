@@ -11,7 +11,7 @@ import Element from 'containers/Common/RealEstate/Element';
 import ExField from './ExField';
 
 const ExConstructoras = props => {
-  const { style = {}, query = { type: 'constructora' } } = props;
+  const { style = {}, query = { type: 'constructora' }, ...restProps } = props;
   let className = props.className || '';
 
   return (
@@ -32,7 +32,7 @@ const ExConstructoras = props => {
               value={field.value}
               onSelect={Id => (form ? form.setFieldValue(field.name, Id) : '')}
               query={query}
-              {...props}
+              {...restProps}
               className={className}
               isInvalid={!!(getInTouched && getInErrors)}
             />

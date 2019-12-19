@@ -10,50 +10,129 @@ import { Link } from 'react-router-dom';
 import {
   OFERTA_STATE,
   APROBACION_INMOBILIARIA_STATE,
+  RECEPCION_GARANTIA_STATE,
+  PRE_APROBACION_CREDITO_STATE,
 } from 'containers/App/constants';
-import { isAprobacionInmobiliariaState, isPendienteContacto } from '../helper';
+import { isPendienteContacto } from '../helper';
+import { isCreditType } from '../../Phases/FormaDePago/helper';
 
 function SubSteps({ offer }) {
-  const { OfertaState, AprobacionInmobiliariaState } = offer;
+  const {
+    AprobacionInmobiliariaState,
+    PreAprobacionCreditoState,
+    RecepcionGarantiaState,
+    PayType,
+  } = offer;
+  const isCreditPayment = isCreditType(PayType);
+  if (
+    AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[2] &&
+    PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2] &&
+    RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1]
+  )
+    return null;
   return (
-    <ul className="m-counter mt-3" style={{ marginLeft: '9.6em' }}>
-      <li
-        className={`m-counter-plus ${
-          isPendienteContacto(offer) ? 'caution' : 'success'
-        }`}
-      >
-        <Link to="/" onClick={evt => evt.preventDefault()}>
-          <span>Pendiente Contacto [JP]</span>
-        </Link>
-      </li>
-      <li
-        className={`m-counter-plus ${
-          isAprobacionInmobiliariaState(offer) ? 'success-02' : 'white'
-        }`}
-      >
-        <Link to="/" onClick={evt => evt.preventDefault()}>
-          <span>Aprobación inmobiliaria [IN]</span>
-        </Link>
-      </li>
-      <li className="m-counter-plus">
-        <Link
-          to="/"
-          onClick={evt => evt.preventDefault()}
-          className="m-counter-item"
+    <>
+      <ul className="m-counter mt-3 " style={{ marginLeft: '9.6em' }}>
+        <li className="m-counter-plus warning-magent">
+          <Link
+            to="/"
+            className="m-counter-item"
+            onClick={evt => evt.preventDefault()}
+          >
+            <span>IN</span>
+          </Link>
+        </li>
+        <li
+          className={`m-counter-plus ${
+            AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[2]
+              ? 'success'
+              : ''
+          }`}
         >
-          <span>Preaprobación crédito [AC]</span>
-        </Link>
-      </li>
-      <li className="m-counter-plus">
-        <Link
-          to="/"
-          onClick={evt => evt.preventDefault()}
-          className="m-counter-item"
+          <Link
+            to="/"
+            className="m-counter-item"
+            onClick={evt => evt.preventDefault()}
+          >
+            <span>Aprobar</span>
+          </Link>
+        </li>
+      </ul>
+      <ul className="m-counter mt-3 " style={{ marginLeft: '9.6em' }}>
+        <li className="m-counter-plus warning-magent">
+          <Link
+            to="/"
+            className="m-counter-item"
+            onClick={evt => evt.preventDefault()}
+          >
+            <span>FI</span>
+          </Link>
+        </li>
+        <li
+          className={`m-counter-plus ${
+            RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[2]
+              ? 'success'
+              : ''
+          }`}
         >
-          <span>Recepción de garantía [FI]</span>
-        </Link>
-      </li>
-    </ul>
+          <Link
+            to="/"
+            className="m-counter-item"
+            onClick={evt => evt.preventDefault()}
+          >
+            <span>Recibo de Grantía</span>
+          </Link>
+        </li>
+      </ul>
+      <ul className="m-counter mt-3 " style={{ marginLeft: '9.6em' }}>
+        <li className="m-counter-plus warning-magent">
+          <Link
+            to="/"
+            className="m-counter-item"
+            onClick={evt => evt.preventDefault()}
+          >
+            <span>AC</span>
+          </Link>
+        </li>
+        <li className="m-counter-plus success">
+          <Link
+            to="/"
+            className="m-counter-item"
+            onClick={evt => evt.preventDefault()}
+          >
+            <span>Contato con cliente</span>
+          </Link>
+        </li>
+        {isCreditPayment && (
+          <li
+            className={`m-counter-plus ${
+              PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2]
+                ? 'success'
+                : ''
+            }`}
+          >
+            <Link
+              to="/"
+              className="m-counter-item"
+              onClick={evt => evt.preventDefault()}
+            >
+              <span>Pre-Aprobacíon</span>
+            </Link>
+          </li>
+        )}
+        {!isCreditPayment && (
+          <li className="m-counter-plus success">
+            <Link
+              to="/"
+              className="m-counter-item"
+              onClick={evt => evt.preventDefault()}
+            >
+              <span>Aprobacíon Formal</span>
+            </Link>
+          </li>
+        )}
+      </ul>
+    </>
   );
 }
 
@@ -85,7 +164,7 @@ function Steps({ offer }) {
     Graph.Node[2].Color = 'green';
   }
 
-  if(OfertaState === OFERTA_STATE[4]) return null;
+  if (OfertaState === OFERTA_STATE[4]) return null;
 
   let colorStep = 0;
   return (
@@ -124,7 +203,7 @@ function Steps({ offer }) {
             );
           })}
       </ul>
-      {/* <SubSteps offer={offer} /> */}
+      <SubSteps offer={offer} />
     </nav>
   );
 }
