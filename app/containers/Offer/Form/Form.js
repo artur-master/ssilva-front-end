@@ -28,7 +28,7 @@ import ApproveConfeccionPromesa from './ApproveConfeccionPromesa';
 import { approveConfeccionPromesa } from './actions';
 import FormActions from './FormActions';
 
-export function Form({ selector, dispatch }) {
+export function Form({ selector, selectorCredit, dispatch }) {
   const { project = {} } = window;
   const entity = selector.offer;
   const initialValues = model({ project, entity });
@@ -64,7 +64,9 @@ export function Form({ selector, dispatch }) {
     <>
       <InitData User Client />
       <ProjectPhases project={project} active="offer" />
-      <Steps offer={selector.offer} />
+      <Steps
+        offer={{ ...selector.offer, Credits: selectorCredit.entities || [] }}
+      />
       <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">
         <span className="font-16-rem line-height-1 color-success">
@@ -101,6 +103,7 @@ export function Form({ selector, dispatch }) {
 
 Form.propTypes = {
   selector: PropTypes.object,
+  selectorCredit: PropTypes.object,
   dispatch: PropTypes.func,
 };
 

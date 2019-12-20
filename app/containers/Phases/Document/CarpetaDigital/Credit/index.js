@@ -12,24 +12,27 @@ import DocumentItem from '../../DocumentItem';
 
 export function Credit({ entity, canUpload, canReview, onReview }) {
   const documents = getDocuments(entity);
+  // skip the first document 'Transferencia/DocumentPagoGarantia'
   return (
     <List>
-      {documents.map((document, index) => (
-        <DocumentItem
-          key={document.documentoType}
-          {...document}
-          required={
-            document.required ||
-            (document.documentoType === 'DocumentCertificadoMatrimonio' &&
-              entity.Cliente.CivilStatus === 'Casado(a)')
-          }
-          Documentos={entity.Documents || {}}
-          className={index > 0 ? 'border-top' : ''}
-          canUpload={canUpload}
-          canReview={canReview}
-          onReview={onReview}
-        />
-      ))}
+      {documents
+        .filter((item, index) => index > 0)
+        .map((document, index) => (
+          <DocumentItem
+            key={document.documentoType}
+            {...document}
+            required={
+              document.required ||
+              (document.documentoType === 'DocumentCertificadoMatrimonio' &&
+                entity.Cliente.CivilStatus === 'Casado(a)')
+            }
+            Documentos={entity.Documents || {}}
+            className={index > 0 ? 'border-top' : ''}
+            canUpload={canUpload}
+            canReview={canReview}
+            onReview={onReview}
+          />
+        ))}
     </List>
   );
 }

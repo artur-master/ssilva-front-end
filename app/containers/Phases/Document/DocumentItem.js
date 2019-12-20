@@ -26,6 +26,7 @@ function DocumentItem({
   required = false,
   accept = '*',
   firmado = false,
+  autoGenerate = false,
   description,
   className = '',
   onReview,
@@ -47,6 +48,7 @@ function DocumentItem({
     default:
       fileAccept = '*';
   }
+  if (autoGenerate && !Documentos[documentoType]) return null;
   return (
     <Item className={className}>
       <div className="color-regular order-1" style={{ width: '22em' }}>
@@ -56,65 +58,67 @@ function DocumentItem({
       {description && (
         <span className="order-1 italic-gray">{description}</span>
       )}
-      <FormikField
-        name={documentoType}
-        validate={value => {
-          if (required && !Documentos[documentoType] && !value)
-            return 'Este campo es requerido';
-          return null;
-        }}
-      >
-        {({ field, form: { touched, errors, setFieldValue } }) => {
-          const getInTouched = getIn(touched, field.name);
-          const getInErrors = getIn(errors, field.name);
-          const { value } = field;
+      {!autoGenerate && (
+        <FormikField
+          name={documentoType}
+          validate={value => {
+            if (required && !Documentos[documentoType] && !value)
+              return 'Este campo es requerido';
+            return null;
+          }}
+        >
+          {({ field, form: { touched, errors, setFieldValue } }) => {
+            const getInTouched = getIn(touched, field.name);
+            const getInErrors = getIn(errors, field.name);
+            const { value } = field;
 
-          if (value) setFileName(value.name);
-          else setFileName('');
+            if (value) setFileName(value.name);
+            else setFileName('');
 
-          return (
-            <>
-              <div
-                className={`custom-file custom-input-file order-3 ${
-                  Documentos[documentoType] ? 'd-none' : ''
-                }`}
-                style={{ height: 'auto' }}
-                title="Examinar..."
-              >
-                <input
-                  name={documentoType}
-                  accept={fileAccept}
-                  className={
-                    getInTouched && getInErrors
-                      ? 'is-invalid custom-file-input'
-                      : 'custom-file-input'
-                  }
-                  disabled={!canUpload}
-                  onChange={event => {
-                    setFieldValue(field.name, event.target.files[0]);
-                  }}
-                  type="file"
-                />
-                <label
-                  className="custom-file-label font-14-rem shadow-sm text-nowrap overflow-hidden"
-                  style={{ textOverflow: 'ellipsis' }}
+            return (
+              <>
+                <div
+                  className={`custom-file custom-input-file order-3 ${
+                    Documentos[documentoType] ? 'd-none' : ''
+                  }`}
+                  style={{ height: 'auto' }}
+                  title="Examinar..."
                 >
-                  <b>
-                    {!value && 'Examinar...'}
-                    {value && !value.name && value}
-                    {value && value.name}
-                  </b>
-                </label>
-                {getInTouched && getInErrors && (
-                  <div className="invalid-feedback d-block m-0">
-                    {getInErrors}
-                  </div>
-                )}
-              </div>
-            </>
-          );
-        }}
-      </FormikField>
+                  <input
+                    name={documentoType}
+                    accept={fileAccept}
+                    className={
+                      getInTouched && getInErrors
+                        ? 'is-invalid custom-file-input'
+                        : 'custom-file-input'
+                    }
+                    disabled={!canUpload}
+                    onChange={event => {
+                      setFieldValue(field.name, event.target.files[0]);
+                    }}
+                    type="file"
+                  />
+                  <label
+                    className="custom-file-label font-14-rem shadow-sm text-nowrap overflow-hidden"
+                    style={{ textOverflow: 'ellipsis' }}
+                  >
+                    <b>
+                      {!value && 'Examinar...'}
+                      {value && !value.name && value}
+                      {value && value.name}
+                    </b>
+                  </label>
+                  {getInTouched && getInErrors && (
+                    <div className="invalid-feedback d-block m-0">
+                      {getInErrors}
+                    </div>
+                  )}
+                </div>
+              </>
+            );
+          }}
+        </FormikField>
+      )}
       {Documentos[documentoType] && (
         <span className="font-14-rem order-3 mr-3">
           <em>{getFileName(fileName || Documentos[documentoType])}</em>
@@ -134,7 +138,7 @@ function DocumentItem({
             >
               Ver documento
             </DropdownItem>
-            {canUpload && (
+            {!autoGenerate && canUpload && (
               <DropdownItem
                 tag="a"
                 onClick={() =>
@@ -179,6 +183,7 @@ DocumentItem.propTypes = {
   documentoType: PropTypes.string,
   accept: PropTypes.string,
   firmado: PropTypes.bool,
+  autoGenerate: PropTypes.bool,
   description: PropTypes.string,
   className: PropTypes.string,
   onReview: PropTypes.func,

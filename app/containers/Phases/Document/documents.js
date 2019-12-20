@@ -8,21 +8,24 @@ export const getDocuments = entity => {
   const hasTieneCredito = !!entity.Patrimony.CreditoConsumo.PagosMensuales;
   let baseDocuments = [
     {
+      documentoName: 'Transferencia',
+      documentoType: 'DocumentPagoGarantia',
+      required: true,
+    },
+    {
       documentoName: 'Oferta',
       documentoType: 'DocumentOferta',
+      autoGenerate: true,
     },
     {
       documentoName: 'Ficha Pre-aprobacion',
       documentoType: 'DocumentFichaPreAprobacion',
+      autoGenerate: true,
     },
     {
       documentoName: 'Simulación de crédito',
       documentoType: 'DocumentSimulador',
-    },
-    {
-      documentoName: 'Transferencia',
-      documentoType: 'DocumentPagoGarantia',
-      required: true,
+      autoGenerate: true,
     },
     {
       documentoName: 'Cotizacion',

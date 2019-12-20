@@ -22,6 +22,7 @@ function SubSteps({ offer }) {
     PreAprobacionCreditoState,
     RecepcionGarantiaState,
     PayType,
+    Credits,
   } = offer;
   const isCreditPayment = isCreditType(PayType);
   if (
@@ -70,7 +71,7 @@ function SubSteps({ offer }) {
         </li>
         <li
           className={`m-counter-plus ${
-            RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[2]
+            RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1]
               ? 'success'
               : ''
           }`}
@@ -94,7 +95,7 @@ function SubSteps({ offer }) {
             <span>AC</span>
           </Link>
         </li>
-        <li className="m-counter-plus success">
+        <li className={`m-counter-plus ${Credits.length > 0 ? 'success' : ''}`}>
           <Link
             to="/"
             className="m-counter-item"
@@ -144,7 +145,7 @@ function Steps({ offer }) {
   const { OfertaState } = offer;
   const Graph = {
     Node: [
-      { Label: 'AC', Description: 'Oferta', Color: 'green' },
+      { Label: 'JP', Description: 'Oferta', Color: 'green' },
       {
         Label: 'IN, FI, AC',
         Description: 'Pendiente Aprobación',

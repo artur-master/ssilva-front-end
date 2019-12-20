@@ -13,7 +13,7 @@ import { getFileName } from 'containers/App/helpers';
 
 const SyncMassage = WithLoading();
 
-export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
+export function PhaseRegisterSendToIN({ selector, entity, onSubmit }) {
   const [withText, setWithText] = useState({ text: '', open: false });
 
   return (
@@ -48,7 +48,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               })
             }
           >
-            Firma
+            Aprobar
           </Button>
           <Button
             disabled={selector.loading}
@@ -93,10 +93,13 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
   );
 }
 
-PhaseApproveConfeccionPromesa.propTypes = {
+PhaseRegisterSendToIN.propTypes = {
   entity: PropTypes.object,
+  canUpload: PropTypes.bool,
   selector: PropTypes.object,
+  form: PropTypes.bool,
   onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
 };
 
-export default PhaseApproveConfeccionPromesa;
+export default PhaseRegisterSendToIN;
