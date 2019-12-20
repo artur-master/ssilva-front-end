@@ -32,6 +32,12 @@ import {
   UPLOAD_CONFECCION_PROMESA,
   UPLOAD_CONFECCION_PROMESA_ERROR,
   UPLOAD_CONFECCION_PROMESA_SUCCESS,
+  APPROVE_UPLOAD_CONFECCION_PROMESA,
+  APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR,
+  APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS,
+  APPROVE_CONTROL_PROMESA,
+  APPROVE_CONTROL_PROMESA_ERROR,
+  APPROVE_CONTROL_PROMESA_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -49,6 +55,8 @@ const promesaReducer = (state = initialState, action) =>
     switch (action.type) {
       case GET_PROMESA:
       case UPLOAD_CONFECCION_PROMESA:
+      case APPROVE_UPLOAD_CONFECCION_PROMESA:
+      case APPROVE_CONTROL_PROMESA:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
@@ -56,6 +64,8 @@ const promesaReducer = (state = initialState, action) =>
         break;
       case GET_PROMESA_ERROR:
       case UPLOAD_CONFECCION_PROMESA_ERROR:
+      case APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR:
+      case APPROVE_CONTROL_PROMESA_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -73,11 +83,14 @@ const promesaReducer = (state = initialState, action) =>
         };
         break;
       case UPLOAD_CONFECCION_PROMESA_SUCCESS:
+      case APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS:
+      case APPROVE_CONTROL_PROMESA_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = action.response.detail;
         draft.promesa = { ...draft.promesa, ...action.response.promesa };
         break;
+
 
       /* remove --> */
       case RESET_CONTAINER:

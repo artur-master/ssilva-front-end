@@ -26,7 +26,7 @@ export function FormActions({ canEdit, onEdit, onCancel }) {
 }
 
 FormActions.propTypes = {
-  canEdit: PropTypes.func,
+  canEdit: PropTypes.bool,
   onEdit: PropTypes.func,
   onCancel: PropTypes.func,
 };

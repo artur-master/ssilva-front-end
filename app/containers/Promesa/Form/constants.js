@@ -18,6 +18,19 @@ export const UPLOAD_CONFECCION_PROMESA_ERROR =
 export const UPLOAD_CONFECCION_PROMESA_SUCCESS =
   'app/containers/Promesa/Form/UPLOAD_CONFECCION_PROMESA_SUCCESS';
 
+export const APPROVE_UPLOAD_CONFECCION_PROMESA =
+  'app/containers/Promesa/Form/APPROVE_UPLOAD_CONFECCION_PROMESA';
+export const APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR =
+  'app/containers/Promesa/Form/APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR';
+export const APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS =
+  'app/containers/Promesa/Form/APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS';
+
+export const APPROVE_CONTROL_PROMESA =
+  'app/containers/Promesa/Form/APPROVE_CONTROL_PROMESA';
+export const APPROVE_CONTROL_PROMESA_ERROR =
+  'app/containers/Promesa/Form/APPROVE_CONTROL_PROMESA_ERROR';
+export const APPROVE_CONTROL_PROMESA_SUCCESS =
+  'app/containers/Promesa/Form/APPROVE_CONTROL_PROMESA_SUCCESS';
 /* remove --> */
 
 export const APPROVE_IN = 'app/containers/Promesa/Form/APPROVE_IN';

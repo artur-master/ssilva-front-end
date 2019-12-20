@@ -26,9 +26,10 @@ export const getReports = (entities = []) =>
   }, initReports());
 
 export const canEditConfeccionPromesa = promesa =>
-  promesa.PromesaState === PROMESA_STATE[0] ||
-  promesa.PromesaState === PROMESA_STATE[9];
+  UserProject.isLegal() && promesa.PromesaState === PROMESA_STATE[0];
 
 export const isPendingApproveConfeccionPromesa = promesa =>
   (UserProject.isAssistance() || UserProject.isPM()) &&
   promesa.PromesaState === PROMESA_STATE[9];
+
+export const canEditPromesa = promesa => true;

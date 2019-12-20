@@ -80,7 +80,7 @@ function* save(action) {
   });
   if (documents) {
     const resDocuments = yield call(sagaUploadVentasDocument, documents);
-    response.reserva.Documents = resDocuments.documentos;
+    response.reserva.Documents = resDocuments.Documentos;
   }
   return response;
 }

@@ -37,6 +37,7 @@ export function ChequeForm({
     ActiveIndex: 0,
     Cuotas: cuotas.map(cuota => ({
       Date: cuota.Date,
+      AccountNumber: '',
       Number: convertUfToPeso(cuota.Amount),
       Beneficiary: '',
       City: 'Santiago',
@@ -124,6 +125,7 @@ export function ChequeForm({
                         <Label className="w-50">Fecha</Label>
                         <ExField
                           style={{ width: '50%' }}
+                          readOnly
                           type="datepicker"
                           name={`Cuotas[${ActiveIndex}].Date`}
                           required
@@ -134,19 +136,38 @@ export function ChequeForm({
                         <ExField
                           style={{ width: '50%' }}
                           name={`Cuotas[${ActiveIndex}].Serie`}
+                          onChange={evt =>
+                            form.setValues({
+                              ActiveIndex: form.values.ActiveIndex,
+                              Cuotas: form.values.Cuotas.map((item, index) => ({
+                                ...item,
+                                Serie: evt.currentTarget.value
+                                  ? parseInt(evt.currentTarget.value, 10) +
+                                    index -
+                                    ActiveIndex
+                                  : '',
+                              })),
+                            })
+                          }
                           required
                         />
                       </FormGroup>
                       <FormGroup className="col-12 col-md-6  align-items-center mt-3">
                         <Label className="w-50">Número</Label>
-                        <div className="btype shadow-sm order-3 font-14-rem w-50">
-                          <input
-                            readOnly
-                            value={ActiveIndex + 1}
-                            type="text"
-                            className="form-control form-control-sm"
-                          />
-                        </div>
+                        <ExField
+                          name={`Cuotas[${ActiveIndex}].AccountNumber`}
+                          onChange={evt =>
+                            form.setValues({
+                              ActiveIndex: form.values.ActiveIndex,
+                              Cuotas: form.values.Cuotas.map(item => ({
+                                ...item,
+                                AccountNumber: evt.currentTarget.value,
+                              })),
+                            })
+                          }
+                          required
+                          style={{ width: '50%' }}
+                        />
                       </FormGroup>
                       <FormGroup className="col-12 col-md-6  align-items-center mt-3">
                         <Label className="w-50">Monto</Label>
@@ -162,6 +183,15 @@ export function ChequeForm({
                         <ExField
                           style={{ width: '50%' }}
                           required
+                          onChange={evt =>
+                            form.setValues({
+                              ActiveIndex: form.values.ActiveIndex,
+                              Cuotas: form.values.Cuotas.map(item => ({
+                                ...item,
+                                Beneficiary: evt.currentTarget.value,
+                              })),
+                            })
+                          }
                           name={`Cuotas[${ActiveIndex}].Beneficiary`}
                           inputClass="text-uppercase"
                         />

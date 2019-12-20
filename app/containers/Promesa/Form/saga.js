@@ -10,6 +10,8 @@ import {
   DELETE_PROMESA,
   SAVE_PROMESA,
   APPROVE_MODIFY,
+  APPROVE_UPLOAD_CONFECCION_PROMESA,
+  APPROVE_CONTROL_PROMESA,
 } from './constants';
 import {
   getPromesaError,
@@ -24,6 +26,10 @@ import {
   approveInSuccess,
   approveConfeccionPromesaError,
   approveConfeccionPromesaSuccess,
+  approveUploadConfeccionPromesaSuccess,
+  approveUploadConfeccionPromesaError,
+  approveControlPromesaSuccess,
+  approveControlPromesaError,
 } from './actions';
 
 function* sagaGetPromesa(action) {
@@ -59,6 +65,38 @@ function* sagaUploadConfeccionPromesa(action) {
     yield put(uploadConfeccionPromesaSuccess(response));
   } catch (error) {
     yield put(uploadConfeccionPromesaError(error));
+  }
+}
+
+function* sagaApproveUploadConfeccionPromesa(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-approve-maqueta/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(approveUploadConfeccionPromesaSuccess(response));
+  } catch (error) {
+    yield put(approveUploadConfeccionPromesaError(error));
+  }
+}
+
+function* sagaApproveControlPromesa(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-approve-control/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(approveControlPromesaSuccess(response));
+  } catch (error) {
+    yield put(approveControlPromesaError(error));
   }
 }
 
@@ -155,7 +193,13 @@ function* sagaApproveModifyPromesa(action) {
 export default function* projectSaga() {
   yield takeLatest(GET_PROMESA, sagaGetPromesa);
   yield takeLatest(UPLOAD_CONFECCION_PROMESA, sagaUploadConfeccionPromesa);
+  yield takeLatest(
+    APPROVE_UPLOAD_CONFECCION_PROMESA,
+    sagaApproveUploadConfeccionPromesa,
+  );
+  yield takeLatest(APPROVE_CONTROL_PROMESA, sagaApproveControlPromesa);
 
+  /* remove */
   yield takeLatest(APPROVE_IN, sagaApproveIn);
   yield takeLatest(APPROVE_CONFECCION_PROMESA, sagaApproveLegal);
   yield takeLatest(DELETE_PROMESA, sagaDeletePromesa);

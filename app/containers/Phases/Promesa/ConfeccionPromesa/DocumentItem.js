@@ -73,13 +73,15 @@ function DocumentItem({ canUpload }) {
             >
               <b>Ver Promesa</b>
             </Link>
-            <button
-              type="button"
-              className="close mb-1"
-              onClick={() => setFieldValue('DocumentFirmaComprador', null)}
-            >
-              <span aria-hidden="true">×</span>
-            </button>
+            {canUpload && (
+              <button
+                type="button"
+                className="close mb-1"
+                onClick={() => setFieldValue('DocumentFirmaComprador', null)}
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            )}
           </>
         );
       }}

@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { Auth } from 'containers/App/helpers';
-import DocumentCondition from './Conditions';
+import DocumentCondition from '../Conditions';
 
 export function CarpetaDigitalUploadActions({
   entity,

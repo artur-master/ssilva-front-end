@@ -31,6 +31,12 @@ import {
   UPLOAD_CONFECCION_PROMESA,
   UPLOAD_CONFECCION_PROMESA_ERROR,
   UPLOAD_CONFECCION_PROMESA_SUCCESS,
+  APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR,
+  APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS,
+  APPROVE_UPLOAD_CONFECCION_PROMESA,
+  APPROVE_CONTROL_PROMESA,
+  APPROVE_CONTROL_PROMESA_ERROR,
+  APPROVE_CONTROL_PROMESA_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -78,6 +84,48 @@ export function uploadConfeccionPromesaError(error) {
 export function uploadConfeccionPromesaSuccess(response) {
   return {
     type: UPLOAD_CONFECCION_PROMESA_SUCCESS,
+    response,
+  };
+}
+
+export function approveUploadConfeccionPromesa(values) {
+  return {
+    type: APPROVE_UPLOAD_CONFECCION_PROMESA,
+    values,
+  };
+}
+
+export function approveUploadConfeccionPromesaError(error) {
+  return {
+    type: APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR,
+    error,
+  };
+}
+
+export function approveUploadConfeccionPromesaSuccess(response) {
+  return {
+    type: APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS,
+    response,
+  };
+}
+
+export function approveControlPromesa(values) {
+  return {
+    type: APPROVE_CONTROL_PROMESA,
+    values,
+  };
+}
+
+export function approveControlPromesaError(error) {
+  return {
+    type: APPROVE_CONTROL_PROMESA_ERROR,
+    error,
+  };
+}
+
+export function approveControlPromesaSuccess(response) {
+  return {
+    type: APPROVE_CONTROL_PROMESA_SUCCESS,
     response,
   };
 }

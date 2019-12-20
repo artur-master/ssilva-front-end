@@ -16,12 +16,13 @@ import { compose } from 'redux';
 import WithLoading from 'components/WithLoading';
 import { UserProject } from 'containers/Project/helper';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
+import makeSelectCredit from 'containers/Phases/PreCredito/Credit/selectors';
 import makeSelectOfferForm from './selectors';
 import Form from './Form';
 import reducer from './reducer';
 import saga from './saga';
 import { getOffer, resetContainer } from './actions';
-import { canApproveModifyOffer, canConfirmOffer, isModified } from '../helper';
+import { canConfirmOffer, isModified } from '../helper';
 import OfferConfirm from './Confirm';
 import OfferInForm from './InForm';
 import OfferFiForm from './FiForm';
@@ -31,6 +32,7 @@ const SyncMessage = WithLoading();
 export function OfferForm({
   selector,
   selectorProject,
+  selectorCredit,
   dispatch,
   location,
   action,
@@ -68,9 +70,20 @@ export function OfferForm({
   }
 
   if (canConfirmOffer(selector.offer))
-    return <OfferConfirm selector={selector} dispatch={dispatch} />;
+    return (
+      <OfferConfirm
+        selector={selector}
+        dispatch={dispatch}
+      />
+    );
 
-  return <Form selector={selector} dispatch={dispatch} />;
+  return (
+    <Form
+      selectorCredit={selectorCredit}
+      selector={selector}
+      dispatch={dispatch}
+    />
+  );
 }
 
 OfferForm.propTypes = {
@@ -78,12 +91,14 @@ OfferForm.propTypes = {
   location: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
+  selectorCredit: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   selector: makeSelectOfferForm(),
   selectorProject: makeSelectInitProject(),
+  selectorCredit: makeSelectCredit(),
 });
 
 function mapDispatchToProps(dispatch) {
