@@ -3,7 +3,7 @@
  * Promesa Form
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import PhaseGeneral from 'containers/Phases/General';
@@ -18,8 +18,9 @@ import InitData from 'containers/Common/InitData';
 import PhaseConfeccionPromesa from 'containers/Phases/Promesa/ConfeccionPromesa';
 import PhaseApproveConfeccionPromesa from 'containers/Phases/Promesa/ApproveConfeccionPromesa';
 import { PROMESA_STATE } from 'containers/App/constants';
-import PhaseApproveControlPromesa from 'containers/Phases/Promesa/ApproveControlPromesa';
+import PhaseFirmaOrNegociacionPromesa from 'containers/Phases/Promesa/FirmaOrNegociacion';
 import PhaseRegisterSendToIN from 'containers/Phases/Promesa/RegisterSendToIN';
+import PhaseUploadFirmaDocumentsPromesa from 'containers/Phases/Promesa/UploadFirmaDocuments';
 import Steps from './Steps';
 import {
   approveControlPromesa,
@@ -31,6 +32,9 @@ export function Form({ selector, dispatch }) {
   const { project = {} } = window;
   const entity = selector.promesa;
   const initialValues = entity;
+
+  const [uploadFirma, setUploadFirma] = useState(false);
+
   const onCancel = () =>
     dispatch(push(`/proyectos/${project.ProyectoID}/promesas`));
 
@@ -51,11 +55,20 @@ export function Form({ selector, dispatch }) {
           onCancel={onCancel}
         />
       );
-    if (entity.PromesaState === PROMESA_STATE[1] && UserProject.isVendor())
+    if (entity.PromesaState === PROMESA_STATE[1] && UserProject.isVendor()) {
+      if (uploadFirma)
+        return (
+          <PhaseUploadFirmaDocumentsPromesa
+            entity={entity}
+            selector={selector}
+            onCancel={() => setUploadFirma(false)}
+          />
+        );
       return (
-        <PhaseApproveControlPromesa
+        <PhaseFirmaOrNegociacionPromesa
           entity={entity}
           selector={selector}
+          onFirma={() => setUploadFirma(true)}
           onSubmit={values =>
             dispatch(
               approveControlPromesa({
@@ -66,25 +79,27 @@ export function Form({ selector, dispatch }) {
           }
         />
       );
-    if (
-      entity.PromesaState === PROMESA_STATE[9] &&
-      entity.DocumentFirmaComprador &&
-      (UserProject.isAssistance() || UserProject.isPM())
-    )
-      return (
-        <PhaseApproveConfeccionPromesa
-          entity={entity}
-          selector={selector}
-          onSubmit={values =>
-            dispatch(
-              approveUploadConfeccionPromesa({
-                PromesaID: entity.PromesaID,
-                ...values,
-              }),
-            )
-          }
-        />
-      );
+    }
+    if (entity.DocumentFirmaComprador) {
+      if (
+        (entity.PromesaState === PROMESA_STATE[9] && UserProject.isAC()) ||
+        (entity.PromesaState === PROMESA_STATE[11] && UserProject.isPM())
+      )
+        return (
+          <PhaseApproveConfeccionPromesa
+            entity={entity}
+            selector={selector}
+            onSubmit={values =>
+              dispatch(
+                approveUploadConfeccionPromesa({
+                  PromesaID: entity.PromesaID,
+                  ...values,
+                }),
+              )
+            }
+          />
+        );
+    }
 
     return (
       <PhaseConfeccionPromesa

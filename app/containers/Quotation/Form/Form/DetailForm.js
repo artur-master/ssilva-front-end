@@ -32,7 +32,6 @@ export function DetailForm({ onCancel, onContinue, form }) {
     label: Name,
     value: Name,
   }));
-
   return (
     <>
       <Box>

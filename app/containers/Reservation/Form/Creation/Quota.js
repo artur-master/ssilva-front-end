@@ -5,7 +5,7 @@
  */
 import React from 'react';
 
-import { FormattedNumber, intlShape } from 'react-intl';
+import { FormattedNumber } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import FormaDePageForm from 'containers/Phases/FormaDePago/Form';
@@ -40,7 +40,5 @@ function Quota({ form }) {
 Quota.propTypes = {
   form: PropTypes.object,
 };
-Quota.contextTypes = {
-  intl: intlShape,
-};
+
 export default Quota;

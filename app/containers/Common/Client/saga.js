@@ -65,7 +65,7 @@ function* saveClient(action) {
 }
 
 function* toggleScreen(action) {
-  if (action.client && action.client.UserID) {
+  if (action.client && action.client.UserID && action.screen) {
     yield call(getClient, { UserID: action.client.UserID || action.client });
   }
 }

@@ -5,7 +5,7 @@ import { Field, FieldArray } from 'formik';
 const CheckboxGroup = ({
   name,
   options,
-  itemClassName = '',
+  itemClassName = 'mr-3',
   map = { label: 'label', value: 'value' },
   required = false,
 }) =>
@@ -52,8 +52,10 @@ const CheckboxGroup = ({
                         {/* eslint-disable-next-line */}
                         <label />
                       </span>
+                      <p className="font-14-rem m-0 color-regular">
+                        {option[map.label]}
+                      </p>
                     </div>
-                    <span className="font-14-rem">{option[map.label]}</span>
                   </div>
                 )}
               </Field>

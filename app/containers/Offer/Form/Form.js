@@ -84,7 +84,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
           initialValues.OfertaID &&
           initialValues.PreAprobacionCreditoState ===
             PRE_APROBACION_CREDITO_STATE[1] &&
-          UserProject.isAssistance(window.project) &&
+          UserProject.isAC(window.project) &&
           !isPendienteContacto(initialValues)
         }
       />

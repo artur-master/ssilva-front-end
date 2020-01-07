@@ -15,7 +15,12 @@ import Conditions from 'containers/Phases/Conditions';
 
 const SyncMassage = WithLoading();
 
-export function PhaseApproveControlPromesa({ selector, entity, onSubmit }) {
+export function PhaseFirmaOrNegociacionPromesa({
+  selector,
+  entity,
+  onSubmit,
+  onFirma,
+}) {
   const initialValues = {
     Condition: entity.Condition || [],
     openComment: false,
@@ -48,13 +53,7 @@ export function PhaseApproveControlPromesa({ selector, entity, onSubmit }) {
             </BoxContent>
             <BoxFooter>
               <div className="d-flex justify-content-end">
-                <Button
-                  disabled={selector.loading}
-                  onClick={() => {
-                    form.setFieldValue('Resolution', true);
-                    form.submitForm();
-                  }}
-                >
+                <Button disabled={selector.loading} onClick={onFirma}>
                   Firmar
                 </Button>
                 <Button
@@ -145,10 +144,11 @@ export function PhaseApproveControlPromesa({ selector, entity, onSubmit }) {
   );
 }
 
-PhaseApproveControlPromesa.propTypes = {
+PhaseFirmaOrNegociacionPromesa.propTypes = {
   entity: PropTypes.object,
   selector: PropTypes.object,
   onSubmit: PropTypes.func,
+  onFirma: PropTypes.func,
 };
 
-export default PhaseApproveControlPromesa;
+export default PhaseFirmaOrNegociacionPromesa;

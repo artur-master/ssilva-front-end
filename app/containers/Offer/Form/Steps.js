@@ -22,7 +22,7 @@ function SubSteps({ offer }) {
     PreAprobacionCreditoState,
     RecepcionGarantiaState,
     PayType,
-    Credits,
+    Credits = [],
   } = offer;
   const isCreditPayment = isCreditType(PayType);
   if (
@@ -95,7 +95,14 @@ function SubSteps({ offer }) {
             <span>AC</span>
           </Link>
         </li>
-        <li className={`m-counter-plus ${Credits.length > 0 ? 'success' : ''}`}>
+        <li
+          className={`m-counter-plus ${
+            Credits.length > 0 ||
+            (!isCreditPayment && !isPendienteContacto(offer))
+              ? 'success'
+              : ''
+          }`}
+        >
           <Link
             to="/"
             className="m-counter-item"
@@ -122,7 +129,11 @@ function SubSteps({ offer }) {
           </li>
         )}
         {!isCreditPayment && (
-          <li className="m-counter-plus success">
+          <li
+            className={`m-counter-plus ${
+              isPendienteContacto(offer) ? '' : 'success'
+            }`}
+          >
             <Link
               to="/"
               className="m-counter-item"

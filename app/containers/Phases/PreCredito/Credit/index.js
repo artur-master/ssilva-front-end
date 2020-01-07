@@ -53,7 +53,9 @@ export function PhaseCredit({
     return (
       <Collapse>
         <CollapseHeader>APROBACIÓN FORMAL</CollapseHeader>
-        <CollapseContent><span className="px-3 badge color-success">Aprobada</span></CollapseContent>
+        <CollapseContent>
+          <span className="px-3 badge color-success">Aprobada</span>
+        </CollapseContent>
       </Collapse>
     );
 

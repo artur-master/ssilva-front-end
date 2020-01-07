@@ -98,7 +98,11 @@ const clientReducer = (state = initialState, action) =>
         break;
       case TOGGLE_FORM:
         draft.screen = action.screen;
-        draft.loading = !!(action.client && action.client.UserID);
+        draft.loading = !!(
+          action.client &&
+          action.client.UserID &&
+          action.screen
+        );
         draft.error = false;
         draft.success = false;
         draft.client = action.client;

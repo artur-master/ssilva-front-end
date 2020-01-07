@@ -52,6 +52,9 @@ function ClienteForm({ info, focusHide, selector, onHide, onSubmit }) {
     Extra: { AgeRank: '', SalaryRank: '', ...(client.Extra || {}) },
     CheckArt150: false,
   };
+  if (selector.success) {
+    onHide();
+  }
   return (
     <Modal isOpen={selector.screen === 'form'} size="xl">
       <ExForm initialValues={initialValues} onSubmit={onSubmit}>

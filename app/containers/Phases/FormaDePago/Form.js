@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { Input } from 'components/ExForm';
 import { formatNumber } from 'containers/App/helpers';
+import IntlFormatCurrency from 'components/IntlFormat/Currency';
 import Cuotas from './Cuotas';
 import {
   calculates,
@@ -141,12 +142,10 @@ function PhaseFormaDePagoForm({ form }) {
               </td>
               <td>
                 <div className="search-filter">
-                  <input
+                  <IntlFormatCurrency
                     className="form-control form-control-sm"
-                    type="number"
-                    value={formatNumber(convert.PaymentFirmaPromesa)}
-                    readOnly
-                    placeholder="$"
+                    style={{ width: 120 }}
+                    value={convert.PaymentFirmaPromesa}
                   />
                 </div>
               </td>
@@ -176,24 +175,20 @@ function PhaseFormaDePagoForm({ form }) {
               <td>PIE / Monto a Financiar en Cuotas</td>
               <td>
                 <div className="search-filter">
-                  <div className="flex-fill">
-                    <div className="btype shadow-sm  ">
-                      <input
-                        placeholder="UF"
-                        min="0"
-                        type="number"
-                        className="form-control form-control-sm"
-                        value={formatNumber(cuota)}
-                        readOnly={values.Cuotas.length > 1}
-                        onChange={evt => {
-                          handleChangeUF(
-                            'Cuotas.0.Amount',
-                            evt.currentTarget.value,
-                          );
-                        }}
-                      />
-                    </div>
-                  </div>
+                  <input
+                    placeholder="UF"
+                    min="0"
+                    type="number"
+                    className="form-control form-control-sm"
+                    value={formatNumber(cuota)}
+                    readOnly={values.Cuotas.length > 1}
+                    onChange={evt => {
+                      handleChangeUF(
+                        'Cuotas.0.Amount',
+                        evt.currentTarget.value,
+                      );
+                    }}
+                  />
                 </div>
               </td>
               <td>
@@ -215,12 +210,10 @@ function PhaseFormaDePagoForm({ form }) {
               </td>
               <td>
                 <div className="search-filter">
-                  <input
+                  <IntlFormatCurrency
                     className="form-control form-control-sm"
-                    type="number"
-                    readOnly
-                    value={formatNumber(convert.Cuotas)}
-                    placeholder="$"
+                    style={{ width: 120 }}
+                    value={convert.Cuotas}
                   />
                 </div>
               </td>
@@ -302,13 +295,10 @@ function PhaseFormaDePagoForm({ form }) {
                 </td>
                 <td>
                   <div className="search-filter">
-                    <input
+                    <IntlFormatCurrency
                       className="form-control form-control-sm"
-                      type="number"
-                      readOnly
-                      value={formatNumber(convert.PaymentFirmaEscritura)}
-                      placeholder="$"
-                      min={0}
+                      style={{ width: 120 }}
+                      value={convert.PaymentFirmaEscritura}
                     />
                   </div>
                 </td>
@@ -360,13 +350,10 @@ function PhaseFormaDePagoForm({ form }) {
                 </td>
                 <td>
                   <div className="search-filter">
-                    <input
+                    <IntlFormatCurrency
                       className="form-control form-control-sm"
-                      type="number"
-                      value={formatNumber(convert.PaymentInstitucionFinanciera)}
-                      placeholder="$"
-                      min={0}
-                      readOnly
+                      value={convert.PaymentInstitucionFinanciera}
+                      style={{ width: 120 }}
                     />
                   </div>
                 </td>
@@ -466,12 +453,10 @@ function PhaseFormaDePagoForm({ form }) {
               </td>
               <td>
                 <div className="search-filter">
-                  <input
+                  <IntlFormatCurrency
                     className="form-control form-control-sm"
-                    type="number"
-                    value={formatNumber(convert.AhorroPlus)}
-                    readOnly
-                    placeholder="$"
+                    style={{ width: 120 }}
+                    value={convert.AhorroPlus}
                   />
                 </div>
               </td>

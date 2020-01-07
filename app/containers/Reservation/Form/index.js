@@ -45,7 +45,7 @@ export function ReservationForm({
   const query = queryString.parse(location.search);
   const { CotizacionID, ReservaID } = query;
   const { project } = selectorProject;
-  const { Folio } = selector.reservation;
+  const { Folio = '' } = selector.reservation;
   useEffect(() => {
     if (ReservaID) dispatch(getReservation(ReservaID));
     else if (CotizacionID) dispatch(getQuotation(CotizacionID));
@@ -80,7 +80,9 @@ export function ReservationForm({
         <>
           <ProjectPhases project={project} active="reservation" />
           <Steps reservation={selector.reservation} />
-          <h4 className="font-21 mt-3">{`${project.Name} / ${Folio}`}</h4>
+          <h4 className="font-21 mt-3">
+            {project.Name} {Folio ? ` / ${Folio}` : ''}
+          </h4>
           <h5 className="mb-3 d-flex align-items-center justify-content-between">
             <span className="font-16-rem line-height-1 color-success">
               {getActionTitle(selector.reservation)}
