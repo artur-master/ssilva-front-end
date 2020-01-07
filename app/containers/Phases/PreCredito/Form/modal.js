@@ -1,24 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { push } from 'connected-react-router';
-import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Button from 'components/Button';
 import { Form as ExForm } from 'components/ExForm';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
 import { isContadoPayment } from 'containers/App/helpers';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'components/Modal';
 import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
 import Renta from './Renta';
 import Summary from './Summary';
 import { calculateRenta } from '../helper';
-import {
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from '../../../../components/Modal';
 const PhasePreCreditoFormModal = ({
   initialValues,
   onSubmit,
@@ -64,29 +57,27 @@ const PhasePreCreditoFormModal = ({
             </div>
           </ModalBody>
           <ModalFooter>
-            <div className="p-3 d-flex align-items-center after-expands-2">
-              <Button
-                disabled={moneyErr}
-                className="order-3"
-                onClick={evt => {
-                  evt.preventDefault();
-                  submitForm();
-                }}
-              >
-                Guardar
-              </Button>
+            <Button
+              disabled={moneyErr}
+              className="order-3"
+              onClick={evt => {
+                evt.preventDefault();
+                submitForm();
+              }}
+            >
+              Guardar
+            </Button>
 
-              <Button
-                onClick={evt => {
-                  evt.preventDefault();
-                  onHide();
-                }}
-                className="order-3"
-                color="white"
-              >
-                Cancelar
-              </Button>
-            </div>
+            <Button
+              onClick={evt => {
+                evt.preventDefault();
+                onHide();
+              }}
+              className="order-3"
+              color="white"
+            >
+              Cancelar
+            </Button>
           </ModalFooter>
         </Modal>
       );

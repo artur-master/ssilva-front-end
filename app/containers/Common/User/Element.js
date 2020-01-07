@@ -25,7 +25,7 @@ const Element = ({
   isInvalid = false,
   onSelect,
   openModal = false,
-  disable = false,
+  disabled = false,
 }) => {
   const [isOpen, setIsOpen] = useState(openModal);
   const defaultComponent = () => {
@@ -43,7 +43,7 @@ const Element = ({
         role="presentation"
         style={{ height: 31, ...style }}
         className={`btype shadow-sm icon icon-select-arrows right-icon ${className}`}
-        onClick={() => (!disable ? setIsOpen(true) : null)}
+        onClick={() => (!disabled ? setIsOpen(true) : null)}
       >
         <div
           className={`form-control form-control-sm ${
@@ -91,7 +91,7 @@ Element.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   isInvalid: PropTypes.bool,
-  disable: PropTypes.bool,
+  disabled: PropTypes.bool,
   component: PropTypes.func,
   onSelect: PropTypes.func,
 };

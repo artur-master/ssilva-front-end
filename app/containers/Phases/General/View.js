@@ -72,6 +72,7 @@ function PhaseGeneralView({ values }) {
             </span>
           </li>
 
+          {/*
           <li className="col-md-6 d-flex align-items-center my-2">
             <span
               className="font-14-rem color-regular mr-3"
@@ -86,6 +87,7 @@ function PhaseGeneralView({ values }) {
                 ).Name}
             </span>
           </li>
+          */}
         </>
       )}
 

@@ -34,7 +34,12 @@ function* getQuotation(action) {
       request,
       `${API_ROOT}/ventas/clientes/${quotation.ClienteID}/`,
     );
-    yield put(getQuotationSuccess({ quotation, client }));
+    yield put(
+      getQuotationSuccess({
+        quotation,
+        client,
+      }),
+    );
   } catch (error) {
     yield put(getQuotationError(error));
   }

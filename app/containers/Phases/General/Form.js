@@ -16,8 +16,8 @@ import {
 
 import { Modal, ModalFooter, ModalHeader, ModalBody } from 'components/Modal';
 import RadioGroup from 'components/ExForm/RadioGroup';
-import { clientFullname } from 'containers/Common/Client/helper';
 import { userFullname } from 'containers/Common/User/helper';
+import ExClients from 'components/ExForm/ExClients';
 
 // eslint-disable-next-line no-unused-vars
 function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
@@ -31,7 +31,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
     <Modal isOpen={isOpen} size="xl" scrollable>
       <ModalHeader>Editar Generals</ModalHeader>
       <ExForm initialValues={initialValues} onSubmit={onUpdate}>
-        {({ values, submitForm }) => (
+        {({ values, submitForm, setValues }) => (
           <>
             <ModalBody className="p-3">
               {!initialValues.CotizacionType && (
@@ -49,7 +49,26 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                 </FormGroup>
                 <FormGroup className="col-md-6 my-2">
                   <Label style={{ width: '10em' }}>Cliente</Label>
-                  <b>{clientFullname(values.Cliente)}</b>
+                  <ExClients
+                    name="Cliente.UserID"
+                    style={{ width: '21em' }}
+                    info="basic"
+                    onSelect={client =>
+                      setValues({
+                        ...values,
+                        ClienteID: client.UserID,
+                        Cliente: client,
+                        Empleador: client.Empleador,
+                      })
+                    }
+                    focusHide={
+                      values.CotizacionType ===
+                      window.preload.quotationUtils.CotizacionTypes[1].Name
+                        ? ['ComunaID']
+                        : false
+                    }
+                    required
+                  />
                 </FormGroup>
                 <FormGroup className="col-md-6 my-2">
                   <Label style={{ width: '10em' }}>Fecha</Label>
@@ -70,7 +89,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                       <ExField
                         type="select"
                         name="IsNotInvestment"
-                        className="flex-fill"
+                        style={{ width: '21em' }}
                         required
                       >
                         <option value="">Selecciona...</option>
@@ -78,12 +97,13 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                         <option value="0">Inversión</option>
                       </ExField>
                     </FormGroup>
+                    {/*
                     <FormGroup className="col-md-6 my-2">
                       <Label style={{ width: '10em' }}>Cómo se Enteró</Label>
                       <ExField
                         type="select"
                         name="Cliente.FindingTypeID"
-                        className="flex-fill"
+                        style={{ width: '21em' }}
                         required
                       >
                         <option value="">Selecciona...</option>
@@ -99,6 +119,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                         )}
                       </ExField>
                     </FormGroup>
+                    */}
                   </>
                 )}
                 {values.CotizacionType ===
@@ -108,7 +129,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                     <ExField
                       type="select"
                       name="ContactMethodTypeID"
-                      className="flex-fill"
+                      style={{ width: '21em' }}
                       required
                     >
                       <option value="">Selecciona...</option>

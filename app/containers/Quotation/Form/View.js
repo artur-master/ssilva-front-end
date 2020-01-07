@@ -7,9 +7,10 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import { FormattedNumber } from 'react-intl';
-import { Box, BoxContent, BoxHeader } from 'components/Box';
+import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import FormaDePagoView from 'containers/Phases/FormaDePago/View';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
+import { Link } from 'react-router-dom';
 import DetailView from './Form/DetailView';
 
 export function QuotationView({ quotation, selectorProject }) {
@@ -40,6 +41,22 @@ export function QuotationView({ quotation, selectorProject }) {
           <FormaDePagoView values={quotation} />
         </BoxContent>
       </Box>
+      <div className="py-3 d-flex align-items-center after-expands-2">
+        <Link
+          to={`/proyectos/${project.ProyectoID}/reserva/crear?CotizacionID=${
+            quotation.CotizacionID
+          }`}
+          className="font-14-rem shadow-sm m-btn order-3"
+        >
+          Reserva
+        </Link>
+        <Link
+          to={`/proyectos/${project.ProyectoID}/cotizaciones`}
+          className="font-14-rem  shadow-sm m-btn m-btn-white ml-2 order-3"
+        >
+          Cancelar
+        </Link>
+      </div>
     </>
   );
 }

@@ -129,8 +129,9 @@ export const PROMESA_STATE = [
   'Pendiente envio de copias',
   'Pendiente escrituracion',
   'Escritura',
-  'Pendiente aprobación de maqueta',
+  'Pendiente AC aprobación de maqueta',
   'Promesa modificada',
+  'Pendiente JP aprobación de maqueta',
 ];
 
 export const REQUIRED_DOCUMENTS = [
@@ -171,4 +172,5 @@ export const VENTA_LOG_TYPE = [
   'Rechazo Modificacion oferta',
   'Aprobacion Modificacion oferta',
   'Refund garantia',
+  'AC Aprobacion maqueta',
 ];

@@ -29,7 +29,7 @@ export const canEditConfeccionPromesa = promesa =>
   UserProject.isLegal() && promesa.PromesaState === PROMESA_STATE[0];
 
 export const isPendingApproveConfeccionPromesa = promesa =>
-  (UserProject.isAssistance() || UserProject.isPM()) &&
+  (UserProject.isAC() || UserProject.isPM()) &&
   promesa.PromesaState === PROMESA_STATE[9];
 
 export const canEditPromesa = promesa => true;

@@ -86,7 +86,7 @@ export const UserProject = {
     isUserProjectType(USER_PROYECTO_TYPE[6], project),
   isFinanza: (project = window.project || {}) =>
     isUserProjectType(USER_PROYECTO_TYPE[7], project),
-  isAssistance: (project = window.project || {}) =>
+  isAC: (project = window.project || {}) =>
     isUserProjectType(USER_PROYECTO_TYPE[3], project),
   isInmobiliario: (project = window.project || {}) =>
     isUserProjectType(USER_PROYECTO_TYPE[0], project) ||

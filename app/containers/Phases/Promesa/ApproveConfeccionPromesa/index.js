@@ -48,7 +48,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               })
             }
           >
-            Firma
+            Aprobar
           </Button>
           <Button
             disabled={selector.loading}

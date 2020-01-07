@@ -24,7 +24,6 @@ import reducer from './reducer';
 import saga from './saga';
 import { saveQuotation, resetContainer, getQuotation } from './actions';
 import QuotationView from './View';
-import InstitucionFinanciera from '../../Common/InstitucionFinanciera/init';
 const SyncMassage = WithLoading();
 const SyncQuotationView = WithLoading(QuotationView);
 

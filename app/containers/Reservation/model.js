@@ -75,7 +75,7 @@ export default function model({ project = {}, entity = {} }) {
     ClienteID: entity.ClienteID || '',
     Cliente: {
       UserID: (entity.Cliente || {}).UserID || '',
-      FindingTypeID: (entity.Cliente || {}).FindingTypeID || null,
+      // FindingTypeID: (entity.Cliente || {}).FindingTypeID || null,
       InterestedTypeID: (entity.Cliente || {}).InterestedTypeID || null,
       ...(entity.Cliente || {}),
       Extra: {
