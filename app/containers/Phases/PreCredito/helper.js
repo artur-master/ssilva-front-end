@@ -1,4 +1,28 @@
 /* eslint-disable array-callback-return */
+import {
+  getDescendantProp,
+  stringToBoolean,
+  isCreditPayment,
+} from 'containers/App/helpers';
+import { calculates } from '../FormaDePago/helper';
+
+export const isValidLabor = ({ Cliente, PayType }) => {
+  const isCompany = stringToBoolean(Cliente.IsCompany);
+  const isCredit = isCreditPayment(PayType);
+
+  const requiredFields = [
+    'Empleador.RazonSocial',
+    'Empleador.Rut',
+    'Empleador.Extra.Phone',
+    'Extra.Values.Honoraries',
+  ];
+  if (!isCompany && isCredit) {
+    return !requiredFields.find(
+      field => getDescendantProp(Cliente, field) === '',
+    );
+  }
+  return true;
+};
 export const calculateRenta = (reserva = {}) => {
   const Cliente = reserva.Cliente || {};
   const Codeudor = reserva.Codeudor || {};
@@ -19,9 +43,13 @@ export const calculateRenta = (reserva = {}) => {
     (CoExtra.Values.RealStateLeasing || 0) +
     (CoExtra.Values.Retirements || 0) +
     (CoExtra.Values.Pension || 0);
+  const SumRenta = Renta + CoRenta;
+  const { total, discount } = calculates(reserva);
+  const moneyErr = Math.floor(total - discount) >= SumRenta;
   return {
     Renta,
     CoRenta,
-    SumRenta: Renta + CoRenta,
+    SumRenta,
+    moneyErr,
   };
 };

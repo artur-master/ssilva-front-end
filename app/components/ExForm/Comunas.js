@@ -15,7 +15,7 @@ import { makeSelectPreload } from 'containers/App/selectors';
 
 const Comunas = ({ preload, ...props }) => (
   <ExField type="select" {...props}>
-    <option>Selecciona una Comuna...</option>
+    <option value="">Selecciona una Comuna...</option>
     {preload.local.map(local => (
       <optgroup key={local.RegionID} label={local.Name}>
         {local.provincias.map(provincia => (

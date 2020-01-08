@@ -68,7 +68,7 @@ function ClienteForm({ info, focusHide, selector, onHide, onSubmit }) {
             default:
               Form = isCompany ? CompanyBasic : PersonBasic;
           }
-          if (form.values.UserID && !form.values.Name)
+          if (form.values.UserID && form.values.Name === undefined)
             return <SyncMessage {...restSelector} loading={loading} />;
 
           return (

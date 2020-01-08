@@ -3,7 +3,7 @@
  * Offer Form
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import PhaseGeneral from 'containers/Phases/General';
 import PhaseClient from 'containers/Phases/Client';
@@ -16,12 +16,14 @@ import PhasesDocumentGarantia from 'containers/Phases/Document/Garantia';
 import { Form as ExForm } from 'components/ExForm';
 import { getDocuments } from 'containers/Phases/Document/documents';
 import { push } from 'connected-react-router';
+import AlertPopup from 'components/Alert/popup';
+import InitData from 'containers/Common/InitData';
 import model from '../../model';
 import Steps from './Steps';
 import CarpetaDigital from './CarpetaDigital';
 import OfferEditActions from './Actions';
 import { deleteOffer, saveOffer, updateOffer } from '../actions';
-import { canEditOffer } from '../../helper';
+import { canEditOffer, isValidData } from '../../helper';
 
 export function OfferEditForm({ selector, dispatch }) {
   const entity = selector.offer;
@@ -29,9 +31,21 @@ export function OfferEditForm({ selector, dispatch }) {
   const initialValues = model({ project, entity });
   const documents = getDocuments(entity);
   const canEdit = !!canEditOffer(entity);
+  const isValid = isValidData(entity);
+  const [openAlert, setOpenAlert] = useState(false);
 
   return (
     <>
+      {!isValid && (
+        <AlertPopup
+          title="Faltan Datos"
+          isOpen={openAlert}
+          onHide={() => setOpenAlert(false)}
+        >
+          Por favor complete los datos faltantes
+        </AlertPopup>
+      )}
+      <InitData User Client />
       <ProjectPhases project={project} active="offer" />
       <Steps offer={selector.offer} />
       <Alert type="danger">
@@ -73,7 +87,10 @@ export function OfferEditForm({ selector, dispatch }) {
           },
           { Folio: entity.Folio, Condition: [] },
         )}
-        onSubmit={values => dispatch(saveOffer(entity, values))}
+        onSubmit={values => {
+          if (!isValid) return setOpenAlert(true);
+          return dispatch(saveOffer(entity, values));
+        }}
       >
         {form => (
           <>

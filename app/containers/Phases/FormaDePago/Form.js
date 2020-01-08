@@ -5,7 +5,7 @@
  */
 import React, { useState } from 'react';
 import _ from 'lodash';
-import { FormattedNumber, intlShape } from 'react-intl';
+import { FormattedNumber } from 'react-intl';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
@@ -543,8 +543,5 @@ function PhaseFormaDePagoForm({ form }) {
 
 PhaseFormaDePagoForm.propTypes = {
   form: PropTypes.object,
-};
-PhaseFormaDePagoForm.contextTypes = {
-  intl: intlShape,
 };
 export default PhaseFormaDePagoForm;

@@ -19,6 +19,7 @@ import {
   canEditReservation,
   canReviewReservation,
   canUploadReservation,
+  isValidData,
 } from './helper';
 import {
   cancelReservation,
@@ -27,12 +28,14 @@ import {
   sendToControl,
   updateReservation,
 } from './actions';
+import AlertPopup from '../../../components/Alert/popup';
 
 export function Form({ project, selector, dispatch }) {
   const entity = selector.reservation;
   const isContado = isContadoPayment(entity.PayType);
   /* eslint-disable-next-line */
   const [step, setStep] = useState(entity.ReservaID ? 3 : isContado ? 2 : 1);
+  const [openAlert, setOpenAlert] = useState(false);
 
   const [confirmes, setConfirmes] = useState({
     general: false,
@@ -40,6 +43,7 @@ export function Form({ project, selector, dispatch }) {
     inmueble: false,
     forma: false,
   });
+  const isValid = isValidData(entity);
   const canEdit = canEditReservation(entity);
   const canConfirm = canConfirmReservation(entity);
   const canUpload = canUploadReservation(entity);
@@ -53,6 +57,15 @@ export function Form({ project, selector, dispatch }) {
   };
   return (
     <>
+      {!isValid && (
+        <AlertPopup
+          title="Faltan Datos"
+          isOpen={openAlert}
+          onHide={() => setOpenAlert(false)}
+        >
+          Por favor complete los datos faltantes
+        </AlertPopup>
+      )}
       <PhaseGeneral
         onConfirm={handleConfirm}
         initialValues={initialValues}
@@ -111,14 +124,18 @@ export function Form({ project, selector, dispatch }) {
               );
             else dispatch(push(`/proyectos/${project.ProyectoID}/reservas`));
           }}
-          onSave={documents =>
-            dispatch(
+          onSave={documents => {
+            if (!isValid) return setOpenAlert(true);
+            return dispatch(
               saveReservation({ ...initialValues, ...entity }, documents),
-            )
-          }
+            );
+          }}
           onSendControl={documents => {
+            if (!isValid) return setOpenAlert(true);
             entity.Condition = documents.Condition;
-            dispatch(sendToControl({ ...initialValues, ...entity }, documents));
+            return dispatch(
+              sendToControl({ ...initialValues, ...entity }, documents),
+            );
           }}
           onControlReview={values =>
             dispatch(controlReview({ ...values, ReservaID: entity.ReservaID }))

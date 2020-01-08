@@ -128,7 +128,8 @@ export const getDescendantProp = (obj, path) => {
   const arr = path.split('.');
   let value = obj;
   while (arr.length) {
-    value = value[arr.shift()] || [];
+    value = value[arr.shift()];
+    if (!value) break;
   }
   return value;
 };

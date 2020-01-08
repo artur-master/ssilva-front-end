@@ -2,7 +2,10 @@
 import React from 'react';
 import { RESERVA_STATE } from 'containers/App/constants';
 import { Auth } from 'containers/App/helpers';
-import { UserProject } from '../../Project/helper';
+import { UserProject } from 'containers/Project/helper';
+import { isValidClient } from 'containers/Phases/Client/helper';
+import { calculates } from 'containers/Phases/FormaDePago/helper';
+import { isValidLabor } from '../../Phases/PreCredito/helper';
 
 export const currentResevationStep = (reservation = {}) => {
   const { ReservaID, ReservaState } = reservation;
@@ -26,6 +29,12 @@ export const currentResevationStep = (reservation = {}) => {
   if (ReservaID && ReservaState === RESERVA_STATE[3]) return 6;
 
   return 1;
+};
+export const isValidData = reservation => {
+  const { moneyErr } = calculates(reservation);
+  return (
+    isValidClient(reservation.Cliente) && !moneyErr && isValidLabor(reservation)
+  );
 };
 
 export const canReviewReservation = reservation =>
