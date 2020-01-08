@@ -20,7 +20,10 @@ const DeleteConfirm = ({ isOpen, onConfirm, onHide }) => {
         <span className="color-warning">Dar de Baja la Oferta</span>
       </ModalHeader>
       <ModalBody className="p-3">
-        <Alert type="danger">El modificar algunos datos implicará cambios importantes en el proceso.</Alert>
+        <Alert type="danger">
+          El modificar algunos datos implicará cambios importantes en el
+          proceso.
+        </Alert>
       </ModalBody>
       <ModalFooter>
         <Button onClick={onConfirm}>Confirmar</Button>

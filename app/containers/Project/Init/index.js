@@ -19,11 +19,11 @@ import reducer from './reducer';
 import saga from './saga';
 import { fetchProject, resetProject, updateProject } from './actions';
 
-export function InitProject({ ProyectoID, dispatch }) {
+export function InitProject({ ProyectoID, dispatch, selector }) {
   useInjectReducer({ key: 'initProject', reducer });
   useInjectSaga({ key: 'initProject', saga });
   useEffect(() => {
-    if (ProyectoID) dispatch(fetchProject(ProyectoID));
+    if (ProyectoID && !selector.loading) dispatch(fetchProject(ProyectoID));
     else
       dispatch(
         updateProject({

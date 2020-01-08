@@ -33,7 +33,7 @@ export function ProjectListPage({ dispatch, selector }) {
 
   const { entities, loading } = selector;
   useEffect(() => {
-    dispatch(fetchEntities());
+    if (!loading) dispatch(fetchEntities());
   }, []);
   const assignEntities = [];
   const otherEntities = [];

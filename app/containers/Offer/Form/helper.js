@@ -21,5 +21,3 @@ export const canUploadOffer = offer =>
       Auth.hasOneOfPermissions(['Es vendedor']) &&
       (!offer.OfertaState ||
         [RESERVA_STATE[0], RESERVA_STATE[3]].includes(offer.OfertaState));
-
-

@@ -37,7 +37,8 @@ export function Offers({ match, selectorProject, selector, dispatch }) {
   useInjectSaga({ key: 'offers', saga });
 
   useEffect(() => {
-    if (match.params.id) dispatch(fetchOffers(match.params.id));
+    if (match.params.id && !selector.loading)
+      dispatch(fetchOffers(match.params.id));
   }, []);
 
   // header
