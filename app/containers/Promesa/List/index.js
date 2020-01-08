@@ -33,7 +33,8 @@ export function Promesas({ match, selectorProject, selector, dispatch }) {
   useInjectSaga({ key: 'promesas', saga });
 
   useEffect(() => {
-    if (match.params.id) dispatch(fetchPromesas(match.params.id));
+    if (match.params.id && !selector.loading)
+      dispatch(fetchPromesas(match.params.id));
   }, []);
 
   // header

@@ -5,8 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the project state domain
  */
 
-const selectOfferFormDomain = state =>
-  state.offerform || initialState;
+const selectOfferFormDomain = state => state.offerform || initialState;
 
 /**
  * Other specific selectors

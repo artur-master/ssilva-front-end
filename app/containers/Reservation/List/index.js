@@ -32,7 +32,8 @@ export function Reservations({ match, selectorProject, selector, dispatch }) {
   useInjectSaga({ key: 'reservations', saga });
 
   useEffect(() => {
-    if (match.params.id) dispatch(fetchReservations(match.params.id));
+    if (match.params.id && !selector.loading)
+      dispatch(fetchReservations(match.params.id));
   }, []);
   return (
     <>

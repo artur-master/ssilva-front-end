@@ -32,7 +32,9 @@ export function Quotation({ match, selectorProject, quotation, dispatch }) {
   useInjectSaga({ key: 'quotation', saga });
 
   useEffect(() => {
-    if (match.params.id) dispatch(fetchQuotations(match.params.id));
+    if (match.params.id && !quotation.loading)
+      dispatch(fetchQuotations(match.params.id));
+
     return () => dispatch(resetContainer());
   }, [match.params.id]);
 
