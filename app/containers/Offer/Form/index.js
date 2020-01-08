@@ -70,12 +70,7 @@ export function OfferForm({
   }
 
   if (canConfirmOffer(selector.offer))
-    return (
-      <OfferConfirm
-        selector={selector}
-        dispatch={dispatch}
-      />
-    );
+    return <OfferConfirm selector={selector} dispatch={dispatch} />;
 
   return (
     <Form

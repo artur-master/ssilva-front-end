@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
 import DeleteConfirm from './DeleteConfirm';
+import { isValidData } from '../../helper';
 
 const SyncMessage = WithLoading();
 

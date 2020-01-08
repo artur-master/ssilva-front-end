@@ -8,6 +8,9 @@ import {
 } from 'containers/App/constants';
 import { UserProject } from 'containers/Project/helper';
 import { Auth } from 'containers/App/helpers';
+import { isValidLabor } from 'containers/Phases/PreCredito/helper';
+import { calculates } from 'containers/Phases/FormaDePago/helper';
+import { isValidClient } from 'containers/Phases/Client/helper';
 
 export const initReports = () =>
   OFERTA_STATE.reduce(
@@ -186,3 +189,8 @@ export const canEditOffer = offer =>
 
 export const canApproveModifyOffer = offer =>
   !window.project ? false : UserProject.isPM() && isModified(offer);
+
+export const isValidData = offer => {
+  const { moneyErr } = calculates(offer);
+  return isValidClient(offer.Cliente) && !moneyErr && isValidLabor(offer);
+};

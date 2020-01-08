@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '../Modal';
 import Button from '../Button';
@@ -17,8 +17,8 @@ const AlertPopup = ({
   timeout = 0,
   title,
   size = 'md',
+  isOpen = true,
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
   let showTitle;
   switch (type) {
     case 'success':
@@ -34,7 +34,6 @@ const AlertPopup = ({
       showTitle = title;
   }
   const hide = () => {
-    setIsOpen(false);
     if (onHide) onHide();
   };
   useEffect(() => {
@@ -65,6 +64,7 @@ AlertPopup.propTypes = {
   timeout: PropTypes.number,
   size: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  isOpen: PropTypes.bool,
   onHide: PropTypes.func,
 };
 

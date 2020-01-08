@@ -32,7 +32,6 @@ export function Form({ selector, selectorCredit, dispatch }) {
   const { project = {} } = window;
   const entity = selector.offer;
   const initialValues = model({ project, entity });
-
   const onEdit = () =>
     dispatch(
       push(

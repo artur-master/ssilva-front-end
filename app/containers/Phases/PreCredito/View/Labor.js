@@ -34,7 +34,7 @@ const Labor = ({ group = 'Cliente', values }) => {
                   </span>
                   <FormGroup className="col-12 col-md-6 mt-3 d-flex">
                     <Label className="w-50 ">Antigüedad Laboral</Label>
-                    <span>{`${Empleador}.Extra.Antiguedad`}</span>
+                    <span>{Extra.Antiguedad}</span>
                   </FormGroup>
                 </>
               )}

@@ -32,7 +32,6 @@ export function PhaseClient({
   useEffect(() => {
     if (selectorClient.success) onUpdate(selectorClient.client);
   }, [selectorClient.client]);
-
   const isValid = isValidClient(client);
   const isContado =
     payType === window.preload.paymentUtils[0].PayTypeID ||

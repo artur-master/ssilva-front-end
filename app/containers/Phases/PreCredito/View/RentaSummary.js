@@ -7,14 +7,11 @@ import { calculates } from 'containers/Phases/FormaDePago/helper';
 import { calculateRenta } from '../helper';
 
 const RentaSummary = ({ values, group = 'Cliente' }) => {
-  const { Renta, CoRenta, SumRenta } = calculateRenta(values);
+  const { Renta, CoRenta, moneyErr } = calculateRenta(values);
   let renta = Renta;
   if (group === 'Codeudor') {
     renta = CoRenta;
   }
-  const { total, discount } = calculates(values);
-
-  const moneyErr = Math.floor(total - discount) >= SumRenta;
 
   return (
     <>
