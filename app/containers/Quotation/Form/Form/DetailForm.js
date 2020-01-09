@@ -36,7 +36,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
     <>
       <Box>
         <BoxHeader>
-          <div className="row p-2 d-flex align-items-center pl-4">
+          <div className="row p-2">
             <RadioGroup
               required
               name="CotizacionType"
@@ -143,6 +143,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
                   name="Cliente.UserID"
                   style={{ width: '18em' }}
                   info="basic"
+                  autoSelect
                   onSelect={client =>
                     setFieldValue('Cliente', {
                       ...client,

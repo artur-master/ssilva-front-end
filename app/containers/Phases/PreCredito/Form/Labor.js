@@ -29,15 +29,16 @@ const Labor = ({ group = 'Cliente', values }) => {
             <b>¿QUÉ TIPO DE EMPLEO TIENE?</b>
           </span>
           <div className="col-12 col-md-6 mb-3 mt-3">
-            <RadioGroup
-              className="d-flex align-items-center col-auto"
-              name={`${group}.Extra.Independent`}
-              options={[
-                { label: 'Contrato', value: 0 },
-                { label: 'Independiente', value: 1 },
-                { label: 'Otro', value: 2 },
-              ]}
-            />
+            <div className="row">
+              <RadioGroup
+                name={`${group}.Extra.Independent`}
+                options={[
+                  { label: 'Contrato', value: 0 },
+                  { label: 'Independiente', value: 1 },
+                  { label: 'Otro', value: 2 },
+                ]}
+              />
+            </div>
           </div>
           <FormGroup className="col-12 col-md-6 d-flex">
             <Label className="w-50 m-0">Cargo Actual Cliente</Label>
@@ -74,21 +75,17 @@ const Labor = ({ group = 'Cliente', values }) => {
       </span>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0">Nombre Empleador</Label>
-        <ExField
-          className="caution w-50"
-          name={`${Empleador}.RazonSocial`}
-          required
-        />
+        <ExField className="w-50" name={`${Empleador}.RazonSocial`} required />
       </FormGroup>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0">RUT Empleador</Label>
-        <ExField className="w-50 caution" name={`${Empleador}.Rut`} required />
+        <ExField className="w-50" name={`${Empleador}.Rut`} required />
       </FormGroup>
       {!IsCompany && (
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
           <Label className="w-50 m-0">Teléfono Empleador</Label>
           <ExField
-            className="caution w-50"
+            className="w-50"
             name={`${Empleador}.Extra.Phone`}
             required
             placeholder="+562"

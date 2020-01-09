@@ -15,6 +15,7 @@ import UserInmobiliaria from './UserInmobiliaria';
 import Checkbox from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';
 import Provincia from './Provincia';
+import ExFieldCurrency from './ExFieldCurrency';
 
 const Field = ({ type = 'text', ...props }) => {
   switch (type) {
@@ -44,6 +45,8 @@ const Field = ({ type = 'text', ...props }) => {
       return <Provincia {...props} />;
     case 'file':
       return <File {...props} />;
+    case 'currency':
+      return <ExFieldCurrency {...props} type="text" />;
     default:
       return <ExField {...props} type={type} />;
   }

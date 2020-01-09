@@ -13,7 +13,11 @@ import {
   RECEPCION_GARANTIA_STATE,
   PRE_APROBACION_CREDITO_STATE,
 } from 'containers/App/constants';
-import { isPendienteContacto } from '../helper';
+import {
+  isAprobacionInmobiliariaState,
+  isPendienteContacto,
+  isWaitAprobacionInmobiliariaState,
+} from '../helper';
 import { isCreditType } from '../../Phases/FormaDePago/helper';
 
 function SubSteps({ offer }) {
@@ -97,10 +101,7 @@ function SubSteps({ offer }) {
         </li>
         <li
           className={`m-counter-plus ${
-            Credits.length > 0 ||
-            (!isCreditPayment && !isPendienteContacto(offer))
-              ? 'success'
-              : ''
+            !isPendienteContacto(offer) ? 'success' : ''
           }`}
         >
           <Link
@@ -114,7 +115,8 @@ function SubSteps({ offer }) {
         {isCreditPayment && (
           <li
             className={`m-counter-plus ${
-              PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2]
+              PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2] ||
+              !isPendienteContacto(offer)
                 ? 'success'
                 : ''
             }`}

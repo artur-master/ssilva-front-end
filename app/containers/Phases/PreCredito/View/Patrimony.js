@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedNumber } from 'react-intl';
 import { stringToBoolean } from 'containers/App/helpers';
 import { FormGroup, Label } from 'components/ExForm';
 import PureRadioGroup from 'components/ExForm/PureRadioGroup';
 import { Collapse, CollapseContent, CollapseHeader } from 'components/Collapse';
-import IntlFormatNumber from 'components/IntlFormat/Number';
+import IntlFormatCurrency from 'components/IntlFormat/Currency';
 
 const Patrimony = ({ values }) => {
   const hasCredits = {
@@ -29,12 +28,12 @@ const Patrimony = ({ values }) => {
     values.Patrimony.DownPayment +
     values.Patrimony.Other;
   const totalPasivos =
-    values.Patrimony.CreditCard.PagosMensuales +
-    values.Patrimony.CreditoConsumo.PagosMensuales +
-    values.Patrimony.PrestamoEmpleador.PagosMensuales +
-    values.Patrimony.DeudaIndirecta.PagosMensuales +
-    values.Patrimony.AnotherCredit.PagosMensuales +
-    values.Patrimony.CreditoComercio.PagosMensuales;
+    values.Patrimony.CreditCard.Pasivos +
+    values.Patrimony.CreditoConsumo.Pasivos +
+    values.Patrimony.PrestamoEmpleador.Pasivos +
+    values.Patrimony.DeudaIndirecta.Pasivos +
+    values.Patrimony.AnotherCredit.Pasivos +
+    values.Patrimony.CreditoComercio.Pasivos;
 
   return (
     <>
@@ -43,7 +42,7 @@ const Patrimony = ({ values }) => {
         <CollapseContent>
           <PureRadioGroup
             readOnly
-            name="IsOwner"
+            name="IsOwner_v"
             value={values.IsOwner}
             options={[
               { label: 'Propietario', value: '1' },
@@ -68,7 +67,7 @@ const Patrimony = ({ values }) => {
                       { label: 'Si', value: 1 },
                       { label: 'No', value: 0 },
                     ]}
-                    name="RealState"
+                    name="RealState_v"
                     value={hasCredits.RealState}
                   />
                 </div>
@@ -81,10 +80,7 @@ const Patrimony = ({ values }) => {
                       <Label style={{ minWidth: '12em' }} className="pt-1">
                         Bienes Raíces
                       </Label>
-                      <IntlFormatNumber
-                        value={values.Patrimony.RealState}
-                        prefix="$"
-                      />
+                      <IntlFormatCurrency value={values.Patrimony.RealState} />
                     </FormGroup>
                   </>
                 )}
@@ -99,7 +95,7 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Rent
                   </Label>
-                  <IntlFormatNumber value={values.Patrimony.Rent} prefix="$" />
+                  <IntlFormatCurrency value={values.Patrimony.Rent} />
                 </FormGroup>
               </>
             )}
@@ -113,7 +109,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="CreditoHipotecario"
+                name="CreditoHipotecario_v"
                 value={hasCredits.CreditoHipotecario}
               />
             </div>
@@ -126,18 +122,16 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Crédito Hipotecario
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.CreditoHipotecario.PagosMensuales}
-                    prefix="$"
                   />
                 </FormGroup>
                 <FormGroup className="col-12 col-md-6 mt-2">
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Deuda Total
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.CreditoHipotecario.Pasivos}
-                    prefix="$"
                   />
                 </FormGroup>
               </>
@@ -152,7 +146,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="Vehicle"
+                name="Vehicle_v"
                 value={hasCredits.Vehicle}
               />
             </div>
@@ -165,10 +159,7 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Vehículos
                   </Label>
-                  <IntlFormatNumber
-                    value={values.Patrimony.Vehicle}
-                    prefix="$"
-                  />
+                  <IntlFormatCurrency value={values.Patrimony.Vehicle} />
                 </FormGroup>
               </>
             )}
@@ -182,7 +173,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="DownPayment"
+                name="DownPayment_v"
                 value={hasCredits.DownPayment}
               />
             </div>
@@ -195,10 +186,7 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Depósitos / Acciones
                   </Label>
-                  <IntlFormatNumber
-                    value={values.Patrimony.DownPayment}
-                    prefix="$"
-                  />
+                  <IntlFormatCurrency value={values.Patrimony.DownPayment} />
                 </FormGroup>
               </>
             )}
@@ -211,7 +199,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="Other"
+                name="Other_v"
                 value={hasCredits.Other}
               />
             </div>
@@ -225,7 +213,7 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Otros
                   </Label>
-                  <IntlFormatNumber value={values.Patrimony.Other} prefix="$" />
+                  <IntlFormatCurrency value={values.Patrimony.Other} />
                 </FormGroup>
               </>
             )}
@@ -240,8 +228,7 @@ const Patrimony = ({ values }) => {
                   <td className="w-100">
                     <span className="font-21 no-whitespace">
                       <b>
-                        $
-                        <FormattedNumber value={totalActivos} />
+                        <IntlFormatCurrency value={totalActivos} />
                       </b>
                     </span>
                   </td>
@@ -262,7 +249,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="CreditCard"
+                name="CreditCard_v"
                 value={hasCredits.CreditCard}
               />
             </div>
@@ -275,18 +262,16 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Cuota Tarjeta de Crédito
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.CreditCard.PagosMensuales}
-                    prefix="$"
                   />
                 </FormGroup>
                 <FormGroup className="mt-2 col-12 col-md-6 ">
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Deuda Total
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.CreditCard.Pasivos}
-                    prefix="$"
                   />
                 </FormGroup>
               </>
@@ -301,7 +286,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="CreditoConsumo"
+                name="CreditoConsumo_v"
                 value={hasCredits.CreditoConsumo}
               />
             </div>
@@ -315,9 +300,8 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Cuota Créditos Consumo
                   </Label>
-                  <IntlFormatNumber
-                    value={values.Patrimony.CreditoConsumo.PagosMensuale}
-                    prefix="$"
+                  <IntlFormatCurrency
+                    value={values.Patrimony.CreditoConsumo.PagosMensuales}
                   />
                 </FormGroup>
 
@@ -325,9 +309,8 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Deuda Total
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.CreditoConsumo.Pasivos}
-                    prefix="$"
                   />
                 </FormGroup>
               </>
@@ -342,7 +325,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="PrestamoEmpleador"
+                name="PrestamoEmpleador_v"
                 value={hasCredits.PrestamoEmpleador}
               />
             </div>
@@ -356,18 +339,16 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Cuota Préstamo Empleador
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.PrestamoEmpleador.PagosMensuales}
-                    prefix="$"
                   />
                 </FormGroup>
                 <FormGroup className="mt-2 col-12 col-md-6 ">
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Deuda Total
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.PrestamoEmpleador.Pasivos}
-                    prefix="$"
                   />
                 </FormGroup>
               </>
@@ -382,7 +363,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="DeudaIndirecta"
+                name="DeudaIndirecta_v"
                 value={hasCredits.DeudaIndirecta}
               />
             </div>
@@ -395,18 +376,16 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Cuota Deuda como Aval
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.DeudaIndirecta.PagosMensuales}
-                    prefix="$"
                   />
                 </FormGroup>
                 <FormGroup className="mt-2 col-12 col-md-6 ">
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Deuda Total
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.DeudaIndirecta.Pasivos}
-                    prefix="$"
                   />
                 </FormGroup>
               </>
@@ -421,7 +400,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="AnotherCredit"
+                name="AnotherCredit_v"
                 value={hasCredits.AnotherCredit}
               />
             </div>
@@ -434,18 +413,16 @@ const Patrimony = ({ values }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Valor
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.AnotherCredit.PagosMensuales}
-                    prefix="$"
                   />
                 </FormGroup>
                 <FormGroup className="mt-2 col-12 col-md-6 ">
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Deuda Total
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.AnotherCredit.Pasivos}
-                    prefix="$"
                   />
                 </FormGroup>
               </>
@@ -460,7 +437,7 @@ const Patrimony = ({ values }) => {
               <PureRadioGroup
                 readOnly
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="CreditoComercio"
+                name="CreditoComercio_v"
                 value={hasCredits.CreditoComercio}
               />
             </div>
@@ -471,20 +448,18 @@ const Patrimony = ({ values }) => {
                 </span>
                 <FormGroup className="mt-2 col-12 col-md-6 ">
                   <Label style={{ minWidth: '12em' }} className="pt-1">
-                    Credito comercio value
+                    Valor Crédito Comercio
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.CreditoComercio.PagosMensuales}
-                    prefix="$"
                   />
                 </FormGroup>
                 <FormGroup className="mt-2 col-12 col-md-6 ">
                   <Label style={{ minWidth: '12em' }} className="pt-1">
                     Deuda Total
                   </Label>
-                  <IntlFormatNumber
+                  <IntlFormatCurrency
                     value={values.Patrimony.CreditoComercio.Pasivos}
-                    prefix="$"
                   />
                 </FormGroup>
               </>
@@ -500,8 +475,7 @@ const Patrimony = ({ values }) => {
                   <td className="w-100">
                     <span className="font-21 no-whitespace">
                       <b>
-                        $
-                        <FormattedNumber value={totalPasivos} />
+                        <IntlFormatCurrency value={totalPasivos} />
                       </b>
                     </span>
                   </td>

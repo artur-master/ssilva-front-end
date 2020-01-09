@@ -20,7 +20,7 @@ function ClientBasic({ form }) {
             <ExField className="flex-fill" name="Name" required />
           </FormGroup>
           <FormGroup className="mt-3">
-            <Label style={{ width: '11em' }}>Reprenetante Legal</Label>
+            <Label style={{ width: '11em' }}>Representante Legal</Label>
             <ExField className="flex-fill" name="ReprenetanteLegal" required />
           </FormGroup>
         </div>

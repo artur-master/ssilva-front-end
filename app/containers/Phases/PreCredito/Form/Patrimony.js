@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isObject } from 'lodash';
-import { FormattedNumber } from 'react-intl';
 import { stringToBoolean } from 'containers/App/helpers';
 import { FormGroup, Label, Field as ExField } from 'components/ExForm';
 import PureRadioGroup from 'components/ExForm/PureRadioGroup';
 import RadioGroup from 'components/ExForm/RadioGroup';
+import IntlFormatCurrency from 'components/IntlFormat/Currency';
 
 const Patrimony = ({ form }) => {
   const { values, setFieldValue } = form;
@@ -30,26 +30,28 @@ const Patrimony = ({ form }) => {
     values.Patrimony.DownPayment +
     values.Patrimony.Other;
   const totalPasivos =
-    values.Patrimony.CreditCard.PagosMensuales +
-    values.Patrimony.CreditoConsumo.PagosMensuales +
-    values.Patrimony.PrestamoEmpleador.PagosMensuales +
-    values.Patrimony.DeudaIndirecta.PagosMensuales +
-    values.Patrimony.AnotherCredit.PagosMensuales +
-    values.Patrimony.CreditoComercio.PagosMensuales;
+    values.Patrimony.CreditCard.Pasivos +
+    values.Patrimony.CreditoConsumo.Pasivos +
+    values.Patrimony.PrestamoEmpleador.Pasivos +
+    values.Patrimony.DeudaIndirecta.Pasivos +
+    values.Patrimony.AnotherCredit.Pasivos +
+    values.Patrimony.CreditoComercio.Pasivos;
 
   const handleChangeHasCredits = evt => {
     const hasValue = stringToBoolean(evt.currentTarget.value);
     const { name } = evt.currentTarget;
+
     if (!hasValue) {
       if (isObject(values.Patrimony[name])) {
         setFieldValue(`Patrimony.${name}`, {
-          Pasivos: 0,
-          PagosMensuales: 0,
+          Pasivos: '',
+          PagosMensuales: '',
         });
       } else {
-        setFieldValue(`Patrimony.${name}`, 0);
+        setFieldValue(`Patrimony.${name}`, '');
       }
     }
+
     setHasCredits({
       ...hasCredits,
       [name]: hasValue,
@@ -58,24 +60,26 @@ const Patrimony = ({ form }) => {
 
   return (
     <>
-      <div className="row pb-3 mt-4">
+      <div className="row pb-3">
         <div className="col-12">
           <span className="w-50 border-bottom py-3 d-block">
             <b>Vivienda Actual</b>
           </span>
         </div>
-        <div className="col-12 col-md-6 mb-3 mt-3">
-          <RadioGroup
-            name="IsOwner"
-            options={[
-              { label: 'Propietario', value: '1' },
-              { label: 'Arriendo', value: '0' },
-            ]}
-          />
+        <div className="col-12 col-md-6 mt-3">
+          <div className="row">
+            <RadioGroup
+              name="IsOwner"
+              options={[
+                { label: 'Propietario', value: '1' },
+                { label: 'Arriendo', value: '0' },
+              ]}
+            />
+          </div>
         </div>
       </div>
       <div className="pb-3 mt-4 border-top">
-        <span className="w-50 border-bottom py-3 d-block mt-3">
+        <span className="w-50 border-bottom py-3 d-block">
           <b>Patrimonio Activos</b>
         </span>
         <div className="mt-4 row">
@@ -105,8 +109,7 @@ const Patrimony = ({ form }) => {
                     <ExField
                       className="ml-3 caution"
                       name="Patrimony.RealState"
-                      placeholder="$"
-                      type="number"
+                      type="currency"
                       required
                     />
                   </FormGroup>
@@ -124,56 +127,55 @@ const Patrimony = ({ form }) => {
                 <ExField
                   className="ml-3 caution"
                   name="Patrimony.Rent"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
             </>
           )}
         </div>
-
-        <div className="mt-4 row">
-          <span className="font-14-rem color-main d-block col-12">
-            <b>¿TIENE CRÉDITO HIPOTECARIO?</b>
-          </span>
-          <div className="mt-2 col-12">
-            <PureRadioGroup
-              options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="CreditoHipotecario"
-              value={hasCredits.CreditoHipotecario}
-              onChange={handleChangeHasCredits}
-            />
+        {stringToBoolean(values.IsOwner) && (
+          <div className="mt-4 row">
+            <span className="font-14-rem color-main d-block col-12">
+              <b>¿TIENE CRÉDITO HIPOTECARIO?</b>
+            </span>
+            <div className="mt-2 col-12">
+              <PureRadioGroup
+                options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
+                name="CreditoHipotecario"
+                value={hasCredits.CreditoHipotecario}
+                onChange={handleChangeHasCredits}
+              />
+            </div>
+            {hasCredits.CreditoHipotecario && (
+              <>
+                <span className="mt-3 font-14-rem color-main d-block col-12">
+                  <b>¿CUANTO PAGA DE CUOTA DE CRÉDITO?</b>
+                </span>
+                <FormGroup className="col-12 col-md-6 mt-2 ">
+                  <Label style={{ minWidth: '12em' }}>
+                    Crédito Hipotecario
+                  </Label>
+                  <ExField
+                    className="ml-3"
+                    name="Patrimony.CreditoHipotecario.PagosMensuales"
+                    type="currency"
+                    required
+                  />
+                </FormGroup>
+                <FormGroup className="col-12 col-md-6 mt-2">
+                  <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
+                  <ExField
+                    className="ml-3"
+                    name="Patrimony.CreditoHipotecario.Pasivos"
+                    type="currency"
+                    required
+                  />
+                </FormGroup>
+              </>
+            )}
           </div>
-          {hasCredits.CreditoHipotecario && (
-            <>
-              <span className="mt-3 font-14-rem color-main d-block col-12">
-                <b>¿CUANTO PAGA DE CUOTA DE CRÉDITO?</b>
-              </span>
-              <FormGroup className="col-12 col-md-6 mt-2 ">
-                <Label style={{ minWidth: '12em' }}>Crédito Hipotecario</Label>
-                <ExField
-                  className="ml-3 caution"
-                  name="Patrimony.CreditoHipotecario.PagosMensuales"
-                  placeholder="$"
-                  type="number"
-                  required
-                />
-              </FormGroup>
-              <FormGroup className="col-12 col-md-6 mt-2">
-                <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
-                <ExField
-                  className="ml-3 caution"
-                  name="Patrimony.CreditoHipotecario.Pasivos"
-                  placeholder="$"
-                  type="number"
-                  required
-                />
-              </FormGroup>
-            </>
-          )}
-        </div>
-
+        )}
         <div className="mt-4">
           <span className="font-14-rem color-main d-block">
             <b>¿TIENE VEHÍCULO?</b>
@@ -194,10 +196,9 @@ const Patrimony = ({ form }) => {
               <FormGroup className="mt-2 d-flex ">
                 <Label style={{ minWidth: '12em' }}>Vehículos</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.Vehicle"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -225,10 +226,9 @@ const Patrimony = ({ form }) => {
               <FormGroup className="mt-2 d-flex ">
                 <Label style={{ minWidth: '12em' }}>Depósitos / Acciones</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.DownPayment"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -256,10 +256,9 @@ const Patrimony = ({ form }) => {
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>Otros</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.Other"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -277,8 +276,7 @@ const Patrimony = ({ form }) => {
               <td className="w-100">
                 <span className="font-21 no-whitespace">
                   <b>
-                    $
-                    <FormattedNumber value={totalActivos} />
+                    <IntlFormatCurrency value={totalActivos} />
                   </b>
                 </span>
               </td>
@@ -286,8 +284,8 @@ const Patrimony = ({ form }) => {
           </tbody>
         </table>
       </div>
-      <div className="pb-3 mt-4 border-top">
-        <span className="w-50 border-bottom py-3 d-block mt-3">
+      <div className="pb-3 mt-3 border-top">
+        <span className="w-50 border-bottom py-3 d-block">
           <b>Patrimonio Pasivos</b>
         </span>
         <div className="mt-4 row">
@@ -312,20 +310,18 @@ const Patrimony = ({ form }) => {
                   Cuota Tarjeta de Crédito
                 </Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.CreditCard.PagosMensuales"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.CreditCard.Pasivos"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -356,10 +352,9 @@ const Patrimony = ({ form }) => {
                   Cuota Créditos Consumo
                 </Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.CreditoConsumo.PagosMensuales"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -367,10 +362,9 @@ const Patrimony = ({ form }) => {
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.CreditoConsumo.Pasivos"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -401,20 +395,18 @@ const Patrimony = ({ form }) => {
                   Cuota Préstamo Empleador
                 </Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.PrestamoEmpleador.PagosMensuales"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.PrestamoEmpleador.Pasivos"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -444,20 +436,18 @@ const Patrimony = ({ form }) => {
                   Cuota Deuda como Aval
                 </Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.DeudaIndirecta.PagosMensuales"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.DeudaIndirecta.Pasivos"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -485,20 +475,18 @@ const Patrimony = ({ form }) => {
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>Valor</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.AnotherCredit.PagosMensuales"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.AnotherCredit.Pasivos"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -525,23 +513,21 @@ const Patrimony = ({ form }) => {
               </span>
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>
-                  Credito comercio value
+                  Valor Crédito Comercio
                 </Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.CreditoComercio.PagosMensuales"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
                 <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
                 <ExField
-                  className="ml-3 caution"
+                  className="ml-3"
                   name="Patrimony.CreditoComercio.Pasivos"
-                  placeholder="$"
-                  type="number"
+                  type="currency"
                   required
                 />
               </FormGroup>
@@ -559,8 +545,7 @@ const Patrimony = ({ form }) => {
               <td className="w-100">
                 <span className="font-21 no-whitespace">
                   <b>
-                    $
-                    <FormattedNumber value={totalPasivos} />
+                    <IntlFormatCurrency value={totalPasivos} />
                   </b>
                 </span>
               </td>

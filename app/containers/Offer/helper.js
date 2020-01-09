@@ -80,7 +80,9 @@ export const formatOffer = offer => {
           Color:
             offer.PreAprobacionCreditoState ===
               PRE_APROBACION_CREDITO_STATE[0] ||
-            offer.PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2]
+            offer.PreAprobacionCreditoState ===
+              PRE_APROBACION_CREDITO_STATE[2] ||
+            !isPendienteContacto(offer)
               ? 'badge-success'
               : offer.PreAprobacionCreditoState ===
                 PRE_APROBACION_CREDITO_STATE[3]
