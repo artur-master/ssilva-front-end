@@ -51,6 +51,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                   <Label style={{ width: '10em' }}>Cliente</Label>
                   <ExClients
                     name="Cliente.UserID"
+                    autoSelect
                     style={{ width: '21em' }}
                     info="basic"
                     onSelect={client =>

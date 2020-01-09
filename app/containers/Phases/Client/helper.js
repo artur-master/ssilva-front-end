@@ -20,14 +20,11 @@ export const isValidClient = ({ Cliente, PayType, CotizacionType }) => {
     'CivilStatus',
     'Carga',
     'Nationality',
-    'IsDefinitiveResidence',
-    'Position',
     'Contact.0.Value',
   ];
-
   if (!isContadoType(PayType)) {
     requiredOfPersonal.push(
-      ...['Extra.SalaryRank', 'Antiquity', 'TotalPatrimony'],
+      ...['Position', 'Extra.SalaryRank', 'Antiquity', 'TotalPatrimony'],
     );
   }
 

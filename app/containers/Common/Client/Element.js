@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'components/Modal';
 import { createStructuredSelector } from 'reselect';
@@ -27,9 +27,17 @@ const Element = ({
   className = '',
   isInvalid = false,
   onSelect,
+  autoSelect = false,
   openModal = false,
 }) => {
   const [isOpen, setIsOpen] = useState(openModal);
+
+  useEffect(() => {
+    if (autoSelect && onSelect && selector.success) {
+      setIsOpen(false);
+      onSelect(selector.client);
+    }
+  }, [selector.success]);
   const defaultComponent = () => {
     let text = 'Selecciona...';
     if (!selector.origin_clients && selector.loading)
@@ -40,7 +48,6 @@ const Element = ({
       );
       if (client) text = clientFullname(client);
     }
-
     return (
       <div
         role="presentation"
@@ -105,6 +112,7 @@ Element.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   isInvalid: PropTypes.bool,
+  autoSelect: PropTypes.bool,
   component: PropTypes.func,
   onSelect: PropTypes.func,
 };

@@ -73,7 +73,7 @@ function Form({ selector, preload, onHide, onSubmit }) {
                         required
                         validate={value => {
                           if (entities.find(item => item.RazonSocial === value))
-                            return 'Razón Social está emocionado';
+                            return '“Razón Social ya existe';
                           return null;
                         }}
                       />

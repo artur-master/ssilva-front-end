@@ -21,7 +21,7 @@ export function PhaseClientView({ client = {}, payType }) {
       {client.IsCompany && (
         <li className="col-md-6 p-0 my-2 d-flex align-items-center">
           <span className="font-14-rem" style={{ width: '11em' }}>
-            <b>Reprenetante Legal</b>
+            <b>Representante Legal</b>
           </span>
           <span className="font-14-rem">{client.ReprenetanteLegal}</span>
         </li>

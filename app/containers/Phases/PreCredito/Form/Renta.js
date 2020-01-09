@@ -36,7 +36,7 @@ const Renta = ({ group = 'Cliente', form }) => (
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0 ">Honorarios Bruto</Label>
         <ExField
-          className="caution w-50"
+          className="w-50"
           name={`${group}.Extra.Values.Honoraries`}
           required
           placeholder="$"

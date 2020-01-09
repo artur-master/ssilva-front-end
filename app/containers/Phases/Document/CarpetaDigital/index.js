@@ -74,7 +74,14 @@ export function CarpetaDigital({
               },
               {
                 label: 'OFERTA',
-                content: <Offer canUpload={canEit} entity={entity} />,
+                content: (
+                  <Offer
+                    canUpload={canEit}
+                    canReview={canReview}
+                    entity={entity}
+                    onReview={onReview}
+                  />
+                ),
               },
             ]}
           />

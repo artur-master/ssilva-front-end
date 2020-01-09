@@ -12,11 +12,7 @@ export const getDocuments = entity => {
       documentoType: 'DocumentPagoGarantia',
       required: true,
     },
-    {
-      documentoName: 'Oferta',
-      documentoType: 'DocumentOferta',
-      autoGenerate: true,
-    },
+
     {
       documentoName: 'Ficha Pre-aprobacion',
       documentoType: 'DocumentFichaPreAprobacion',

@@ -70,7 +70,7 @@ const defaultValidate = (value, props) => {
   if (props.required && (value === '' || value === null)) return 'Este campo es requerido';
 
   // rut validate
-  //if (props.rut || props.name.toLowerCase() === 'rut') return checkRut(value);
+  if (props.rut || props.name.toLowerCase() === 'rut') return checkRut(value);
 
   // email validate
   if (
@@ -127,7 +127,7 @@ const ExField = ({
     {({ field, form }) => {
       let className = props.className || '';
       /* eslint-disable-next-line */
-      if (props.required && (field.value == '' || field.value === null)) className += ' caution';
+      if (props.required && (field.value === '' || field.value === null)) className += ' caution';
       const getInTouched = getIn(form.touched, field.name);
       const getInErrors = getIn(form.errors, field.name);
       const inputElement = component ? (
