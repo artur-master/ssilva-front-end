@@ -50,7 +50,6 @@ function* saveUser(action) {
   const selector = yield select(makeSelectUser());
   const oldUser = selector.user || {};
   const newUser = { ...oldUser, ...action.values };
-  if (newUser.UserID) delete newUser.Rut;
 
   const requestURL = !newUser.UserID
     ? `${API_ROOT}/user-profiles/`

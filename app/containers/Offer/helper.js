@@ -192,5 +192,5 @@ export const canApproveModifyOffer = offer =>
 
 export const isValidData = offer => {
   const { moneyErr } = calculates(offer);
-  return isValidClient(offer.Cliente) && !moneyErr && isValidLabor(offer);
+  return isValidClient(offer) && !moneyErr && isValidLabor(offer);
 };

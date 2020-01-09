@@ -5,10 +5,11 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isContadoType } from '../FormaDePago/helper';
 
-export function PhaseClientView({ client = {} }) {
+export function PhaseClientView({ client = {}, payType }) {
   const { Comuna = { Name: ' ' } } = client;
-
+  const isContado = isContadoType(payType);
   return (
     <ul className="row p-0 m-0 color-regular">
       <li className="col-md-6 p-0 my-2 d-flex align-items-center">
@@ -71,7 +72,7 @@ export function PhaseClientView({ client = {} }) {
           <span className="font-14-rem">{client.Genre}</span>
         </li>
       )}
-      {!client.IsCompany && (
+      {!client.IsCompany && !isContado && (
         <li className="col-md-6 p-0 my-2 d-flex align-items-center">
           <span className="font-14-rem" style={{ width: '11em' }}>
             <b>Cargo</b>
@@ -79,7 +80,7 @@ export function PhaseClientView({ client = {} }) {
           <span className="font-14-rem">{client.Position}</span>
         </li>
       )}
-      {!client.IsCompany && (
+      {!client.IsCompany && !isContado && (
         <li className="col-md-6 p-0 my-2 d-flex align-items-center">
           <span className="font-14-rem" style={{ width: '11em' }}>
             <b>Antigüedad</b>
@@ -125,6 +126,7 @@ export function PhaseClientView({ client = {} }) {
 
 PhaseClientView.propTypes = {
   client: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  payType: PropTypes.string,
 };
 
 export default PhaseClientView;

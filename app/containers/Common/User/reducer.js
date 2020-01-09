@@ -78,7 +78,10 @@ const userReducer = (state = initialState, action) =>
       case RESET_PASSWORD_USER_ERROR:
       case ACTIVE_USER_ERROR:
         draft.loading = false;
-        draft.error = action.error;
+        draft.error = {
+          body: (action.error.body.Email ||
+            action.error.body.Rut || [action.error.body])[0],
+        };
         draft.success = false;
         break;
       case GET_USER_SUCCESS:

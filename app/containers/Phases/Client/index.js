@@ -32,7 +32,7 @@ export function PhaseClient({
   useEffect(() => {
     if (selectorClient.success) onUpdate(selectorClient.client);
   }, [selectorClient.client]);
-  const isValid = isValidClient(client);
+  const isValid = isValidClient({ Cliente: client, PayType: payType });
   const isContado =
     payType === window.preload.paymentUtils[0].PayTypeID ||
     payType === window.preload.paymentUtils[0].Name;
@@ -76,7 +76,7 @@ export function PhaseClient({
         )}
       </BoxHeader>
       <BoxContent>
-        <PhaseClientView client={client} />
+        <PhaseClientView client={client} payType={payType} />
       </BoxContent>
       <ClienteForm
         focusHide={isContado ? ['Cargo', 'Other'] : []}

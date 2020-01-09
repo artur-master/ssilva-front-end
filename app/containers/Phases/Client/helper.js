@@ -1,7 +1,8 @@
 import { stringToBoolean, getDescendantProp } from 'containers/App/helpers';
+import { isContadoType } from '../FormaDePago/helper';
 
-export const isValidClient = client => {
-  const isCompany = stringToBoolean(client.IsCompany);
+export const isValidClient = ({ Cliente, PayType, CotizacionType }) => {
+  const isCompany = stringToBoolean(Cliente.IsCompany);
   const requiredOfCompany = [
     'Rut',
     'Name',
@@ -15,24 +16,30 @@ export const isValidClient = client => {
     'LastNames',
     'Ocupation',
     'BirthDate',
-    'ComunaID',
     'Genre',
     'CivilStatus',
     'Carga',
     'Nationality',
     'IsDefinitiveResidence',
     'Position',
-    'Extra.SalaryRank',
-    'Antiquity',
-    'TotalPatrimony',
     'Contact.0.Value',
   ];
+
+  if (!isContadoType(PayType)) {
+    requiredOfPersonal.push(
+      ...['Extra.SalaryRank', 'Antiquity', 'TotalPatrimony'],
+    );
+  }
+
+  if (CotizacionType !== window.preload.quotationUtils.CotizacionTypes[1].Name)
+    requiredOfPersonal.push('ComunaID');
+
   if (isCompany) {
     return !requiredOfCompany.find(
-      field => getDescendantProp(client, field) === '',
+      field => getDescendantProp(Cliente, field) === '',
     );
   }
   return !requiredOfPersonal.find(
-    field => getDescendantProp(client, field) === '',
+    field => getDescendantProp(Cliente, field) === '',
   );
 };
