@@ -32,9 +32,7 @@ export const currentResevationStep = (reservation = {}) => {
 };
 export const isValidData = reservation => {
   const { moneyErr } = calculates(reservation);
-  return (
-    isValidClient(reservation.Cliente) && !moneyErr && isValidLabor(reservation)
-  );
+  return isValidClient(reservation) && !moneyErr && isValidLabor(reservation);
 };
 
 export const canReviewReservation = reservation =>

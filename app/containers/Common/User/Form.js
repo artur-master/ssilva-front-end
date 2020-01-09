@@ -6,13 +6,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Yup from 'yup';
 import { Form as ExForm, FormGroup, Label } from 'components/ExForm';
 import ExField from 'components/ExForm/ExField';
-import CheckboxGroup from 'components/ExForm/CheckboxGroup';
 import Button from 'components/Button';
 import { Modal, ModalFooter, ModalHeader, ModalBody } from 'components/Modal';
 import WithLoading from 'components/WithLoading';
+import RadioGroup from 'components/ExForm/RadioGroup';
 
 const SyncMessage = WithLoading();
 
@@ -25,13 +24,13 @@ function Form({ selector, onHide, onSubmit }) {
       acc.push(role);
     return acc;
   }, []);
-
   const initialValues = {
     Name: user.Name || '',
     LastNames: user.LastNames || '',
     Rut: user.Rut || '',
     Email: user.Email || '',
     Roles: user.Roles || [],
+    RoleID: (user.Roles || [{ RoleID: '' }])[0].RoleID,
   };
   return (
     <Modal isOpen={selector.screen === 'form'} size="xl" scrollable>
@@ -41,9 +40,11 @@ function Form({ selector, onHide, onSubmit }) {
       {!(user && user.UserID && !user.Rut) && (
         <ExForm
           initialValues={initialValues}
-          onSubmit={values => onSubmit(values)}
-          validationSchema={{
-            Roles: Yup.array().required('Must select at least one role'),
+          onSubmit={values => {
+            onSubmit({
+              ...values,
+              Roles: [{ RoleID: values.RoleID }],
+            });
           }}
         >
           {() => (
@@ -99,9 +100,10 @@ function Form({ selector, onHide, onSubmit }) {
                       </div>
                     </div>
                     <div className="background-color-tab pt-3 pb-2 mt-3 m-0 p-0 row">
-                      <CheckboxGroup
+                      <RadioGroup
                         itemClassName="col-md-3 mb-2"
-                        name="Roles"
+                        name="RoleID"
+                        required
                         options={roles || []}
                         map={{ label: 'Name', value: 'RoleID' }}
                       />
