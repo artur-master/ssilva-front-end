@@ -72,8 +72,19 @@ function Form({ selector, preload, onHide, onSubmit }) {
                         name="RazonSocial"
                         required
                         validate={value => {
-                          if (entities.find(item => item.RazonSocial === value))
-                            return '“Razón Social ya existe';
+                          if (
+                            entities.find(
+                              item =>
+                                item.RazonSocial === value &&
+                                ((IsInmobiliaria &&
+                                  item.InmobiliariaID ===
+                                    values.InmobiliariaID) ||
+                                  (!IsInmobiliaria &&
+                                    item.ConstructoraID ===
+                                      values.ConstructoraID)),
+                            )
+                          )
+                            return 'Razón Social ya existe';
                           return null;
                         }}
                       />

@@ -2,7 +2,7 @@ export const doQuery = (entities, query = {}) => {
   if (!entities) return [];
   let queriedEntities = [...entities];
   /* sort */
-  const { sort } = query;
+  const { sort, mustIn } = query;
   if (sort) {
     queriedEntities = queriedEntities.sort((a, b) => {
       if (['Name', 'LastNames', 'Rut'].includes(sort.by)) {
@@ -26,6 +26,12 @@ export const doQuery = (entities, query = {}) => {
     if (!Array.isArray(roles)) roles = [roles];
     queriedEntities = queriedEntities.filter(user =>
       user.Roles.some(role => roles.length < 1 || roles.includes(role.Name)),
+    );
+  }
+  /* mustIn */
+  if (mustIn && Array.isArray(mustIn) && mustIn.length > 0) {
+    queriedEntities = queriedEntities.filter(user =>
+      mustIn.some(needed => needed.UserID === user.UserID),
     );
   }
   return queriedEntities;

@@ -187,7 +187,10 @@ export const getGeneralFields = project => {
   ];
 };
 
-export const getCommercialFields = project => {
+export const getCommercialFields = (
+  project,
+  { UsersInmobiliaria = [] } = {},
+) => {
   const { UsersProyecto = [] } = project;
 
   /* index of users of project */
@@ -196,7 +199,6 @@ export const getCommercialFields = project => {
   const userRepresentanteIndex = getUserIndex(UsersProyecto, 'Representante');
   const userAprobadorIndex = getUserIndex(UsersProyecto, 'Aprobador');
   const userAutorizadorIndex = getUserIndex(UsersProyecto, 'Autorizador');
-  const userArquitectoIndex = getUserIndex(UsersProyecto, 'Arquitecto');
   const userMarketingIndex = getUserIndex(UsersProyecto, 'Marketing');
   const userLegalIndex = getUserIndex(UsersProyecto, 'Legal');
   const userFinanzaIndex = getUserIndex(UsersProyecto, 'Finanza');
@@ -233,7 +235,11 @@ export const getCommercialFields = project => {
           ? entity.UsersProyecto[userRepresentanteIndex].Name
           : '',
       Component: ExUsers,
-      query: { roles: ['Representante', 'Inmobiliario'] },
+      query: {
+        mustIn: UsersInmobiliaria.filter(
+          item => item.UserInmobiliariaType === 'Representante',
+        ),
+      },
       required: true,
     },
     {
@@ -244,7 +250,11 @@ export const getCommercialFields = project => {
           ? entity.UsersProyecto[userAprobadorIndex].Name
           : '',
       Component: ExUsers,
-      query: { roles: ['Aprobador', 'Inmobiliario'] },
+      query: {
+        mustIn: UsersInmobiliaria.filter(
+          item => item.UserInmobiliariaType === 'Aprobador',
+        ),
+      },
       required: true,
     },
     {
@@ -255,19 +265,18 @@ export const getCommercialFields = project => {
           ? entity.UsersProyecto[userAutorizadorIndex].Name
           : '',
       Component: ExUsers,
-      query: { roles: ['Autorizador', 'Inmobiliario'] },
+      query: {
+        mustIn: UsersInmobiliaria.filter(
+          item => item.UserInmobiliariaType === 'Autorizador',
+        ),
+      },
       required: true,
     },
 
     {
       label: 'Arquitecto',
-      name: `UsersProyecto.${userArquitectoIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userArquitectoIndex]
-          ? entity.UsersProyecto[userArquitectoIndex].Name
-          : '',
-      Component: ExUsers,
-      query: { roles: ['Arquitecto', 'Inmobiliario'] },
+      name: 'Arquitecto',
+      view: entity => entity.Arquitecto || '',
       required: true,
     },
     {

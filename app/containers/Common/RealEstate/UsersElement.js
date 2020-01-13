@@ -47,7 +47,7 @@ const UsersElement = ({ userInmobiliariaTypes, values }) => {
                     <UserElement
                       query={{
                         roles: 'Inmobiliario',
-                        selected: UsersInmobiliaria.map(user => user.UserID),
+                        selected: users.map(user => user.UserID),
                       }}
                       onSelect={user => {
                         push({

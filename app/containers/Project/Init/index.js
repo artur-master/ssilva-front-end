@@ -23,10 +23,12 @@ export function InitProject({ ProyectoID, dispatch, selector }) {
   useInjectReducer({ key: 'initProject', reducer });
   useInjectSaga({ key: 'initProject', saga });
   useEffect(() => {
-    if (ProyectoID && !selector.loading) dispatch(fetchProject(ProyectoID));
+    const { project = {}, loading } = selector;
+    if (ProyectoID && !loading && !project) dispatch(fetchProject(ProyectoID));
     else
       dispatch(
         updateProject({
+          ...project,
           UsersProyecto: [
             {
               UserID: Auth.get('user_id'),

@@ -43,9 +43,11 @@ export function CommercialForm({
     item => item.UserInmobiliariaType === 'Representante',
   );
   const Aprobador = selectedInmobiliaria.UsersInmobiliaria.find(
-    item =>
-      item.UserInmobiliariaType === 'Aprobador' &&
-      (!Representante || item.UserID !== Representante.UserID),
+    item => item.UserInmobiliariaType === 'Aprobador',
+  );
+
+  const Autorizador = selectedInmobiliaria.UsersInmobiliaria.find(
+    item => item.UserInmobiliariaType === 'Autorizador',
   );
 
   if (
@@ -80,10 +82,28 @@ export function CommercialForm({
       },
     ];
 
+  if (
+    Autorizador &&
+    !initialValues.UsersProyecto.find(
+      item => item.UserProyectoType === 'Autorizador' && item.UserID,
+    )
+  )
+    initialValues.UsersProyecto = [
+      ...initialValues.UsersProyecto.filter(
+        item => item.UserProyectoType !== 'Autorizador',
+      ),
+      {
+        UserID: Representante.UserID,
+        UserProyectoType: 'Autorizador',
+      },
+    ];
+
   if (!initialValues.ConstructoraID && selectedConstructora) {
     initialValues.ConstructoraID = selectedConstructora.ConstructoraID;
   }
-  const fields = getCommercialFields(initialValues);
+  const fields = getCommercialFields(initialValues, {
+    UsersInmobiliaria: selectedInmobiliaria.UsersInmobiliaria,
+  });
 
   return (
     <ExForm initialValues={initialValues} onSubmit={values => onSubmit(values)}>

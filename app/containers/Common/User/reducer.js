@@ -18,6 +18,7 @@ import {
   RESET_PASSWORD_USER,
   RESET_PASSWORD_USER_ERROR,
   RESET_PASSWORD_USER_SUCCESS,
+  RESET_QUERY_USERS,
   SAVE_USER,
   SAVE_USER_ERROR,
   SAVE_USER_SUCCESS,
@@ -43,6 +44,10 @@ export const initialState = {
 const userReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case RESET_QUERY_USERS:
+        draft.query = initialState.query;
+        draft.users = doQuery(state.origin_users, draft.query);
+        break;
       case QUERY_USERS:
         draft.query = !action.query
           ? initialState.query
