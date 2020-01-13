@@ -18,6 +18,7 @@ import {
   RESET_PASSWORD_USER,
   RESET_PASSWORD_USER_ERROR,
   RESET_PASSWORD_USER_SUCCESS,
+  RESET_QUERY_USERS,
   SAVE_USER,
   SAVE_USER_ERROR,
   SAVE_USER_SUCCESS,
@@ -25,6 +26,11 @@ import {
   TOGGLE_FORM,
 } from './constants';
 
+export function resetQueryUsers() {
+  return {
+    type: RESET_QUERY_USERS,
+  };
+}
 export function queryUsers(query) {
   return {
     type: QUERY_USERS,

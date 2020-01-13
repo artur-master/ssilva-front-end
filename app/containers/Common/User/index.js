@@ -18,6 +18,7 @@ import {
   resetPasswordUser,
   activeUser,
   queryUsers,
+  resetQueryUsers,
 } from './actions';
 import ResetPassword from './ResetPassword';
 import ActiveUser from './ActiveUser';
@@ -35,9 +36,11 @@ function User({
   onSubmit,
   onHide,
   onSelect,
+  onRsetQueryUsers,
 }) {
   useEffect(() => {
     onQuery(query);
+    return () => onRsetQueryUsers();
   }, []);
   return (
     <>
@@ -85,6 +88,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    onRsetQueryUsers: () => dispatch(resetQueryUsers()),
     onQuery: query => dispatch(queryUsers(query)),
     onActive: user => dispatch(activeUser(user.UserID)),
     onCreate: () => dispatch(toggleScreen('form', false)),

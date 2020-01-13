@@ -3,6 +3,7 @@
  * User constants
  *
  */
+export const RESET_QUERY_USERS = 'app/containers/Common/User/RESET_QUERY_USERS';
 export const QUERY_USERS = 'app/containers/Common/User/QUERY_USERS';
 export const FETCH_USERS = 'app/containers/Common/User/FETCH_USERS';
 export const FETCH_USERS_ERROR = 'app/containers/Common/User/FETCH_USERS_ERROR';

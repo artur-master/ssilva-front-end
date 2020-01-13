@@ -41,6 +41,7 @@ export default function model(preload, project = {}) {
   const {
     ProyectoID,
     Name = '',
+    Arquitecto = '',
     Symbol = '',
     Address = '',
     InmobiliariaID,
@@ -55,6 +56,7 @@ export default function model(preload, project = {}) {
   return {
     ProyectoID,
     Name,
+    Arquitecto,
     Symbol,
     ContactInfo,
     Address,

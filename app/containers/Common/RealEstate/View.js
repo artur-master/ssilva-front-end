@@ -196,6 +196,30 @@ function View({ preload, ID, selector, onHide, isOpen }) {
                   </Box>
                   <Box collapse>
                     <BoxHeader>
+                      <b>AUTORIZADORS</b>
+                    </BoxHeader>
+                    <BoxContent className="p-3">
+                      <ul className="row p-0 m-0 color-regular">
+                        {(entity.UsersInmobiliaria || [])
+                          .filter(
+                            user => user.UserInmobiliariaType === 'Autorizador',
+                          )
+                          .map(user => (
+                            <li
+                              key={user.UserID}
+                              className="col-md-12 p-0 my-2 d-flex align-items-center"
+                            >
+                              <span className="font-14-rem">
+                                <b>{user.Name}</b>
+                                {` / ${user.LastNames} / ${user.Rut}`}
+                              </span>
+                            </li>
+                          ))}
+                      </ul>
+                    </BoxContent>
+                  </Box>
+                  <Box collapse>
+                    <BoxHeader>
                       <b>MEDIOS DE CONTACTO</b>
                     </BoxHeader>
                     <BoxContent className="p-3">
