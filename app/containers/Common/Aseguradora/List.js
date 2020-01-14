@@ -52,7 +52,7 @@ const List = ({ selector, onQuery, onCreate, onEdit, onView, onSelect }) => {
                         tag="a"
                         className="icon icon-dots main_color ml-1"
                       />
-                      <DropdownMenu right>
+                      <DropdownMenu right positionFixed>
                         <DropdownItem
                           className="d-none"
                           tag="a"

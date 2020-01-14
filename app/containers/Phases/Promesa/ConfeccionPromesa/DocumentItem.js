@@ -13,7 +13,7 @@ import { getFileName } from 'containers/App/helpers';
 function DocumentItem({ canUpload }) {
   return (
     <FormikField
-      name="DocumentFirmaComprador"
+      name="DocumentPromesa"
       validate={value => {
         if (!value) return 'Este campo es requerido';
         return null;
@@ -32,7 +32,7 @@ function DocumentItem({ canUpload }) {
               title="Examinar..."
             >
               <input
-                name="DocumentFirmaComprador"
+                name="DocumentPromesa"
                 className={
                   getInTouched && getInErrors
                     ? 'is-invalid custom-file-input'
@@ -77,7 +77,7 @@ function DocumentItem({ canUpload }) {
               <button
                 type="button"
                 className="close mb-1"
-                onClick={() => setFieldValue('DocumentFirmaComprador', null)}
+                onClick={() => setFieldValue('DocumentPromesa', null)}
               >
                 <span aria-hidden="true">×</span>
               </button>

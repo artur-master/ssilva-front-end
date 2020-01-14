@@ -26,7 +26,7 @@ export function PhaseConfeccionPromesa({
   return (
     <ExForm
       initialValues={{
-        DocumentFirmaComprador: entity.DocumentFirmaComprador,
+        DocumentPromesa: entity.DocumentPromesa,
       }}
       onSubmit={onSubmit}
     >
@@ -40,7 +40,7 @@ export function PhaseConfeccionPromesa({
               <div className="row m-0 p-0">
                 <div className="col-lg-6 border-bottom p-0 pb-3 d-flex align-items-center">
                   <Link
-                    disabled={!!form.values.DocumentFirmaComprador}
+                    disabled={!!form.values.DocumentPromesa}
                     className="m-btn m-btn-white m-btn-download"
                     to={maquetaWord.url}
                     target="_blank"
@@ -53,9 +53,7 @@ export function PhaseConfeccionPromesa({
               <div className="pt-4 pb-4">
                 <div className="d-flex align-items-center">
                   <span className="font-14-rem mr-3">
-                    {form.values.DocumentFirmaComprador
-                      ? 'Promesa'
-                      : 'Cargar Promesa'}
+                    {form.values.DocumentPromesa ? 'Promesa' : 'Cargar Promesa'}
                   </span>
                   <DocumentItem canUpload={canUpload} />
                 </div>
@@ -67,8 +65,8 @@ export function PhaseConfeccionPromesa({
                   disabled={
                     selector.loading ||
                     !(
-                      form.values.DocumentFirmaComprador &&
-                      form.values.DocumentFirmaComprador.name
+                      form.values.DocumentPromesa &&
+                      form.values.DocumentPromesa.name
                     )
                   }
                   onClick={() => form.submitForm()}

@@ -130,7 +130,7 @@ function DocumentItem({
             tag="a"
             className="icon icon-dots color-main font-21"
           />
-          <DropdownMenu right>
+          <DropdownMenu right positionFixed>
             <DropdownItem
               tag="a"
               target="_blank"
