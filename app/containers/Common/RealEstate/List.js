@@ -107,7 +107,7 @@ const List = ({ selector, onQuery, onCreate, onEdit, onView, onSelect }) => {
                         tag="a"
                         className="icon icon-dots main_color ml-1"
                       />
-                      <DropdownMenu right>
+                      <DropdownMenu right positionFixed>
                         <DropdownItem tag="a" onClick={() => onView(entity)}>
                           Ver datos
                         </DropdownItem>

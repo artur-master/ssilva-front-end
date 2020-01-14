@@ -26,10 +26,10 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
           <div className="d-flex align-items-center">
             <span className="font-14-rem mr-3">Promesa</span>
             <span className="font-14-rem mx-2">
-              {getFileName(entity.DocumentFirmaComprador)}
+              {getFileName(entity.DocumentPromesa)}
             </span>
             <Link
-              to={entity.DocumentFirmaComprador}
+              to={entity.DocumentPromesa}
               target="_blank"
               download
               className="font-14-rem mx-2 btn-arrow"

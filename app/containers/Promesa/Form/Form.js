@@ -80,7 +80,7 @@ export function Form({ selector, dispatch }) {
         />
       );
     }
-    if (entity.DocumentFirmaComprador) {
+    if (entity.DocumentPromesa) {
       if (
         (entity.PromesaState === PROMESA_STATE[9] && UserProject.isAC()) ||
         (entity.PromesaState === PROMESA_STATE[11] && UserProject.isPM())

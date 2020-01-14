@@ -36,7 +36,7 @@ const Menu = ({ collapse, dispatch }) => (
           </i>
           <span>Admin</span>
           <DropdownToggle tag="a" />
-          <DropdownMenu>
+          <DropdownMenu positionFixed>
             <DropdownItem header>Administración</DropdownItem>
             <DropdownItem divider />
             <DropdownItem

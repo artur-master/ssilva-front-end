@@ -73,7 +73,7 @@ const Item = ({ project, offer, dispatch }) => {
           toggle={() => setDropdownOpen(!dropdownOpen)}
         >
           <DropdownToggle tag="a" className="icon icon-dots main_color ml-1" />
-          <DropdownMenu right>
+          <DropdownMenu right positionFixed>
             <DropdownItem
               tag="a"
               onClick={() => {

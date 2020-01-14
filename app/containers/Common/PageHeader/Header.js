@@ -39,7 +39,7 @@ function Header({ pageHeader = {} }) {
       {actions && (
         <UncontrolledDropdown>
           <DropdownToggle tag="a" className="icon icon-dots" />
-          <DropdownMenu right>
+          <DropdownMenu right positionFixed>
             {actions.map(({ component, ...props }, index) => (
               /* eslint-disable-next-line */
               <DropdownItem tag="a" {...props} key={index}>
