@@ -120,8 +120,8 @@ export const RECEPCION_GARANTIA_STATE = [
 ];
 
 export const PROMESA_STATE = [
-  'Pendiente confección',
-  'Pendiente firma comprador',
+  'Pendiente confección', // #0 -> #9
+  'Pendiente firma comprador', // #1 -> #12
   'Pendiente envío a inmobiliaria',
   'Pendiente control',
   'Pendiente firma inmobiliaria',
@@ -129,9 +129,10 @@ export const PROMESA_STATE = [
   'Pendiente envio de copias',
   'Pendiente escrituracion',
   'Escritura',
-  'Pendiente AC aprobación de maqueta',
+  'Pendiente AC aprobación de maqueta', // #9 -> #11
   'Promesa modificada',
-  'Pendiente JP aprobación de maqueta',
+  'Pendiente JP aprobación de maqueta', // #11 -> #1
+  'Pendiente aprobación de firma comprador', // #12 -> #2
 ];
 
 export const REQUIRED_DOCUMENTS = [

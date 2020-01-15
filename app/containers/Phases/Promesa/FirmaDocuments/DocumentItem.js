@@ -67,16 +67,24 @@ function DocumentItem({ name, label, canUpload }) {
           );
         }
         return (
-          <FormGroup>
-            <Label style={{ width: '6em' }}>{label}</Label>
-            <span className="font-14-rem mx-2">{getFileName(value)}</span>
+          <FormGroup className="align-items-center">
+            <Label style={{ width: 'auto' }} className="mr-4">
+              {label}
+            </Label>
+            <span
+              className="font-14-rem mx-2 text-nowrap overflow-hidden"
+              style={{ textOverflow: 'ellipsis' }}
+              title={getFileName(value)}
+            >
+              {getFileName(value)}
+            </span>
             <Link
               to={value}
               target="_blank"
               download
-              className="font-14-rem mx-2 btn-arrow"
+              className="font-14-rem mx-2 btn-arrow text-nowrap"
             >
-              <b>Ver Promesa</b>
+              <b>Ver {label}</b>
             </Link>
             {canUpload && (
               <button

@@ -26,7 +26,8 @@ export const getReports = (entities = []) =>
   }, initReports());
 
 export const canEditConfeccionPromesa = promesa =>
-  UserProject.isLegal() && promesa.PromesaState === PROMESA_STATE[0];
+  UserProject.isLegal() &&
+  [PROMESA_STATE[0], PROMESA_STATE[9]].includes(promesa.PromesaState);
 
 export const isPendingApproveConfeccionPromesa = promesa =>
   (UserProject.isAC() || UserProject.isPM()) &&

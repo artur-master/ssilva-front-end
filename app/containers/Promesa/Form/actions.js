@@ -10,33 +10,30 @@ import {
   GET_PROMESA_SUCCESS,
   UPDATE_PROMESA,
   RESET_CONTAINER,
-  CONFIRM,
-  CONFIRM_ERROR,
-  CONFIRM_SUCCESS,
-  APPROVE_IN,
-  APPROVE_IN_ERROR,
-  APPROVE_IN_SUCCESS,
-  APPROVE_CONFECCION_PROMESA,
-  APPROVE_CONFECCION_PROMESA_ERROR,
-  APPROVE_CONFECCION_PROMESA_SUCCESS,
-  DELETE_PROMESA,
-  DELETE_PROMESA_ERROR,
-  DELETE_PROMESA_SUCCESS,
-  SAVE_PROMESA,
-  SAVE_PROMESA_ERROR,
-  SAVE_PROMESA_SUCCESS,
-  APPROVE_MODIFY,
-  APPROVE_MODIFY_ERROR,
-  APPROVE_MODIFY_SUCCESS,
   UPLOAD_CONFECCION_PROMESA,
   UPLOAD_CONFECCION_PROMESA_ERROR,
   UPLOAD_CONFECCION_PROMESA_SUCCESS,
   APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR,
   APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS,
   APPROVE_UPLOAD_CONFECCION_PROMESA,
-  APPROVE_CONTROL_PROMESA,
-  APPROVE_CONTROL_PROMESA_ERROR,
-  APPROVE_CONTROL_PROMESA_SUCCESS,
+  UPLOAD_FIRMA_DOCUMENTS_PROMESA,
+  UPLOAD_FIRMA_DOCUMENTS_PROMESA_ERROR,
+  UPLOAD_FIRMA_DOCUMENTS_PROMESA_SUCCESS,
+  CONTROL_PROMESA,
+  CONTROL_PROMESA_ERROR,
+  CONTROL_PROMESA_SUCCESS,
+  SEND_PROMESA_TO_IN,
+  SEND_PROMESA_TO_IN_ERROR,
+  SEND_PROMESA_TO_IN_SUCCESS,
+  SIGN_IN,
+  SIGN_IN_ERROR,
+  SIGN_IN_SUCCESS,
+  LEGALIZE,
+  LEGALIZE_ERROR,
+  LEGALIZE_SUCCESS,
+  SEND_COPY,
+  SEND_COPY_ERROR,
+  SEND_COPY_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -109,23 +106,129 @@ export function approveUploadConfeccionPromesaSuccess(response) {
   };
 }
 
-export function approveControlPromesa(values) {
+export function uploadFirmaDocumentsPromesa(PromesaID, values) {
   return {
-    type: APPROVE_CONTROL_PROMESA,
+    type: UPLOAD_FIRMA_DOCUMENTS_PROMESA,
+    PromesaID,
     values,
   };
 }
 
-export function approveControlPromesaError(error) {
+export function uploadFirmaDocumentsPromesaError(error) {
   return {
-    type: APPROVE_CONTROL_PROMESA_ERROR,
+    type: UPLOAD_FIRMA_DOCUMENTS_PROMESA_ERROR,
     error,
   };
 }
 
-export function approveControlPromesaSuccess(response) {
+export function uploadFirmaDocumentsPromesaSuccess(response) {
   return {
-    type: APPROVE_CONTROL_PROMESA_SUCCESS,
+    type: UPLOAD_FIRMA_DOCUMENTS_PROMESA_SUCCESS,
+    response,
+  };
+}
+
+export function controlPromesa(values) {
+  return {
+    type: CONTROL_PROMESA,
+    values,
+  };
+}
+
+export function controlPromesaError(error) {
+  return {
+    type: CONTROL_PROMESA_ERROR,
+    error,
+  };
+}
+
+export function controlPromesaSuccess(response) {
+  return {
+    type: CONTROL_PROMESA_SUCCESS,
+    response,
+  };
+}
+
+export function sendPromesaToIn(values) {
+  return {
+    type: SEND_PROMESA_TO_IN,
+    values,
+  };
+}
+
+export function sendPromesaToInError(error) {
+  return {
+    type: SEND_PROMESA_TO_IN_ERROR,
+    error,
+  };
+}
+
+export function sendPromesaToInSuccess(response) {
+  return {
+    type: SEND_PROMESA_TO_IN_SUCCESS,
+    response,
+  };
+}
+
+export function signIn(values) {
+  return {
+    type: SIGN_IN,
+    values,
+  };
+}
+
+export function signInError(error) {
+  return {
+    type: SIGN_IN_ERROR,
+    error,
+  };
+}
+
+export function signInSuccess(response) {
+  return {
+    type: SIGN_IN_SUCCESS,
+    response,
+  };
+}
+
+export function legalize(values) {
+  return {
+    type: LEGALIZE,
+    values,
+  };
+}
+
+export function legalizeError(error) {
+  return {
+    type: LEGALIZE_ERROR,
+    error,
+  };
+}
+
+export function legalizeSuccess(response) {
+  return {
+    type: LEGALIZE_SUCCESS,
+    response,
+  };
+}
+
+export function sendCopy(values) {
+  return {
+    type: SEND_COPY,
+    values,
+  };
+}
+
+export function sendCopyError(error) {
+  return {
+    type: SEND_COPY_ERROR,
+    error,
+  };
+}
+
+export function sendCopySuccess(response) {
+  return {
+    type: SEND_COPY_SUCCESS,
     response,
   };
 }
@@ -135,131 +238,5 @@ export function updatePromesa(values) {
   return {
     type: UPDATE_PROMESA,
     values,
-  };
-}
-export function confirmToClient(values) {
-  return {
-    type: CONFIRM,
-    values,
-  };
-}
-
-export function confirmError(error) {
-  return {
-    type: CONFIRM_ERROR,
-    error,
-  };
-}
-
-export function confirmSuccess(response) {
-  return {
-    type: CONFIRM_SUCCESS,
-    response,
-  };
-}
-
-export function approveIn(values) {
-  return {
-    type: APPROVE_IN,
-    values,
-  };
-}
-
-export function approveInError(error) {
-  return {
-    type: APPROVE_IN_ERROR,
-    error,
-  };
-}
-
-export function approveInSuccess(response) {
-  return {
-    type: APPROVE_IN_SUCCESS,
-    response,
-  };
-}
-
-export function approveConfeccionPromesa(values) {
-  return {
-    type: APPROVE_CONFECCION_PROMESA,
-    values,
-  };
-}
-
-export function approveConfeccionPromesaError(error) {
-  return {
-    type: APPROVE_CONFECCION_PROMESA_ERROR,
-    error,
-  };
-}
-
-export function approveConfeccionPromesaSuccess(response) {
-  return {
-    type: APPROVE_CONFECCION_PROMESA_SUCCESS,
-    response,
-  };
-}
-
-export function deletePromesa(values) {
-  return {
-    type: DELETE_PROMESA,
-    values,
-  };
-}
-
-export function deletePromesaError(error) {
-  return {
-    type: DELETE_PROMESA_ERROR,
-    error,
-  };
-}
-
-export function deletePromesaSuccess(response) {
-  return {
-    type: DELETE_PROMESA_SUCCESS,
-    response,
-  };
-}
-
-export function savePromesa(values, documents = false) {
-  return {
-    type: SAVE_PROMESA,
-    values,
-    documents,
-  };
-}
-
-export function savePromesaError(error) {
-  return {
-    type: SAVE_PROMESA_ERROR,
-    error,
-  };
-}
-
-export function savePromesaSuccess(response) {
-  return {
-    type: SAVE_PROMESA_SUCCESS,
-    response,
-  };
-}
-
-export function approveModifyPromesa(values) {
-  return {
-    type: APPROVE_MODIFY,
-    values,
-  };
-}
-
-export function approveModifyPromesaError(error) {
-  return {
-    type: APPROVE_MODIFY_ERROR,
-    error,
-  };
-}
-
-export function approveModifyPromesaSuccess(response) {
-  return {
-    type: APPROVE_MODIFY_SUCCESS,
-    response,
   };
 }

@@ -1,35 +1,36 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { API_ROOT } from 'containers/App/constants';
-import { sagaUploadVentasDocument } from 'containers/Reservation/Form/saga';
 import {
   GET_PROMESA,
   UPLOAD_CONFECCION_PROMESA,
-  APPROVE_IN,
-  APPROVE_CONFECCION_PROMESA,
-  DELETE_PROMESA,
-  SAVE_PROMESA,
-  APPROVE_MODIFY,
   APPROVE_UPLOAD_CONFECCION_PROMESA,
-  APPROVE_CONTROL_PROMESA,
+  CONTROL_PROMESA,
+  UPLOAD_FIRMA_DOCUMENTS_PROMESA,
+  SEND_PROMESA_TO_IN,
+  SIGN_IN,
+  LEGALIZE,
+  SEND_COPY,
 } from './constants';
 import {
   getPromesaError,
   getPromesaSuccess,
   uploadConfeccionPromesaError,
   uploadConfeccionPromesaSuccess,
-  deletePromesaSuccess,
-  deletePromesaError,
-  savePromesaSuccess,
-  savePromesaError,
-  approveInError,
-  approveInSuccess,
-  approveConfeccionPromesaError,
-  approveConfeccionPromesaSuccess,
   approveUploadConfeccionPromesaSuccess,
   approveUploadConfeccionPromesaError,
-  approveControlPromesaSuccess,
-  approveControlPromesaError,
+  controlPromesaSuccess,
+  controlPromesaError,
+  uploadFirmaDocumentsPromesaSuccess,
+  uploadFirmaDocumentsPromesaError,
+  sendPromesaToInSuccess,
+  sendPromesaToInError,
+  signInError,
+  signInSuccess,
+  legalizeSuccess,
+  legalizeError,
+  sendCopySuccess,
+  sendCopyError,
 } from './actions';
 
 function* sagaGetPromesa(action) {
@@ -45,7 +46,7 @@ function* sagaGetPromesa(action) {
 function* sagaUploadConfeccionPromesa(action) {
   const data = new FormData();
   Object.keys(action.values).forEach(name => {
-    data.append(name, action.values[name]);
+    if (action.values[name].name) data.append(name, action.values[name]);
   });
   try {
     const response = yield call(
@@ -84,6 +85,30 @@ function* sagaApproveUploadConfeccionPromesa(action) {
   }
 }
 
+function* sagaUploadFirmaDocumentsPromesa(action) {
+  const data = new FormData();
+  Object.keys(action.values).forEach(name => {
+    if (action.values[name].name) data.append(name, action.values[name]);
+  });
+  try {
+    const response = yield call(
+      request,
+      `${API_ROOT}/ventas/promesas-upload-firma-document/${action.PromesaID}/`,
+      {
+        method: 'PATCH',
+        body: data,
+        headers: {
+          'content-type': null,
+        },
+      },
+    );
+
+    yield put(uploadFirmaDocumentsPromesaSuccess(response));
+  } catch (error) {
+    yield put(uploadFirmaDocumentsPromesaError(error));
+  }
+}
+
 function* sagaApproveControlPromesa(action) {
   try {
     const { values } = action;
@@ -94,99 +119,73 @@ function* sagaApproveControlPromesa(action) {
       method: 'PATCH',
       body: JSON.stringify(values),
     });
-    yield put(approveControlPromesaSuccess(response));
+    yield put(controlPromesaSuccess(response));
   } catch (error) {
-    yield put(approveControlPromesaError(error));
+    yield put(controlPromesaError(error));
   }
 }
 
-/* remove --> */
-
-function* sagaApproveIn(action) {
-  const requestURL = `${API_ROOT}/ventas/promesas-inmobiliarias-approve-control/${
-    action.values.PromesaID
-  }/`;
-  try {
-    const response = yield call(request, requestURL, {
-      method: 'PATCH',
-      body: JSON.stringify(action.values),
-    });
-    yield put(approveInSuccess(response));
-  } catch (error) {
-    yield put(approveInError(error));
-  }
-}
-
-function* sagaApproveLegal(action) {
-  const requestURL = `${API_ROOT}/ventas/promesas-approve-confeccion-promesa/${
-    action.values.PromesaID
-  }/`;
-  try {
-    const response = yield call(request, requestURL, {
-      method: 'PATCH',
-      body: JSON.stringify(action.values),
-    });
-    yield put(approveConfeccionPromesaSuccess(response));
-  } catch (error) {
-    yield put(approveConfeccionPromesaError(error));
-  }
-}
-
-function* sagaDeletePromesa(action) {
-  const requestURL = `${API_ROOT}/ventas/promesas-cancel/${
-    action.values.PromesaID
-  }/`;
-  try {
-    const response = yield call(request, requestURL, {
-      method: 'PATCH',
-    });
-    yield put(deletePromesaSuccess(response));
-  } catch (error) {
-    yield put(deletePromesaError(error));
-  }
-}
-
-function* sagaSavePromesa(action) {
-  try {
-    const { values, documents = false } = action;
-    const requestURL = `${API_ROOT}/ventas/promesas/${values.PromesaID}/`;
-    const response = yield call(request, requestURL, {
-      method: 'PATCH',
-      body: JSON.stringify(action.values),
-    });
-    if (documents) {
-      const resDocuments = yield call(sagaUploadVentasDocument, documents);
-      response.promesa.Documents = resDocuments.documentos;
-    }
-    yield put(savePromesaSuccess(response));
-  } catch (error) {
-    yield put(savePromesaError(error));
-  }
-}
-
-function* sagaApproveModifyPromesa(action) {
+function* sagaSendPromesaToIn(action) {
   try {
     const { values } = action;
-    const requestURL = `${API_ROOT}/ventas/promesas-approve-modificar/${
+    const requestURL = `${API_ROOT}/ventas/promesas-register-send/${
       values.PromesaID
     }/`;
     const response = yield call(request, requestURL, {
       method: 'PATCH',
-      body: JSON.stringify(action.values),
+      body: JSON.stringify(values),
     });
-    if (values.isSendToIN) {
-      yield call(
-        request,
-        `${API_ROOT}/ventas/promesas-send-control/${action.values.PromesaID}/`,
-        {
-          method: 'PATCH',
-          body: JSON.stringify({ Conditions: [] }),
-        },
-      );
-    }
-    yield put(savePromesaSuccess(response));
+    yield put(sendPromesaToInSuccess(response));
   } catch (error) {
-    yield put(savePromesaError(error));
+    yield put(sendPromesaToInError(error));
+  }
+}
+
+function* sagaSignIn(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-register-signature/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(signInSuccess(response));
+  } catch (error) {
+    yield put(signInError(error));
+  }
+}
+
+function* sagaLegalize(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-legalize/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(legalizeSuccess(response));
+  } catch (error) {
+    yield put(legalizeError(error));
+  }
+}
+
+function* sagaSendCopy(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-send-copies/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(sendCopySuccess(response));
+  } catch (error) {
+    yield put(sendCopyError(error));
   }
 }
 
@@ -197,12 +196,13 @@ export default function* projectSaga() {
     APPROVE_UPLOAD_CONFECCION_PROMESA,
     sagaApproveUploadConfeccionPromesa,
   );
-  yield takeLatest(APPROVE_CONTROL_PROMESA, sagaApproveControlPromesa);
-
-  /* remove */
-  yield takeLatest(APPROVE_IN, sagaApproveIn);
-  yield takeLatest(APPROVE_CONFECCION_PROMESA, sagaApproveLegal);
-  yield takeLatest(DELETE_PROMESA, sagaDeletePromesa);
-  yield takeLatest(SAVE_PROMESA, sagaSavePromesa);
-  yield takeLatest(APPROVE_MODIFY, sagaApproveModifyPromesa);
+  yield takeLatest(
+    UPLOAD_FIRMA_DOCUMENTS_PROMESA,
+    sagaUploadFirmaDocumentsPromesa,
+  );
+  yield takeLatest(CONTROL_PROMESA, sagaApproveControlPromesa);
+  yield takeLatest(SEND_PROMESA_TO_IN, sagaSendPromesaToIn);
+  yield takeLatest(SIGN_IN, sagaSignIn);
+  yield takeLatest(LEGALIZE, sagaLegalize);
+  yield takeLatest(SEND_COPY, sagaSendCopy);
 }
