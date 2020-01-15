@@ -11,33 +11,30 @@ import {
   GET_PROMESA_SUCCESS,
   UPDATE_PROMESA,
   RESET_CONTAINER,
-  CONFIRM,
-  CONFIRM_ERROR,
-  CONFIRM_SUCCESS,
-  APPROVE_IN,
-  APPROVE_IN_ERROR,
-  APPROVE_IN_SUCCESS,
-  APPROVE_CONFECCION_PROMESA,
-  APPROVE_CONFECCION_PROMESA_ERROR,
-  APPROVE_CONFECCION_PROMESA_SUCCESS,
-  DELETE_PROMESA,
-  DELETE_PROMESA_ERROR,
-  DELETE_PROMESA_SUCCESS,
-  SAVE_PROMESA,
-  SAVE_PROMESA_ERROR,
-  SAVE_PROMESA_SUCCESS,
-  APPROVE_MODIFY,
-  APPROVE_MODIFY_ERROR,
-  APPROVE_MODIFY_SUCCESS,
   UPLOAD_CONFECCION_PROMESA,
   UPLOAD_CONFECCION_PROMESA_ERROR,
   UPLOAD_CONFECCION_PROMESA_SUCCESS,
   APPROVE_UPLOAD_CONFECCION_PROMESA,
   APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR,
   APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS,
-  APPROVE_CONTROL_PROMESA,
-  APPROVE_CONTROL_PROMESA_ERROR,
-  APPROVE_CONTROL_PROMESA_SUCCESS,
+  UPLOAD_FIRMA_DOCUMENTS_PROMESA,
+  UPLOAD_FIRMA_DOCUMENTS_PROMESA_ERROR,
+  UPLOAD_FIRMA_DOCUMENTS_PROMESA_SUCCESS,
+  CONTROL_PROMESA,
+  CONTROL_PROMESA_ERROR,
+  CONTROL_PROMESA_SUCCESS,
+  SEND_PROMESA_TO_IN,
+  SEND_PROMESA_TO_IN_ERROR,
+  SEND_PROMESA_TO_IN_SUCCESS,
+  SIGN_IN,
+  SIGN_IN_ERROR,
+  SIGN_IN_SUCCESS,
+  LEGALIZE,
+  SEND_COPY,
+  LEGALIZE_ERROR,
+  SEND_COPY_ERROR,
+  LEGALIZE_SUCCESS,
+  SEND_COPY_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -56,7 +53,12 @@ const promesaReducer = (state = initialState, action) =>
       case GET_PROMESA:
       case UPLOAD_CONFECCION_PROMESA:
       case APPROVE_UPLOAD_CONFECCION_PROMESA:
-      case APPROVE_CONTROL_PROMESA:
+      case UPLOAD_FIRMA_DOCUMENTS_PROMESA:
+      case CONTROL_PROMESA:
+      case SEND_PROMESA_TO_IN:
+      case SIGN_IN:
+      case LEGALIZE:
+      case SEND_COPY:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
@@ -65,7 +67,12 @@ const promesaReducer = (state = initialState, action) =>
       case GET_PROMESA_ERROR:
       case UPLOAD_CONFECCION_PROMESA_ERROR:
       case APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR:
-      case APPROVE_CONTROL_PROMESA_ERROR:
+      case UPLOAD_FIRMA_DOCUMENTS_PROMESA_ERROR:
+      case CONTROL_PROMESA_ERROR:
+      case SEND_PROMESA_TO_IN_ERROR:
+      case SIGN_IN_ERROR:
+      case LEGALIZE_ERROR:
+      case SEND_COPY_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -84,52 +91,21 @@ const promesaReducer = (state = initialState, action) =>
         break;
       case UPLOAD_CONFECCION_PROMESA_SUCCESS:
       case APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS:
-      case APPROVE_CONTROL_PROMESA_SUCCESS:
+      case UPLOAD_FIRMA_DOCUMENTS_PROMESA_SUCCESS:
+      case CONTROL_PROMESA_SUCCESS:
+      case SEND_PROMESA_TO_IN_SUCCESS:
+      case SIGN_IN_SUCCESS:
+      case LEGALIZE_SUCCESS:
+      case SEND_COPY_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = action.response.detail;
         draft.promesa = { ...draft.promesa, ...action.response.promesa };
         break;
 
-
       /* remove --> */
       case RESET_CONTAINER:
         return initialState;
-
-      case CONFIRM:
-      case APPROVE_IN:
-      case APPROVE_CONFECCION_PROMESA:
-      case DELETE_PROMESA:
-      case SAVE_PROMESA:
-      case APPROVE_MODIFY:
-        draft.loading = true;
-        draft.error = false;
-        draft.success = false;
-        draft.redirect = '';
-        break;
-
-      case CONFIRM_ERROR:
-      case APPROVE_IN_ERROR:
-      case APPROVE_CONFECCION_PROMESA_ERROR:
-      case DELETE_PROMESA_ERROR:
-      case SAVE_PROMESA_ERROR:
-      case APPROVE_MODIFY_ERROR:
-        draft.loading = false;
-        draft.error = action.error;
-        draft.success = false;
-        draft.redirect = '';
-        break;
-      case CONFIRM_SUCCESS:
-      case APPROVE_IN_SUCCESS:
-      case APPROVE_CONFECCION_PROMESA_SUCCESS:
-      case DELETE_PROMESA_SUCCESS:
-      case SAVE_PROMESA_SUCCESS:
-      case APPROVE_MODIFY_SUCCESS:
-        draft.loading = false;
-        draft.error = false;
-        draft.success = action.response.detail;
-        draft.redirect = 'list';
-        break;
 
       case UPDATE_PROMESA:
         draft.promesa = { ...draft.promesa, ...action.data };

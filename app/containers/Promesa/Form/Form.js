@@ -19,13 +19,19 @@ import PhaseConfeccionPromesa from 'containers/Phases/Promesa/ConfeccionPromesa'
 import PhaseApproveConfeccionPromesa from 'containers/Phases/Promesa/ApproveConfeccionPromesa';
 import { PROMESA_STATE } from 'containers/App/constants';
 import PhaseFirmaOrNegociacionPromesa from 'containers/Phases/Promesa/FirmaOrNegociacion';
-import PhaseRegisterSendToIN from 'containers/Phases/Promesa/RegisterSendToIN';
-import PhaseUploadFirmaDocumentsPromesa from 'containers/Phases/Promesa/UploadFirmaDocuments';
+import PhaseFirmaDocumentsPromesa from 'containers/Phases/Promesa/FirmaDocuments';
+import PhaseControlPromesa from 'containers/Phases/Promesa/ControlPromesa';
+import PhaseTimeline from 'containers/Phases/Promesa/Timeline';
 import Steps from './Steps';
 import {
-  approveControlPromesa,
+  controlPromesa,
   approveUploadConfeccionPromesa,
   uploadConfeccionPromesa,
+  uploadFirmaDocumentsPromesa,
+  sendPromesaToIn,
+  signIn,
+  legalize,
+  sendCopy,
 } from './actions';
 import { canEditConfeccionPromesa } from '../helper';
 export function Form({ selector, dispatch }) {
@@ -39,48 +45,12 @@ export function Form({ selector, dispatch }) {
     dispatch(push(`/proyectos/${project.ProyectoID}/promesas`));
 
   const blockPromesa = () => {
-    if (entity.PromesaState === PROMESA_STATE[2] && UserProject.isPM())
-      return (
-        <PhaseRegisterSendToIN
-          entity={entity}
-          selector={selector}
-          onSubmit={values =>
-            dispatch(
-              approveControlPromesa({
-                PromesaID: entity.PromesaID,
-                ...values,
-              }),
-            )
-          }
-          onCancel={onCancel}
-        />
-      );
-    if (entity.PromesaState === PROMESA_STATE[1] && UserProject.isVendor()) {
-      if (uploadFirma)
-        return (
-          <PhaseUploadFirmaDocumentsPromesa
-            entity={entity}
-            selector={selector}
-            onCancel={() => setUploadFirma(false)}
-          />
-        );
-      return (
-        <PhaseFirmaOrNegociacionPromesa
-          entity={entity}
-          selector={selector}
-          onFirma={() => setUploadFirma(true)}
-          onSubmit={values =>
-            dispatch(
-              approveControlPromesa({
-                PromesaID: entity.PromesaID,
-                ...values,
-              }),
-            )
-          }
-        />
-      );
-    }
-    if (entity.DocumentPromesa) {
+    // confeccion
+    if (
+      [PROMESA_STATE[0], PROMESA_STATE[9], PROMESA_STATE[11]].includes(
+        entity.PromesaState,
+      )
+    ) {
       if (
         (entity.PromesaState === PROMESA_STATE[9] && UserProject.isAC()) ||
         (entity.PromesaState === PROMESA_STATE[11] && UserProject.isPM())
@@ -99,17 +69,103 @@ export function Form({ selector, dispatch }) {
             }
           />
         );
+      return (
+        <PhaseConfeccionPromesa
+          entity={entity}
+          canUpload={canEditConfeccionPromesa(entity)}
+          selector={selector}
+          onSubmit={values =>
+            dispatch(uploadConfeccionPromesa(entity.PromesaID, values))
+          }
+          onCancel={onCancel}
+        />
+      );
+    }
+
+    // negociacion
+    if (
+      entity.PromesaState === PROMESA_STATE[1] &&
+      UserProject.isVendor() &&
+      !uploadFirma
+    ) {
+      return (
+        <PhaseFirmaOrNegociacionPromesa
+          entity={entity}
+          selector={selector}
+          onFirma={() => setUploadFirma(true)}
+          onSubmit={values => {}}
+        />
+      );
+    }
+
+    // control promesa -- approve firma documents
+    if (entity.PromesaState === PROMESA_STATE[12] && UserProject.isAC()) {
+      return (
+        <PhaseControlPromesa
+          entity={entity}
+          selector={selector}
+          onControl={values =>
+            dispatch(
+              controlPromesa({
+                PromesaID: entity.PromesaID,
+                ...values,
+              }),
+            )
+          }
+        />
+      );
+    }
+
+    // send to in
+    if (
+      [
+        PROMESA_STATE[2],
+        PROMESA_STATE[4],
+        PROMESA_STATE[5],
+        PROMESA_STATE[6],
+        PROMESA_STATE[7],
+        PROMESA_STATE[8],
+      ].includes(entity.PromesaState)
+    ) {
+      return (
+        <PhaseTimeline
+          entity={entity}
+          selector={selector}
+          onCancel={onCancel}
+          onSendToIn={values =>
+            dispatch(
+              sendPromesaToIn({ PromesaID: entity.PromesaID, ...values }),
+            )
+          }
+          onSignIn={values =>
+            dispatch(signIn({ PromesaID: entity.PromesaID, ...values }))
+          }
+          onLegalize={values =>
+            dispatch(legalize({ PromesaID: entity.PromesaID, ...values }))
+          }
+          onSendCopy={values =>
+            dispatch(sendCopy({ PromesaID: entity.PromesaID, ...values }))
+          }
+        />
+      );
     }
 
     return (
-      <PhaseConfeccionPromesa
+      <PhaseFirmaDocumentsPromesa
         entity={entity}
-        canUpload={canEditConfeccionPromesa(entity)}
         selector={selector}
-        onSubmit={values =>
-          dispatch(uploadConfeccionPromesa(entity.PromesaID, values))
+        onCancel={() =>
+          entity.PromesaState === PROMESA_STATE[1]
+            ? setUploadFirma(false)
+            : onCancel()
         }
-        onCancel={onCancel}
+        onSubmit={values =>
+          dispatch(uploadFirmaDocumentsPromesa(entity.PromesaID, values))
+        }
+        canUpload={
+          UserProject.isVendor() &&
+          [PROMESA_STATE[1], PROMESA_STATE[12]].includes(entity.PromesaState)
+        }
       />
     );
   };
