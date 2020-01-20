@@ -253,7 +253,7 @@ function CuotasForm({ form, onHide, onView }) {
       </ModalBody>
       <ModalFooter>
         <Button color="white" onClick={onHide}>
-          Volver
+          OK
         </Button>
       </ModalFooter>
     </>

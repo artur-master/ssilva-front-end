@@ -121,18 +121,20 @@ export const RECEPCION_GARANTIA_STATE = [
 
 export const PROMESA_STATE = [
   'Pendiente confección', // #0 -> #9
-  'Pendiente firma comprador', // #1 -> #12
-  'Pendiente envío a inmobiliaria',
+  'Pendiente firma comprador', // #1 -> #12 or #1->#13
+  'Pendiente envío a inmobiliaria', // # 2 -> #4
   'Pendiente control',
-  'Pendiente firma inmobiliaria',
-  'Pendiente legalizacion',
-  'Pendiente envio de copias',
-  'Pendiente escrituracion',
-  'Escritura',
+  'Pendiente firma inmobiliaria', // #4 -> #5 or #6
+  'Pendiente legalizacion', // #5 -> #6
+  'Pendiente envio de copias', // # 6 -> #7 or #8
+  'Pendiente escrituracion', // # 7
+  'Escritura', // #8
   'Pendiente AC aprobación de maqueta', // #9 -> #11
-  'Promesa modificada',
+  'Promesa modificada', // #10 -> #0
   'Pendiente JP aprobación de maqueta', // #11 -> #1
   'Pendiente aprobación de firma comprador', // #12 -> #2
+  'Pendiente revisión negociación', // #13 -> #14     send condition to JP review
+  'Pendiente negociación inmobiliaria', // #14     wait IN approve condition. If reject -> #10, if approve -> #1
 ];
 
 export const REQUIRED_DOCUMENTS = [
@@ -174,4 +176,8 @@ export const VENTA_LOG_TYPE = [
   'Aprobacion Modificacion oferta',
   'Refund garantia',
   'AC Aprobacion maqueta',
+  'Envio a negociación',
+  'Envio negociación a inmobiliaria',
+  'Aprobacion a negociación',
+  'Rechazo a negociación',
 ];

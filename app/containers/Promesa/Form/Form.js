@@ -22,6 +22,8 @@ import PhaseFirmaOrNegociacionPromesa from 'containers/Phases/Promesa/FirmaOrNeg
 import PhaseFirmaDocumentsPromesa from 'containers/Phases/Promesa/FirmaDocuments';
 import PhaseControlPromesa from 'containers/Phases/Promesa/ControlPromesa';
 import PhaseTimeline from 'containers/Phases/Promesa/Timeline';
+import PhaseReviewNegociacionPromesa from 'containers/Phases/Promesa/ReviewNegociacionPromesa';
+import PromesaObservation from 'containers/Phases/Promesa/Observation/index';
 import Steps from './Steps';
 import {
   controlPromesa,
@@ -32,6 +34,9 @@ import {
   signIn,
   legalize,
   sendCopy,
+  sendToReviewNegociacion,
+  updatePromesa,
+  reviewNegociacion,
 } from './actions';
 import { canEditConfeccionPromesa } from '../helper';
 export function Form({ selector, dispatch }) {
@@ -47,10 +52,17 @@ export function Form({ selector, dispatch }) {
   const blockPromesa = () => {
     // confeccion
     if (
-      [PROMESA_STATE[0], PROMESA_STATE[9], PROMESA_STATE[11]].includes(
-        entity.PromesaState,
-      )
+      [
+        PROMESA_STATE[0],
+        PROMESA_STATE[1],
+        PROMESA_STATE[9],
+        PROMESA_STATE[10],
+        PROMESA_STATE[11],
+        PROMESA_STATE[13],
+        PROMESA_STATE[14],
+      ].includes(entity.PromesaState)
     ) {
+      // AC & PM approve confeccion
       if (
         (entity.PromesaState === PROMESA_STATE[9] && UserProject.isAC()) ||
         (entity.PromesaState === PROMESA_STATE[11] && UserProject.isPM())
@@ -69,33 +81,36 @@ export function Form({ selector, dispatch }) {
             }
           />
         );
-      return (
-        <PhaseConfeccionPromesa
-          entity={entity}
-          canUpload={canEditConfeccionPromesa(entity)}
-          selector={selector}
-          onSubmit={values =>
-            dispatch(uploadConfeccionPromesa(entity.PromesaID, values))
-          }
-          onCancel={onCancel}
-        />
-      );
-    }
 
-    // negociacion
-    if (
-      entity.PromesaState === PROMESA_STATE[1] &&
-      UserProject.isVendor() &&
-      !uploadFirma
-    ) {
-      return (
-        <PhaseFirmaOrNegociacionPromesa
-          entity={entity}
-          selector={selector}
-          onFirma={() => setUploadFirma(true)}
-          onSubmit={values => {}}
-        />
-      );
+      // PM review negociacion
+      if (entity.PromesaState === PROMESA_STATE[13] && UserProject.isPM())
+        return (
+          <PhaseReviewNegociacionPromesa
+            entity={entity}
+            selector={selector}
+            onSubmit={() =>
+              dispatch(
+                reviewNegociacion({
+                  PromesaID: entity.PromesaID,
+                  Condition: entity.Condition,
+                }),
+              )
+            }
+            onCancel={onCancel}
+          />
+        );
+      if (!(entity.PromesaState === PROMESA_STATE[1] && UserProject.isVendor()))
+        return (
+          <PhaseConfeccionPromesa
+            entity={entity}
+            canUpload={canEditConfeccionPromesa(entity)}
+            selector={selector}
+            onSubmit={values =>
+              dispatch(uploadConfeccionPromesa(entity.PromesaID, values))
+            }
+            onCancel={onCancel}
+          />
+        );
     }
 
     // control promesa -- approve firma documents
@@ -150,6 +165,29 @@ export function Form({ selector, dispatch }) {
       );
     }
 
+    // V firma or negociacion
+    if (
+      entity.PromesaState === PROMESA_STATE[1] &&
+      UserProject.isVendor() &&
+      !uploadFirma
+    ) {
+      return (
+        <PhaseFirmaOrNegociacionPromesa
+          entity={entity}
+          selector={selector}
+          onFirma={() => setUploadFirma(true)}
+          onSubmit={values =>
+            dispatch(
+              sendToReviewNegociacion({
+                PromesaID: entity.PromesaID,
+                ...values,
+              }),
+            )
+          }
+        />
+      );
+    }
+
     return (
       <PhaseFirmaDocumentsPromesa
         entity={entity}
@@ -181,6 +219,11 @@ export function Form({ selector, dispatch }) {
           {entity.PromesaState}
         </span>
       </h5>
+      <PromesaObservation
+        entity={entity}
+        selector={selector}
+        onChange={Condition => dispatch(updatePromesa({ Condition }))}
+      />
       <PhaseGeneral initialValues={initialValues} />
       <PhaseClient payType={entity.PayType} client={entity.Cliente} />
       <PhaseInmueble initialValues={initialValues} />

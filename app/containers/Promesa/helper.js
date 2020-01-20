@@ -27,10 +27,12 @@ export const getReports = (entities = []) =>
 
 export const canEditConfeccionPromesa = promesa =>
   UserProject.isLegal() &&
-  [PROMESA_STATE[0], PROMESA_STATE[9]].includes(promesa.PromesaState);
+  [PROMESA_STATE[0], PROMESA_STATE[9], PROMESA_STATE[10]].includes(
+    promesa.PromesaState,
+  );
 
 export const isPendingApproveConfeccionPromesa = promesa =>
   (UserProject.isAC() || UserProject.isPM()) &&
   promesa.PromesaState === PROMESA_STATE[9];
 
-export const canEditPromesa = promesa => true;
+export const canEditPromesa = promesa => false;

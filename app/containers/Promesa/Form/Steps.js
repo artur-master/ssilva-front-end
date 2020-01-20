@@ -42,8 +42,16 @@ function Steps({ promesa }) {
 
   switch (promesa.PromesaState) {
     case PROMESA_STATE[0]:
+    case PROMESA_STATE[10]:
       Graph.Node[0].Color = 'yellow';
       Graph.Node[1].Color = 'white';
+      Graph.Node[2].Color = 'white';
+      Graph.Node[3].Color = 'white';
+      break;
+    case PROMESA_STATE[13]:
+    case PROMESA_STATE[14]:
+      Graph.Node[0].Color = 'green';
+      Graph.Node[1].Color = 'green';
       Graph.Node[2].Color = 'white';
       Graph.Node[3].Color = 'white';
       break;

@@ -4,6 +4,7 @@
  *
  */
 export const RESET_CONTAINER = 'app/containers/Promesa/Form/RESET_CONTAINER';
+export const UPDATE_PROMESA = 'app/containers/Promesa/Form/UPDATE_PROMESA';
 
 export const GET_PROMESA = 'app/containers/Promesa/Form/GET_PROMESA';
 export const GET_PROMESA_ERROR =
@@ -58,5 +59,23 @@ export const SEND_COPY_ERROR = 'app/containers/Promesa/Form/SEND_COPY_ERROR';
 export const SEND_COPY_SUCCESS =
   'app/containers/Promesa/Form/SEND_COPY_SUCCESS';
 
-/* remove --> */
-export const UPDATE_PROMESA = 'app/containers/Promesa/Form/UPDATE_PROMESA';
+export const SEND_TO_REVIEW_NEGOCIACION =
+  'app/containers/Promesa/Form/SEND_TO_REVIEW_NEGOCIACION';
+export const SEND_TO_REVIEW_NEGOCIACION_ERROR =
+  'app/containers/Promesa/Form/SEND_TO_REVIEW_NEGOCIACION_ERROR';
+export const SEND_TO_REVIEW_NEGOCIACION_SUCCESS =
+  'app/containers/Promesa/Form/SEND_TO_REVIEW_NEGOCIACION_SUCCESS';
+
+export const REVIEW_NEGOCIACION =
+  'app/containers/Promesa/Form/REVIEW_NEGOCIACION';
+export const REVIEW_NEGOCIACION_ERROR =
+  'app/containers/Promesa/Form/REVIEW_NEGOCIACION_ERROR';
+export const REVIEW_NEGOCIACION_SUCCESS =
+  'app/containers/Promesa/Form/REVIEW_NEGOCIACION_SUCCESS';
+
+export const CONTROL_NEGOCIACION =
+  'app/containers/Promesa/Form/CONTROL_NEGOCIACION';
+export const CONTROL_NEGOCIACION_ERROR =
+  'app/containers/Promesa/Form/CONTROL_NEGOCIACION_ERROR';
+export const CONTROL_NEGOCIACION_SUCCESS =
+  'app/containers/Promesa/Form/CONTROL_NEGOCIACION_SUCCESS';

@@ -6,6 +6,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import {
   Dropdown,
@@ -39,7 +40,9 @@ const Item = ({ project, promesa, dispatch }) => {
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        <b>{`${Proyecto} / ${Folio}`}</b>
+        <Link to={`/proyectos/${project.ProyectoID}/promesa?PromesaID=${promesa.PromesaID}`}>
+          <b>{`${Proyecto} / ${Folio}`}</b>
+        </Link>
       </td>
       <td className="px-3">
         {tmpInmuebles.map(Inmueble => (

@@ -16,7 +16,7 @@ function Cuotas({ form, isOpen, onHide, onView, onEdit }) {
   return (
     <Modal isOpen={isOpen !== 0} size="xl" scrollable>
       {isOpen === 1 && (
-        <CuotasForm form={form} onView={onView} onHide={onHide} />
+        <CuotasForm form={form} onView={onView} onHide={onView} />
       )}
       {isOpen === 2 && (
         <CuotasView values={form.values} onEdit={onEdit} onHide={onHide} />

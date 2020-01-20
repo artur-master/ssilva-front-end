@@ -112,8 +112,12 @@ function PhaseFormaDePagoForm({ form }) {
                   <input
                     className="form-control form-control-sm"
                     type="number"
-                    value={formatNumber(values.PaymentFirmaPromesa)}
-                    placeholder="UF"
+                    value={
+                      values.PaymentFirmaPromesa
+                        ? formatNumber(values.PaymentFirmaPromesa)
+                        : ''
+                    }
+                    placeholder="0"
                     min={0}
                     onChange={evt =>
                       handleChangeUF(
@@ -129,14 +133,18 @@ function PhaseFormaDePagoForm({ form }) {
                   <input
                     className="form-control form-control-sm"
                     type="number"
-                    value={formatNumber(percent.PaymentFirmaPromesa)}
+                    value={
+                      percent.PaymentFirmaPromesa
+                        ? formatNumber(percent.PaymentFirmaPromesa)
+                        : ''
+                    }
                     onChange={evt =>
                       handleChangePercent(
                         'PaymentFirmaPromesa',
                         evt.currentTarget.value,
                       )
                     }
-                    placeholder="%"
+                    placeholder="0"
                   />
                 </div>
               </td>
@@ -176,11 +184,11 @@ function PhaseFormaDePagoForm({ form }) {
               <td>
                 <div className="search-filter">
                   <input
-                    placeholder="UF"
+                    placeholder="0"
                     min="0"
                     type="number"
                     className="form-control form-control-sm"
-                    value={formatNumber(cuota)}
+                    value={cuota ? formatNumber(cuota) : ''}
                     readOnly={values.Cuotas.length > 1}
                     onChange={evt => {
                       handleChangeUF(
@@ -197,14 +205,14 @@ function PhaseFormaDePagoForm({ form }) {
                     className="form-control form-control-sm"
                     type="number"
                     readOnly={values.Cuotas.length > 1}
-                    value={formatNumber(percent.Cuotas)}
+                    value={percent.Cuotas ? formatNumber(percent.Cuotas) : ''}
                     onChange={evt => {
                       handleChangePercent(
                         'Cuotas.0.Amount',
                         evt.currentTarget.value,
                       );
                     }}
-                    placeholder="%"
+                    placeholder="0"
                   />
                 </div>
               </td>
@@ -277,8 +285,12 @@ function PhaseFormaDePagoForm({ form }) {
                       className="form-control form-control-sm"
                       type="number"
                       readOnly
-                      value={formatNumber(values.PaymentFirmaEscritura)}
-                      placeholder="UF"
+                      value={
+                        values.PaymentFirmaEscritura
+                          ? formatNumber(values.PaymentFirmaEscritura)
+                          : ''
+                      }
+                      placeholder="0"
                     />
                   </div>
                 </td>
@@ -288,8 +300,12 @@ function PhaseFormaDePagoForm({ form }) {
                       className="form-control form-control-sm"
                       type="number"
                       readOnly
-                      value={formatNumber(percent.PaymentFirmaEscritura)}
-                      placeholder="%"
+                      value={
+                        percent.PaymentFirmaEscritura
+                          ? formatNumber(percent.PaymentFirmaEscritura)
+                          : ''
+                      }
+                      placeholder="0"
                     />
                   </div>
                 </td>
@@ -330,8 +346,12 @@ function PhaseFormaDePagoForm({ form }) {
                     <input
                       className="form-control form-control-sm"
                       type="number"
-                      value={formatNumber(values.PaymentInstitucionFinanciera)}
-                      placeholder="UF"
+                      value={
+                        values.PaymentInstitucionFinanciera
+                          ? formatNumber(values.PaymentInstitucionFinanciera)
+                          : ''
+                      }
+                      placeholder="0"
                       min={0}
                       readOnly
                     />
@@ -342,9 +362,13 @@ function PhaseFormaDePagoForm({ form }) {
                     <input
                       className="form-control form-control-sm"
                       type="number"
-                      value={formatNumber(percent.PaymentInstitucionFinanciera)}
+                      value={
+                        percent.PaymentInstitucionFinanciera
+                          ? formatNumber(percent.PaymentInstitucionFinanciera)
+                          : ''
+                      }
                       readOnly
-                      placeholder="%"
+                      placeholder="0"
                     />
                   </div>
                 </td>
@@ -429,8 +453,10 @@ function PhaseFormaDePagoForm({ form }) {
                   <input
                     className="form-control form-control-sm"
                     type="number"
-                    value={formatNumber(values.AhorroPlus)}
-                    placeholder="UF"
+                    value={
+                      values.AhorroPlus ? formatNumber(values.AhorroPlus) : ''
+                    }
+                    placeholder="0"
                     min={0}
                     onChange={evt =>
                       handleChangeUF('AhorroPlus', evt.currentTarget.value)
@@ -443,11 +469,13 @@ function PhaseFormaDePagoForm({ form }) {
                   <input
                     className="form-control form-control-sm"
                     type="number"
-                    value={formatNumber(percent.AhorroPlus)}
+                    value={
+                      percent.AhorroPlus ? formatNumber(percent.AhorroPlus) : ''
+                    }
                     onChange={evt =>
                       handleChangePercent('AhorroPlus', evt.currentTarget.value)
                     }
-                    placeholder="%"
+                    placeholder="0"
                   />
                 </div>
               </td>

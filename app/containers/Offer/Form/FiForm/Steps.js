@@ -28,14 +28,14 @@ function FiSteps({ offer }) {
   if (offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1])
     Graph.Node[1] = {
       Label: 'I',
-      Description: 'RECIBO DE GARANTÍA',
+      Description: 'Recibo De Garantía',
       Color: 'green',
     };
 
   if (offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[2])
     Graph.Node[1] = {
       Label: 'I',
-      Description: 'DEVOLUVIÓN DE GARANTÍA',
+      Description: 'Devolución De Garantía',
       Color: 'green',
     };
 
