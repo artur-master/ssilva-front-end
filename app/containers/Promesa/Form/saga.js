@@ -11,6 +11,9 @@ import {
   SIGN_IN,
   LEGALIZE,
   SEND_COPY,
+  SEND_TO_REVIEW_NEGOCIACION,
+  REVIEW_NEGOCIACION,
+  CONTROL_NEGOCIACION,
 } from './constants';
 import {
   getPromesaError,
@@ -31,6 +34,12 @@ import {
   legalizeError,
   sendCopySuccess,
   sendCopyError,
+  sendToReviewNegociacionSuccess,
+  sendToReviewNegociacionError,
+  reviewNegociacionSuccess,
+  reviewNegociacionError,
+  controlNegociacionSuccess,
+  controlNegociacionError,
 } from './actions';
 
 function* sagaGetPromesa(action) {
@@ -189,6 +198,54 @@ function* sagaSendCopy(action) {
   }
 }
 
+function* sagaSendToReviewNegociacion(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-send-negociacion-to-jp/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(sendToReviewNegociacionSuccess(response));
+  } catch (error) {
+    yield put(sendToReviewNegociacionError(error));
+  }
+}
+
+function* sagaReviewNegociacion(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-send-negociacion-to-in/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(reviewNegociacionSuccess(response));
+  } catch (error) {
+    yield put(reviewNegociacionError(error));
+  }
+}
+
+function* sagaControlNegociacion(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-control-negociacion/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(controlNegociacionSuccess(response));
+  } catch (error) {
+    yield put(controlNegociacionError(error));
+  }
+}
+
 export default function* projectSaga() {
   yield takeLatest(GET_PROMESA, sagaGetPromesa);
   yield takeLatest(UPLOAD_CONFECCION_PROMESA, sagaUploadConfeccionPromesa);
@@ -205,4 +262,7 @@ export default function* projectSaga() {
   yield takeLatest(SIGN_IN, sagaSignIn);
   yield takeLatest(LEGALIZE, sagaLegalize);
   yield takeLatest(SEND_COPY, sagaSendCopy);
+  yield takeLatest(SEND_TO_REVIEW_NEGOCIACION, sagaSendToReviewNegociacion);
+  yield takeLatest(REVIEW_NEGOCIACION, sagaReviewNegociacion);
+  yield takeLatest(CONTROL_NEGOCIACION, sagaControlNegociacion);
 }

@@ -7,8 +7,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectPhases from 'containers/Common/ProjectPhases';
+import { Auth } from 'containers/App/helpers';
 
 export function ProjectMeta({ project = {}, active }) {
+  if (Auth.isInmobiliario()) return null;
   return (
     <>
       <div className="heading row justify-content-between">

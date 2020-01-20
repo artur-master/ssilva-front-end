@@ -34,11 +34,27 @@ import {
   SEND_COPY,
   SEND_COPY_ERROR,
   SEND_COPY_SUCCESS,
+  SEND_TO_REVIEW_NEGOCIACION,
+  SEND_TO_REVIEW_NEGOCIACION_ERROR,
+  SEND_TO_REVIEW_NEGOCIACION_SUCCESS,
+  REVIEW_NEGOCIACION_ERROR,
+  REVIEW_NEGOCIACION,
+  REVIEW_NEGOCIACION_SUCCESS,
+  CONTROL_NEGOCIACION,
+  CONTROL_NEGOCIACION_ERROR,
+  CONTROL_NEGOCIACION_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
   return {
     type: RESET_CONTAINER,
+  };
+}
+
+export function updatePromesa(values) {
+  return {
+    type: UPDATE_PROMESA,
+    values,
   };
 }
 
@@ -233,10 +249,65 @@ export function sendCopySuccess(response) {
   };
 }
 
-/* remove ---> */
-export function updatePromesa(values) {
+export function sendToReviewNegociacion(values) {
   return {
-    type: UPDATE_PROMESA,
+    type: SEND_TO_REVIEW_NEGOCIACION,
     values,
+  };
+}
+
+export function sendToReviewNegociacionError(error) {
+  return {
+    type: SEND_TO_REVIEW_NEGOCIACION_ERROR,
+    error,
+  };
+}
+
+export function sendToReviewNegociacionSuccess(response) {
+  return {
+    type: SEND_TO_REVIEW_NEGOCIACION_SUCCESS,
+    response,
+  };
+}
+
+export function reviewNegociacion(values) {
+  return {
+    type: REVIEW_NEGOCIACION,
+    values,
+  };
+}
+
+export function reviewNegociacionError(error) {
+  return {
+    type: REVIEW_NEGOCIACION_ERROR,
+    error,
+  };
+}
+
+export function reviewNegociacionSuccess(response) {
+  return {
+    type: REVIEW_NEGOCIACION_SUCCESS,
+    response,
+  };
+}
+
+export function controlNegociacion(values) {
+  return {
+    type: CONTROL_NEGOCIACION,
+    values,
+  };
+}
+
+export function controlNegociacionError(error) {
+  return {
+    type: CONTROL_NEGOCIACION_ERROR,
+    error,
+  };
+}
+
+export function controlNegociacionSuccess(response) {
+  return {
+    type: CONTROL_NEGOCIACION_SUCCESS,
+    response,
   };
 }

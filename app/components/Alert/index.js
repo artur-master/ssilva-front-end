@@ -64,7 +64,7 @@ const Alert = ({
         type === 'danger' ? 'border-color-danger' : ''
       } ${space} ${
         isChecked ? 'border-color-danger' : ''
-      } mt-2  rounded-lg  alert fade show p-0 ${className}`}
+      } mb-2 mt-2  rounded-lg  alert fade show p-0 ${className}`}
     >
       <table className="table table-responsive-md table-borderless m-0 rounded-lg">
         <tbody>

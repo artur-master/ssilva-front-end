@@ -12,6 +12,8 @@ import {
   SEARCH_PROMESAS,
 } from './constants';
 import { getReports, initReports } from '../helper';
+import { UserProject } from '../../Project/helper';
+import { PROMESA_STATE } from '../../App/constants';
 
 export const initialState = {
   loading: false,

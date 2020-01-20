@@ -75,7 +75,7 @@ export function TopPage({ action, project = {}, dispatch }) {
   const nextResponer = getNextResponer(project);
   const responers =
     nextResponer.length > 0 ? (
-      <span className="color-warning">[{nextResponer.join(', ')}]</span>
+      <span className="color-warning">({nextResponer.join(', ')})</span>
     ) : (
       ''
     );

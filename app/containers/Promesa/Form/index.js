@@ -21,16 +21,13 @@ import Form from './Form';
 import reducer from './reducer';
 import saga from './saga';
 import { getPromesa, resetContainer } from './actions';
-import PromesaConfirm from './Confirm';
-import PromesaInForm from './InForm';
-import PromesaFiForm from './FiForm';
+import InForm from './InForm';
 const SyncMessage = WithLoading();
 export function PromesaForm({
   selector,
   selectorProject,
   dispatch,
   location,
-  action,
 }) {
   useInjectReducer({ key: 'promesaform', reducer });
   useInjectSaga({ key: 'promesaform', saga });
@@ -48,11 +45,13 @@ export function PromesaForm({
   }
   if (!project || !selector.promesa) return <SyncMessage loading />;
 
+  if (UserProject.isInmobiliario())
+    return <InForm selector={selector} dispatch={dispatch} />;
+
   return <Form selector={selector} dispatch={dispatch} />;
 }
 
 PromesaForm.propTypes = {
-  action: PropTypes.string,
   location: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,

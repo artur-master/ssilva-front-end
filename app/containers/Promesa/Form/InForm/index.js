@@ -5,76 +5,79 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import PhaseGeneral from 'containers/Phases/General';
-import PhaseClient from 'containers/Phases/Client';
-import PhaseInmueble from 'containers/Phases/Inmueble';
-import PhaseFormaDePago from 'containers/Phases/FormaDePago';
-import PhasePreCredito from 'containers/Phases/PreCredito';
-import PhaseDocument from 'containers/Phases/Document';
 import { push } from 'connected-react-router';
-import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
-import model from '../../model';
-import { approveIn } from '../actions';
-import PromesaInFormObservation from './Observation';
-import PromesaInFormActions from './Actions';
-import InSteps from './Steps';
+import { Redirect } from 'react-router-dom';
+import InitData from 'containers/Common/InitData';
+import { PROMESA_STATE } from 'containers/App/constants';
+import PhaseFirmaDocumentsPromesa from 'containers/Phases/Promesa/FirmaDocuments';
+import PromesaObservation from 'containers/Phases/Promesa/Observation/index';
+import PhaseControlNegociacionPromesa from 'containers/Phases/Promesa/ControlNegociacionPromesa';
+import { controlNegociacion } from '../actions';
+export function InForm({ selector, dispatch }) {
+  const { project = {} } = window;
+  const entity = selector.promesa;
 
-export function PromesaInForm({ selector, dispatch }) {
-  const initialValues = model({
-    project: window.project,
-    entity: selector.promesa,
-  });
+  const onCancel = () =>
+    dispatch(push(`/proyectos/${project.ProyectoID}/promesas`));
 
-  return (
-    <>
-      <InSteps promesa={selector.promesa} />
-      <h4 className="font-21 mt-3">{`${window.project.Name} / ${
-        selector.promesa.Folio
-      }`}</h4>
-      <h5 className="mb-3 d-flex align-items-center justify-content-between">
-        <span className="font-16-rem line-height-1 color-success">
-          {selector.promesa.AprobacionInmobiliariaState}
-        </span>
-      </h5>
-      <PromesaInFormObservation entity={selector.promesa} />
-      <PhaseGeneral initialValues={initialValues} />
-      <PhaseClient
-        payType={selector.promesa.PayType}
-        client={selector.promesa.Cliente}
-      />
-      <PhaseInmueble initialValues={initialValues} />
-      <PhaseFormaDePago initialValues={initialValues} />
-      <PhasePreCredito initialValues={initialValues} />
-      <PhaseDocument entity={initialValues} isCollapse />
-      {selector.promesa.AprobacionInmobiliariaState ===
-        APROBACION_INMOBILIARIA_STATE[1] && (
-        <PromesaInFormActions
+  if (selector.success) {
+    return <Redirect to={`/proyectos/${project.ProyectoID}/promesas`} />;
+  }
+
+  const blockPromesa = () => {
+    if (entity.PromesaState === PROMESA_STATE[14]) {
+      return (
+        <PhaseControlNegociacionPromesa
+          entity={entity}
           selector={selector}
-          onCancel={() =>
-            dispatch(push(`/proyectos/${window.project.ProyectoID}/promesas`))
-          }
-          onApprove={values => {
+          onSubmit={values =>
             dispatch(
-              approveIn({
-                PromesaID: selector.promesa.PromesaID,
-                ...values,
+              controlNegociacion({
+                PromesaID: entity.PromesaID,
                 Comment: values.Comment || '',
-                Conditions: selector.promesa.Condition.map(condition => ({
+                Resolution: values.Resolution,
+                Condition: entity.Condition.map(condition => ({
                   ...condition,
                   IsApprove: true,
                 })),
               }),
-            );
-          }}
+            )
+          }
         />
+      );
+    }
+
+    return (
+      <PhaseFirmaDocumentsPromesa
+        entity={entity}
+        selector={selector}
+        onCancel={onCancel}
+      />
+    );
+  };
+
+  return (
+    <>
+      <InitData User Client />
+      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
+      <h5 className="mb-3 d-flex align-items-center justify-content-between">
+        <span className="font-16-rem line-height-1">
+          {entity.PromesaState === PROMESA_STATE[14]
+            ? 'Negociación Promesa'
+            : ''}
+        </span>
+      </h5>
+      {entity.PromesaState === PROMESA_STATE[14] && (
+        <PromesaObservation entity={entity} selector={selector} />
       )}
+      {blockPromesa()}
     </>
   );
 }
 
-PromesaInForm.propTypes = {
+InForm.propTypes = {
   selector: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
-export default PromesaInForm;
+export default InForm;

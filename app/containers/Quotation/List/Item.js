@@ -44,7 +44,9 @@ const Item = ({ quotation, dispatch }) => {
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        <b>{`${Proyecto} / ${Folio}`}</b>
+        <Link to={`/proyectos/${ProyectoID}/cotizacion/${CotizacionID}`}>
+          <b>{`${Proyecto} / ${Folio}`}</b>
+        </Link>
       </td>
       <td className="px-3">
         {Inmuebles.map(Inmueble => (
