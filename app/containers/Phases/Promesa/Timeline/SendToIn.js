@@ -35,7 +35,7 @@ export function PhaseTimelineSendToIn({
           {(canEdit || !isPending) && (
             <FormGroup>
               <Label style={{ width: '15em' }} className="pt-1">
-                Date Envio Promesa
+                Fecha Envio Promesa
               </Label>
               {canEdit && (
                 <>

@@ -39,6 +39,7 @@ import {
   reviewNegociacion,
 } from './actions';
 import { canEditConfeccionPromesa } from '../helper';
+import Button from '../../../components/Button';
 export function Form({ selector, dispatch }) {
   const { project = {} } = window;
   const entity = selector.promesa;
@@ -135,6 +136,7 @@ export function Form({ selector, dispatch }) {
     if (
       [
         PROMESA_STATE[2],
+        PROMESA_STATE[3],
         PROMESA_STATE[4],
         PROMESA_STATE[5],
         PROMESA_STATE[6],
@@ -214,10 +216,18 @@ export function Form({ selector, dispatch }) {
       <ProjectPhases project={project} active="promesa" />
       <Steps promesa={selector.promesa} />
       <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
-      <h5 className="mb-3 d-flex align-items-center justify-content-between">
+      <h5 className="mb-3 d-flex align-items-center after-expands-2">
         <span className="font-16-rem line-height-1 color-success">
           {entity.PromesaState}
         </span>
+        {UserProject.isFinanza() && (
+          <>
+            <Button className="order-3 m-btn-white m-btn-download">
+              Resumen Facturación
+            </Button>
+            <Button className="order-3 ">Facturación</Button>
+          </>
+        )}
       </h5>
       <PromesaObservation
         entity={entity}

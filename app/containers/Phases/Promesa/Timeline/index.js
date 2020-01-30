@@ -15,6 +15,7 @@ import PhaseTimelineSignIn from './SignIn';
 import PhaseTimelineLegalizePromesa from './LegalizePromesa';
 import { getStepTimeline } from './helper';
 import PhaseTimelineSendCopy from './SendCopy';
+import PhaseTimelineFacturaPromesa from './Factura';
 
 const SyncMassage = WithLoading();
 
@@ -28,6 +29,7 @@ export function PhaseTimeline({
   onCancel,
 }) {
   const step = getStepTimeline(entity);
+  console.log(step)
   return (
     <Box collapse>
       <BoxHeader>
@@ -45,26 +47,27 @@ export function PhaseTimeline({
             isPending={step < 1}
             canEdit={step === 0 && UserProject.isPM()}
           />
+          <PhaseTimelineFacturaPromesa isPending={step < 2} />
           <PhaseTimelineSignIn
             entity={entity}
             selector={selector}
             onSubmit={onSignIn}
-            isPending={step < 2}
-            canEdit={step === 1 && UserProject.isPM()}
+            isPending={step < 3}
+            canEdit={step === 2 && UserProject.isPM()}
           />
           <PhaseTimelineLegalizePromesa
             entity={entity}
             selector={selector}
             onSubmit={onLegalize}
-            isPending={step < 3}
-            canEdit={step === 2 && UserProject.isPM()}
+            isPending={step < 4}
+            canEdit={step === 3 && UserProject.isAC()}
           />
           <PhaseTimelineSendCopy
             entity={entity}
             selector={selector}
             onSubmit={onSendCopy}
-            isPending={step < 4}
-            canEdit={step === 3 && UserProject.isPM()}
+            isPending={step < 5}
+            canEdit={step === 4 && UserProject.isAC()}
           />
           <div className="py-3">
             <SyncMassage {...selector} />

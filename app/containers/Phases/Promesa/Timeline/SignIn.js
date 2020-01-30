@@ -27,7 +27,7 @@ export function PhaseTimelineSignIn({
           <div className="row m-0 p-0 mb-3">
             <div className="col-lg-6 border-bottom p-0 pb-2 d-flex align-items-center">
               <span className="font-16-rem">
-                <strong>Registrarse Signature Inmobiliaria</strong>
+                <strong>Registro Firma de Inmobiliaria</strong>
               </span>
             </div>
           </div>
@@ -36,7 +36,7 @@ export function PhaseTimelineSignIn({
             {(canEdit || !isPending) && (
               <>
                 <Label style={{ width: '15em' }} className="pt-1">
-                  Date Regreso Promesa
+                  Fecha Regreso Promesa
                 </Label>
                 {canEdit && (
                   <>
