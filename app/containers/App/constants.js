@@ -122,8 +122,8 @@ export const RECEPCION_GARANTIA_STATE = [
 export const PROMESA_STATE = [
   'Pendiente confección', // #0 -> #9
   'Pendiente firma comprador', // #1 -> #12 or #1->#13
-  'Pendiente envío a inmobiliaria', // # 2 -> #4
-  'Pendiente control',
+  'Pendiente envío a inmobiliaria', // # 2 -> #3
+  'Pendiente factura', // #3 -> 4
   'Pendiente firma inmobiliaria', // #4 -> #5 or #6
   'Pendiente legalizacion', // #5 -> #6
   'Pendiente envio de copias', // # 6 -> #7 or #8
