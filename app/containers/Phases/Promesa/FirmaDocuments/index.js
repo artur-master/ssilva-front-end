@@ -105,9 +105,7 @@ export function PhaseFirmaDocumentsPromesa({
           )}
         </ExForm>
       </Box>
-      <div className="py-3">
-        <SyncMassage {...selector} />
-      </div>
+      <SyncMassage {...selector} />
     </>
   );
 }

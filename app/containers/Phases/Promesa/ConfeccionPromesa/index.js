@@ -40,15 +40,15 @@ export function PhaseConfeccionPromesa({
               {canUpload && (
                 <div className="row m-0 p-0">
                   <div className="col-lg-6 border-bottom p-0 pb-3 d-flex align-items-center">
-                    <Link
+                    <a
                       disabled={!!form.values.DocumentPromesa}
                       className="m-btn m-btn-white m-btn-download"
-                      to={maquetaWord.url}
+                      href={maquetaWord.url}
                       target="_blank"
                       download
                     >
                       Descargar Maqueta
-                    </Link>
+                    </a>
                   </div>
                 </div>
               )}

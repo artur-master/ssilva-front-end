@@ -24,7 +24,6 @@ function DocumentItem({ name, label, canUpload }) {
         const getInTouched = getIn(touched, field.name);
         const getInErrors = getIn(errors, field.name);
         const { value } = field;
-
         if (!value || value.name) {
           return (
             <FormGroup>
@@ -78,14 +77,14 @@ function DocumentItem({ name, label, canUpload }) {
             >
               {getFileName(value)}
             </span>
-            <Link
-              to={value}
+            <a
+              href={value}
               target="_blank"
               download
               className="font-14-rem mx-2 btn-arrow text-nowrap"
             >
               <b>Ver {label}</b>
-            </Link>
+            </a>
             {canUpload && (
               <button
                 type="button"

@@ -19,7 +19,7 @@ export function Offer({ entity, canUpload, canReview, onReview }) {
     {
       documentoName: 'Oferta Firmada',
       documentoType: 'DocumentOfertaFirmada',
-      firmado: true
+      firmado: true,
     },
   ];
   return (

@@ -24,6 +24,11 @@ import PhaseControlPromesa from 'containers/Phases/Promesa/ControlPromesa';
 import PhaseTimeline from 'containers/Phases/Promesa/Timeline';
 import PhaseReviewNegociacionPromesa from 'containers/Phases/Promesa/ReviewNegociacionPromesa';
 import PromesaObservation from 'containers/Phases/Promesa/Observation/index';
+import FacturaButton from 'containers/Phases/Factura/Buttons';
+import Factura from 'containers/Phases/Factura';
+import Desistimiento from 'containers/Phases/Promesa/Desistimiento';
+import PromesaRefundGarantia from 'containers/Phases/Promesa/RefundGarantia';
+import RefundGrantiaButton from 'containers/Phases/Promesa/RefundGarantia/Buttons';
 import Steps from './Steps';
 import {
   controlPromesa,
@@ -37,9 +42,12 @@ import {
   sendToReviewNegociacion,
   updatePromesa,
   reviewNegociacion,
+  generateFactura,
 } from './actions';
-import { canEditConfeccionPromesa } from '../helper';
-import Button from '../../../components/Button';
+import { canEditConfeccionPromesa, canRefund } from '../helper';
+import StepsDesistimento from './StepsDesistimiento';
+import StepsResiliacion from './StepsResiliacion';
+import StepsResolucion from './StepsResolucion';
 export function Form({ selector, dispatch }) {
   const { project = {} } = window;
   const entity = selector.promesa;
@@ -154,6 +162,9 @@ export function Form({ selector, dispatch }) {
               sendPromesaToIn({ PromesaID: entity.PromesaID, ...values }),
             )
           }
+          onGenerateFactura={() =>
+            dispatch(generateFactura({ PromesaID: entity.PromesaID }))
+          }
           onSignIn={values =>
             dispatch(signIn({ PromesaID: entity.PromesaID, ...values }))
           }
@@ -209,23 +220,47 @@ export function Form({ selector, dispatch }) {
       />
     );
   };
+  let stepsComponent = '';
+  let subtitle = '';
+
+  switch (selector.promesa.PromesaState) {
+    case PROMESA_STATE[16]:
+      stepsComponent = <StepsDesistimento promesa={selector.promesa} />;
+      subtitle = entity.PromesaDesistimentoState || entity.PromesaState;
+      break;
+    case PROMESA_STATE[17]:
+      stepsComponent = <StepsResiliacion promesa={selector.promesa} />;
+      subtitle = entity.PromesaResiliacionState || entity.PromesaState;
+      break;
+    case PROMESA_STATE[18]:
+      stepsComponent = <StepsResolucion promesa={selector.promesa} />;
+      subtitle = entity.PromesaResolucionState || entity.PromesaState;
+      break;
+    default:
+      stepsComponent = <Steps promesa={selector.promesa} />;
+      subtitle = entity.PromesaState;
+  }
 
   return (
     <>
       <InitData User Client />
       <ProjectPhases project={project} active="promesa" />
-      <Steps promesa={selector.promesa} />
+      {stepsComponent}
       <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
       <h5 className="mb-3 d-flex align-items-center after-expands-2">
         <span className="font-16-rem line-height-1 color-success">
-          {entity.PromesaState}
+          {subtitle}
         </span>
-        {UserProject.isFinanza() && (
+        {canRefund(entity) && (
           <>
-            <Button className="order-3 m-btn-white m-btn-download">
-              Resumen Facturación
-            </Button>
-            <Button className="order-3 ">Facturación</Button>
+            <PromesaRefundGarantia />
+            <RefundGrantiaButton promesa={entity} />
+          </>
+        )}
+        {UserProject.isLegal() && entity.Factura && (
+          <>
+            <Factura />
+            <FacturaButton factura={entity.Factura} />
           </>
         )}
       </h5>
@@ -242,6 +277,7 @@ export function Form({ selector, dispatch }) {
       <PhaseDocument entity={initialValues} />
 
       {blockPromesa()}
+      <Desistimiento promesa={entity} />
     </>
   );
 }

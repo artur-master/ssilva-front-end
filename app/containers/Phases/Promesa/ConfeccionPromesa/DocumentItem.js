@@ -6,7 +6,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Field as FormikField, getIn } from 'formik';
 import { getFileName } from 'containers/App/helpers';
 
@@ -65,14 +64,14 @@ function DocumentItem({ canUpload }) {
         return (
           <>
             <span className="font-14-rem mx-2">{getFileName(value)}</span>
-            <Link
-              to={value}
+            <a
+              href={value}
               target="_blank"
               download
               className="font-14-rem mx-2 btn-arrow"
             >
               <b>Ver Promesa</b>
-            </Link>
+            </a>
             {canUpload && (
               <button
                 type="button"

@@ -12,6 +12,7 @@ import { PROMESA_STATE } from 'containers/App/constants';
 import PhaseFirmaDocumentsPromesa from 'containers/Phases/Promesa/FirmaDocuments';
 import PromesaObservation from 'containers/Phases/Promesa/Observation/index';
 import PhaseControlNegociacionPromesa from 'containers/Phases/Promesa/ControlNegociacionPromesa';
+import Desistimiento from 'containers/Phases/Promesa/Desistimiento';
 import { controlNegociacion } from '../actions';
 export function InForm({ selector, dispatch }) {
   const { project = {} } = window;
@@ -71,6 +72,7 @@ export function InForm({ selector, dispatch }) {
         <PromesaObservation entity={entity} selector={selector} />
       )}
       {blockPromesa()}
+      <Desistimiento promesa={entity} />
     </>
   );
 }

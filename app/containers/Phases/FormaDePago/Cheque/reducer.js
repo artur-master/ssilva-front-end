@@ -33,7 +33,7 @@ const chequeReducer = (state = initialState, action) =>
       case GENERATE_CHEQUE_SUCCESS:
         draft.loading = false;
         draft.error = false;
-        draft.files = action.response
+        draft.files = action.response;
         break;
       case RESET_CONTAINER:
         return initialState;

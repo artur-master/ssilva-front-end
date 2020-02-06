@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Label } from 'components/ExForm';
 import Restriction from 'containers/Common/Restriction';
-import { UserProject } from '../../helper';
 import { Auth } from 'containers/App/helpers';
+import { UserProject } from '../../helper';
 
 function Restrictions({ project }) {
   const [openRestriction, setOpenRestriciton] = useState(false);

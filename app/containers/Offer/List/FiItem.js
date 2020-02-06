@@ -43,7 +43,11 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        <Link to={`/proyectos/${project.ProyectoID}/oferta?OfertaID=${offer.OfertaID}`}>
+        <Link
+          to={`/proyectos/${project.ProyectoID}/oferta?OfertaID=${
+            offer.OfertaID
+          }`}
+        >
           <b>{`${Proyecto} / ${Folio}`}</b>
         </Link>
       </td>
@@ -79,7 +83,7 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
             (offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1] ||
               success[offer.OfertaID]) && (
               <span className="badge px-2 badge-success">Aprobada</span>
-            )}
+          )}
 
           {offer.OfertaState === OFERTA_STATE[4] &&
             (offer.RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[2] ||

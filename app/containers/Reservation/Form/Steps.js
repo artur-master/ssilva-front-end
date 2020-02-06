@@ -107,7 +107,7 @@ function Steps({ reservation }) {
                     'Pendiente información/Rechazada'
                       ? 'Pendiente información'
                       : node.Description}{' '}
-                    [{node.Label}]
+                    ({node.Label})
                   </span>
                 </Link>
               </li>

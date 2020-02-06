@@ -5,7 +5,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
@@ -45,14 +44,14 @@ export function PhaseFirmaOrNegociacionPromesa({
                   <span className="font-14-rem mx-2">
                     {getFileName(entity.DocumentPromesa)}
                   </span>
-                  <Link
-                    to={entity.DocumentPromesa}
+                  <a
+                    href={entity.DocumentPromesa}
                     target="_blank"
                     download
                     className="font-14-rem mx-2 btn-arrow"
                   >
                     <b>Ver Promesa</b>
-                  </Link>
+                  </a>
                 </div>
               </BoxContent>
               <BoxFooter>

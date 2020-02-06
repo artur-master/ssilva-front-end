@@ -18,6 +18,8 @@ import makeSelectInitProject from 'containers/Project/Init/selectors';
 import WithLoading from 'components/WithLoading';
 import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
 import PageHeader from 'containers/Common/PageHeader';
+import Factura from 'containers/Phases/Factura';
+import PromesaRefundGarantia from 'containers/Phases/Promesa/RefundGarantia';
 import makeSelectPromesas from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -47,6 +49,8 @@ export function Promesas({ match, selectorProject, selector, dispatch }) {
       <Helmet title={`Promesas - ${project.Name || '...'}`} />
       <PageHeader header={header} />
       <ProjectMeta action="view" project={project} active="promesa" />
+      <Factura />
+      <PromesaRefundGarantia />
       {selector.loading && <SyncMessage {...selector} />}
       {!selector.loading && selector.promesas && (
         <>

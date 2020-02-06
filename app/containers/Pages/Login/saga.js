@@ -26,7 +26,7 @@ export function* login(action) {
     const auth = yield call(request, requestURL, {
       method: 'post',
       body: JSON.stringify({
-        rut: credentials.username.replace(/\s/g, ""),
+        rut: credentials.username.replace(/\s/g, ''),
         password: credentials.password,
       }),
     });

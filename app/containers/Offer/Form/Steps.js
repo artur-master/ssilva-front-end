@@ -13,11 +13,7 @@ import {
   RECEPCION_GARANTIA_STATE,
   PRE_APROBACION_CREDITO_STATE,
 } from 'containers/App/constants';
-import {
-  isAprobacionInmobiliariaState,
-  isPendienteContacto,
-  isWaitAprobacionInmobiliariaState,
-} from '../helper';
+import { isPendienteContacto } from '../helper';
 import { isCreditType } from '../../Phases/FormaDePago/helper';
 
 function SubSteps({ offer }) {
@@ -26,7 +22,6 @@ function SubSteps({ offer }) {
     PreAprobacionCreditoState,
     RecepcionGarantiaState,
     PayType,
-    Credits = [],
   } = offer;
   const isCreditPayment = isCreditType(PayType);
   if (
@@ -164,7 +159,7 @@ function Steps({ offer }) {
         Description: 'Pendiente Aprobación',
         Color: isPendienteContacto(offer) ? 'white' : 'red',
       },
-      { Label: 'AC', Description: 'Pendiente Control', Color: 'white' },
+      { Label: 'LG', Description: 'Pendiente Control', Color: 'white' },
       { Label: '', Description: 'Promesa', Color: 'white' },
     ],
   };
@@ -210,7 +205,7 @@ function Steps({ offer }) {
                   className="m-counter-item"
                 >
                   <span>{`${node.Description.trim()} ${
-                    node.Label ? `[${node.Label}]` : ''
+                    node.Label ? `(${node.Label})` : ''
                   }`}</span>
                 </Link>
               </li>

@@ -5,8 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the project state domain
  */
 
-const selectPromesaFormDomain = state =>
-  state.promesaform || initialState;
+const selectPromesaFormDomain = state => state.promesaform || initialState;
 
 /**
  * Other specific selectors

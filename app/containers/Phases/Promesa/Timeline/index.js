@@ -23,13 +23,13 @@ export function PhaseTimeline({
   selector,
   entity,
   onSendToIn,
+  onGenerateFactura,
   onSignIn,
   onLegalize,
   onSendCopy,
   onCancel,
 }) {
   const step = getStepTimeline(entity);
-  console.log(step)
   return (
     <Box collapse>
       <BoxHeader>
@@ -47,7 +47,15 @@ export function PhaseTimeline({
             isPending={step < 1}
             canEdit={step === 0 && UserProject.isPM()}
           />
-          <PhaseTimelineFacturaPromesa isPending={step < 2} />
+          {/*
+          <PhaseTimelineFacturaPromesa
+            isPending={step < 2}
+            canEdit={step === 1 && UserProject.isPM()}
+            selector={selector}
+            entity={entity}
+            onSubmit={onGenerateFactura}
+          />
+          */}
           <PhaseTimelineSignIn
             entity={entity}
             selector={selector}
@@ -60,14 +68,14 @@ export function PhaseTimeline({
             selector={selector}
             onSubmit={onLegalize}
             isPending={step < 4}
-            canEdit={step === 3 && UserProject.isAC()}
+            canEdit={step === 3 && UserProject.isPM()}
           />
           <PhaseTimelineSendCopy
             entity={entity}
             selector={selector}
             onSubmit={onSendCopy}
             isPending={step < 5}
-            canEdit={step === 4 && UserProject.isAC()}
+            canEdit={step === 4 && UserProject.isPM()}
           />
           <div className="py-3">
             <SyncMassage {...selector} />
@@ -87,6 +95,7 @@ PhaseTimeline.propTypes = {
   entity: PropTypes.object,
   selector: PropTypes.object,
   onSendToIn: PropTypes.func,
+  onGenerateFactura: PropTypes.func,
   onSignIn: PropTypes.func,
   onLegalize: PropTypes.func,
   onSendCopy: PropTypes.func,

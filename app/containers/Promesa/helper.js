@@ -1,5 +1,5 @@
-import { PROMESA_STATE } from 'containers/App/constants';
-import { UserProject } from '../Project/helper';
+import { PROMESA_STATE, PROMESA_REFUND_STATE } from 'containers/App/constants';
+import { UserProject } from 'containers/Project/helper';
 
 export const initReports = () =>
   PROMESA_STATE.reduce(
@@ -35,4 +35,36 @@ export const isPendingApproveConfeccionPromesa = promesa =>
   (UserProject.isAC() || UserProject.isPM()) &&
   promesa.PromesaState === PROMESA_STATE[9];
 
-export const canEditPromesa = promesa => false;
+export const canEditPromesa = () => false;
+
+export const canRefund = promesa =>
+  UserProject.isFinanza() &&
+  ((promesa.PromesaState === PROMESA_STATE[16] &&
+    promesa.PromesaDesistimientoState === PROMESA_REFUND_STATE[0]) ||
+    (promesa.PromesaState === PROMESA_STATE[17] &&
+      promesa.PromesaResiliacionState === PROMESA_REFUND_STATE[0]) ||
+    (promesa.PromesaState === PROMESA_STATE[18] &&
+      promesa.PromesaResolucionState === PROMESA_REFUND_STATE[0]) ||
+    (promesa.PromesaState === PROMESA_STATE[19] &&
+      promesa.PromesaModificacionState === PROMESA_REFUND_STATE[0]));
+
+export const isRefund = promesa =>
+  promesa.PromesaDesistimientoState === PROMESA_REFUND_STATE[1] ||
+  promesa.PromesaResiliacionState === PROMESA_REFUND_STATE[1] ||
+  promesa.PromesaResolucionState === PROMESA_REFUND_STATE[1] ||
+  promesa.PromesaModificacionState === PROMESA_REFUND_STATE[1];
+
+export const getExtraPromesaState = promesa => {
+  switch (promesa.PromesaState) {
+    case PROMESA_STATE[16]:
+      return promesa.PromesaDesistimientoState;
+    case PROMESA_STATE[17]:
+      return promesa.PromesaResiliacionState;
+    case PROMESA_STATE[18]:
+      return promesa.PromesaResolucionState;
+    case PROMESA_STATE[19]:
+      return promesa.PromesaModificacionState;
+    default:
+      return promesa.PromesaState;
+  }
+};

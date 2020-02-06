@@ -27,6 +27,7 @@ import Steps from './Steps';
 import ApproveConfeccionPromesa from './ApproveConfeccionPromesa';
 import { approveConfeccionPromesa } from './actions';
 import FormActions from './FormActions';
+import PhaseObservation from '../../Phases/Observation';
 
 export function Form({ selector, selectorCredit, dispatch }) {
   const { project = {} } = window;
@@ -73,6 +74,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
         </span>
         {canApproveConfeccionPromesa(initialValues) && controlAction}
       </h5>
+      {UserProject.isLegal() && <PhaseObservation entity={initialValues} />}
       <PhaseGeneral initialValues={initialValues} />
       <PhaseClient payType={entity.PayType} client={entity.Cliente} />
       <PhaseInmueble initialValues={initialValues} />
