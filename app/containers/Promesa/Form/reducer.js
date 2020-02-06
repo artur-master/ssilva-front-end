@@ -44,6 +44,9 @@ import {
   CONTROL_NEGOCIACION,
   CONTROL_NEGOCIACION_ERROR,
   CONTROL_NEGOCIACION_SUCCESS,
+  GENERATE_FACTURA,
+  GENERATE_FACTURA_ERROR,
+  GENERATE_FACTURA_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -71,6 +74,7 @@ const promesaReducer = (state = initialState, action) =>
       case SIGN_IN:
       case LEGALIZE:
       case SEND_COPY:
+      case GENERATE_FACTURA:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
@@ -88,6 +92,7 @@ const promesaReducer = (state = initialState, action) =>
       case SIGN_IN_ERROR:
       case LEGALIZE_ERROR:
       case SEND_COPY_ERROR:
+      case GENERATE_FACTURA_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -115,18 +120,18 @@ const promesaReducer = (state = initialState, action) =>
       case SIGN_IN_SUCCESS:
       case LEGALIZE_SUCCESS:
       case SEND_COPY_SUCCESS:
+      case GENERATE_FACTURA_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = action.response.detail;
         draft.promesa = { ...draft.promesa, ...action.response.promesa };
         break;
-
       /* remove --> */
       case RESET_CONTAINER:
         return initialState;
 
       case UPDATE_PROMESA:
-        draft.promesa = { ...draft.promesa, ...action.data };
+        draft.promesa = { ...draft.promesa, ...action.values };
         break;
     }
   });

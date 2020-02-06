@@ -41,9 +41,13 @@ const Item = ({ project, reservation, dispatch }) => {
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        <Link to={`/proyectos/${project.ProyectoID}/reserva?ReservaID=${
-                      reservation.ReservaID
-        }`}><b>{`${Proyecto} / ${Folio}`}</b></Link>
+        <Link
+          to={`/proyectos/${project.ProyectoID}/reserva?ReservaID=${
+            reservation.ReservaID
+          }`}
+        >
+          <b>{`${Proyecto} / ${Folio}`}</b>
+        </Link>
       </td>
       <td className="px-3">
         {tmpInmuebles.map(Inmueble => (

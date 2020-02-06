@@ -27,12 +27,12 @@ export function PhaseTimelineSendCopy({
           <div className="row m-0 p-0 mb-3">
             <div className="col-lg-6 border-bottom p-0 pb-2 d-flex align-items-center">
               <span className="font-16-rem">
-                <strong>Envio Copias (AC)</strong>
+                <strong>Envio Copias</strong>
               </span>
             </div>
           </div>
           <FormGroup>
-            {!canEdit && isPending && PROMESA_STATE[4]}
+            {!canEdit && isPending && 'Pendiente'}
             {(canEdit || !isPending) && (
               <>
                 <Label style={{ width: '15em' }} className="pt-1">

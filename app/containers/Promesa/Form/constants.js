@@ -79,3 +79,9 @@ export const CONTROL_NEGOCIACION_ERROR =
   'app/containers/Promesa/Form/CONTROL_NEGOCIACION_ERROR';
 export const CONTROL_NEGOCIACION_SUCCESS =
   'app/containers/Promesa/Form/CONTROL_NEGOCIACION_SUCCESS';
+
+export const GENERATE_FACTURA = 'app/containers/Promesa/Form/GENERATE_FACTURA';
+export const GENERATE_FACTURA_ERROR =
+  'app/containers/Promesa/Form/GENERATE_FACTURA_ERROR';
+export const GENERATE_FACTURA_SUCCESS =
+  'app/containers/Promesa/Form/GENERATE_FACTURA_SUCCESS';

@@ -14,6 +14,7 @@ import {
   SEND_TO_REVIEW_NEGOCIACION,
   REVIEW_NEGOCIACION,
   CONTROL_NEGOCIACION,
+  GENERATE_FACTURA,
 } from './constants';
 import {
   getPromesaError,
@@ -40,6 +41,8 @@ import {
   reviewNegociacionError,
   controlNegociacionSuccess,
   controlNegociacionError,
+  generateFacturaSuccess,
+  generateFacturaError,
 } from './actions';
 
 function* sagaGetPromesa(action) {
@@ -246,6 +249,22 @@ function* sagaControlNegociacion(action) {
   }
 }
 
+function* sagaGenerateFactura(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-generate-factura/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(generateFacturaSuccess(response));
+  } catch (error) {
+    yield put(generateFacturaError(error));
+  }
+}
+
 export default function* projectSaga() {
   yield takeLatest(GET_PROMESA, sagaGetPromesa);
   yield takeLatest(UPLOAD_CONFECCION_PROMESA, sagaUploadConfeccionPromesa);
@@ -265,4 +284,5 @@ export default function* projectSaga() {
   yield takeLatest(SEND_TO_REVIEW_NEGOCIACION, sagaSendToReviewNegociacion);
   yield takeLatest(REVIEW_NEGOCIACION, sagaReviewNegociacion);
   yield takeLatest(CONTROL_NEGOCIACION, sagaControlNegociacion);
+  yield takeLatest(GENERATE_FACTURA, sagaGenerateFactura);
 }

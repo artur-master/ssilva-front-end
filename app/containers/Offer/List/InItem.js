@@ -29,7 +29,11 @@ const InItem = ({ project, offer, dispatch }) => {
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        <Link to={`/proyectos/${project.ProyectoID}/oferta?OfertaID=${offer.OfertaID}`}>
+        <Link
+          to={`/proyectos/${project.ProyectoID}/oferta?OfertaID=${
+            offer.OfertaID
+          }`}
+        >
           <b>{`${Proyecto} / ${Folio}`}</b>
         </Link>
       </td>

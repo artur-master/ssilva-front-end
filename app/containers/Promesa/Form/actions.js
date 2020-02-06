@@ -43,6 +43,9 @@ import {
   CONTROL_NEGOCIACION,
   CONTROL_NEGOCIACION_ERROR,
   CONTROL_NEGOCIACION_SUCCESS,
+  GENERATE_FACTURA,
+  GENERATE_FACTURA_ERROR,
+  GENERATE_FACTURA_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -308,6 +311,27 @@ export function controlNegociacionError(error) {
 export function controlNegociacionSuccess(response) {
   return {
     type: CONTROL_NEGOCIACION_SUCCESS,
+    response,
+  };
+}
+
+export function generateFactura(values) {
+  return {
+    type: GENERATE_FACTURA,
+    values,
+  };
+}
+
+export function generateFacturaError(error) {
+  return {
+    type: GENERATE_FACTURA_ERROR,
+    error,
+  };
+}
+
+export function generateFacturaSuccess(response) {
+  return {
+    type: GENERATE_FACTURA_SUCCESS,
     response,
   };
 }

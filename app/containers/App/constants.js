@@ -134,8 +134,34 @@ export const PROMESA_STATE = [
   'Pendiente JP aprobación de maqueta', // #11 -> #1
   'Pendiente aprobación de firma comprador', // #12 -> #2
   'Pendiente revisión negociación', // #13 -> #14     send condition to JP review
-  'Pendiente negociación inmobiliaria', // #14     wait IN approve condition. If reject -> #10, if approve -> #1
+  'Pendiente negociación inmobiliaria', // # 14 -> 15 or 1     wait IN approve condition. If reject -> #15, if approve -> #1
+  'Rechazada Inmobiliaria', // #15
+  'Desistimiento', // # 16 -> PROMESA_DESISTIMIENTO_STATE + PROMESA_REFUND_STATE
+  'Resiliación', // # 17 -> PROMESA_RESILIACION_STATE + PROMESA_REFUND_STATE
+  'Resolución', // #18 -> PROMESA_RESOLUCION_STATE + PROMESA_REFUND_STATE
+  'Modificación', // #19 -> PROMESA_MODIFICACION_STATE + PROMESA_REFUND_STATE
 ];
+
+export const PROMESA_DESISTIMIENTO_STATE = ['Pendiente aprobación'];
+
+export const PROMESA_RESILIACION_STATE = [
+  'Pendiente JP aprobación',
+  'Pendiente GC aprobación',
+  'Pendiente IN aprobación',
+  'Pendiente confección de resciliación',
+  'Pendiente firma de resciliación',
+];
+
+export const PROMESA_RESOLUCION_STATE = [
+  'Pendiente JP aprobación',
+  'Pendiente GC aprobación',
+  'Pendiente IN aprobación',
+  'Pendiente confección de resolución',
+];
+
+export const PROMESA_MODIFICACION_STATE = [];
+
+export const PROMESA_REFUND_STATE = ['Pendiente devolución garantía', 'Refund'];
 
 export const REQUIRED_DOCUMENTS = [
   'DocumentCotizacion',
@@ -181,3 +207,13 @@ export const VENTA_LOG_TYPE = [
   'Aprobacion a negociación',
   'Rechazo a negociación',
 ];
+
+export const FACTURA_INMUEBLE_TYPE = [
+  'Promesa',
+  'Escritura',
+  'Cierre de gestion',
+];
+
+export const FACTURA_INMUEBLE_STATE = ['Pendiente factura', 'Facturado'];
+
+export const FACTURA_STATE = ['Pendiente pago', 'Pagada'];

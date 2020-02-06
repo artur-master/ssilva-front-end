@@ -23,12 +23,7 @@ import saga from './saga';
 import { getPromesa, resetContainer } from './actions';
 import InForm from './InForm';
 const SyncMessage = WithLoading();
-export function PromesaForm({
-  selector,
-  selectorProject,
-  dispatch,
-  location,
-}) {
+export function PromesaForm({ selector, selectorProject, dispatch, location }) {
   useInjectReducer({ key: 'promesaform', reducer });
   useInjectSaga({ key: 'promesaform', saga });
   const query = queryString.parse(location.search);

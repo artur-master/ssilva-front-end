@@ -9,16 +9,14 @@ import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
 import PhaseFirmaDocumentsPromesaView from '../FirmaDocuments/View';
-import {FormGroup} from "../../../../components/ExForm";
+import { FormGroup } from '../../../../components/ExForm';
 
 const SyncMassage = WithLoading();
 
 export function PhaseTimelineActions({ selector, entity, onSend, onCancel }) {
   return (
     <>
-      <FormGroup>
-
-      </FormGroup>
+      <FormGroup />
     </>
   );
 }

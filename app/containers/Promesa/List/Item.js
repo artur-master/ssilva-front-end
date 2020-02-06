@@ -19,7 +19,10 @@ import {
   matchRestrictionsFromAList,
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
-import { canEditPromesa } from '../helper';
+import RefundGrantiaButton from 'containers/Phases/Promesa/RefundGarantia/Buttons';
+import { UserProject } from 'containers/Project/helper';
+import FacturaButton from 'containers/Phases/Factura/Buttons';
+import { canEditPromesa, canRefund, isRefund } from '../helper';
 
 const Item = ({ project, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -40,7 +43,11 @@ const Item = ({ project, promesa, dispatch }) => {
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        <Link to={`/proyectos/${project.ProyectoID}/promesa?PromesaID=${promesa.PromesaID}`}>
+        <Link
+          to={`/proyectos/${project.ProyectoID}/promesa?PromesaID=${
+            promesa.PromesaID
+          }`}
+        >
           <b>{`${Proyecto} / ${Folio}`}</b>
         </Link>
       </td>
@@ -51,13 +58,31 @@ const Item = ({ project, promesa, dispatch }) => {
           </div>
         ))}
       </td>
-      <td className="">Cliente: {clientFullname(Cliente)}</td>
-      <td />
-      <td className="px-3">
+      <td>Cliente: {clientFullname(Cliente)}</td>
+      <td>
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
           <span className={`badge ${ColorBadge} px-2`}>{PromesaState}</span>
         </div>
       </td>
+      <td>
+        {UserProject.isLegal() && promesa.Factura && (
+          <div className="justify-content-end d-flex align-items-center ">
+            <FacturaButton factura={promesa.Factura} />
+          </div>
+        )}
+        {(canRefund(promesa) || isRefund(promesa)) && (
+          <div className="justify-content-end d-flex align-items-center">
+            <RefundGrantiaButton promesa={promesa} />
+          </div>
+        )}
+      </td>
+      {UserProject.isInmobiliario() && (
+        <td className="no-whitespace d-none">
+          <span>
+            <b>FIRMAS</b> {` | 0 de 1`}
+          </span>
+        </td>
+      )}
       <td className="font-21 px-3">
         <Dropdown
           isOpen={dropdownOpen}

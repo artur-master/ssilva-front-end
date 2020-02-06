@@ -33,10 +33,12 @@ SubSteps.propTypes = {
 function Steps({ promesa }) {
   const Graph = {
     Node: [
-      { Label: '', Description: 'Confección Promesa', Color: 'white' },
-      { Label: '', Description: 'Pendiente Control', Color: 'white' },
-      { Label: '', Description: 'Firma Promesa', Color: 'white' },
-      { Label: '', Description: 'Control Firma', Color: 'white' },
+      { Label: 'LG', Description: 'Confección', Color: 'white' },
+      { Label: 'AC, JP', Description: 'Aprobaciónes', Color: 'white' },
+      { Label: 'V', Description: 'Firma Promesa', Color: 'white' },
+      { Label: 'AC', Description: 'Control Firma', Color: 'white' },
+      { Label: 'JP', Description: 'Firmas', Color: 'white' },
+      { Label: 'LG', Description: 'Facturación', Color: 'white' },
     ],
   };
 
@@ -47,6 +49,25 @@ function Steps({ promesa }) {
       Graph.Node[1].Color = 'white';
       Graph.Node[2].Color = 'white';
       Graph.Node[3].Color = 'white';
+      break;
+    case PROMESA_STATE[2]:
+    case PROMESA_STATE[3]:
+    case PROMESA_STATE[4]:
+    case PROMESA_STATE[5]:
+    case PROMESA_STATE[6]:
+      Graph.Node[0].Color = 'green';
+      Graph.Node[1].Color = 'green';
+      Graph.Node[2].Color = 'green';
+      Graph.Node[3].Color = 'green';
+      Graph.Node[4].Color = 'yellow';
+      break;
+    case PROMESA_STATE[7]:
+      Graph.Node[0].Color = 'green';
+      Graph.Node[1].Color = 'green';
+      Graph.Node[2].Color = 'green';
+      Graph.Node[3].Color = 'green';
+      Graph.Node[4].Color = 'green';
+      Graph.Node[5].Color = 'yellow';
       break;
     case PROMESA_STATE[13]:
     case PROMESA_STATE[14]:
@@ -112,7 +133,7 @@ function Steps({ promesa }) {
                   className="m-counter-item"
                 >
                   <span>{`${node.Description.trim()} ${
-                    node.Label ? `[${node.Label}]` : ''
+                    node.Label ? `(${node.Label})` : ''
                   }`}</span>
                 </Link>
               </li>

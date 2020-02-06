@@ -6,7 +6,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { getFileName } from 'containers/App/helpers';
 import { FormGroup, Label } from 'components/ExForm';
 
@@ -23,14 +22,14 @@ function DocumentItemView({ value, label }) {
       >
         {getFileName(value)}
       </span>
-      <Link
-        to={value}
+      <a
+        href={value}
         target="_blank"
         download
         className="font-14-rem mx-2 btn-arrow text-nowrap"
       >
         <b>Ver {label}</b>
-      </Link>
+      </a>
     </FormGroup>
   );
 }
