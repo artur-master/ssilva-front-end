@@ -31,7 +31,7 @@ export function PhaseControlPromesaForm({ selector, onControl }) {
             color="white"
             onClick={() => setWithText({ text: '', open: true })}
           >
-            Recharza
+            Rechazaz
           </Button>
           {withText.open && (
             <div className="py-3 ">
@@ -56,7 +56,7 @@ export function PhaseControlPromesaForm({ selector, onControl }) {
                   })
                 }
               >
-                Recharza
+                Rechazaz
               </Button>
             </div>
           )}

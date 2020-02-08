@@ -4,7 +4,7 @@ import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import { Form as ExForm } from 'components/ExForm';
 import {
-  PROMESA_RESILIACION_STATE,
+  PROMESA_RESCILIACION_STATE,
   PROMESA_STATE,
 } from 'containers/App/constants';
 import DocumentItem from './DocumentItem';
@@ -18,7 +18,7 @@ export function DesistimientoConfeccion({
   let elemName = '';
   switch (promesa.PromesaState) {
     case PROMESA_STATE[17]:
-      elemName = 'DocumentResiliacion';
+      elemName = 'DocumentResciliacion';
       break;
     case PROMESA_STATE[18]:
       elemName = 'DocumentResolucion';

@@ -36,7 +36,7 @@ const defaultValidate = (value, props) => {
 };
 
 const defaultMaskOptions = {
-  prefix: '$',
+  prefix: '$ ',
   suffix: '',
   includeThousandsSeparator: true,
   thousandsSeparatorSymbol: ',',
@@ -96,7 +96,7 @@ const ExFieldCurrency = ({
                   Number(evt.currentTarget.value.replace(/[^0-9]+/g, '')),
                 )
               }
-              placeholder={defaultMaskOptions.prefix}
+              placeholder={maskOptions.prefix || defaultMaskOptions.prefix}
               mask={currencyMask}
               className={`form-control form-control-sm ${
                 getInTouched && getInErrors ? 'is-invalid' : ''

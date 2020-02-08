@@ -91,7 +91,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                       })
                     }
                   >
-                    Recharza Promesa
+                    Rechazaz Promesa
                   </Button>
                 </div>
                 {form.values.openCondition && (
@@ -137,7 +137,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                         form.submitForm();
                       }}
                     >
-                      Recharza Promesa
+                      Rechazaz Promesa
                     </Button>
                   </div>
                 )}

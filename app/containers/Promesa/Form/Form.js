@@ -46,7 +46,7 @@ import {
 } from './actions';
 import { canEditConfeccionPromesa, canRefund } from '../helper';
 import StepsDesistimento from './StepsDesistimiento';
-import StepsResiliacion from './StepsResiliacion';
+import StepsResciliacion from './StepsResciliacion';
 import StepsResolucion from './StepsResolucion';
 export function Form({ selector, dispatch }) {
   const { project = {} } = window;
@@ -229,8 +229,8 @@ export function Form({ selector, dispatch }) {
       subtitle = entity.PromesaDesistimentoState || entity.PromesaState;
       break;
     case PROMESA_STATE[17]:
-      stepsComponent = <StepsResiliacion promesa={selector.promesa} />;
-      subtitle = entity.PromesaResiliacionState || entity.PromesaState;
+      stepsComponent = <StepsResciliacion promesa={selector.promesa} />;
+      subtitle = entity.PromesaResciliacionState || entity.PromesaState;
       break;
     case PROMESA_STATE[18]:
       stepsComponent = <StepsResolucion promesa={selector.promesa} />;

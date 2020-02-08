@@ -137,14 +137,14 @@ export const PROMESA_STATE = [
   'Pendiente negociación inmobiliaria', // # 14 -> 15 or 1     wait IN approve condition. If reject -> #15, if approve -> #1
   'Rechazada Inmobiliaria', // #15
   'Desistimiento', // # 16 -> PROMESA_DESISTIMIENTO_STATE + PROMESA_REFUND_STATE
-  'Resiliación', // # 17 -> PROMESA_RESILIACION_STATE + PROMESA_REFUND_STATE
+  'Resciliación', // # 17 -> PROMESA_RESCILIACION_STATE + PROMESA_REFUND_STATE
   'Resolución', // #18 -> PROMESA_RESOLUCION_STATE + PROMESA_REFUND_STATE
   'Modificación', // #19 -> PROMESA_MODIFICACION_STATE + PROMESA_REFUND_STATE
 ];
 
 export const PROMESA_DESISTIMIENTO_STATE = ['Pendiente aprobación'];
 
-export const PROMESA_RESILIACION_STATE = [
+export const PROMESA_RESCILIACION_STATE = [
   'Pendiente JP aprobación',
   'Pendiente GC aprobación',
   'Pendiente IN aprobación',

@@ -14,7 +14,7 @@ export function DesistimientoFirmaConfeccion({
   return (
     <ExForm
       initialValues={{
-        DocumentResiliacionFirma: promesa.DocumentResiliacionFirma || '',
+        DocumentResciliacionFirma: promesa.DocumentResciliacionFirma || '',
       }}
       onSubmit={onSubmit}
     >
@@ -30,7 +30,7 @@ export function DesistimientoFirmaConfeccion({
               <div className="col-lg-6 border-bottom p-0 pb-3 d-flex align-items-center">
                 <a
                   className="m-btn m-btn-white m-btn-download"
-                  href={promesa.DocumentResiliacion}
+                  href={promesa.DocumentResciliacion}
                   target="_blank"
                   download
                 >
@@ -41,13 +41,13 @@ export function DesistimientoFirmaConfeccion({
             <div className="pt-4 pb-4">
               <div className="d-flex align-items-center">
                 <span className="font-14-rem mr-3">
-                  {form.values.DocumentResiliacionFirma
+                  {form.values.DocumentResciliacionFirma
                     ? 'Documento'
                     : 'Cargar Documento'}
                 </span>
                 <DocumentItem
                   canUpload={canUpload}
-                  name="DocumentResiliacionFirma"
+                  name="DocumentResciliacionFirma"
                 />
               </div>
             </div>
@@ -58,8 +58,8 @@ export function DesistimientoFirmaConfeccion({
                 disabled={
                   selector.loading ||
                   !(
-                    form.values.DocumentResiliacionFirma &&
-                    form.values.DocumentResiliacionFirma.name
+                    form.values.DocumentResciliacionFirma &&
+                    form.values.DocumentResciliacionFirma.name
                   )
                 }
                 onClick={() => form.submitForm()}

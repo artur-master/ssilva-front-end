@@ -54,7 +54,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
             color="white"
             onClick={() => setWithText({ text: '', open: true })}
           >
-            Recharza
+            Rechazaz
           </Button>
           {withText.open && (
             <div className="py-3 ">
@@ -79,7 +79,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
                   })
                 }
               >
-                Recharza
+                Rechazaz
               </Button>
             </div>
           )}
