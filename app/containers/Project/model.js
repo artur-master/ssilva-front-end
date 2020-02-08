@@ -8,16 +8,17 @@ export default function model(preload, project = {}) {
     UserProyectoTypeID: user.UserProyectoType,
   }));
   const EtapaStateID =
-    project.EtapaStateID || (project.EtapaState || {}).EtapaStateID;
+    project.EtapaStateID ||
+    (project.EtapaState || { EtapaStateID: '' }).EtapaStateID;
   // merge phone
   const ContactInfo = [
     {
       ...phoneContactType,
-      Value: '+562',
+      Value: '',
     },
     {
       ...phoneContactType,
-      Value: '+569',
+      Value: '',
     },
   ];
   (
@@ -44,7 +45,7 @@ export default function model(preload, project = {}) {
     Arquitecto = '',
     Symbol = '',
     Address = '',
-    InmobiliariaID,
+    InmobiliariaID = '',
     EntregaInmediata = 0,
     InstitucionFinancieraID,
     ConstructoraID,

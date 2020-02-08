@@ -8,6 +8,7 @@ import RealEstateView from 'containers/Common/RealEstate/RealEstateView';
 import moment from 'components/moment';
 import ExAseguradoras from 'components/ExForm/ExAseguradoras';
 import ExInstitucionFinancieras from 'components/ExForm/ExInstitucionFinancieras';
+import IntlFormatNumber from 'components/IntlFormat/Number';
 
 const getUserIndex = (UsersProyecto, userType) => {
   let userIndex = UsersProyecto.findIndex(
@@ -85,6 +86,7 @@ export const getGeneralFields = project => {
         entity.ContactInfo && entity.ContactInfo[phones[0]]
           ? entity.ContactInfo[phones[0]].Value
           : '',
+      placeholder: '+562',
       required: true,
     },
     {
@@ -94,6 +96,7 @@ export const getGeneralFields = project => {
         entity.ContactInfo && entity.ContactInfo[phones[1]]
           ? entity.ContactInfo[phones[1]].Value
           : '',
+      placeholder: '+569',
       required: true,
     },
     {
@@ -323,26 +326,17 @@ export const getCommercialFields = (
       label: 'Duración Cotización',
       name: `CotizacionDuration`,
       view: entity => `${entity.CotizacionDuration} Días`,
-      type: 'select',
-      children: [
-        <option key={0} value="">
-          Selecciona...
-        </option>,
-        <option key={1} value={1}>
-          1
-        </option>,
-        <option key={2} value={2}>
-          2
-        </option>,
-      ],
+      type: 'number',
       required: true,
     },
     {
       label: 'Monto Reserva',
       name: `GuaranteeAmount`,
-      view: entity => (entity ? `UF ${entity.GuaranteeAmount}` : ''),
-      placeholder: 'UF',
-      type: 'number',
+      view: entity => (
+        <IntlFormatNumber prefix="UF " value={entity.GuaranteeAmount} />
+      ),
+      maskOptions: { prefix: 'UF ' },
+      type: 'currency',
       min: 0,
       required: true,
     },
@@ -369,8 +363,14 @@ export const getPolizaFields = () => [
   {
     label: 'Monto de la Póliza',
     name: `Aseguradora.Amount`,
-    view: entity => `UF ${entity.Aseguradora ? entity.Aseguradora.Amount : ''}`,
-    type: 'number',
+    view: entity => (
+      <IntlFormatNumber
+        prefix="UF "
+        value={entity.Aseguradora ? entity.Aseguradora.Amount : ''}
+      />
+    ),
+    maskOptions: { prefix: 'UF ' },
+    type: 'currency',
     min: 0,
     required: true,
   },

@@ -9,13 +9,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   PROMESA_REFUND_STATE,
-  PROMESA_RESILIACION_STATE,
+  PROMESA_RESCILIACION_STATE,
 } from 'containers/App/constants';
 
-function StepsResiliacion({ promesa }) {
+function StepsResciliacion({ promesa }) {
   const Graph = {
     Node: [
-      { Label: '', Description: 'Resiliación', Color: 'green' },
+      { Label: '', Description: 'Resciliación', Color: 'green' },
       { Label: 'JP, GC, IN', Description: 'Aprobaciónes', Color: 'white' },
       {
         Label: 'JP',
@@ -23,7 +23,7 @@ function StepsResiliacion({ promesa }) {
         Color: 'white',
       },
       {
-        Label: 'JP',
+        Label: 'VN',
         Description: 'Firma',
         Color: 'white',
       },
@@ -35,14 +35,14 @@ function StepsResiliacion({ promesa }) {
     ],
   };
 
-  switch (promesa.PromesaResiliacionState) {
-    case PROMESA_RESILIACION_STATE[3]:
+  switch (promesa.PromesaResciliacionState) {
+    case PROMESA_RESCILIACION_STATE[3]:
       Graph.Node[1].Color = 'green';
       Graph.Node[2].Color = 'yellow';
       Graph.Node[3].Color = 'white';
       Graph.Node[4].Color = 'white';
       break;
-    case PROMESA_RESILIACION_STATE[4]:
+    case PROMESA_RESCILIACION_STATE[4]:
       Graph.Node[1].Color = 'green';
       Graph.Node[2].Color = 'green';
       Graph.Node[3].Color = 'yellow';
@@ -109,8 +109,8 @@ function StepsResiliacion({ promesa }) {
   );
 }
 
-StepsResiliacion.propTypes = {
+StepsResciliacion.propTypes = {
   promesa: PropTypes.object,
 };
 
-export default StepsResiliacion;
+export default StepsResciliacion;

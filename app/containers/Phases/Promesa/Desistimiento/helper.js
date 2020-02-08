@@ -1,7 +1,7 @@
 import {
   PROMESA_STATE,
   PROMESA_DESISTIMIENTO_STATE,
-  PROMESA_RESILIACION_STATE,
+  PROMESA_RESCILIACION_STATE,
   PROMESA_RESOLUCION_STATE,
   PROMESA_MODIFICACION_STATE,
 } from 'containers/App/constants';
@@ -37,15 +37,15 @@ export const canDesistimiento = promesa =>
     promesa.PromesaState === PROMESA_STATE[16] &&
     promesa.PromesaDesistimientoState === PROMESA_DESISTIMIENTO_STATE[0]);
 
-export const canResiliacion = promesa =>
+export const canResciliacion = promesa =>
   ((UserProject.isVendor() || UserProject.isPM()) && afterSigning(promesa)) ||
   ((promesa.PromesaState === PROMESA_STATE[17] &&
     (UserProject.isPM() &&
-      promesa.PromesaResiliacionState === PROMESA_RESILIACION_STATE[0])) ||
+      promesa.PromesaResciliacionState === PROMESA_RESCILIACION_STATE[0])) ||
     (Auth.isGerenteComercial() &&
-      promesa.PromesaResiliacionState === PROMESA_RESILIACION_STATE[1]) ||
+      promesa.PromesaResciliacionState === PROMESA_RESCILIACION_STATE[1]) ||
     (UserProject.isInmobiliario() &&
-      promesa.PromesaResiliacionState === PROMESA_RESILIACION_STATE[2]));
+      promesa.PromesaResciliacionState === PROMESA_RESCILIACION_STATE[2]));
 
 export const canResolucion = promesa =>
   ((UserProject.isVendor() || UserProject.isPM()) && afterSigning(promesa)) ||
@@ -65,15 +65,15 @@ export const canModificacion = promesa =>
 
 export const showDesistimiento = promesa =>
   canDesistimiento(promesa) ||
-  canResiliacion(promesa) ||
+  canResciliacion(promesa) ||
   canResolucion(promesa) ||
   canModificacion(promesa);
 
-export const canConfeccionResiliacion = promesa =>
+export const canConfeccionResciliacion = promesa =>
   !showDesistimiento(promesa) &&
   promesa.PromesaState === PROMESA_STATE[17] &&
   UserProject.isPM() &&
-  promesa.PromesaResiliacionState === PROMESA_RESILIACION_STATE[3];
+  promesa.PromesaResciliacionState === PROMESA_RESCILIACION_STATE[3];
 
 export const canConfeccionResolucion = promesa =>
   !showDesistimiento(promesa) &&
@@ -85,20 +85,21 @@ export const canConfeccionFirma = promesa =>
   !showDesistimiento(promesa) &&
   promesa.PromesaState === PROMESA_STATE[17] &&
   UserProject.isVendor() &&
-  promesa.PromesaResiliacionState === PROMESA_RESILIACION_STATE[4];
+  promesa.PromesaResciliacionState === PROMESA_RESCILIACION_STATE[4];
 
 export const canConfeccion = promesa =>
   !canConfeccionFirma(promesa) &&
-  (canConfeccionResiliacion(promesa) || canConfeccionResolucion(promesa));
+  (canConfeccionResciliacion(promesa) || canConfeccionResolucion(promesa));
 
 export const showConfeccion = promesa =>
   !showConfeccionFirma(promesa) &&
   ((promesa.PromesaState === PROMESA_STATE[17] &&
-    promesa.DocumentResiliacion) ||
-    (promesa.PromesaState === PROMESA_STATE[18] && promesa.DocumentResolucion));
+    (promesa.DocumentResciliacion ||
+      promesa.PromesaResciliacionState === PROMESA_RESCILIACION_STATE[3])) ||
+    (promesa.PromesaState === PROMESA_STATE[18] && (promesa.DocumentResolucion || PROMESA_RESOLUCION_STATE[2])));
 
 export const showConfeccionFirma = promesa =>
   promesa.PromesaState === PROMESA_STATE[17] &&
-  (promesa.DocumentResiliacionFirma ||
+  (promesa.DocumentResciliacionFirma ||
     (UserProject.isVendor() &&
-      promesa.PromesaResiliacionState === PROMESA_RESILIACION_STATE[4]));
+      promesa.PromesaResciliacionState === PROMESA_RESCILIACION_STATE[4]));

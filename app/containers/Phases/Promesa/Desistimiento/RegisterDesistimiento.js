@@ -13,7 +13,7 @@ import {
 import {
   canDesistimiento,
   canModificacion,
-  canResiliacion,
+  canResciliacion,
   canResolucion,
 } from './helper';
 
@@ -22,7 +22,7 @@ export function RegisterDesistimiento({ selector, promesa, onSubmit }) {
   const {
     PromesaState,
     PromesaDesistimientoState,
-    PromesaResiliacionState,
+    PromesaResciliacionState,
     PromesaResolucionState,
     PromesaModificacionState,
   } = promesa;
@@ -39,7 +39,7 @@ export function RegisterDesistimiento({ selector, promesa, onSubmit }) {
   }
   if (
     PromesaDesistimientoState ||
-    PromesaResiliacionState ||
+    PromesaResciliacionState ||
     PromesaResolucionState ||
     PromesaModificacionState
   )
@@ -83,7 +83,7 @@ export function RegisterDesistimiento({ selector, promesa, onSubmit }) {
               {labelButton || PROMESA_STATE[16]}
             </Button>
           )}
-          {canResiliacion(promesa) && (
+          {canResciliacion(promesa) && (
             <Button
               className="m-btn-warning-02 d-inline"
               disabled={selector.loading}

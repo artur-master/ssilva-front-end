@@ -42,7 +42,7 @@ export const canRefund = promesa =>
   ((promesa.PromesaState === PROMESA_STATE[16] &&
     promesa.PromesaDesistimientoState === PROMESA_REFUND_STATE[0]) ||
     (promesa.PromesaState === PROMESA_STATE[17] &&
-      promesa.PromesaResiliacionState === PROMESA_REFUND_STATE[0]) ||
+      promesa.PromesaResciliacionState === PROMESA_REFUND_STATE[0]) ||
     (promesa.PromesaState === PROMESA_STATE[18] &&
       promesa.PromesaResolucionState === PROMESA_REFUND_STATE[0]) ||
     (promesa.PromesaState === PROMESA_STATE[19] &&
@@ -50,7 +50,7 @@ export const canRefund = promesa =>
 
 export const isRefund = promesa =>
   promesa.PromesaDesistimientoState === PROMESA_REFUND_STATE[1] ||
-  promesa.PromesaResiliacionState === PROMESA_REFUND_STATE[1] ||
+  promesa.PromesaResciliacionState === PROMESA_REFUND_STATE[1] ||
   promesa.PromesaResolucionState === PROMESA_REFUND_STATE[1] ||
   promesa.PromesaModificacionState === PROMESA_REFUND_STATE[1];
 
@@ -59,7 +59,7 @@ export const getExtraPromesaState = promesa => {
     case PROMESA_STATE[16]:
       return promesa.PromesaDesistimientoState;
     case PROMESA_STATE[17]:
-      return promesa.PromesaResiliacionState;
+      return promesa.PromesaResciliacionState;
     case PROMESA_STATE[18]:
       return promesa.PromesaResolucionState;
     case PROMESA_STATE[19]:

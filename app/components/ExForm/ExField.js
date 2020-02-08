@@ -127,7 +127,7 @@ const ExField = ({
     {({ field, form }) => {
       let className = props.className || '';
       /* eslint-disable-next-line */
-      if (props.required && (field.value === '' || field.value === null)) className += ' caution';
+      if (props.required && (field.value === '' || field.value === null || field.value === undefined)) className += ' caution';
       const getInTouched = getIn(form.touched, field.name);
       const getInErrors = getIn(form.errors, field.name);
       const inputElement = component ? (
