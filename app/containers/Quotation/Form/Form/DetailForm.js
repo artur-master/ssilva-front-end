@@ -172,21 +172,6 @@ export function DetailForm({ onCancel, onContinue, form }) {
                 quotationUtils.CotizacionTypes[0].Name && (
                 <>
                   <FormGroup className="col-md-6 my-2">
-                    <Label style={{ width: '12em' }}>
-                      Destino de la Compra
-                    </Label>
-                    <ExField
-                      type="select"
-                      name="IsNotInvestment"
-                      style={{ width: '18em' }}
-                      required
-                    >
-                      <option value="">Selecciona...</option>
-                      <option value="1">Vivienda</option>
-                      <option value="0">Inversión</option>
-                    </ExField>
-                  </FormGroup>
-                  <FormGroup className="col-md-6 my-2">
                     <Label style={{ width: '12em' }}>Cómo se Enteró</Label>
                     <ExField
                       type="select"
@@ -209,25 +194,42 @@ export function DetailForm({ onCancel, onContinue, form }) {
               )}
               {values.CotizacionType ===
                 quotationUtils.CotizacionTypes[1].Name && (
-                <FormGroup className="col-md-6 my-2">
-                  <Label style={{ width: '12em' }}>Medio de Contacto</Label>
-                  <ExField
-                    type="select"
-                    name="ContactMethodTypeID"
-                    style={{ width: '18em' }}
-                    required
-                  >
-                    <option value="">Selecciona...</option>
-                    {quotationUtils.ContactMethodTypes.map(contacttype => (
-                      <option
-                        key={contacttype.ContactMethodTypeID}
-                        value={contacttype.ContactMethodTypeID}
-                      >
-                        {contacttype.Name}
-                      </option>
-                    ))}
-                  </ExField>
-                </FormGroup>
+                <>
+                  <FormGroup className="col-md-6 my-2">
+                    <Label style={{ width: '12em' }}>
+                      Destino de la Compra
+                    </Label>
+                    <ExField
+                      type="select"
+                      name="IsNotInvestment"
+                      style={{ width: '18em' }}
+                      required
+                    >
+                      <option value="">Selecciona...</option>
+                      <option value="1">Vivienda</option>
+                      <option value="0">Inversión</option>
+                    </ExField>
+                  </FormGroup>
+                  <FormGroup className="col-md-6 my-2">
+                    <Label style={{ width: '12em' }}>Medio de Contacto</Label>
+                    <ExField
+                      type="select"
+                      name="ContactMethodTypeID"
+                      style={{ width: '18em' }}
+                      required
+                    >
+                      <option value="">Selecciona...</option>
+                      {quotationUtils.ContactMethodTypes.map(contacttype => (
+                        <option
+                          key={contacttype.ContactMethodTypeID}
+                          value={contacttype.ContactMethodTypeID}
+                        >
+                          {contacttype.Name}
+                        </option>
+                      ))}
+                    </ExField>
+                  </FormGroup>
+                </>
               )}
             </ul>
           </div>

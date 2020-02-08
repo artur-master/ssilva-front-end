@@ -37,41 +37,6 @@ export function InList({ dispatch, selector }) {
               </span>
             </h4>
             <div className="content">
-              <span className="statement">Metas proyecto</span>
-              <div className="graphics">
-                <div className="row">
-                  <span className="title col-5">
-                    UF <b>15.607</b>
-                  </span>
-                  <div className="col-7">
-                    <ProgressBar
-                      title="de"
-                      percent={40}
-                      label={
-                        <>
-                          UF <b>500.000</b>
-                        </>
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <span className="title col-5">
-                    UF <b>15.607</b>
-                  </span>
-                  <div className="col-7">
-                    <ProgressBar
-                      title="de"
-                      percent={40}
-                      label={
-                        <>
-                          UF <b>500.000</b>
-                        </>
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
               <ul className="proyect-links">
                 <li className="row justify-content-between">
                   <span className="col-auto">Ofertas</span>

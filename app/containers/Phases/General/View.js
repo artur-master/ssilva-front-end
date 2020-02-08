@@ -60,18 +60,6 @@ function PhaseGeneralView({ values }) {
       {CotizacionType ===
         window.preload.quotationUtils.CotizacionTypes[0].Name && (
         <>
-          <li className="col-md-6 d-flex align-items-center my-2">
-            <span
-              className="font-14-rem color-regular mr-3"
-              style={{ width: '10em' }}
-            >
-              <b>Interés del Cliente</b>
-            </span>
-            <span className="font-14-rem color-regular">
-              {stringToBoolean(IsNotInvestment) ? 'Vivienda' : 'Inversión'}
-            </span>
-          </li>
-
           {/*
           <li className="col-md-6 d-flex align-items-center my-2">
             <span
@@ -93,20 +81,33 @@ function PhaseGeneralView({ values }) {
 
       {CotizacionType ===
         window.preload.quotationUtils.CotizacionTypes[1].Name && (
-        <li className="col-md-6 d-flex align-items-center my-2">
-          <span
-            className="font-14-rem color-regular mr-3"
-            style={{ width: '10em' }}
-          >
-            <b>Medio de Contacto</b>
-          </span>
-          <span className="font-14-rem color-regular">
-            {ContactMethodTypeID &&
-              window.preload.quotationUtils.ContactMethodTypes.find(
-                item => item.ContactMethodTypeID === ContactMethodTypeID,
-              ).Name}
-          </span>
-        </li>
+        <>
+          <li className="col-md-6 d-flex align-items-center my-2">
+            <span
+              className="font-14-rem color-regular mr-3"
+              style={{ width: '10em' }}
+            >
+              <b>Destino de la Compra</b>
+            </span>
+            <span className="font-14-rem color-regular">
+              {stringToBoolean(IsNotInvestment) ? 'Vivienda' : 'Inversión'}
+            </span>
+          </li>
+          <li className="col-md-6 d-flex align-items-center my-2">
+            <span
+              className="font-14-rem color-regular mr-3"
+              style={{ width: '10em' }}
+            >
+              <b>Medio de Contacto</b>
+            </span>
+            <span className="font-14-rem color-regular">
+              {ContactMethodTypeID &&
+                window.preload.quotationUtils.ContactMethodTypes.find(
+                  item => item.ContactMethodTypeID === ContactMethodTypeID,
+                ).Name}
+            </span>
+          </li>
+        </>
       )}
     </ul>
   );
