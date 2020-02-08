@@ -133,6 +133,25 @@ function DetailView({ values, project }) {
             </span>
           </li>
           {values.CotizacionType === quotationUtils.CotizacionTypes[0].Name && (
+            <li className="col-md-6 d-flex align-items-center my-2">
+              <span
+                className="font-14-rem color-regular mr-3"
+                style={{ width: '9em' }}
+              >
+                <b>Cómo se Enteró</b>
+              </span>
+              <span className="font-14-rem color-regular">
+                {!values.CotizacionID &&
+                  values.Cliente.FindingTypeID &&
+                  quotationUtils.FindingTypes.find(
+                    item => item.FindingTypeID === values.Cliente.FindingTypeID,
+                  ).Name}
+                {values.CotizacionID && finding && finding.FindingType}
+              </span>
+            </li>
+          )}
+
+          {values.CotizacionType === quotationUtils.CotizacionTypes[1].Name && (
             <>
               <li className="col-md-6 d-flex align-items-center my-2">
                 <span
@@ -147,43 +166,22 @@ function DetailView({ values, project }) {
                     : 'Inversión'}
                 </span>
               </li>
-
               <li className="col-md-6 d-flex align-items-center my-2">
                 <span
                   className="font-14-rem color-regular mr-3"
                   style={{ width: '9em' }}
                 >
-                  <b>Cómo se Enteró</b>
+                  <b>Medio de Contacto</b>
                 </span>
                 <span className="font-14-rem color-regular">
-                  {!values.CotizacionID &&
-                    values.Cliente.FindingTypeID &&
-                    quotationUtils.FindingTypes.find(
+                  {values.ContactMethodTypeID &&
+                    quotationUtils.ContactMethodTypes.find(
                       item =>
-                        item.FindingTypeID === values.Cliente.FindingTypeID,
+                        item.ContactMethodTypeID === values.ContactMethodTypeID,
                     ).Name}
-                  {values.CotizacionID && finding && finding.FindingType}
                 </span>
               </li>
             </>
-          )}
-
-          {values.CotizacionType === quotationUtils.CotizacionTypes[1].Name && (
-            <li className="col-md-6 d-flex align-items-center my-2">
-              <span
-                className="font-14-rem color-regular mr-3"
-                style={{ width: '9em' }}
-              >
-                <b>Medio de Contacto</b>
-              </span>
-              <span className="font-14-rem color-regular">
-                {values.ContactMethodTypeID &&
-                  quotationUtils.ContactMethodTypes.find(
-                    item =>
-                      item.ContactMethodTypeID === values.ContactMethodTypeID,
-                  ).Name}
-              </span>
-            </li>
           )}
         </ul>
       </BoxContent>

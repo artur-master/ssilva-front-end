@@ -16,10 +16,12 @@ import {
 } from 'reactstrap';
 import Thead from 'components/Table/Thead';
 import { Auth } from 'containers/App/helpers';
+import { PERMISSIONS } from 'containers/App/constants';
 
 const List = ({ selector, onQuery, onCreate, onEdit, onView, onSelect }) => {
   const { entities, query = {} } = selector;
   const { selected = [], type } = query;
+  const canManage = Auth.isAdmin() || Auth.hasPermission(PERMISSIONS[2]);
   let ths = [
     {
       field: 'RazonSocial',
@@ -50,7 +52,7 @@ const List = ({ selector, onQuery, onCreate, onEdit, onView, onSelect }) => {
         <h4 className="font-21 color-regular mt-3 order-1">
           {type === 'inmobiliaria' ? 'Inmobiliarias' : 'Constructoras'}
         </h4>
-        {Auth.isAdmin() && (
+        {canManage && (
           <Button className="m-btn-plus order-3 mr-3" onClick={onCreate}>
             Agregar {type}
           </Button>
@@ -111,7 +113,7 @@ const List = ({ selector, onQuery, onCreate, onEdit, onView, onSelect }) => {
                         <DropdownItem tag="a" onClick={() => onView(entity)}>
                           Ver datos
                         </DropdownItem>
-                        {Auth.isAdmin() && (
+                        {canManage && (
                           <DropdownItem tag="a" onClick={() => onEdit(entity)}>
                             Editar
                           </DropdownItem>

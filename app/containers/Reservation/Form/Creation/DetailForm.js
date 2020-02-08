@@ -170,6 +170,28 @@ export function DetailForm({ form }) {
               </FormGroup>
               {values.CotizacionType ===
                 quotationUtils.CotizacionTypes[0].Name && (
+                <FormGroup className="col-md-6 my-2">
+                  <Label style={{ width: '12em' }}>Cómo se Enteró</Label>
+                  <ExField
+                    type="select"
+                    name="Cliente.FindingTypeID"
+                    style={{ width: '18em' }}
+                    required
+                  >
+                    <option value="">Selecciona...</option>
+                    {quotationUtils.FindingTypes.map(findingtype => (
+                      <option
+                        key={findingtype.FindingTypeID}
+                        value={findingtype.FindingTypeID}
+                      >
+                        {findingtype.Name}
+                      </option>
+                    ))}
+                  </ExField>
+                </FormGroup>
+              )}
+              {values.CotizacionType ===
+                quotationUtils.CotizacionTypes[1].Name && (
                 <>
                   <FormGroup className="col-md-6 my-2">
                     <Label style={{ width: '12em' }}>
@@ -187,47 +209,25 @@ export function DetailForm({ form }) {
                     </ExField>
                   </FormGroup>
                   <FormGroup className="col-md-6 my-2">
-                    <Label style={{ width: '12em' }}>Cómo se Enteró</Label>
+                    <Label style={{ width: '12em' }}>Medio de Contacto</Label>
                     <ExField
                       type="select"
-                      name="Cliente.FindingTypeID"
+                      name="ContactMethodTypeID"
                       style={{ width: '18em' }}
                       required
                     >
                       <option value="">Selecciona...</option>
-                      {quotationUtils.FindingTypes.map(findingtype => (
+                      {quotationUtils.ContactMethodTypes.map(contacttype => (
                         <option
-                          key={findingtype.FindingTypeID}
-                          value={findingtype.FindingTypeID}
+                          key={contacttype.ContactMethodTypeID}
+                          value={contacttype.ContactMethodTypeID}
                         >
-                          {findingtype.Name}
+                          {contacttype.Name}
                         </option>
                       ))}
                     </ExField>
                   </FormGroup>
                 </>
-              )}
-              {values.CotizacionType ===
-                quotationUtils.CotizacionTypes[1].Name && (
-                <FormGroup className="col-md-6 my-2">
-                  <Label style={{ width: '12em' }}>Medio de Contacto</Label>
-                  <ExField
-                    type="select"
-                    name="ContactMethodTypeID"
-                    style={{ width: '18em' }}
-                    required
-                  >
-                    <option value="">Selecciona...</option>
-                    {quotationUtils.ContactMethodTypes.map(contacttype => (
-                      <option
-                        key={contacttype.ContactMethodTypeID}
-                        value={contacttype.ContactMethodTypeID}
-                      >
-                        {contacttype.Name}
-                      </option>
-                    ))}
-                  </ExField>
-                </FormGroup>
               )}
             </ul>
           </div>

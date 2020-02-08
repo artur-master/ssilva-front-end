@@ -15,7 +15,8 @@ import { isValidClient } from 'containers/Phases/Client/helper';
 export const initReports = () =>
   OFERTA_STATE.reduce(
     (acc, state) => {
-      acc[state] = { Label: state, Count: 0 };
+      // exclude Promesa
+      if (state !== OFERTA_STATE[3]) acc[state] = { Label: state, Count: 0 };
       return acc;
     },
     {

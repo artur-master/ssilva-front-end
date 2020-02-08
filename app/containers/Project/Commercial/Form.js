@@ -93,7 +93,7 @@ export function CommercialForm({
         item => item.UserProyectoType !== 'Autorizador',
       ),
       {
-        UserID: Representante.UserID,
+        UserID: Autorizador.UserID,
         UserProyectoType: 'Autorizador',
       },
     ];
@@ -104,7 +104,6 @@ export function CommercialForm({
   const fields = getCommercialFields(initialValues, {
     UsersInmobiliaria: selectedInmobiliaria.UsersInmobiliaria,
   });
-
   return (
     <ExForm initialValues={initialValues} onSubmit={values => onSubmit(values)}>
       {({ submitForm, values }) => {

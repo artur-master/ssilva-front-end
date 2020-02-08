@@ -195,7 +195,6 @@ export const getCommercialFields = (
   { UsersInmobiliaria = [] } = {},
 ) => {
   const { UsersProyecto = [] } = project;
-
   /* index of users of project */
   const userAsistenteIndex = getUserIndex(UsersProyecto, 'Asistente Comercial');
   const userVendedorIndex = getUserIndex(UsersProyecto, 'Vendedor');

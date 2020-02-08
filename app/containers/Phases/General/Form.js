@@ -83,21 +83,6 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                 {values.CotizacionType ===
                   window.preload.quotationUtils.CotizacionTypes[0].Name && (
                   <>
-                    <FormGroup className="col-md-6 my-2">
-                      <Label style={{ width: '10em' }}>
-                        Interés del Cliente
-                      </Label>
-                      <ExField
-                        type="select"
-                        name="IsNotInvestment"
-                        style={{ width: '21em' }}
-                        required
-                      >
-                        <option value="">Selecciona...</option>
-                        <option value="1">Vivienda</option>
-                        <option value="0">Inversión</option>
-                      </ExField>
-                    </FormGroup>
                     {/*
                     <FormGroup className="col-md-6 my-2">
                       <Label style={{ width: '10em' }}>Cómo se Enteró</Label>
@@ -125,27 +110,44 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                 )}
                 {values.CotizacionType ===
                   window.preload.quotationUtils.CotizacionTypes[1].Name && (
-                  <FormGroup className="col-md-6 my-2">
-                    <Label style={{ width: '10em' }}>Medio de Contacto</Label>
-                    <ExField
-                      type="select"
-                      name="ContactMethodTypeID"
-                      style={{ width: '21em' }}
-                      required
-                    >
-                      <option value="">Selecciona...</option>
-                      {window.preload.quotationUtils.ContactMethodTypes.map(
-                        contacttype => (
-                          <option
-                            key={contacttype.ContactMethodTypeID}
-                            value={contacttype.ContactMethodTypeID}
-                          >
-                            {contacttype.Name}
-                          </option>
-                        ),
-                      )}
-                    </ExField>
-                  </FormGroup>
+                  <>
+                    <FormGroup className="col-md-6 my-2">
+                      <Label style={{ width: '10em' }}>
+                        Destino de la Compra
+                      </Label>
+                      <ExField
+                        type="select"
+                        name="IsNotInvestment"
+                        style={{ width: '21em' }}
+                        required
+                      >
+                        <option value="">Selecciona...</option>
+                        <option value="1">Vivienda</option>
+                        <option value="0">Inversión</option>
+                      </ExField>
+                    </FormGroup>
+                    <FormGroup className="col-md-6 my-2">
+                      <Label style={{ width: '10em' }}>Medio de Contacto</Label>
+                      <ExField
+                        type="select"
+                        name="ContactMethodTypeID"
+                        style={{ width: '21em' }}
+                        required
+                      >
+                        <option value="">Selecciona...</option>
+                        {window.preload.quotationUtils.ContactMethodTypes.map(
+                          contacttype => (
+                            <option
+                              key={contacttype.ContactMethodTypeID}
+                              value={contacttype.ContactMethodTypeID}
+                            >
+                              {contacttype.Name}
+                            </option>
+                          ),
+                        )}
+                      </ExField>
+                    </FormGroup>
+                  </>
                 )}
               </ul>
             </ModalBody>
