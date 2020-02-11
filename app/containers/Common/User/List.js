@@ -32,7 +32,8 @@ const List = ({
   onSelect,
 }) => {
   const { users, loading, query = {} } = selector;
-  const { selected = [] } = query;
+  const selected = (query.selected || []).map(user => user.UserID || user);
+
   const canManage = Auth.hasOneOfPermissions([PERMISSIONS[1]]);
   const ths = [
     { field: 'Name', label: 'Nombres', sortable: true },

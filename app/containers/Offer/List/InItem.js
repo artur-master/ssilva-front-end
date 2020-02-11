@@ -20,12 +20,26 @@ import {
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
 import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
+import { Auth } from 'containers/App/helpers';
 
-const InItem = ({ project, offer, dispatch }) => {
+const InItem = ({ project, numberIN, offer, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { Proyecto, Folio, Inmuebles, Cliente, Condition = [] } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
-
+  const firmaIN = Object.keys(offer.AprobacionInmobiliaria || {}).length;
+  let State = '';
+  if (offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[3]) {
+    State = <span className="badge px-2 badge-danger">RECHAZADA</span>;
+  } else if (offer.AprobacionInmobiliaria[Auth.get('user_id')]) {
+    State = <span className="badge px-2 badge-success">CONTROL APROBADO</span>;
+  } else if (!offer.AprobacionInmobiliaria[Auth.get('user_id')]) {
+    State = (
+      <span className="badge px-2 badge-warning">
+        {Condition.length > 0 && 'CONTROL APROBADO CON OBS.'}
+        {Condition.length < 1 && 'CONTROL APROBADO'}
+      </span>
+    );
+  }
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
@@ -47,29 +61,12 @@ const InItem = ({ project, offer, dispatch }) => {
       <td>Cliente: {clientFullname(Cliente)}</td>
       <td>
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          {offer.AprobacionInmobiliariaState ===
-            APROBACION_INMOBILIARIA_STATE[1] && (
-            <span className="badge px-2 badge-warning">
-              {Condition.length > 0 && 'CONTROL APROBADO CON OBS.'}
-              {Condition.length < 1 && 'CONTROL APROBADO'}
-            </span>
-          )}
-          {offer.AprobacionInmobiliariaState ===
-            APROBACION_INMOBILIARIA_STATE[2] && (
-            <span className="badge px-2 badge-success">CONTROL APROBADO</span>
-          )}
-          {offer.AprobacionInmobiliariaState ===
-            APROBACION_INMOBILIARIA_STATE[3] && (
-            <span className="badge px-2 badge-danger">RECHAZADA</span>
-          )}
+          {State}
         </div>
       </td>
       <td className="no-whitespace">
         <span>
-          <b>FIRMAS</b> |{' '}
-          {`${Condition.filter(cond => cond.IsImportant).length} de ${
-            Condition.length
-          }`}
+          <b>FIRMAS</b> | {`${firmaIN} de ${numberIN}`}
         </span>
       </td>
       <td className="px-3 font-21">
@@ -101,6 +98,7 @@ const InItem = ({ project, offer, dispatch }) => {
 };
 
 InItem.propTypes = {
+  numberIN: PropTypes.number,
   offer: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dispatch: PropTypes.func,

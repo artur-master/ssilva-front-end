@@ -13,11 +13,10 @@ import { Box, BoxContent, BoxHeader } from 'components/Box';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { makeSelectPreload } from 'containers/App/selectors';
 import makeSelectRealEstate from './selectors';
 
-function View({ preload, ID, selector, onHide, isOpen }) {
-  const { local } = preload;
+function View({ ID, selector, onHide, isOpen }) {
+  const { local } = window.preload;
   const inmobiliaria = (selector.inmobiliarias || []).find(
     item => item.InmobiliariaID === ID,
   );
@@ -260,7 +259,6 @@ function View({ preload, ID, selector, onHide, isOpen }) {
 }
 
 View.propTypes = {
-  preload: PropTypes.object,
   selector: PropTypes.object,
   ID: PropTypes.string,
   isOpen: PropTypes.bool,
@@ -268,7 +266,6 @@ View.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
   selector: makeSelectRealEstate(),
 });
 

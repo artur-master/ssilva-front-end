@@ -20,11 +20,22 @@ export function resetContainer() {
 
 export function saveProject(newValues) {
   const values = { ...newValues };
-  if (values.UsersProyecto)
-    values.UsersProyecto = values.UsersProyecto.map(user => ({
-      ...user,
-      UserProyectoType: user.UserProyectoType || user.UserProyectoTypeID,
-    }));
+  if (values.tmp.UsersProyecto) {
+    values.UsersProyecto = Object.keys(values.tmp.UsersProyecto).reduce(
+      (acc, userType) => {
+        let users = values.tmp.UsersProyecto[userType];
+        if (!Array.isArray(users)) users = [users];
+        return [
+          ...acc,
+          ...users.map(user => ({
+            UserID: user.UserID || user,
+            UserProyectoType: userType,
+          })),
+        ];
+      },
+      [],
+    );
+  }
   return {
     type: SAVE_PROJECT,
     values,

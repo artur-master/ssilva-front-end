@@ -52,6 +52,14 @@ const projectReducer = (state = initialState, action) =>
             ...(action.values.Documentos || {}),
           },
         };
+        window.project = {
+          ...state.project,
+          ...action.values,
+          Documentos: {
+            ...(draft.project.Documentos || {}),
+            ...(action.values.Documentos || {}),
+          },
+        };
         break;
       case UPDATE_DOCUMENT_PROJECT:
         draft.project = {
@@ -65,6 +73,22 @@ const projectReducer = (state = initialState, action) =>
                   state: action.documents[doc],
                 };
               else acc[doc] = { ...draft.project.Documentos[doc] };
+              return acc;
+            },
+            {},
+          ),
+        };
+        window.project = {
+          ...state.project,
+          ...action.values,
+          Documentos: Object.keys(state.project.Documentos).reduce(
+            (acc, doc) => {
+              if (action.documents[doc])
+                acc[doc] = {
+                  ...state.project.Documentos[doc],
+                  state: action.documents[doc],
+                };
+              else acc[doc] = { ...state.project.Documentos[doc] };
               return acc;
             },
             {},

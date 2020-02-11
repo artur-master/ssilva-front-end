@@ -18,6 +18,7 @@ import { approveIn } from '../actions';
 import OfferInFormObservation from './Observation';
 import OfferInFormActions from './Actions';
 import InSteps from './Steps';
+import { Auth } from '../../../App/helpers';
 
 export function OfferInForm({ selector, dispatch }) {
   const initialValues = model({
@@ -46,8 +47,7 @@ export function OfferInForm({ selector, dispatch }) {
       <PhaseFormaDePago initialValues={initialValues} />
       <PhasePreCredito initialValues={initialValues} />
       <PhaseDocument entity={initialValues} isCollapse />
-      {selector.offer.AprobacionInmobiliariaState ===
-        APROBACION_INMOBILIARIA_STATE[1] && (
+      {!selector.offer.AprobacionInmobiliaria[Auth.get('user_id')] && (
         <OfferInFormActions
           selector={selector}
           onCancel={() =>

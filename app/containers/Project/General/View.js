@@ -11,12 +11,13 @@ import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
 import { getGeneralFields } from '../fields';
 import GeneralReview from '../GeneralApprove/GeneralReview';
+import model from '../model';
 
 const SyncMessage = WithLoading();
 
-function GeneralView({ canEdit, selectorProject, selector, preload, onEdit }) {
+function GeneralView({ canEdit, selectorProject, selector, onEdit }) {
   const { project = {} } = selectorProject;
-  const fields = getGeneralFields(project, preload);
+  const fields = getGeneralFields({ values: model(project) });
   return (
     <Box collapse>
       <BoxHeader>
@@ -37,7 +38,7 @@ function GeneralView({ canEdit, selectorProject, selector, preload, onEdit }) {
                   {name !== 'ComunaID' ? label : ''}
                 </Label>
                 <span className="font-14-rem ml-2">
-                  {view ? view(project, preload) : project[name]}
+                  {view || project[name]}
                 </span>
               </FormGroup>
             ))}
@@ -51,7 +52,6 @@ function GeneralView({ canEdit, selectorProject, selector, preload, onEdit }) {
 
 GeneralView.propTypes = {
   canEdit: PropTypes.bool,
-  preload: PropTypes.object,
   selectorProject: PropTypes.object,
   selector: PropTypes.object,
   onEdit: PropTypes.func,

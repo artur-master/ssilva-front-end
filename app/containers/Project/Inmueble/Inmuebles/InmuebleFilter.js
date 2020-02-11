@@ -9,10 +9,9 @@ import { ReactBootstrapSlider } from 'react-bootstrap-slider';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { makeSelectPreload } from 'containers/App/selectors';
 
-function InmuebleFilter({ preload, entities = {}, onQuery }) {
-  const { inmueblesOrientations } = preload;
+function InmuebleFilter({ entities = {}, onQuery }) {
+  const { inmueblesOrientations } = window.preload;
   const orientations = [];
   const piso = [];
   const initQuery = entities.reduce(
@@ -119,14 +118,11 @@ function InmuebleFilter({ preload, entities = {}, onQuery }) {
 }
 
 InmuebleFilter.propTypes = {
-  preload: PropTypes.object,
   entities: PropTypes.array,
   onQuery: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 const withConnect = connect(
   mapStateToProps,

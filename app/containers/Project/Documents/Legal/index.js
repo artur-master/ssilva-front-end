@@ -10,7 +10,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { makeSelectPreload } from 'containers/App/selectors';
 import Ban from 'components/Ban';
 import makeSelectInitProject from '../../Init/selectors';
 
@@ -26,13 +25,7 @@ import {
   resetContainer,
 } from './actions';
 
-export function Legal({
-  action,
-  preload,
-  selectorProject,
-  selector,
-  dispatch,
-}) {
+export function Legal({ action, selectorProject, selector, dispatch }) {
   useInjectReducer({ key: 'legal', reducer });
   useInjectSaga({ key: 'legal', saga });
   const { project = {} } = selectorProject;
@@ -42,7 +35,6 @@ export function Legal({
   return (
     <LegalForm
       action={action}
-      preload={preload}
       selectorProject={selectorProject}
       selector={selector}
       onConfirm={(documentType, isConfirm) =>
@@ -62,13 +54,11 @@ export function Legal({
 
 Legal.propTypes = {
   action: PropTypes.string,
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   dispatch: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
   selectorProject: makeSelectInitProject(),
   selector: makeSelectLegal(),
 });

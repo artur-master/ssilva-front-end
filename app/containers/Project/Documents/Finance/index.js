@@ -10,7 +10,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { makeSelectPreload } from 'containers/App/selectors';
 import Ban from 'components/Ban';
 import makeSelectInitProject from '../../Init/selectors';
 import { canAccessArea } from '../../helper';
@@ -27,13 +26,7 @@ import {
   resetContainer,
 } from './actions';
 
-export function Finance({
-  action,
-  preload,
-  selectorProject,
-  selector,
-  dispatch,
-}) {
+export function Finance({ action, selectorProject, selector, dispatch }) {
   useInjectReducer({ key: 'finance', reducer });
   useInjectSaga({ key: 'finance', saga });
   const { project = {} } = selectorProject;
@@ -51,7 +44,6 @@ export function Finance({
     return (
       <FinanceView
         action={action}
-        preload={preload}
         selectorProject={selectorProject}
         selector={selector}
         onEdit={() => dispatch(toggleScreen('form', true))}
@@ -64,7 +56,6 @@ export function Finance({
     return (
       <FinanceForm
         onSubmit={values => dispatch(saveEntity(project.ProyectoID, values))}
-        preload={preload}
         selectorProject={selectorProject}
         selector={selector}
         onReset={() => dispatch(toggleScreen('view', true))}
@@ -75,13 +66,11 @@ export function Finance({
 
 Finance.propTypes = {
   action: PropTypes.string,
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   dispatch: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
   selectorProject: makeSelectInitProject(),
   selector: makeSelectFinance(),
 });

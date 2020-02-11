@@ -10,8 +10,8 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { makeSelectPreload } from 'containers/App/selectors';
 import { Auth } from 'containers/App/helpers';
+import Ban from 'components/Ban';
 import makeSelectInitProject from '../Init/selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -20,11 +20,9 @@ import GeneralView from './View';
 import makeSelectGeneral from './selectors';
 import { resetContainer, saveProject, toggleScreen } from './actions';
 import { UserProject } from '../helper';
-import Ban from '../../../components/Ban';
 
 export function General({
   action = 'view',
-  preload,
   selectorProject,
   selector,
   dispatch,
@@ -38,7 +36,6 @@ export function General({
 
   const { screen } = selector;
   const isPM = UserProject.isPM(selectorProject.project);
-
   if (screen === 'view' && selectorProject.project)
     return (
       <GeneralView
@@ -47,7 +44,6 @@ export function General({
           Auth.canManageProject() &&
           action !== 'view'
         }
-        preload={preload}
         selectorProject={selectorProject}
         selector={selector}
         onEdit={() => dispatch(toggleScreen('form'))}
@@ -58,7 +54,6 @@ export function General({
     return (
       <GeneralForm
         onSubmit={values => dispatch(saveProject(values))}
-        preload={preload}
         selectorProject={selectorProject}
         selector={selector}
         onReset={() => dispatch(toggleScreen('view'))}
@@ -70,13 +65,11 @@ export function General({
 
 General.propTypes = {
   action: PropTypes.string,
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   dispatch: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
   selectorProject: makeSelectInitProject(),
   selector: makeSelectGeneral(),
 });

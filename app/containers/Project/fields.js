@@ -9,27 +9,51 @@ import moment from 'components/moment';
 import ExAseguradoras from 'components/ExForm/ExAseguradoras';
 import ExInstitucionFinancieras from 'components/ExForm/ExInstitucionFinancieras';
 import IntlFormatNumber from 'components/IntlFormat/Number';
+import { userFullname } from '../Common/User/helper';
 
-const getUserIndex = (UsersProyecto, userType) => {
-  let userIndex = UsersProyecto.findIndex(
-    user =>
-      user.UserProyectoType === userType ||
-      user.UserProyectoTypeID === userType,
-  );
-  if (userIndex < 0) {
-    UsersProyecto.push({
-      UserProyectoTypeID: userType,
-      UserProyectoType: userType,
-      UserID: '',
-    });
-    userIndex = UsersProyecto.length - 1;
-  }
-  return userIndex;
+const buildUsersField = (form, options = {}) => {
+  const { tmp } = form.values;
+  const {
+    userProyectoType,
+    label,
+    roles,
+    multiple = false,
+    query = {},
+  } = options;
+  let selected = tmp.UsersProyecto[userProyectoType];
+  if (!Array.isArray(selected) && selected) selected = [selected];
+  return {
+    ...options,
+    label,
+    required: true,
+    name: `tmp.UsersProyecto[${userProyectoType}]`,
+    multiple,
+    value: selected,
+    view: (selected || []).map(user => (
+      <div
+        className="text-nowrap"
+        style={{ textOverflow: 'ellipsis' }}
+        key={user.UserID}
+      >
+        {userFullname(user)}
+      </div>
+    )),
+    query: {
+      roles: roles || userProyectoType,
+      selected,
+      ...query,
+    },
+    Component: ExUsers,
+  };
 };
 
-export const getGeneralFields = project => {
-  const { UsersProyecto = [], ContactInfo = [] } = project;
-
+export const getGeneralFields = form => {
+  const {
+    ContactInfo = [],
+    EtapaState,
+    InmobiliariaID,
+    Inmobiliaria,
+  } = form.values;
   /* prepare contact type */
   const phoneContactType = getContactType('phone');
   const emailContactType = getContactType('email');
@@ -62,8 +86,41 @@ export const getGeneralFields = project => {
     }
     return acc;
   }, []);
-  /* index of users of project */
-  const userProjectIndex = getUserIndex(UsersProyecto, 'Jefe de Proyecto');
+
+  const Address = [form.values.Address];
+  if (form.values.Comuna) {
+    Address.push(form.values.Comuna);
+  }
+  let Comuna;
+  if (form.values.ComunaID && window.preload) {
+    Comuna = window.preload.comunas.find(
+      item => item.ComunaID === form.values.ComunaID,
+    );
+    Comuna = [Comuna.Provincia, Comuna.Regione].join(', ');
+  }
+
+  let InmobiliariaElm = '';
+  if (InmobiliariaID) {
+    const InmobiliariaLinkView = RealEstateView(({ onOpen }) => (
+      <div className="d-flex align-items-center">
+        <span className="font-14-rem mr-3" style={{ maxWidth: '13em' }}>
+          {Inmobiliaria}
+        </span>
+        <Link
+          to="/"
+          className="btn-arrow font-14-rem"
+          onClick={evt => {
+            evt.preventDefault();
+            onOpen();
+          }}
+        >
+          <b>Ver ficha</b>
+        </Link>
+      </div>
+    ));
+    InmobiliariaElm = <InmobiliariaLinkView ID={InmobiliariaID} />;
+  }
+
   return [
     {
       label: 'Nombre Proyecto',
@@ -82,9 +139,9 @@ export const getGeneralFields = project => {
     {
       label: 'Teléfono Fijo',
       name: `ContactInfo.${phones[0]}.Value`,
-      view: entity =>
-        entity.ContactInfo && entity.ContactInfo[phones[0]]
-          ? entity.ContactInfo[phones[0]].Value
+      view:
+        ContactInfo && ContactInfo[phones[0]]
+          ? ContactInfo[phones[0]].Value
           : '',
       placeholder: '+562',
       required: true,
@@ -92,9 +149,9 @@ export const getGeneralFields = project => {
     {
       label: 'Teléfono Móvil',
       name: `ContactInfo.${phones[1]}.Value`,
-      view: entity =>
-        entity.ContactInfo && entity.ContactInfo[phones[1]]
-          ? entity.ContactInfo[phones[1]].Value
+      view:
+        ContactInfo && ContactInfo[phones[1]]
+          ? ContactInfo[phones[1]].Value
           : '',
       placeholder: '+569',
       required: true,
@@ -103,9 +160,9 @@ export const getGeneralFields = project => {
       label: 'Mail',
       type: 'email',
       name: `ContactInfo.${emailIndex}.Value`,
-      view: entity =>
-        entity.ContactInfo && entity.ContactInfo[emailIndex]
-          ? entity.ContactInfo[emailIndex].Value
+      view:
+        ContactInfo && ContactInfo[emailIndex]
+          ? ContactInfo[emailIndex].Value
           : '',
       required: true,
       placeholder: 'Ej: usuario@gmail.com',
@@ -114,39 +171,19 @@ export const getGeneralFields = project => {
       label: 'Dirección',
       name: 'Address',
       maxlen: 150,
-      view: entity => {
-        const Address = [entity.Address];
-        if (entity.Comuna) {
-          Address.push(entity.Comuna);
-        }
-        return Address.join(', ');
-      },
+      view: Address.join(', '),
       required: true,
       placeholder: 'Ej: Av La Florida 2087',
     },
-    {
+    buildUsersField(form, {
       label: 'Jefe de Proyecto',
-      name: `UsersProyecto.${userProjectIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userProjectIndex]
-          ? entity.UsersProyecto[userProjectIndex].Name
-          : '',
+      userProyectoType: 'Jefe de Proyecto',
       required: true,
-      query: { roles: 'Jefe de Proyecto' },
-      Component: ExUsers,
-    },
+    }),
     {
       label: 'Comuna',
       name: 'ComunaID',
-      view: (entity, { comunas = [] }) => {
-        if (entity.ComunaID) {
-          const comuna = comunas.find(
-            item => item.ComunaID === entity.ComunaID,
-          );
-          return [comuna.Provincia, comuna.Regione].join(', ');
-        }
-        return null;
-      },
+      view: Comuna || '',
       required: true,
       type: 'comunas',
     },
@@ -154,186 +191,119 @@ export const getGeneralFields = project => {
       label: 'Estado de la Etapa',
       type: 'stageStates',
       name: 'EtapaStateID',
-      view: entity =>
-        entity && entity.EtapaState ? entity.EtapaState.Name : '',
+      view: EtapaState ? EtapaState.Name : '',
       required: true,
     },
     {
       label: 'Inmobiliaria',
       name: `InmobiliariaID`,
-      view: entity => {
-        if (entity && entity.InmobiliariaID) {
-          const InmobiliariaLinkView = RealEstateView(({ onOpen }) => (
-            <div className="d-flex align-items-center">
-              <span className="font-14-rem mr-3" style={{ maxWidth: '13em' }}>
-                {entity.Inmobiliaria}
-              </span>
-              <Link
-                to="/"
-                className="btn-arrow font-14-rem"
-                onClick={evt => {
-                  evt.preventDefault();
-                  onOpen();
-                }}
-              >
-                <b>Ver ficha</b>
-              </Link>
-            </div>
-          ));
-          return <InmobiliariaLinkView ID={entity.InmobiliariaID} />;
-        }
-        return '';
-      },
+      view: InmobiliariaElm,
       Component: ExInmobiliarias,
       required: true,
     },
   ];
 };
 
-export const getCommercialFields = (
-  project,
-  { UsersInmobiliaria = [] } = {},
-) => {
-  const { UsersProyecto = [] } = project;
-  /* index of users of project */
-  const userAsistenteIndex = getUserIndex(UsersProyecto, 'Asistente Comercial');
-  const userVendedorIndex = getUserIndex(UsersProyecto, 'Vendedor');
-  const userRepresentanteIndex = getUserIndex(UsersProyecto, 'Representante');
-  const userAprobadorIndex = getUserIndex(UsersProyecto, 'Aprobador');
-  const userAutorizadorIndex = getUserIndex(UsersProyecto, 'Autorizador');
-  const userMarketingIndex = getUserIndex(UsersProyecto, 'Marketing');
-  const userLegalIndex = getUserIndex(UsersProyecto, 'Legal');
-  const userFinanzaIndex = getUserIndex(UsersProyecto, 'Finanza');
+export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
+  const {
+    Arquitecto,
+    Constructora,
+    CotizacionDuration,
+    GuaranteeAmount,
+    EntregaInmediata,
+    InstitucionFinanciera,
+  } = form.values;
 
   return [
     /* Commercial Data */
-    {
+    buildUsersField(form, {
       label: 'Asistente Comercial',
-      name: `UsersProyecto.${userAsistenteIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userAsistenteIndex]
-          ? entity.UsersProyecto[userAsistenteIndex].Name
-          : '',
-      query: { roles: 'Asistente Comercial' },
+      userProyectoType: 'Asistente Comercial',
       required: true,
-      Component: ExUsers,
-    },
-    {
+    }),
+    buildUsersField(form, {
       label: 'Vendedor',
-      name: `UsersProyecto.${userVendedorIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userVendedorIndex]
-          ? entity.UsersProyecto[userVendedorIndex].Name
-          : '',
-      Component: ExUsers,
-      query: { roles: 'Vendedor' },
+      userProyectoType: 'Vendedor',
       required: true,
-    },
-    {
+    }),
+    buildUsersField(form, {
       label: 'Representante Inmobiliaria',
-      name: `UsersProyecto.${userRepresentanteIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userRepresentanteIndex]
-          ? entity.UsersProyecto[userRepresentanteIndex].Name
-          : '',
-      Component: ExUsers,
+      userProyectoType: 'Representante',
+      multiple: true,
       query: {
+        roles: [],
         mustIn: UsersInmobiliaria.filter(
           item => item.UserInmobiliariaType === 'Representante',
         ),
       },
       required: true,
-    },
-    {
+    }),
+    buildUsersField(form, {
       label: 'Aprobador Inmobiliaria',
-      name: `UsersProyecto.${userAprobadorIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userAprobadorIndex]
-          ? entity.UsersProyecto[userAprobadorIndex].Name
-          : '',
-      Component: ExUsers,
+      userProyectoType: 'Aprobador',
+      multiple: true,
       query: {
+        roles: [],
         mustIn: UsersInmobiliaria.filter(
           item => item.UserInmobiliariaType === 'Aprobador',
         ),
       },
       required: true,
-    },
-    {
+    }),
+    buildUsersField(form, {
       label: 'Autorizador Inmobiliaria',
-      name: `UsersProyecto.${userAutorizadorIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userAutorizadorIndex]
-          ? entity.UsersProyecto[userAutorizadorIndex].Name
-          : '',
-      Component: ExUsers,
+      userProyectoType: 'Autorizador',
+      multiple: true,
       query: {
+        roles: [],
         mustIn: UsersInmobiliaria.filter(
           item => item.UserInmobiliariaType === 'Autorizador',
         ),
       },
       required: true,
-    },
-
+    }),
     {
       label: 'Arquitecto',
       name: 'Arquitecto',
-      view: entity => entity.Arquitecto || '',
+      view: Arquitecto || '',
       required: true,
     },
-    {
+    buildUsersField(form, {
       label: 'Marketing',
-      name: `UsersProyecto.${userMarketingIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userMarketingIndex]
-          ? entity.UsersProyecto[userMarketingIndex].Name
-          : '',
-      Component: ExUsers,
-      query: { roles: ['Marketing'] },
+      userProyectoType: 'Marketing',
       required: true,
-    },
-    {
+    }),
+    buildUsersField(form, {
       label: 'Legal',
-      name: `UsersProyecto.${userLegalIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userLegalIndex]
-          ? entity.UsersProyecto[userLegalIndex].Name
-          : '',
-      Component: ExUsers,
-      query: { roles: ['Legal'] },
+      userProyectoType: 'Legal',
       required: true,
-    },
-    {
-      label: 'Finanzas',
-      name: `UsersProyecto.${userFinanzaIndex}.UserID`,
-      view: entity =>
-        entity.UsersProyecto && entity.UsersProyecto[userFinanzaIndex]
-          ? entity.UsersProyecto[userFinanzaIndex].Name
-          : '',
-      Component: ExUsers,
-      query: { roles: ['Finanzas'] },
+    }),
+    buildUsersField(form, {
+      label: 'Finanza',
+      userProyectoType: 'Finanza',
       required: true,
-    },
+      query: {
+        roles: 'Finanzas',
+      },
+    }),
     {
       label: 'Constructora',
       name: `ConstructoraID`,
-      view: entity => (entity ? entity.Constructora : ''),
+      view: Constructora || '',
       Component: ExConstructoras,
       required: true,
     },
     {
       label: 'Duración Cotización',
       name: `CotizacionDuration`,
-      view: entity => `${entity.CotizacionDuration} Días`,
+      view: `${CotizacionDuration || ''} Días`,
       type: 'number',
       required: true,
     },
     {
       label: 'Monto Reserva',
       name: `GuaranteeAmount`,
-      view: entity => (
-        <IntlFormatNumber prefix="UF " value={entity.GuaranteeAmount} />
-      ),
+      view: <IntlFormatNumber prefix="UF " value={GuaranteeAmount} />,
       maskOptions: { prefix: 'UF ' },
       type: 'currency',
       min: 0,
@@ -342,7 +312,7 @@ export const getCommercialFields = (
     {
       label: 'Entrega Inmediata',
       name: 'EntregaInmediata',
-      view: entity => (entity.EntregaInmediata ? 'Si' : 'No'),
+      view: EntregaInmediata ? 'Si' : 'No',
       type: 'radioGroup',
       required: true,
       options: [{ value: 1, label: 'Si' }, { value: 0, label: 'No' }],
@@ -350,19 +320,19 @@ export const getCommercialFields = (
     {
       label: 'Institucion Financiera',
       name: `InstitucionFinancieraID`,
-      view: entity => (entity ? entity.InstitucionFinanciera : ''),
+      view: InstitucionFinanciera || '',
       Component: ExInstitucionFinancieras,
       required: true,
     },
   ];
 };
 
-export const getPolizaFields = () => [
+export const getPolizaFields = entity => [
   /* Poliza Data */
   {
     label: 'Monto de la Póliza',
     name: `Aseguradora.Amount`,
-    view: entity => (
+    view: (
       <IntlFormatNumber
         prefix="UF "
         value={entity.Aseguradora ? entity.Aseguradora.Amount : ''}
@@ -376,7 +346,7 @@ export const getPolizaFields = () => [
   {
     label: 'Fecha Vencimiento',
     name: `Aseguradora.ExpirationDate`,
-    view: entity =>
+    view:
       entity.Aseguradora && entity.Aseguradora.ExpirationDate
         ? moment(entity.Aseguradora.ExpirationDate).format('DD MMM YYYY')
         : '',
@@ -386,7 +356,7 @@ export const getPolizaFields = () => [
   {
     label: 'Ente que da la Póliza',
     name: `Aseguradora.AseguradoraID`,
-    view: entity =>
+    view:
       entity && entity.Aseguradora.Aseguradora
         ? entity.Aseguradora.Aseguradora
         : '',

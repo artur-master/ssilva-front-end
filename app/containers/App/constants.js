@@ -53,9 +53,8 @@ export const USER_PROYECTO_TYPE = [
   'Aprobador',
   'Marketing',
   'Legal',
-  'Finanzas',
+  'Finanza',
   'Autorizador',
-  'Arquitecto',
 ];
 
 export const PROYECTO_DOCUMENT_STATE = ['Pendiente', 'Agregado'];

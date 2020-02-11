@@ -13,12 +13,13 @@ import Alert from 'components/Alert';
 import { getPolizaFields } from '../fields';
 import { canUpdate, isEmpty } from './helper';
 import GeneralReview from '../GeneralApprove/GeneralReview';
+import model from '../model';
 
 const SyncMessage = WithLoading();
 
-function PolizaView({ action, selectorProject, selector, preload, onEdit }) {
+function PolizaView({ action, selectorProject, selector, onEdit }) {
   const { project = {} } = selectorProject;
-  const fields = getPolizaFields();
+  const fields = getPolizaFields(model(project));
   return (
     <Box collapse>
       <BoxHeader>
@@ -39,7 +40,7 @@ function PolizaView({ action, selectorProject, selector, preload, onEdit }) {
                   {name !== 'ComunaID' ? label : ''}
                 </Label>
                 <span className="font-14-rem ml-2">
-                  {view ? view(project, preload) : project[name]}
+                  {view || project[name]}
                 </span>
               </FormGroup>
             ))}
@@ -58,7 +59,6 @@ function PolizaView({ action, selectorProject, selector, preload, onEdit }) {
 
 PolizaView.propTypes = {
   action: PropTypes.string,
-  preload: PropTypes.object,
   selectorProject: PropTypes.object,
   selector: PropTypes.object,
   onEdit: PropTypes.func,
