@@ -10,7 +10,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { makeSelectPreload } from 'containers/App/selectors';
 import WithLoading from 'components/WithLoading';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import { FormGroup } from 'components/ExForm';
@@ -73,14 +72,12 @@ export function Inmueble({
 }
 
 Inmueble.propTypes = {
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorInmueble: PropTypes.object,
   selectorProject: PropTypes.object,
   dispatch: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
   selectorProject: makeSelectInitProject(),
   selector: makeSelectInmueble(),
   selectorInmueble: makeSelectInmuebleInit(),

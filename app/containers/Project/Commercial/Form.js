@@ -18,7 +18,6 @@ import { getCommercialFields } from '../fields';
 
 const SyncMessage = WithLoading();
 export function CommercialForm({
-  preload,
   selector,
   selectorProject,
   selectorRealEstate,
@@ -29,7 +28,7 @@ export function CommercialForm({
   const { inmobiliarias, constructoras } = selectorRealEstate;
   const { UsersProyecto = [], InmobiliariaID } = project;
   const { loading, ...restSelector } = selector;
-  const initialValues = model(preload, project);
+  const initialValues = model(project);
   const selectedInmobiliaria = (inmobiliarias || []).find(
     item => item.InmobiliariaID === InmobiliariaID,
   );
@@ -39,74 +38,28 @@ export function CommercialForm({
       item.IsInmobiliaria &&
       item.RazonSocial === selectedInmobiliaria.RazonSocial,
   );
-  const Representante = selectedInmobiliaria.UsersInmobiliaria.find(
-    item => item.UserInmobiliariaType === 'Representante',
-  );
-  const Aprobador = selectedInmobiliaria.UsersInmobiliaria.find(
-    item => item.UserInmobiliariaType === 'Aprobador',
-  );
 
-  const Autorizador = selectedInmobiliaria.UsersInmobiliaria.find(
-    item => item.UserInmobiliariaType === 'Autorizador',
-  );
-
-  if (
-    Representante &&
-    !initialValues.UsersProyecto.find(
-      item => item.UserProyectoType === 'Representante' && item.UserID,
-    )
-  )
-    initialValues.UsersProyecto = [
-      ...initialValues.UsersProyecto.filter(
-        item => item.UserProyectoType !== 'Representante',
-      ),
-      {
-        UserID: Representante.UserID,
-        UserProyectoType: 'Representante',
-      },
-    ];
-
-  if (
-    Aprobador &&
-    !initialValues.UsersProyecto.find(
-      item => item.UserProyectoType === 'Aprobador' && item.UserID,
-    )
-  )
-    initialValues.UsersProyecto = [
-      ...initialValues.UsersProyecto.filter(
-        item => item.UserProyectoType !== 'Aprobador',
-      ),
-      {
-        UserID: Aprobador.UserID,
-        UserProyectoType: 'Aprobador',
-      },
-    ];
-
-  if (
-    Autorizador &&
-    !initialValues.UsersProyecto.find(
-      item => item.UserProyectoType === 'Autorizador' && item.UserID,
-    )
-  )
-    initialValues.UsersProyecto = [
-      ...initialValues.UsersProyecto.filter(
-        item => item.UserProyectoType !== 'Autorizador',
-      ),
-      {
-        UserID: Autorizador.UserID,
-        UserProyectoType: 'Autorizador',
-      },
-    ];
+  ['Representante', 'Aprobador', 'Autorizador'].forEach(userType => {
+    const users = selectedInmobiliaria.UsersInmobiliaria.filter(
+      item => item.UserInmobiliariaType === userType,
+    );
+    initialValues.tmp.UsersProyecto[userType] = users.map(user => ({
+      UserID: user.UserID || user,
+      UserProyectoType: userType,
+    }));
+  });
 
   if (!initialValues.ConstructoraID && selectedConstructora) {
     initialValues.ConstructoraID = selectedConstructora.ConstructoraID;
   }
-  const fields = getCommercialFields(initialValues, {
-    UsersInmobiliaria: selectedInmobiliaria.UsersInmobiliaria,
-  });
+
   return (
     <ExForm initialValues={initialValues} onSubmit={values => onSubmit(values)}>
-      {({ submitForm, values }) => {
+      {form => {
+        const { submitForm, values } = form;
+        const fields = getCommercialFields(form, {
+          UsersInmobiliaria: selectedInmobiliaria.UsersInmobiliaria,
+        });
         const EntregaInmediata = stringToBoolean(values.EntregaInmediata);
         const { Aseguradora } = values;
         return (
@@ -175,7 +128,6 @@ export function CommercialForm({
 }
 
 CommercialForm.propTypes = {
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   selectorRealEstate: PropTypes.object,

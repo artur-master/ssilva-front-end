@@ -20,9 +20,10 @@ import {
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
 import RefundGrantiaButton from 'containers/Phases/Promesa/RefundGarantia/Buttons';
-import { UserProject } from 'containers/Project/helper';
+import { UserProject, countIN } from 'containers/Project/helper';
 import FacturaButton from 'containers/Phases/Factura/Buttons';
 import { canEditPromesa, canRefund, isRefund } from '../helper';
+import { PROMESA_STATE } from '../../App/constants';
 
 const Item = ({ project, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -76,13 +77,19 @@ const Item = ({ project, promesa, dispatch }) => {
           </div>
         )}
       </td>
-      {UserProject.isInmobiliario() && (
-        <td className="no-whitespace d-none">
-          <span>
-            <b>FIRMAS</b> {` | 0 de 1`}
-          </span>
-        </td>
-      )}
+
+      <td className="no-whitespace">
+        {UserProject.isInmobiliario() &&
+          (promesa.PromesaState === PROMESA_STATE[14] && (
+            <span>
+              <b>FIRMAS</b>{' '}
+              {` | ${
+                Object.keys(promesa.AprobacionInmobiliaria || {}).length
+              } de ${countIN()}`}
+            </span>
+          ))}
+      </td>
+
       <td className="font-21 px-3">
         <Dropdown
           isOpen={dropdownOpen}

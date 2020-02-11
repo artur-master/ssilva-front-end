@@ -11,14 +11,9 @@ import Inmueble from 'containers/Common/Inmueble';
 import Button from 'components/Button';
 import { shortType } from 'containers/Common/Inmueble/helper';
 
-function RestrictionsForm({
-  preload,
-  selector,
-  setRestriction,
-  saveRestriction,
-}) {
+function RestrictionsForm({ selector, setRestriction, saveRestriction }) {
   const { entity, loading } = selector;
-  const { inmueblesRestrictionTypes } = preload;
+  const { inmueblesRestrictionTypes } = window.preload;
   const [openInmueble, setOpenInmueble] = useState(false);
   const [InmuebleInmuebleTypeID, setInmuebleInmuebleTypeID] = useState(false);
   return (
@@ -131,7 +126,6 @@ function RestrictionsForm({
 
 RestrictionsForm.propTypes = {
   selector: PropTypes.object,
-  preload: PropTypes.object,
   setRestriction: PropTypes.func,
   saveRestriction: PropTypes.func,
 };

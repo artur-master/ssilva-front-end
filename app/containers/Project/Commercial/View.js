@@ -11,18 +11,13 @@ import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
 import { getCommercialFields } from '../fields';
 import GeneralReview from '../GeneralApprove/GeneralReview';
+import model from '../model';
 
 const SyncMessage = WithLoading();
 
-function CommercialView({
-  canEdit,
-  selectorProject,
-  selector,
-  preload,
-  onEdit,
-}) {
+function CommercialView({ canEdit, selectorProject, selector, onEdit }) {
   const { project = {} } = selectorProject;
-  const fields = getCommercialFields(project);
+  const fields = getCommercialFields({ values: model(project) });
   return (
     <Box collapse>
       <BoxHeader>
@@ -43,7 +38,7 @@ function CommercialView({
                   {name !== 'ComunaID' ? label : ''}
                 </Label>
                 <span className="font-14-rem ml-2">
-                  {view ? view(project, preload) : project[name]}
+                  {view || project[name]}
                 </span>
               </FormGroup>
             ))}
@@ -57,7 +52,6 @@ function CommercialView({
 
 CommercialView.propTypes = {
   canEdit: PropTypes.bool,
-  preload: PropTypes.object,
   selectorProject: PropTypes.object,
   selector: PropTypes.object,
   onEdit: PropTypes.func,

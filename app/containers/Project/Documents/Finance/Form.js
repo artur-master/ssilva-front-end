@@ -91,7 +91,6 @@ function FinanceForm({ selector, onSubmit, onReset }) {
 }
 
 FinanceForm.propTypes = {
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   onSubmit: PropTypes.func,

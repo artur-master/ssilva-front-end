@@ -18,11 +18,11 @@ import PhonesElement from './PhonesElement';
 import UsersElement from './UsersElement';
 const SyncMessage = WithLoading();
 
-function Form({ selector, preload, onHide, onSubmit }) {
+function Form({ selector, onHide, onSubmit }) {
   const { loading, query = {}, entity, entities, ...restSelector } = selector;
   const { type = '' } = query;
   const IdName = type === 'constructora' ? 'ConstructoraID' : 'InmobiliariaID';
-  const { contactTypes, userInmobiliariaTypes } = preload;
+  const { contactTypes, userInmobiliariaTypes } = window.preload;
   const phoneContactType = getContactType('phone');
   const emailContactType = getContactType('email');
   const ContactEmail = (entity.Contact || []).find(
@@ -197,7 +197,6 @@ function Form({ selector, preload, onHide, onSubmit }) {
 
 Form.propTypes = {
   query: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  preload: PropTypes.object,
   selector: PropTypes.object,
   onSubmit: PropTypes.func,
   onHide: PropTypes.func,

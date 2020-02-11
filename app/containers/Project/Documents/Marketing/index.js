@@ -10,8 +10,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { makeSelectPreload } from 'containers/App/selectors';
-
 import Ban from 'components/Ban';
 import makeSelectInitProject from '../../Init/selectors';
 import { canAccessArea } from '../../helper';
@@ -21,13 +19,7 @@ import MarketingForm from './Form';
 import makeSelectMarketing from './selectors';
 import { resetContainer, reviewMarketing, saveMarketing } from './actions';
 
-export function Marketing({
-  action,
-  preload,
-  selectorProject,
-  selector,
-  dispatch,
-}) {
+export function Marketing({ action, selectorProject, selector, dispatch }) {
   useInjectReducer({ key: 'marketing', reducer });
   useInjectSaga({ key: 'marketing', saga });
   const { project = {} } = selectorProject;
@@ -37,7 +29,6 @@ export function Marketing({
   return (
     <MarketingForm
       action={action}
-      preload={preload}
       selectorProject={selectorProject}
       selector={selector}
       onConfirm={(documentType, isConfirm) =>
@@ -54,13 +45,11 @@ export function Marketing({
 
 Marketing.propTypes = {
   action: PropTypes.string,
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   dispatch: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
   selectorProject: makeSelectInitProject(),
   selector: makeSelectMarketing(),
 });

@@ -96,7 +96,8 @@ export const showConfeccion = promesa =>
   ((promesa.PromesaState === PROMESA_STATE[17] &&
     (promesa.DocumentResciliacion ||
       promesa.PromesaResciliacionState === PROMESA_RESCILIACION_STATE[3])) ||
-    (promesa.PromesaState === PROMESA_STATE[18] && (promesa.DocumentResolucion || PROMESA_RESOLUCION_STATE[2])));
+    (promesa.PromesaState === PROMESA_STATE[18] &&
+      (promesa.DocumentResolucion || PROMESA_RESOLUCION_STATE[2])));
 
 export const showConfeccionFirma = promesa =>
   promesa.PromesaState === PROMESA_STATE[17] &&

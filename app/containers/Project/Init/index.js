@@ -25,10 +25,9 @@ export function InitProject({ ProyectoID, dispatch, selector }) {
   useEffect(() => {
     const { project = {}, loading } = selector;
     if (ProyectoID && !loading && !project) dispatch(fetchProject(ProyectoID));
-    else
+    else if (!project)
       dispatch(
         updateProject({
-          ...project,
           UsersProyecto: [
             {
               UserID: Auth.get('user_id'),

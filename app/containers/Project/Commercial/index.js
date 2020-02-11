@@ -10,7 +10,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { makeSelectPreload } from 'containers/App/selectors';
 import { Auth } from 'containers/App/helpers';
 import Ban from 'components/Ban';
 import makeSelectRealEstate from 'containers/Common/RealEstate/selectors';
@@ -25,7 +24,6 @@ import { UserProject } from '../helper';
 
 export function Commercial({
   action = 'view',
-  preload,
   selectorProject,
   selectorRealEstate,
   selector,
@@ -54,7 +52,6 @@ export function Commercial({
           Auth.canManageProject() &&
           action !== 'view'
         }
-        preload={preload}
         selectorProject={selectorProject}
         selector={selector}
         onEdit={() => dispatch(toggleScreen('form', true))}
@@ -65,7 +62,6 @@ export function Commercial({
     return (
       <CommercialForm
         onSubmit={values => dispatch(saveProject(values))}
-        preload={preload}
         selectorProject={selectorProject}
         selectorRealEstate={selectorRealEstate}
         selector={selector}
@@ -78,14 +74,12 @@ export function Commercial({
 
 Commercial.propTypes = {
   action: PropTypes.string,
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   selectorRealEstate: PropTypes.object,
   dispatch: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
   selectorProject: makeSelectInitProject(),
   selectorRealEstate: makeSelectRealEstate(),
   selector: makeSelectCommercial(),

@@ -11,12 +11,11 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import ExField from 'components/ExForm/ExField';
-import { makeSelectPreload } from 'containers/App/selectors';
 
-const Comunas = ({ preload, ...props }) => (
+const Comunas = ({ ...props }) => (
   <ExField type="select" {...props}>
     <option value="">Selecciona una Comuna...</option>
-    {preload.local.map(local => (
+    {window.preload.local.map(local => (
       <optgroup key={local.RegionID} label={local.Name}>
         {local.provincias.map(provincia => (
           <React.Fragment key={provincia.ProvinciaID}>
@@ -32,13 +31,9 @@ const Comunas = ({ preload, ...props }) => (
   </ExField>
 );
 
-Comunas.propTypes = {
-  preload: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-};
+Comunas.propTypes = {};
 
-const mapStateToProps = createStructuredSelector({
-  preload: makeSelectPreload(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 const withConnect = connect(
   mapStateToProps,

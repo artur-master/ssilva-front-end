@@ -1,6 +1,7 @@
 import { getContactType } from 'containers/App/helpers';
+import { USER_PROYECTO_TYPE } from '../App/constants';
 
-export default function model(preload, project = {}) {
+export default function model(project = {}) {
   const phoneContactType = getContactType('phone');
   const emailContactType = getContactType('email');
   const UsersProyecto = (project.UsersProyecto || []).map(user => ({
@@ -55,6 +56,7 @@ export default function model(preload, project = {}) {
     Aseguradora = {},
   } = project;
   return {
+    ...project,
     ProyectoID,
     Name,
     Arquitecto,
@@ -71,5 +73,20 @@ export default function model(preload, project = {}) {
     CotizacionDuration,
     GuaranteeAmount,
     Aseguradora,
+    tmp: {
+      UsersProyecto: UsersProyecto.reduce((acc, user) => {
+        if (
+          ['Representante', 'Aprobador', 'Autorizador'].includes(
+            user.UserProyectoType,
+          )
+        ) {
+          acc[user.UserProyectoType] = acc[user.UserProyectoType] || [];
+          acc[user.UserProyectoType].push(user);
+        } else {
+          acc[user.UserProyectoType] = user;
+        }
+        return acc;
+      }, USER_PROYECTO_TYPE.reduce((bcc, userType) => ({ ...bcc, [userType]: '' }), {})),
+    },
   };
 }

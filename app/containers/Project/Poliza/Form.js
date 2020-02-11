@@ -10,7 +10,6 @@ import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import { Form as ExForm, Field, FormGroup, Label } from 'components/ExForm';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
-import moment from 'components/moment';
 import { getPolizaFields } from '../fields';
 
 const SyncMessage = WithLoading();
@@ -83,7 +82,6 @@ export function PolizaForm({ selector, selectorProject, onSubmit, onReset }) {
 }
 
 PolizaForm.propTypes = {
-  preload: PropTypes.object,
   selector: PropTypes.object,
   selectorProject: PropTypes.object,
   onSubmit: PropTypes.func,

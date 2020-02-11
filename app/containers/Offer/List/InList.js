@@ -7,10 +7,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from 'components/Box';
 import Empty from 'components/Empty';
+import { countIN } from 'containers/Project/helper';
 import InItem from './InItem';
 import { isPendienteContacto } from '../helper';
 
-const InList = ({ project, offers, dispatch }) => {
+const InList = ({ project = {}, offers, dispatch }) => {
   const showOffers = (offers || []).filter(
     offer => !isPendienteContacto(offer),
   );
@@ -22,6 +23,7 @@ const InList = ({ project, offers, dispatch }) => {
           <tbody>
             {showOffers.map(offer => (
               <InItem
+                numberIN={countIN()}
                 key={offer.OfertaID}
                 offer={offer}
                 project={project}

@@ -29,7 +29,7 @@ export const doQuery = (entities, query = {}) => {
     );
   }
   /* mustIn */
-  if (mustIn && Array.isArray(mustIn) && mustIn.length > 0) {
+  if (mustIn && Array.isArray(mustIn)) {
     queriedEntities = queriedEntities.filter(user =>
       mustIn.some(needed => needed.UserID === user.UserID),
     );

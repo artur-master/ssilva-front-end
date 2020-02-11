@@ -32,12 +32,17 @@ const Element = ({
     let text = 'Selecciona...';
     if (!selector.origin_users && selector.loading) text = <i>Cargando ...</i>;
     if (value) {
-      const user = (selector.origin_users || []).find(
-        u => u.UserID === value.UserID || u.UserID === value,
-      );
-      if (user) text = userFullname(user);
+      const user = (selector.origin_users || []).filter(u => {
+        if (Array.isArray(value)) {
+          return value.find(
+            item => u.UserID === item.UserID || u.UserID === item,
+          );
+        }
+        return u.UserID === value.UserID || u.UserID === value;
+      });
+      if (user.length === 1) text = userFullname(user[0]);
+      else if (user.length > 1) text = `${user.length} usuarios`;
     }
-
     return (
       <div
         role="presentation"
@@ -73,7 +78,7 @@ const Element = ({
         </ModalBody>
         <ModalFooter>
           <Button color="white" onClick={() => setIsOpen(false)}>
-            Cancelar
+            Volver
           </Button>
         </ModalFooter>
       </Modal>
@@ -87,7 +92,11 @@ Element.propTypes = {
   query: PropTypes.object,
   openModal: PropTypes.bool,
   selector: PropTypes.object,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array,
+  ]),
   style: PropTypes.object,
   className: PropTypes.string,
   isInvalid: PropTypes.bool,

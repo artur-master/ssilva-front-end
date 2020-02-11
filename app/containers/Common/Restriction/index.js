@@ -12,7 +12,6 @@ import { compose } from 'redux';
 
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'components/Modal';
 import Button from 'components/Button';
-import { makeSelectPreload } from 'containers/App/selectors';
 import WithLoading from 'components/WithLoading';
 import makeSelectRestriction from './selectors';
 import List from './List';
@@ -28,7 +27,6 @@ export function Restriction({
   viewOnly = false,
   isOpen = false,
   selector,
-  preload,
   onHide,
   dispatch,
 }) {
@@ -53,7 +51,6 @@ export function Restriction({
           {!viewOnly && (
             <RestrictionsForm
               selector={selector}
-              preload={preload}
               setRestriction={values => dispatch(setRestriction(values))}
               saveRestriction={() => dispatch(saveRestriction())}
             />
@@ -82,14 +79,12 @@ Restriction.propTypes = {
   viewOnly: PropTypes.bool,
   isOpen: PropTypes.bool,
   selector: PropTypes.object,
-  preload: PropTypes.object,
   onHide: PropTypes.func,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   selector: makeSelectRestriction(),
-  preload: makeSelectPreload(),
 });
 
 function mapDispatchToProps(dispatch) {

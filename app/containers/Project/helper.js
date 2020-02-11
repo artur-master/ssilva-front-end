@@ -271,3 +271,10 @@ export const getPromesa = entity => {
   }
   return { maquetaWord, maquetaPdf };
 };
+
+export const countIN = () =>
+  (window.project.UsersProyecto || []).filter(user =>
+    ['Representante', 'Aprobador', 'Autorizador'].includes(
+      user.UserProyectoType,
+    ),
+  ).length;
