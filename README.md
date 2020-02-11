@@ -13,24 +13,34 @@ pass: SSilva001
 
 ## Setup packages  
 
-- Run `npm install` in order to install dependencies. 
+- Install dependencies
+```
+> npm install
+```
+
 - Open file `.env`, change `API_ROOT` to base API endpoint. 
 
 ## Development  
 
-```npm run start```
+```
+> npm run start
+```
 
 Starts the development server running on http://localhost:3000
 
 ## Generators  
 
-```npm run generate```
+```
+> npm run generate
+```
 
 Allows you to auto-generate boilerplate code for common parts of your application, specifically components, and containers. You can also run npm run generate <part> to skip the first selection. (e.g. npm run generate container)
 
 ## Building  
 
-```npm run build```
+```
+> npm run build
+```
 
 Preps your app for deployment (does not run tests). Optimizes and minifies all files, piping them to the build folder.
 
