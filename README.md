@@ -6,9 +6,15 @@ user: 189806973
 pass: SSilva001
 ```
 
-## Setup  
+## Requirements
 
-Run `npm install` in order to install dependencies. 
+- Nodejs
+- code style: ES6 standard
+
+## Setup packages  
+
+- Run `npm install` in order to install dependencies. 
+- Open file `.env`, change `API_ROOT` to base API endpoint. 
 
 ## Development  
 
@@ -30,6 +36,6 @@ Preps your app for deployment (does not run tests). Optimizes and minifies all f
 
 Upload the contents of build to your web server to see your work live!
 
-## Documentation 
+## Reference Documentation 
 
 https://github.com/react-boilerplate/react-boilerplate/blob/master/README.md
