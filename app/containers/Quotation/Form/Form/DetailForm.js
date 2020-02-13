@@ -235,19 +235,22 @@ export function DetailForm({ onCancel, onContinue, form }) {
           </div>
         </BoxContent>
         <BoxFooter>
-          <Button
-            name="nextStep"
-            onClick={evt => {
-              evt.preventDefault();
-              onContinue();
-            }}
-          >
-            Continuar
-          </Button>
-
-          <Button onClick={onCancel} type="reset" color="white">
-            Cancelar
-          </Button>
+          {onContinue && (
+            <Button
+              name="nextStep"
+              onClick={evt => {
+                evt.preventDefault();
+                onContinue();
+              }}
+            >
+              Continuar
+            </Button>
+          )}
+          {onCancel && (
+            <Button onClick={onCancel} type="reset" color="white">
+              Cancelar
+            </Button>
+          )}
         </BoxFooter>
       </Box>
       <Inmueble

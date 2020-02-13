@@ -13,6 +13,9 @@ import {
   SAVE_QUOTATION_ERROR,
   SAVE_QUOTATION_SUCCESS,
   UPDATE_QUOTATION,
+  DOWNLOAD_QUOTATION,
+  DOWNLOAD_QUOTATION_ERROR,
+  DOWNLOAD_QUOTATION_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -31,8 +34,10 @@ const quotationReducer = (state = initialState, action) =>
       case RESET_CONTAINER:
         return initialState;
       case GET_QUOTATION:
+      case DOWNLOAD_QUOTATION:
         draft.loading = true;
         draft.error = false;
+        draft.success = false;
         break;
       case SAVE_QUOTATION:
         draft.loading = true;
@@ -42,6 +47,7 @@ const quotationReducer = (state = initialState, action) =>
         break;
       case GET_QUOTATION_ERROR:
       case SAVE_QUOTATION_ERROR:
+      case DOWNLOAD_QUOTATION_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -57,6 +63,11 @@ const quotationReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = false;
         draft.quotation = action.quotation;
+        break;
+      case DOWNLOAD_QUOTATION_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.success = false;
         break;
       case UPDATE_QUOTATION:
         draft.quotation = { ...draft.quotation, ...action.data };

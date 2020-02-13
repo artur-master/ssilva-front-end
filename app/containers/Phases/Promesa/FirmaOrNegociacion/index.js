@@ -78,7 +78,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                       });
                     }}
                   >
-                    Agregar Observación
+                    El cliente quiere negociar
                   </Button>
                   <Button
                     disabled={selector.loading}

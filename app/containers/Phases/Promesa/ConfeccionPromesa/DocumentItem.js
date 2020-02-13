@@ -9,10 +9,10 @@ import PropTypes from 'prop-types';
 import { Field as FormikField, getIn } from 'formik';
 import { getFileName } from 'containers/App/helpers';
 
-function DocumentItem({ canUpload }) {
+function DocumentItem({ canUpload, name }) {
   return (
     <FormikField
-      name="DocumentPromesa"
+      name={name}
       validate={value => {
         if (!value) return 'Este campo es requerido';
         return null;
@@ -26,12 +26,12 @@ function DocumentItem({ canUpload }) {
         if (!value || value.name) {
           return (
             <div
-              className="custom-file custom-input-file order-3"
+              className="custom-file custom-input-file order-3 caution"
               style={{ height: 'auto' }}
               title="Examinar..."
             >
               <input
-                name="DocumentPromesa"
+                name={field.name}
                 className={
                   getInTouched && getInErrors
                     ? 'is-invalid custom-file-input'
@@ -41,6 +41,7 @@ function DocumentItem({ canUpload }) {
                 onChange={event => {
                   setFieldValue(field.name, event.target.files[0]);
                 }}
+                required
                 type="file"
               />
               <label
@@ -70,13 +71,13 @@ function DocumentItem({ canUpload }) {
               download
               className="font-14-rem mx-2 btn-arrow"
             >
-              <b>Ver Promesa</b>
+              <b>Ver Detalle</b>
             </a>
             {canUpload && (
               <button
                 type="button"
                 className="close mb-1"
-                onClick={() => setFieldValue('DocumentPromesa', null)}
+                onClick={() => setFieldValue(field.name, null)}
               >
                 <span aria-hidden="true">×</span>
               </button>
@@ -90,6 +91,7 @@ function DocumentItem({ canUpload }) {
 
 DocumentItem.propTypes = {
   canUpload: PropTypes.bool,
+  name: PropTypes.string,
 };
 
 export default DocumentItem;

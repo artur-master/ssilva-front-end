@@ -48,6 +48,7 @@ export const DatePickerInput = ({
         }`}
         name={`${name}_date`}
         type="text"
+        placeholder={props.placeholder || 'Fecha...'}
         {...props}
       />
     </div>
@@ -62,6 +63,7 @@ DatePickerInput.propTypes = {
   values: PropTypes.array,
   name: PropTypes.string,
   range: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
 const DatePicker = ({ name, style, ...props }) => (
