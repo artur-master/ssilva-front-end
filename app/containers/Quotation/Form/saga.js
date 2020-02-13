@@ -1,15 +1,22 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { API_ROOT } from 'containers/App/constants';
-import { SAVE_QUOTATION, GET_QUOTATION } from './constants';
+import FileSaver from 'file-saver';
+import { SAVE_QUOTATION, GET_QUOTATION, DOWNLOAD_QUOTATION } from './constants';
 import {
   saveQuotationError,
   saveQuotationSuccess,
   getQuotationError,
   getQuotationSuccess,
+  downloadQuotationSuccess,
+  downloadQuotationError,
 } from './actions';
+import {
+  resumeFacturaError,
+  resumeFacturaSuccess,
+} from '../../Phases/Factura/actions';
 
-function* getQuotation(action) {
+function* sagaGetQuotation(action) {
   const requestURL = `${API_ROOT}/ventas/cotizaciones/${action.CotizacionID}/`;
   try {
     const response = yield call(request, requestURL);
@@ -18,7 +25,7 @@ function* getQuotation(action) {
     yield put(getQuotationError(error));
   }
 }
-function* saveQuotation(action) {
+function* sagaSaveQuotation(action) {
   const requestURL = action.values.CotizacionID
     ? `${API_ROOT}/ventas/cotizaciones/${action.values.CotizacionID}/`
     : `${API_ROOT}/ventas/cotizaciones/`;
@@ -36,7 +43,25 @@ function* saveQuotation(action) {
   }
 }
 
+function* sagaDownloadQuotation(action) {
+  const requestURL = `${API_ROOT}/ventas/cotizaciones-download/`;
+  try {
+    const response = yield call(request, requestURL, {
+      method: 'post',
+      body: JSON.stringify({
+        CotizacionID: action.Cotizacion.CotizacionID,
+        LetterSize: 80,
+      }),
+    });
+    FileSaver.saveAs(response, `Cotizacion_${action.Cotizacion.Folio}.pdf`);
+    yield put(downloadQuotationSuccess(response));
+  } catch (error) {
+    yield put(downloadQuotationError(error));
+  }
+}
+
 export default function* quotationformSaga() {
-  yield takeLatest(SAVE_QUOTATION, saveQuotation);
-  yield takeLatest(GET_QUOTATION, getQuotation);
+  yield takeLatest(SAVE_QUOTATION, sagaSaveQuotation);
+  yield takeLatest(GET_QUOTATION, sagaGetQuotation);
+  yield takeLatest(DOWNLOAD_QUOTATION, sagaDownloadQuotation);
 }

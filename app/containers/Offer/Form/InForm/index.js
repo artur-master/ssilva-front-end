@@ -12,13 +12,12 @@ import PhaseFormaDePago from 'containers/Phases/FormaDePago';
 import PhasePreCredito from 'containers/Phases/PreCredito';
 import PhaseDocument from 'containers/Phases/Document';
 import { push } from 'connected-react-router';
-import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
+import { Auth } from 'containers/App/helpers';
 import model from '../../model';
 import { approveIn } from '../actions';
 import OfferInFormObservation from './Observation';
 import OfferInFormActions from './Actions';
 import InSteps from './Steps';
-import { Auth } from '../../../App/helpers';
 
 export function OfferInForm({ selector, dispatch }) {
   const initialValues = model({

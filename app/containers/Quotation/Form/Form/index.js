@@ -47,7 +47,7 @@ export function PhaseCreationForm({
       }}
     >
       {form => {
-        const { submitForm, values } = form;
+        const { submitForm } = form;
         return (
           <>
             <h4 className="font-21">{project.Name}</h4>
@@ -59,16 +59,16 @@ export function PhaseCreationForm({
             </h5>
 
             <SyncMessage {...restSelector} />
-            <div className={step === 2 ? 'd-none' : ''}>
+            {step === 1 && (
               <DetailForm
                 onCancel={onCancel}
                 onContinue={submitForm}
                 form={form}
               />
-            </div>
+            )}
             {step === 2 && (
               <>
-                <DetailView values={values} project={project} />
+                <DetailForm form={form} />
                 <QuotaForm
                   form={form}
                   onCancel={onCancel}

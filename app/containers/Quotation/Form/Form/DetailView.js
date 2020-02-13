@@ -14,12 +14,12 @@ import { inmuebleLabel } from 'containers/Common/Inmueble/helper';
 import { userFullname } from 'containers/Common/User/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
 
-function DetailView({ values, project }) {
+function DetailView({ values }) {
   const { ClienteProyecto = [] } = values.Cliente;
   const { total, discount } = calculates(values);
   const { quotationUtils } = window.preload;
   const finding = ClienteProyecto.find(
-    item => item.ProyectoID === project.ProyectoID,
+    item => item.ProyectoID === window.project.ProyectoID,
   );
   return (
     <Box collapse>
@@ -191,7 +191,6 @@ function DetailView({ values, project }) {
 
 DetailView.propTypes = {
   values: PropTypes.object,
-  project: PropTypes.object,
 };
 
 export default DetailView;

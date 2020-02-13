@@ -17,3 +17,9 @@ export const GET_QUOTATION_SUCCESS =
 export const RESET_CONTAINER = 'app/containers/Quotation/Form/RESET_CONTAINER';
 export const UPDATE_QUOTATION =
   'app/containers/Quotation/Form/UPDATE_QUOTATION';
+export const DOWNLOAD_QUOTATION =
+  'app/containers/Quotation/Form/DOWNLOAD_QUOTATION';
+export const DOWNLOAD_QUOTATION_ERROR =
+  'app/containers/Quotation/Form/DOWNLOAD_QUOTATION_ERROR';
+export const DOWNLOAD_QUOTATION_SUCCESS =
+  'app/containers/Quotation/Form/DOWNLOAD_QUOTATION_SUCCESS';

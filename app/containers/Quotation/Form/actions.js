@@ -15,6 +15,9 @@ import {
   TOGGLE_SCREEN,
   RESET_CONTAINER,
   UPDATE_QUOTATION,
+  DOWNLOAD_QUOTATION,
+  DOWNLOAD_QUOTATION_ERROR,
+  DOWNLOAD_QUOTATION_SUCCESS,
 } from './constants';
 
 export function saveQuotation(values, redirect = 'list') {
@@ -84,5 +87,26 @@ export function updateQuotation(data) {
   return {
     type: UPDATE_QUOTATION,
     data,
+  };
+}
+
+export function downloadQuotation(Cotizacion) {
+  return {
+    type: DOWNLOAD_QUOTATION,
+    Cotizacion,
+  };
+}
+
+export function downloadQuotationError(error) {
+  return {
+    type: DOWNLOAD_QUOTATION_ERROR,
+    error,
+  };
+}
+
+export function downloadQuotationSuccess(quotation) {
+  return {
+    type: DOWNLOAD_QUOTATION_SUCCESS,
+    quotation,
   };
 }

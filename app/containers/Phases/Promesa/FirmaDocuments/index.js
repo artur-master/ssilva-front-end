@@ -11,6 +11,7 @@ import WithLoading from 'components/WithLoading';
 import { Form as ExForm } from 'components/ExForm';
 import DocumentItem from './DocumentItem';
 import PhaseDownloadDocumentsPromesa from './DownloadDocuments';
+import Alert from '../../../../components/Alert';
 
 const SyncMassage = WithLoading();
 
@@ -47,6 +48,13 @@ export function PhaseFirmaDocumentsPromesa({
           {form => (
             <>
               <BoxContent>
+                {entity.DocumentChequesFirma &&
+                  (entity.DocumentPromesaFirma &&
+                    (entity.DocumentPlantaFirma && (
+                      <Alert type="success">
+                        Se enviará a Asistente Comercial para su aprobación.
+                      </Alert>
+                    )))}
                 <div className="row m-0 p-0 mb-4">
                   <div className="col-lg-6 border-bottom p-0 pb-2 d-flex align-items-center">
                     <span className="font-16-rem">

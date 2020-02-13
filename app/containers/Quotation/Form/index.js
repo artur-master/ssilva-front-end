@@ -22,7 +22,12 @@ import Form from './Form/index';
 import makeSelectQuotationForm from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { saveQuotation, resetContainer, getQuotation } from './actions';
+import {
+  saveQuotation,
+  resetContainer,
+  getQuotation,
+  downloadQuotation,
+} from './actions';
 import QuotationView from './View';
 const SyncMassage = WithLoading();
 const SyncQuotationView = WithLoading(QuotationView);
@@ -76,8 +81,8 @@ export function QuotationForm({
           {match.params.cid && (
             <SyncQuotationView
               shouldShow={!!quotation}
-              {...selectorQuotation}
-              selectorProject={selectorProject}
+              selector={selectorQuotation}
+              onDownload={() => dispatch(downloadQuotation(quotation))}
             />
           )}
           {!match.params.cid && (

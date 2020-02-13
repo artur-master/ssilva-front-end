@@ -58,7 +58,9 @@ function* sagaGetPromesa(action) {
 function* sagaUploadConfeccionPromesa(action) {
   const data = new FormData();
   Object.keys(action.values).forEach(name => {
-    if (action.values[name].name) data.append(name, action.values[name]);
+    if (['DocumentPaymentForm', 'DocumentPromesa'].includes(name)) {
+      if (action.values[name].name) data.append(name, action.values[name]);
+    } else data.append(name, action.values[name]);
   });
   try {
     const response = yield call(
