@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { PROMESA_STATE } from 'containers/App/constants';
+import { PROMESA_STATE, FACTURA_STATE } from 'containers/App/constants';
 
 function SubSteps({ promesa }) {
   return (
@@ -35,10 +35,10 @@ function Steps({ promesa }) {
     Node: [
       { Label: 'LG', Description: 'Confección', Color: 'white' },
       { Label: 'AC, JP', Description: 'Aprobaciónes', Color: 'white' },
-      { Label: 'V', Description: 'Firma Promesa', Color: 'white' },
-      { Label: 'AC', Description: 'Control Firma', Color: 'white' },
+      { Label: 'V', Description: 'Firma Comprador', Color: 'white' },
+      { Label: 'AC', Description: 'Aprobación Firmas', Color: 'white' },
       { Label: 'JP', Description: 'Firmas', Color: 'white' },
-      { Label: 'LG', Description: 'Facturación', Color: 'white' },
+      { Label: 'FI', Description: 'Facturación', Color: 'white' },
     ],
   };
 
@@ -67,7 +67,9 @@ function Steps({ promesa }) {
       Graph.Node[2].Color = 'green';
       Graph.Node[3].Color = 'green';
       Graph.Node[4].Color = 'green';
-      Graph.Node[5].Color = 'yellow';
+      if (promesa.Factura && promesa.Factura.FacturaState === FACTURA_STATE[1])
+        Graph.Node[5].Color = 'green';
+      else Graph.Node[5].Color = 'yellow';
       break;
     case PROMESA_STATE[13]:
     case PROMESA_STATE[14]:
@@ -84,6 +86,7 @@ function Steps({ promesa }) {
       Graph.Node[3].Color = 'white';
       break;
     case PROMESA_STATE[1]:
+    case PROMESA_STATE[20]:
       Graph.Node[0].Color = 'green';
       Graph.Node[1].Color = 'green';
       Graph.Node[2].Color = 'yellow';

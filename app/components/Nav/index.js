@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Header from 'containers/Common/PageHeader/Header';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -19,51 +19,59 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { logout } from 'containers/App/actions';
 import { Auth } from 'containers/App/helpers';
+import CurrencyConverter from 'containers/Common/CurrencyConverter';
 
 function Nav({ dispatch }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <nav className="top-nav row mb-3">
-      <Header />
-      <div className="col-auto d-flex align-items-center p-0">
-        <span className="font-14-rem color-regular mr-2">Vista:</span>
-        <Link
-          to="/"
-          onClick={evt => evt.preventDefault()}
-          className="font-14-rem color-main"
-        >
-          <b className="text-uppercase">{Auth.get('user').Roles[0].Name}</b>
-        </Link>
-      </div>
-      <ul className="col-auto row">
-        <UncontrolledDropdown tag="li">
-          <DropdownToggle tag="a" className="icon icon-book" />
-          <DropdownMenu>
-            <DropdownItem tag="a">Calculadora de UF</DropdownItem>
-            <DropdownItem tag="a">Simulador de credito</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-        <UncontrolledDropdown tag="li">
-          <DropdownToggle tag="a" className="icon icon-notifications" />
-          <DropdownMenu>
-            <DropdownItem tag="a">...</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-        <UncontrolledDropdown tag="li">
-          <DropdownToggle tag="a" className="icon icon-user circle-icon" />
-          <DropdownMenu>
-            <DropdownItem
-              tag="a"
-              onClick={evt => {
-                evt.preventDefault();
-                dispatch(logout());
-              }}
-            >
-              Cerrar sesión
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      </ul>
-    </nav>
+    <>
+      <nav className="top-nav row mb-3">
+        <Header />
+        <div className="col-auto d-flex align-items-center p-0">
+          <span className="font-14-rem color-regular mr-2">Vista:</span>
+          <Link
+            to="/"
+            onClick={evt => evt.preventDefault()}
+            className="font-14-rem color-main"
+          >
+            <b className="text-uppercase">{Auth.get('user').Roles[0].Name}</b>
+          </Link>
+        </div>
+        <ul className="col-auto row">
+          <UncontrolledDropdown tag="li">
+            <DropdownToggle tag="a" className="icon icon-book" />
+            <DropdownMenu>
+              <DropdownItem tag="a" onClick={() => setIsOpen(true)}>
+                Calculadora de UF
+              </DropdownItem>
+              <DropdownItem tag="a">Simulador de credito</DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+          <UncontrolledDropdown tag="li">
+            <DropdownToggle tag="a" className="icon icon-notifications" />
+            <DropdownMenu>
+              <DropdownItem tag="a">...</DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+          <UncontrolledDropdown tag="li">
+            <DropdownToggle tag="a" className="icon icon-user circle-icon" />
+            <DropdownMenu>
+              <DropdownItem
+                tag="a"
+                onClick={evt => {
+                  evt.preventDefault();
+                  dispatch(logout());
+                }}
+              >
+                Cerrar sesión
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </ul>
+      </nav>
+      <CurrencyConverter isOpen={isOpen} onHide={() => setIsOpen(false)} />
+    </>
   );
 }
 

@@ -9,12 +9,12 @@ import PropTypes from 'prop-types';
 import { Field as FormikField, getIn } from 'formik';
 import { getFileName } from 'containers/App/helpers';
 
-function DocumentItem({ canUpload, name }) {
+function DocumentItem({ canUpload, name, required = false }) {
   return (
     <FormikField
       name={name}
       validate={value => {
-        if (!value) return 'Este campo es requerido';
+        if (!value && required) return 'Este campo es requerido';
         return null;
       }}
     >
@@ -92,6 +92,7 @@ function DocumentItem({ canUpload, name }) {
 DocumentItem.propTypes = {
   canUpload: PropTypes.bool,
   name: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 export default DocumentItem;

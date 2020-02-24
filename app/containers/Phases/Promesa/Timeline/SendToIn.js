@@ -27,7 +27,7 @@ export function PhaseTimelineSendToIn({
           <div className="row m-0 p-0 mb-3">
             <div className="col-lg-6 border-bottom p-0 pb-2 d-flex align-items-center">
               <span className="font-16-rem">
-                <strong>Enviar a Inmobiliaria</strong>
+                <strong>Enviar a Inmobiliaria (JP)</strong>
               </span>
             </div>
           </div>

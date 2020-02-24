@@ -66,7 +66,7 @@ DatePickerInput.propTypes = {
   placeholder: PropTypes.string,
 };
 
-const DatePicker = ({ name, style, ...props }) => (
+const DatePicker = ({ name, style, valueFormat = null, ...props }) => (
   <FormikField
     name={name}
     {...props}
@@ -84,7 +84,7 @@ const DatePicker = ({ name, style, ...props }) => (
             {...props}
             isInvalid={isInvalid}
             onSelect={(fd, date) => {
-              form.setFieldValue(name, moment(date).format());
+              form.setFieldValue(name, moment(date).format(valueFormat));
             }}
             value={field.value}
           />
@@ -102,6 +102,7 @@ DatePicker.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string,
   required: PropTypes.bool,
+  valueFormat: PropTypes.string,
 };
 
 export default DatePicker;

@@ -73,7 +73,11 @@ export function PhaseConfeccionPromesa({
                   <Label className="mr-3">
                     {form.values.DocumentPromesa ? 'Promesa' : 'Cargar Promesa'}
                   </Label>
-                  <DocumentItem canUpload={canUpload} name="DocumentPromesa" />
+                  <DocumentItem
+                    required
+                    canUpload={canUpload}
+                    name="DocumentPromesa"
+                  />
                 </FormGroup>
               </div>
               <div className="pt-4 pb-4 ">
@@ -152,7 +156,6 @@ export function PhaseConfeccionPromesa({
                     type="datePicker"
                     placeholder="Fecha"
                     name="DatePayment"
-                    required={canUpload}
                     readOnly={!canUpload}
                   />
                 </FormGroup>

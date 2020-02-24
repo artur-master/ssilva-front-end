@@ -19,6 +19,7 @@ export const beforeSigning = promesa =>
     PROMESA_STATE[13],
     PROMESA_STATE[14],
     PROMESA_STATE[15],
+    PROMESA_STATE[20],
   ].includes(promesa.PromesaState);
 
 export const afterSigning = promesa =>

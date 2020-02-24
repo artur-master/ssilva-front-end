@@ -10,19 +10,17 @@ import { Link } from 'react-router-dom';
 import { OFERTA_STATE } from 'containers/App/constants';
 
 function Steps({ offer }) {
+  const { OfertaState } = offer;
   const Graph = {
     Node: [
-      { Label: 'AC', Description: 'Modificar Oferta', Color: 'green' },
+      { Label: '', Description: 'Modificar Oferta', Color: 'green' },
       {
         Label: 'JP',
         Description: 'Pendiente Aprobación',
         Color: 'red',
       },
-      { Label: '', Description: 'Pendiente Control', Color: 'white' },
-      { Label: '', Description: 'Promesa', Color: 'white' },
     ],
   };
-
   let colorStep = 0;
   return (
     <nav className="breadcrumb-step">
@@ -52,7 +50,9 @@ function Steps({ offer }) {
                   onClick={evt => evt.preventDefault()}
                   className="m-counter-item"
                 >
-                  <span>{node.Description.trim()}</span>
+                  <span>{`${node.Description.trim()} ${
+                    node.Label ? `(${node.Label})` : ''
+                  }`}</span>{' '}
                 </Link>
               </li>
             );

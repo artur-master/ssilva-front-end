@@ -85,20 +85,26 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
             <span className="font-14-rem mr-3">
               <b>Pago por instrucciones</b>
             </span>
-            <span className="font-14-rem mx-2">
-              Fecha: {moment(entity.DatePayment).format('DD MMM YYYY')}
-            </span>
-            <span className="font-14-rem mx-2">
-              {getFileName(entity.DocumentPromesa)}
-            </span>
-            <a
-              href={entity.DocumentPaymentForm}
-              target="_blank"
-              download
-              className="font-14-rem mx-2 btn-arrow"
-            >
-              <b>Ver</b>
-            </a>
+            {entity.DatePayment && (
+              <span className="font-14-rem mx-2">
+                Fecha: {moment(entity.DatePayment).format('DD MMM YYYY')}
+              </span>
+            )}
+            {entity.DocumentPromesa && (
+              <>
+                <span className="font-14-rem mx-2">
+                  {getFileName(entity.DocumentPromesa)}
+                </span>
+                <a
+                  href={entity.DocumentPaymentForm}
+                  target="_blank"
+                  download
+                  className="font-14-rem mx-2 btn-arrow"
+                >
+                  <b>Ver</b>
+                </a>
+              </>
+            )}
           </div>
         </BoxContent>
         <BoxFooter>
@@ -118,7 +124,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
             color="white"
             onClick={() => setWithText({ text: '', open: true })}
           >
-            Rechazaz
+            Rechazar
           </Button>
           {withText.open && (
             <div className="py-3 ">
@@ -143,7 +149,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
                   })
                 }
               >
-                Rechazaz
+                Rechazar
               </Button>
             </div>
           )}

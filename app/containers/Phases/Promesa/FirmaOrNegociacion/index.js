@@ -9,8 +9,7 @@ import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import { getFileName } from 'containers/App/helpers';
-import { Form as ExForm } from 'components/ExForm';
-import { PROMESA_STATE } from 'containers/App/constants';
+import { Form as ExForm, Field as ExField } from 'components/ExForm';
 import PromesaObservationForm from '../Observation/Form';
 
 const SyncMassage = WithLoading();
@@ -23,13 +22,24 @@ export function PhaseFirmaOrNegociacionPromesa({
 }) {
   const initialValues = {
     Condition: entity.Condition || [],
-    openComment: false,
-    openCondition: false,
+    currentAction: '',
     Comment: '',
     Resolution: '',
+    DateEnvioPromesaToCliente: entity.DateEnvioPromesaToCliente || '',
   };
   return (
-    <ExForm initialValues={initialValues} onSubmit={onSubmit}>
+    <ExForm
+      initialValues={initialValues}
+      onSubmit={values => {
+        if (values.currentAction === 'firma') return onFirma(values);
+        if (
+          values.currentAction === 'nego' ||
+          values.currentAction === 'rechazar'
+        )
+          return onSubmit(values);
+        return '';
+      }}
+    >
       {form => {
         const { Condition = [], NewCondition = '' } = form.values;
         return (
@@ -56,8 +66,38 @@ export function PhaseFirmaOrNegociacionPromesa({
               </BoxContent>
               <BoxFooter>
                 <div className="d-flex justify-content-end">
-                  {entity.PromesaState === PROMESA_STATE[1] && (
-                    <Button disabled={selector.loading} onClick={onFirma}>
+                  {form.values.currentAction === 'firma' && (
+                    <div className="p-0">
+                      <div className="d-flex text-right">
+                        <ExField
+                          type="datePicker"
+                          name="DateEnvioPromesaToCliente"
+                          required
+                        />
+                        <Button
+                          className="m-btn"
+                          type="submit"
+                          onClick={() => {
+                            form.setFieldValue('Resolution', true);
+                            form.submitForm();
+                          }}
+                          disabled={selector.loading}
+                        >
+                          Envia a Cliente
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                  {form.values.currentAction !== 'firma' && (
+                    <Button
+                      disabled={selector.loading}
+                      onClick={() => {
+                        form.setValues({
+                          ...form.values,
+                          currentAction: 'firma',
+                        });
+                      }}
+                    >
                       Firmar
                     </Button>
                   )}
@@ -72,9 +112,9 @@ export function PhaseFirmaOrNegociacionPromesa({
                       form.setValues({
                         Condition,
                         NewCondition: '',
-                        openComment: false,
-                        openCondition: true,
+                        currentAction: 'nego',
                         Comment: '',
+                        DateEnvioPromesaToCliente: '',
                       });
                     }}
                   >
@@ -86,15 +126,15 @@ export function PhaseFirmaOrNegociacionPromesa({
                     onClick={() =>
                       form.setValues({
                         ...form.values,
-                        openComment: true,
-                        openCondition: false,
+                        currentAction: 'rechazar',
                       })
                     }
                   >
-                    Rechazaz Promesa
+                    Rechazar Promesa
                   </Button>
                 </div>
-                {form.values.openCondition && (
+
+                {form.values.currentAction === 'nego' && (
                   <div className="p-0">
                     <PromesaObservationForm form={form} />
                     <div className="py-3 text-right">
@@ -112,7 +152,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                     </div>
                   </div>
                 )}
-                {form.values.openComment && (
+                {form.values.currentAction === 'rechazar' && (
                   <div className="py-3 ">
                     <span className="d-block text-left font-14-rem">
                       <b>Comentarios (En caso de Rechazo)</b>
@@ -137,7 +177,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                         form.submitForm();
                       }}
                     >
-                      Rechazaz Promesa
+                      Rechazar Promesa
                     </Button>
                   </div>
                 )}

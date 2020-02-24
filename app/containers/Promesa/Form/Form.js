@@ -3,7 +3,7 @@
  * Promesa Form
  *
  */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import PhaseGeneral from 'containers/Phases/General';
@@ -43,17 +43,18 @@ import {
   updatePromesa,
   reviewNegociacion,
   generateFactura,
+  controlNegociacion,
+  sendPromesaToCliente,
 } from './actions';
 import { canEditConfeccionPromesa, canRefund } from '../helper';
 import StepsDesistimento from './StepsDesistimiento';
 import StepsResciliacion from './StepsResciliacion';
 import StepsResolucion from './StepsResolucion';
+import Log from '../../../components/Log';
 export function Form({ selector, dispatch }) {
   const { project = {} } = window;
   const entity = selector.promesa;
   const initialValues = entity;
-
-  const [uploadFirma, setUploadFirma] = useState(false);
 
   const onCancel = () =>
     dispatch(push(`/proyectos/${project.ProyectoID}/promesas`));
@@ -106,6 +107,19 @@ export function Form({ selector, dispatch }) {
               )
             }
             onCancel={onCancel}
+            onContinue={(Comment = '') =>
+              dispatch(
+                controlNegociacion({
+                  PromesaID: entity.PromesaID,
+                  Comment,
+                  Resolution: true,
+                  Condition: entity.Condition.map(condition => ({
+                    ...condition,
+                    IsApprove: true,
+                  })),
+                }),
+              )
+            }
           />
         );
       if (!(entity.PromesaState === PROMESA_STATE[1] && UserProject.isVendor()))
@@ -179,16 +193,19 @@ export function Form({ selector, dispatch }) {
     }
 
     // V firma or negociacion
-    if (
-      entity.PromesaState === PROMESA_STATE[1] &&
-      UserProject.isVendor() &&
-      !uploadFirma
-    ) {
+    if (entity.PromesaState === PROMESA_STATE[1] && UserProject.isVendor()) {
       return (
         <PhaseFirmaOrNegociacionPromesa
           entity={entity}
           selector={selector}
-          onFirma={() => setUploadFirma(true)}
+          onFirma={values =>
+            dispatch(
+              sendPromesaToCliente({
+                PromesaID: entity.PromesaID,
+                ...values,
+              }),
+            )
+          }
           onSubmit={values =>
             dispatch(
               sendToReviewNegociacion({
@@ -205,17 +222,15 @@ export function Form({ selector, dispatch }) {
       <PhaseFirmaDocumentsPromesa
         entity={entity}
         selector={selector}
-        onCancel={() =>
-          entity.PromesaState === PROMESA_STATE[1]
-            ? setUploadFirma(false)
-            : onCancel()
-        }
+        onCancel={onCancel}
         onSubmit={values =>
           dispatch(uploadFirmaDocumentsPromesa(entity.PromesaID, values))
         }
         canUpload={
           UserProject.isVendor() &&
-          [PROMESA_STATE[1], PROMESA_STATE[12]].includes(entity.PromesaState)
+          [PROMESA_STATE[1], PROMESA_STATE[12], PROMESA_STATE[20]].includes(
+            entity.PromesaState,
+          )
         }
       />
     );
@@ -257,12 +272,16 @@ export function Form({ selector, dispatch }) {
             <RefundGrantiaButton promesa={entity} />
           </>
         )}
-        {UserProject.isLegal() && entity.Factura && (
-          <>
-            <Factura />
-            <FacturaButton factura={entity.Factura} />
-          </>
-        )}
+        {UserProject.isFinanza() &&
+          (entity.Factura &&
+            ([PROMESA_STATE[7], PROMESA_STATE[8]].includes(
+              selector.promesa.PromesaState,
+            ) && (
+              <>
+                <Factura />
+                <FacturaButton factura={entity.Factura} />
+              </>
+            )))}
       </h5>
       <PromesaObservation
         entity={entity}
@@ -278,6 +297,7 @@ export function Form({ selector, dispatch }) {
 
       {blockPromesa()}
       <Desistimiento promesa={entity} />
+      <Log logs={entity.Logs} limit={10} />
     </>
   );
 }

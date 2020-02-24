@@ -66,7 +66,7 @@ const Item = ({ project, promesa, dispatch }) => {
         </div>
       </td>
       <td>
-        {UserProject.isLegal() && promesa.Factura && (
+        {UserProject.isFinanza() && promesa.Factura && (
           <div className="justify-content-end d-flex align-items-center ">
             <FacturaButton factura={promesa.Factura} />
           </div>

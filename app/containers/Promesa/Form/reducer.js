@@ -47,6 +47,9 @@ import {
   GENERATE_FACTURA,
   GENERATE_FACTURA_ERROR,
   GENERATE_FACTURA_SUCCESS,
+  SEND_PROMESA_TO_CLIENTE,
+  SEND_PROMESA_TO_CLIENTE_ERROR,
+  SEND_PROMESA_TO_CLIENTE_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -71,6 +74,7 @@ const promesaReducer = (state = initialState, action) =>
       case UPLOAD_FIRMA_DOCUMENTS_PROMESA:
       case CONTROL_PROMESA:
       case SEND_PROMESA_TO_IN:
+      case SEND_PROMESA_TO_CLIENTE:
       case SIGN_IN:
       case LEGALIZE:
       case SEND_COPY:
@@ -89,6 +93,7 @@ const promesaReducer = (state = initialState, action) =>
       case UPLOAD_FIRMA_DOCUMENTS_PROMESA_ERROR:
       case CONTROL_PROMESA_ERROR:
       case SEND_PROMESA_TO_IN_ERROR:
+      case SEND_PROMESA_TO_CLIENTE_ERROR:
       case SIGN_IN_ERROR:
       case LEGALIZE_ERROR:
       case SEND_COPY_ERROR:
@@ -117,6 +122,7 @@ const promesaReducer = (state = initialState, action) =>
       case UPLOAD_FIRMA_DOCUMENTS_PROMESA_SUCCESS:
       case CONTROL_PROMESA_SUCCESS:
       case SEND_PROMESA_TO_IN_SUCCESS:
+      case SEND_PROMESA_TO_CLIENTE_SUCCESS:
       case SIGN_IN_SUCCESS:
       case LEGALIZE_SUCCESS:
       case SEND_COPY_SUCCESS:

@@ -3,7 +3,7 @@
  * Reservation Upload Form
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
@@ -17,7 +17,10 @@ export function PhaseReviewNegociacionPromesa({
   entity,
   onSubmit,
   onCancel,
+  onContinue,
 }) {
+  const [withText, setWithText] = useState({ text: '', open: false });
+
   return (
     <>
       <Box>
@@ -41,12 +44,41 @@ export function PhaseReviewNegociacionPromesa({
           </div>
         </BoxContent>
         <BoxFooter>
+          <Button
+            color="white"
+            disabled={selector.loading}
+            onClick={() => setWithText({ text: '', open: true })}
+          >
+            Continuar
+          </Button>
           <Button disabled={selector.loading} onClick={onSubmit}>
             Enviar Observaciones a Inmobiliaria
           </Button>
           <Button disabled={selector.loading} color="white" onClick={onCancel}>
             Cancelar
           </Button>
+          {withText.open && (
+            <div className="py-3 ">
+              <span className="d-block text-left font-14-rem">
+                <b>Comentarios</b>
+              </span>
+              <div className="py-3 ">
+                <textarea
+                  className="w-100 d-block rounded-lg shadow-sm"
+                  rows="5"
+                  onChange={evt =>
+                    setWithText({ ...withText, text: evt.currentTarget.value })
+                  }
+                />
+              </div>
+              <Button
+                disabled={selector.loading}
+                onClick={() => onContinue(withText.text.trim())}
+              >
+                Continuar
+              </Button>
+            </div>
+          )}
         </BoxFooter>
       </Box>
       <div className="py-3">
@@ -61,6 +93,7 @@ PhaseReviewNegociacionPromesa.propTypes = {
   selector: PropTypes.object,
   onSubmit: PropTypes.func,
   onCancel: PropTypes.func,
+  onContinue: PropTypes.func,
 };
 
 export default PhaseReviewNegociacionPromesa;

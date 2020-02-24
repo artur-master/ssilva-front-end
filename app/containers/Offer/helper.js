@@ -79,11 +79,7 @@ export const formatOffer = offer => {
         OfertaStateFormat.push({
           Label: 'AC',
           Color:
-            offer.PreAprobacionCreditoState ===
-              PRE_APROBACION_CREDITO_STATE[0] ||
-            offer.PreAprobacionCreditoState ===
-              PRE_APROBACION_CREDITO_STATE[2] ||
-            !isPendienteContacto(offer)
+            offer.PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2]
               ? 'badge-success'
               : offer.PreAprobacionCreditoState ===
                 PRE_APROBACION_CREDITO_STATE[3]
@@ -95,18 +91,15 @@ export const formatOffer = offer => {
     case 'Pendiente control':
     case 'Pendiente legal':
       OfertaStateFormat[0].Color = 'badge-caution';
-      OfertaStateFormat[0].Label = 'Pendiente control';
       break;
     case 'Rechazada por legal':
       OfertaStateFormat[0].Color = 'badge-danger';
-      OfertaStateFormat[0].Label = 'Rechazada';
       break;
     case 'Cancelada':
       OfertaStateFormat[0].Color = 'badge-warning';
       break;
     case 'Modificado':
       OfertaStateFormat[0].Color = 'badge-caution';
-      OfertaStateFormat[0].Label = 'Pendiente Aprobación Modificado';
       break;
     default:
       OfertaStateFormat[0].Color = 'badge-caution';
@@ -119,7 +112,7 @@ export const formatOffer = offer => {
 };
 
 export const isPendienteContacto = offer =>
-  offer.OfertaState === OFERTA_STATE[0] &&
+  [OFERTA_STATE[0], OFERTA_STATE[2]].includes(offer.OfertaState) &&
   offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[0];
 
 export const isWaitAprobacionInmobiliariaState = offer =>
@@ -143,6 +136,9 @@ export const getActionTitle = (offer = {}) => {
   if (offer.OfertaState === OFERTA_STATE[4])
     return <span className="color-warning">Cancelar Oferta</span>;
 
+  if (offer.OfertaState === OFERTA_STATE[2])
+    return <span className="color-warning">{offer.OfertaState}</span>;
+
   if (Auth.isInmobiliario())
     return <span className="color-caution-03">Confirmar Oferta</span>;
 
@@ -162,9 +158,7 @@ export const getActionTitle = (offer = {}) => {
       if (node) {
         switch (node.Description.trim()) {
           case 'Pendiente legal':
-            return 'Pendiente Control';
-          case 'Rechazada por legal':
-            return 'Rechazada';
+            return 'Pendiente Aprueba Confeccion Promesa';
           default:
             return node.Description.trim();
         }

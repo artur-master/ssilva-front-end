@@ -120,7 +120,7 @@ export const RECEPCION_GARANTIA_STATE = [
 
 export const PROMESA_STATE = [
   'Pendiente confección', // #0 -> #9
-  'Pendiente firma comprador', // #1 -> #12 or #1->#13
+  'Pendiente firma comprador', // #1 -> #20 or #1->#13
   'Pendiente envío a inmobiliaria', // # 2 -> #3
   'Pendiente factura', // #3 -> 4
   'Pendiente firma inmobiliaria', // #4 -> #5 or #6
@@ -139,6 +139,7 @@ export const PROMESA_STATE = [
   'Resciliación', // # 17 -> PROMESA_RESCILIACION_STATE + PROMESA_REFUND_STATE
   'Resolución', // #18 -> PROMESA_RESOLUCION_STATE + PROMESA_REFUND_STATE
   'Modificación', // #19 -> PROMESA_MODIFICACION_STATE + PROMESA_REFUND_STATE
+  'Envío a cliente', // #20 -> #12
 ];
 
 export const PROMESA_DESISTIMIENTO_STATE = ['Pendiente aprobación'];
@@ -205,6 +206,9 @@ export const VENTA_LOG_TYPE = [
   'Envio negociación a inmobiliaria',
   'Aprobacion a negociación',
   'Rechazo a negociación',
+  'Register Desistimiento',
+  'Aprobacion Desistimiento',
+  'Envío promesa a cliente',
 ];
 
 export const FACTURA_INMUEBLE_TYPE = [
