@@ -1,30 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
+import { FormattedNumber } from 'react-intl';
 
 const IntlFormatCurrency = props => {
-  const intl = useIntl();
   const {
     className = '',
     style = {},
     value,
-    currency = 'USD',
+    currency = 'CLP',
     minimumFractionDigits = 0,
-    maximumFractionDigits = 0,
+    maximumFractionDigits = 2,
     currencyDisplay = 'symbol',
+    prefix = '$',
     ...rest
   } = props;
   if (value !== undefined)
     return (
       <span className={className} style={style}>
-        {intl.formatNumber(value, {
-          style: 'currency',
-          currency,
-          minimumFractionDigits,
-          maximumFractionDigits,
-          currencyDisplay,
-          ...rest,
-        })}
+        {prefix}
+        <FormattedNumber
+          value={value}
+          currency={currency}
+          minimumFractionDigits={minimumFractionDigits}
+          maximumFractionDigits={maximumFractionDigits}
+          currencyDisplay={currencyDisplay}
+          {...rest}
+        />
       </span>
     );
 
@@ -33,6 +34,8 @@ const IntlFormatCurrency = props => {
 
 IntlFormatCurrency.propTypes = {
   value: PropTypes.number,
+  className: PropTypes.string,
+  style: PropTypes.object,
   prefix: PropTypes.string,
 };
 

@@ -15,6 +15,7 @@ import {
   REVIEW_NEGOCIACION,
   CONTROL_NEGOCIACION,
   GENERATE_FACTURA,
+  SEND_PROMESA_TO_CLIENTE,
 } from './constants';
 import {
   getPromesaError,
@@ -43,6 +44,8 @@ import {
   controlNegociacionError,
   generateFacturaSuccess,
   generateFacturaError,
+  sendPromesaToClienteSuccess,
+  sendPromesaToClienteError,
 } from './actions';
 
 function* sagaGetPromesa(action) {
@@ -60,7 +63,8 @@ function* sagaUploadConfeccionPromesa(action) {
   Object.keys(action.values).forEach(name => {
     if (['DocumentPaymentForm', 'DocumentPromesa'].includes(name)) {
       if (action.values[name].name) data.append(name, action.values[name]);
-    } else data.append(name, action.values[name]);
+    } else if (action.values[name] !== null)
+      data.append(name, action.values[name]);
   });
   try {
     const response = yield call(
@@ -152,6 +156,22 @@ function* sagaSendPromesaToIn(action) {
     yield put(sendPromesaToInSuccess(response));
   } catch (error) {
     yield put(sendPromesaToInError(error));
+  }
+}
+
+function* sagaSendPromesaToCliente(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/promesas-send-to-cliente/${
+      values.PromesaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(values),
+    });
+    yield put(sendPromesaToClienteSuccess(response));
+  } catch (error) {
+    yield put(sendPromesaToClienteError(error));
   }
 }
 
@@ -280,6 +300,7 @@ export default function* projectSaga() {
   );
   yield takeLatest(CONTROL_PROMESA, sagaApproveControlPromesa);
   yield takeLatest(SEND_PROMESA_TO_IN, sagaSendPromesaToIn);
+  yield takeLatest(SEND_PROMESA_TO_CLIENTE, sagaSendPromesaToCliente);
   yield takeLatest(SIGN_IN, sagaSignIn);
   yield takeLatest(LEGALIZE, sagaLegalize);
   yield takeLatest(SEND_COPY, sagaSendCopy);

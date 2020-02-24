@@ -25,6 +25,8 @@ export const SEND_TO_CONTROL_ERROR =
 export const SEND_TO_CONTROL_SUCCESS =
   'app/containers/Offer/Form/SEND_TO_CONTROL_SUCCESS';
 
+
+
 export const APPROVE_CONFECCION_PROMESA =
   'app/containers/Offer/Form/APPROVE_CONFECCION_PROMESA';
 export const APPROVE_CONFECCION_PROMESA_ERROR =

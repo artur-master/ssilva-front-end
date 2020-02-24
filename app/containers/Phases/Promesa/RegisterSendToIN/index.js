@@ -54,7 +54,7 @@ export function PhaseRegisterSendToIN({ selector, entity, onSubmit }) {
             color="white"
             onClick={() => setWithText({ text: '', open: true })}
           >
-            Rechazaz
+            Rechazar
           </Button>
           {withText.open && (
             <div className="py-3 ">
@@ -79,7 +79,7 @@ export function PhaseRegisterSendToIN({ selector, entity, onSubmit }) {
                   })
                 }
               >
-                Rechazaz
+                Rechazar
               </Button>
             </div>
           )}

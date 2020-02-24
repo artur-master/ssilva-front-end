@@ -47,15 +47,15 @@ export function PhaseTimeline({
             isPending={step < 1}
             canEdit={step === 0 && UserProject.isPM()}
           />
-          {/*
+
           <PhaseTimelineFacturaPromesa
             isPending={step < 2}
-            canEdit={step === 1 && UserProject.isPM()}
+            canEdit={step === 1 && UserProject.isFinanza()}
             selector={selector}
             entity={entity}
             onSubmit={onGenerateFactura}
           />
-          */}
+
           <PhaseTimelineSignIn
             entity={entity}
             selector={selector}
@@ -68,14 +68,14 @@ export function PhaseTimeline({
             selector={selector}
             onSubmit={onLegalize}
             isPending={step < 4}
-            canEdit={step === 3 && UserProject.isPM()}
+            canEdit={step === 3 && UserProject.isAC()}
           />
           <PhaseTimelineSendCopy
             entity={entity}
             selector={selector}
             onSubmit={onSendCopy}
             isPending={step < 5}
-            canEdit={step === 4 && UserProject.isPM()}
+            canEdit={step === 4 && UserProject.isAC()}
           />
           <div className="py-3">
             <SyncMassage {...selector} />

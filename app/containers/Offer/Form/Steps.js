@@ -96,7 +96,7 @@ function SubSteps({ offer }) {
         </li>
         <li
           className={`m-counter-plus ${
-            !isPendienteContacto(offer) ? 'success' : ''
+            !isPendienteContacto(offer) ? 'success' : 'yellow'
           }`}
         >
           <Link
@@ -110,8 +110,10 @@ function SubSteps({ offer }) {
         {isCreditPayment && (
           <li
             className={`m-counter-plus ${
-              PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2] ||
-              !isPendienteContacto(offer)
+              [
+                PRE_APROBACION_CREDITO_STATE[0],
+                PRE_APROBACION_CREDITO_STATE[2],
+              ].includes(PreAprobacionCreditoState)
                 ? 'success'
                 : ''
             }`}
@@ -153,17 +155,27 @@ function Steps({ offer }) {
   const { OfertaState } = offer;
   const Graph = {
     Node: [
-      { Label: 'JP', Description: 'Oferta', Color: 'green' },
+      {
+        Label: 'JP',
+        Description: 'Oferta',
+        Color: isPendienteContacto(offer) ? 'yellow' : 'green',
+      },
       {
         Label: 'IN, FI, AC',
         Description: 'Pendiente Aprobación',
         Color: isPendienteContacto(offer) ? 'white' : 'red',
       },
-      { Label: 'LG', Description: 'Pendiente Control', Color: 'white' },
+      {
+        Label: 'LG',
+        Description: 'Aprueba confeccion promesa',
+        Color: 'white',
+      },
       { Label: '', Description: 'Promesa', Color: 'white' },
     ],
   };
-  if (OfertaState !== OFERTA_STATE[0] && OfertaState !== OFERTA_STATE[4]) {
+  if (
+    ![OFERTA_STATE[0], OFERTA_STATE[2], OFERTA_STATE[4]].includes(OfertaState)
+  ) {
     Graph.Node[1].Color = 'green';
   }
 

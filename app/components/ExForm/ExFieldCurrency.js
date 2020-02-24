@@ -39,9 +39,9 @@ const defaultMaskOptions = {
   prefix: '$ ',
   suffix: '',
   includeThousandsSeparator: true,
-  thousandsSeparatorSymbol: ',',
+  thousandsSeparatorSymbol: '.',
   allowDecimal: true,
-  decimalSymbol: '.',
+  decimalSymbol: ',',
   decimalLimit: 0, // how many digits allowed after the decimal
   integerLimit: 10, // limit length of integer numbers
   allowNegative: false,

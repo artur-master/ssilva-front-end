@@ -12,6 +12,7 @@ import { FACTURA_STATE } from 'containers/App/constants';
 import WithLoading from 'components/WithLoading';
 import makeSelectFactura from './selectors';
 import { paidFactura, resumeFactura } from './actions';
+
 const SyncMessage = WithLoading();
 
 function FacturaButton({ factura, selector, dispatch }) {
@@ -31,15 +32,15 @@ function FacturaButton({ factura, selector, dispatch }) {
         Resumen Facturación
       </Button>
       {factura.FacturaState === FACTURA_STATE[0] &&
-        !selector.success[factura.FacturaID] && (
-        <Button
-          className="order-3"
-          disabled={selector.loading[factura.FacturaID]}
-          onClick={() => dispatch(paidFactura(factura))}
-        >
+        (!selector.success[factura.FacturaID] && (
+          <Button
+            className="order-3"
+            disabled={selector.loading[factura.FacturaID]}
+            onClick={() => dispatch(paidFactura(factura))}
+          >
             Facturación
-        </Button>
-      )}
+          </Button>
+        ))}
       {(factura.FacturaState === FACTURA_STATE[1] ||
         selector.success[factura.FacturaID]) && (
         <Button className="order-3" disabled>

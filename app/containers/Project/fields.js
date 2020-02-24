@@ -283,7 +283,7 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       userProyectoType: 'Finanza',
       required: true,
       query: {
-        roles: 'Finanzas',
+        roles: 'Finanza',
       },
     }),
     {

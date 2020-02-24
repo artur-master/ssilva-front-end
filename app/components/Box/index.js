@@ -82,12 +82,15 @@ BoxHeader.propTypes = {
   toggle: PropTypes.func,
 };
 
-const BoxContent = ({ children, className = 'p-3' }) => (
-  <div className={`${className} background-color-white`}>{children}</div>
+const BoxContent = ({ children, className = 'p-3', style = {} }) => (
+  <div className={`${className} background-color-white`} style={style}>
+    {children}
+  </div>
 );
 BoxContent.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  style: PropTypes.object,
 };
 
 const BoxFooter = ({ children, inside = false, className = '' }) => (

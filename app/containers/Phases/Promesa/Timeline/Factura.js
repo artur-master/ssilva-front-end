@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Form, FormGroup, Label, Field} from 'components/ExForm';
+import {Form, FormGroup, Label} from 'components/ExForm';
 import {PROMESA_STATE} from 'containers/App/constants';
 import Button from "components/Button";
 
@@ -18,7 +18,7 @@ export function PhaseTimelineFacturaPromesa({
 }) {
   return (
     <Form
-      initialValues={{ DateEnvio: entity.DateEnvio || '' }}
+      initialValues={{DateEnvio: entity.DateEnvio || ''}}
       onSubmit={onSubmit}
     >
       {() => (
@@ -26,7 +26,7 @@ export function PhaseTimelineFacturaPromesa({
           <div className="row m-0 p-0 mb-3">
             <div className="col-lg-6 border-bottom p-0 pb-2 d-flex align-items-center">
               <span className="font-16-rem">
-                <strong>Generar Factura</strong>
+                <strong>Generar Factura (FI)</strong>
               </span>
             </div>
           </div>
@@ -35,17 +35,16 @@ export function PhaseTimelineFacturaPromesa({
             {(canEdit || !isPending) && (
               <FormGroup>
                 <Label style={{width: '15em'}} className="pt-1">
-              Fecha Envio Factura
+                  {entity.Factura && 'Se genera la factura'}
+                  {!entity.Factura && 'Pendiente factura'}
+
                 </Label>
                 {canEdit && (
-              <>
-                <Field type="datepicker" required name="DateEnvio"/>
-                <div className="ml-3">
-                  <Button disabled={selector.loading} type="submit">
-                    Aceptar
-                  </Button>
-                </div>
-              </>
+                  <div className="ml-3">
+                    <Button disabled={selector.loading} type="submit">
+                      Generar
+                    </Button>
+                  </div>
                 )}
               </FormGroup>
             )}

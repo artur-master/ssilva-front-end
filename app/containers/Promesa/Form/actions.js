@@ -46,6 +46,9 @@ import {
   GENERATE_FACTURA,
   GENERATE_FACTURA_ERROR,
   GENERATE_FACTURA_SUCCESS,
+  SEND_PROMESA_TO_CLIENTE,
+  SEND_PROMESA_TO_CLIENTE_ERROR,
+  SEND_PROMESA_TO_CLIENTE_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -185,6 +188,27 @@ export function sendPromesaToInError(error) {
 export function sendPromesaToInSuccess(response) {
   return {
     type: SEND_PROMESA_TO_IN_SUCCESS,
+    response,
+  };
+}
+
+export function sendPromesaToCliente(values) {
+  return {
+    type: SEND_PROMESA_TO_CLIENTE,
+    values,
+  };
+}
+
+export function sendPromesaToClienteError(error) {
+  return {
+    type: SEND_PROMESA_TO_CLIENTE_ERROR,
+    error,
+  };
+}
+
+export function sendPromesaToClienteSuccess(response) {
+  return {
+    type: SEND_PROMESA_TO_CLIENTE_SUCCESS,
     response,
   };
 }

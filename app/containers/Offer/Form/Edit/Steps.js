@@ -13,27 +13,14 @@ function Steps({ offer }) {
   const { OfertaState } = offer;
   const Graph = {
     Node: [
-      { Label: 'AC', Description: 'Modificar Oferta', Color: 'green' },
+      { Label: '', Description: 'Modificar Oferta', Color: 'green' },
       {
-        Label: 'JP, IN, AC, FI',
+        Label: 'JP',
         Description: 'Pendiente Aprobación',
         Color: 'red',
       },
-      { Label: 'LG', Description: 'Pendiente Control', Color: 'white' },
-      { Label: '', Description: 'Promesa', Color: 'white' },
     ],
   };
-  /*
-  if (OfertaState !== OFERTA_STATE[0] && OfertaState !== OFERTA_STATE[4]) {
-    Graph.Node[1].Color = 'green';
-  }
-
-  if (OfertaState === OFERTA_STATE[1]) {
-    Graph.Node[2].Color = 'red';
-  } else if (OfertaState === OFERTA_STATE[3]) {
-    Graph.Node[2].Color = 'green';
-  }
-  */
   let colorStep = 0;
   return (
     <nav className="breadcrumb-step">
@@ -63,7 +50,9 @@ function Steps({ offer }) {
                   onClick={evt => evt.preventDefault()}
                   className="m-counter-item"
                 >
-                  <span>{node.Description.trim()}</span>
+                  <span>{`${node.Description.trim()} ${
+                    node.Label ? `(${node.Label})` : ''
+                  }`}</span>{' '}
                 </Link>
               </li>
             );

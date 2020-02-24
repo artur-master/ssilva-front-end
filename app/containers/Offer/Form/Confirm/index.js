@@ -52,18 +52,28 @@ export function OfferConfirm({ selector, dispatch }) {
       <PhasePreCredito initialValues={initialValues} isCollapse={false} />
       <PhaseDocument entity={initialValues} isCollapse />
       <OfferConfirmActions
+        entity={initialValues}
         selector={selector}
         onCancel={() =>
           dispatch(push(`/proyectos/${project.ProyectoID}/ofertas`))
         }
-        onConfirm={() => {
+        onConfirm={() =>
           dispatch(
             confirmToClient({
               OfertaID: selector.offer.OfertaID,
               Conditions: selector.offer.Condition,
             }),
-          );
-        }}
+          )
+        }
+        onEdit={() =>
+          dispatch(
+            push(
+              `/proyectos/${project.ProyectoID}/oferta/editar?OfertaID=${
+                entity.OfertaID
+              }`,
+            ),
+          )
+        }
       />
     </>
   );

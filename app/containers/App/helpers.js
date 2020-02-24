@@ -50,7 +50,7 @@ export const Auth = {
   isPM: () => Auth.hasOneOfRoles(['Jefe de Proyecto']),
   isGerenteComercial: () => Auth.hasOneOfRoles(['Gerente Comercial']),
   isLegal: () => Auth.hasOneOfRoles(['Legal']),
-  isFinanza: () => Auth.hasOneOfRoles(['Finanzas']),
+  isFinanza: () => Auth.hasOneOfRoles(['Finanza']),
   isVendor: () => Auth.hasOneOfRoles(['Vendedor']),
   isAC: () => Auth.hasOneOfRoles(['Asistente Comercial']),
   isInmobiliario: () => Auth.hasOneOfRoles(['Inmobiliario']),
@@ -187,3 +187,14 @@ export const isCreditPayment = PayType => {
 
 export const convertUfToPeso = uf =>
   formatNumber(uf * window.preload.uf.valor, 0);
+
+export const convertStringToNumber = str => {
+  if (str) {
+    const formatNumbers = str.replace(/[^0-9.,]+/g, '').split(',');
+    formatNumbers[0] = formatNumbers[0].replace(/[^0-9]+/g, '');
+    if (formatNumbers.length > 1) return parseFloat(formatNumbers.join('.'));
+    return parseInt(formatNumbers[0], 10);
+  }
+
+  return str;
+};

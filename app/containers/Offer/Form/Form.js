@@ -16,6 +16,7 @@ import { PRE_APROBACION_CREDITO_STATE } from 'containers/App/constants';
 import { UserProject } from 'containers/Project/helper';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import InitData from 'containers/Common/InitData';
+import PhaseObservation from 'containers/Phases/Observation';
 import model from '../model';
 import {
   canApproveConfeccionPromesa,
@@ -27,7 +28,6 @@ import Steps from './Steps';
 import ApproveConfeccionPromesa from './ApproveConfeccionPromesa';
 import { approveConfeccionPromesa } from './actions';
 import FormActions from './FormActions';
-import PhaseObservation from '../../Phases/Observation';
 
 export function Form({ selector, selectorCredit, dispatch }) {
   const { project = {} } = window;
@@ -72,7 +72,6 @@ export function Form({ selector, selectorCredit, dispatch }) {
         <span className="font-16-rem line-height-1 color-success">
           {getActionTitle(selector.offer)}
         </span>
-        {canApproveConfeccionPromesa(initialValues) && controlAction}
       </h5>
       {UserProject.isLegal() && <PhaseObservation entity={initialValues} />}
       <PhaseGeneral initialValues={initialValues} />
@@ -85,7 +84,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
           initialValues.OfertaID &&
           initialValues.PreAprobacionCreditoState ===
             PRE_APROBACION_CREDITO_STATE[1] &&
-          UserProject.isAC(window.project) &&
+          UserProject.isAC() &&
           !isPendienteContacto(initialValues)
         }
       />

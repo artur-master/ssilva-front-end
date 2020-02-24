@@ -46,6 +46,13 @@ export const SEND_PROMESA_TO_IN_ERROR =
 export const SEND_PROMESA_TO_IN_SUCCESS =
   'app/containers/Promesa/Form/SEND_PROMESA_TO_IN_SUCCESS';
 
+export const SEND_PROMESA_TO_CLIENTE =
+  'app/containers/Promesa/Form/SEND_PROMESA_TO_CLIENTE';
+export const SEND_PROMESA_TO_CLIENTE_ERROR =
+  'app/containers/Promesa/Form/SEND_PROMESA_TO_CLIENTE_ERROR';
+export const SEND_PROMESA_TO_CLIENTE_SUCCESS =
+  'app/containers/Promesa/Form/SEND_PROMESA_TO_CLIENTE_SUCCESS';
+
 export const SIGN_IN = 'app/containers/Promesa/Form/SIGN_IN';
 export const SIGN_IN_ERROR = 'app/containers/Promesa/Form/SIGN_IN_ERROR';
 export const SIGN_IN_SUCCESS = 'app/containers/Promesa/Form/SIGN_IN_SUCCESS';
