@@ -70,7 +70,7 @@ const defaultValidate = (value, props) => {
   if (props.required && (value === '' || value === null)) return 'Este campo es requerido';
 
   // rut validate
-  //if (props.rut || props.name.toLowerCase() === 'rut') return checkRut(value);
+  if (props.rut || props.name.toLowerCase() === 'rut') return checkRut(value);
 
   // email validate
   if (
