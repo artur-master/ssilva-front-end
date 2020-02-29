@@ -11,14 +11,19 @@ import {
 } from './actions';
 
 export function* sagaResumeFactura(action) {
-  const requestURL = `${API_ROOT}/ventas/facturas-download/${
-    action.factura.FacturaID
-  }/`;
+  const requestURL = `${API_ROOT}/ventas/${
+    action.noteCredit ? 'facturas-nota-credito-download' : 'facturas-download'
+  }/${action.factura.FacturaID}/`;
   try {
     const response = yield call(request, requestURL, {
       method: 'PATCH',
     });
-    FileSaver.saveAs(response, `FACTURA${action.factura.Number}.pdf`);
+    FileSaver.saveAs(
+      response,
+      `${action.noteCredit ? 'NoteCredit' : 'Factura'}${
+        action.factura.Number
+      }.pdf`,
+    );
     yield put(resumeFacturaSuccess(action.factura, response));
   } catch (error) {
     yield put(resumeFacturaError(action.factura, error));
@@ -26,9 +31,11 @@ export function* sagaResumeFactura(action) {
 }
 
 export function* sagaPaidFactura(action) {
-  const requestURL = `${API_ROOT}/ventas/facturas-register-payment/${
-    action.factura.FacturaID
-  }/`;
+  const requestURL = `${API_ROOT}/ventas/${
+    action.noteCredit
+      ? 'facturas-register-nota-credito'
+      : 'facturas-register-payment'
+  }/${action.factura.FacturaID}/`;
   try {
     const response = yield call(request, requestURL, {
       method: 'PATCH',

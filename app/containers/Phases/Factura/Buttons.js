@@ -10,41 +10,45 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FACTURA_STATE } from 'containers/App/constants';
 import WithLoading from 'components/WithLoading';
+import { isNoteCredit } from 'containers/Promesa/helper';
 import makeSelectFactura from './selectors';
 import { paidFactura, resumeFactura } from './actions';
-
 const SyncMessage = WithLoading();
 
-function FacturaButton({ factura, selector, dispatch }) {
+function FacturaButton({ promesa, selector, dispatch }) {
+  const { Factura } = promesa;
+  const noteCredit = isNoteCredit(promesa);
   return (
     <>
       <div className="order-3">
         <SyncMessage
-          error={selector.error[factura.FacturaID]}
-          success={selector.success[factura.FacturaID]}
+          error={selector.error[Factura.FacturaID]}
+          success={selector.success[Factura.FacturaID]}
         />
       </div>
       <Button
         className="order-3 m-btn-white m-btn-download"
-        disabled={selector.loading[factura.FacturaID]}
-        onClick={() => dispatch(resumeFactura(factura))}
+        disabled={selector.loading[Factura.FacturaID]}
+        onClick={() => dispatch(resumeFactura(Factura, noteCredit))}
       >
-        Resumen Facturación
+        {noteCredit && 'Resumen Nota Crédito'}
+        {!noteCredit && 'Resumen Facturación'}
       </Button>
-      {factura.FacturaState === FACTURA_STATE[0] &&
-        (!selector.success[factura.FacturaID] && (
+      {Factura.FacturaState === FACTURA_STATE[0] &&
+        (!selector.success[Factura.FacturaID] && (
           <Button
             className="order-3"
-            disabled={selector.loading[factura.FacturaID]}
-            onClick={() => dispatch(paidFactura(factura))}
+            disabled={selector.loading[Factura.FacturaID]}
+            onClick={() => dispatch(paidFactura(Factura, noteCredit))}
           >
-            Facturación
+            {noteCredit && 'OK Nota Crédito'}
+            {!noteCredit && 'Facturación'}
           </Button>
         ))}
-      {(factura.FacturaState === FACTURA_STATE[1] ||
-        selector.success[factura.FacturaID]) && (
+      {(Factura.FacturaState !== FACTURA_STATE[0] ||
+        selector.success[Factura.FacturaID]) && (
         <Button className="order-3" disabled>
-          Pagada
+          {selector.success[Factura.FacturaID] || Factura.FacturaState}
         </Button>
       )}
     </>
@@ -52,7 +56,7 @@ function FacturaButton({ factura, selector, dispatch }) {
 }
 
 FacturaButton.propTypes = {
-  factura: PropTypes.object,
+  promesa: PropTypes.object,
   selector: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
