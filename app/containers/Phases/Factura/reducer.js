@@ -44,7 +44,8 @@ const offerGarantiaReducer = (state = initialState, action) =>
       case PAID_FACTURA_SUCCESS:
         draft.loading[action.factura.FacturaID] = false;
         draft.error[action.factura.FacturaID] = false;
-        draft.success[action.factura.FacturaID] = action.response.detail;
+        draft.success[action.factura.FacturaID] =
+          action.response.factura.FacturaState;
         break;
     }
   });

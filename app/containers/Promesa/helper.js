@@ -68,3 +68,10 @@ export const getExtraPromesaState = promesa => {
       return promesa.PromesaState;
   }
 };
+
+export const isNoteCredit = promesa =>
+  !!(
+    [PROMESA_STATE[16], PROMESA_STATE[17], PROMESA_STATE[18]].includes(
+      promesa.PromesaState,
+    ) && promesa.DateRegresoPromesa
+  );

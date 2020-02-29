@@ -274,12 +274,16 @@ export function Form({ selector, dispatch }) {
         )}
         {UserProject.isFinanza() &&
           (entity.Factura &&
-            ([PROMESA_STATE[7], PROMESA_STATE[8]].includes(
-              selector.promesa.PromesaState,
-            ) && (
+            ([
+              PROMESA_STATE[7],
+              PROMESA_STATE[8],
+              PROMESA_STATE[16],
+              PROMESA_STATE[17],
+              PROMESA_STATE[18],
+            ].includes(selector.promesa.PromesaState) && (
               <>
                 <Factura />
-                <FacturaButton factura={entity.Factura} />
+                <FacturaButton factura={entity.Factura} promesa={entity} />
               </>
             )))}
       </h5>

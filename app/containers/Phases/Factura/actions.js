@@ -19,10 +19,11 @@ export function resetContainer() {
     type: RESET_CONTAINER,
   };
 }
-export function resumeFactura(factura) {
+export function resumeFactura(factura, noteCredit = false) {
   return {
     type: RESUME_FACTURA,
     factura,
+    noteCredit,
   };
 }
 
@@ -42,10 +43,11 @@ export function resumeFacturaSuccess(factura, response) {
   };
 }
 
-export function paidFactura(factura) {
+export function paidFactura(factura, noteCredit = false) {
   return {
     type: PAID_FACTURA,
     factura,
+    noteCredit,
   };
 }
 

@@ -68,7 +68,7 @@ const Item = ({ project, promesa, dispatch }) => {
       <td>
         {UserProject.isFinanza() && promesa.Factura && (
           <div className="justify-content-end d-flex align-items-center ">
-            <FacturaButton factura={promesa.Factura} />
+            <FacturaButton promesa={promesa} />
           </div>
         )}
         {(canRefund(promesa) || isRefund(promesa)) && (
