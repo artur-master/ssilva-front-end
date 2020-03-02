@@ -42,12 +42,17 @@ function CuotasForm({ form, onHide, onView }) {
     let { Cuotas = [] } = values;
     const number = parseInt(evt.currentTarget.value, 10);
     const firstCuotas = Cuotas[0];
-    Cuotas = Cuotas.slice(0, number);
+    let totalFee = 0;
+    Cuotas.forEach(cuota => {
+      totalFee = Number(totalFee) + cuota.Amount;
+    });
+    const fee = Number(totalFee / number);
+    Cuotas = [];
     const existedNumber = Cuotas.length;
-    if (number > existedNumber) {
-      [...Array(number - existedNumber).keys()].forEach(i => {
+    if (number > 0) {
+      [...Array(number).keys()].forEach(i => {
         Cuotas.push({
-          Amount: firstCuotas.Amount || 0,
+          Amount: fee || 0,
           Date: moment(firstCuotas.Date || new Date())
             .add(existedNumber + i, 'M')
             .format(),
