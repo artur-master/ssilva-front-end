@@ -21,13 +21,47 @@ export function OfferConfirmActions({
     <>
       <div className="d-flex after-expands-2 align-items-center">
         {entity.OfertaState !== OFERTA_STATE[2] && (
-          <Button
-            disabled={loading}
-            className="order-3 m-btn mr-2"
-            onClick={onConfirm}
-          >
-            Contacte al cliente
-          </Button>
+          <div className="d-flex align-items-center after-expands-2 font-14-rem order-3">
+            <div className="d-flex align-items-center mr-3 ">
+              <div className="checkbox-01 checkbox-medium">
+                <span>
+                  <input
+                    type="checkbox"
+                    // onChange={evt => {
+                    //   // onConfirm('client', evt.currentTarget.checked);
+                    // }}
+                  />
+                </span>
+              </div>
+              <span>
+                <b>Revisé y confirmo Oferta</b>
+              </span>
+            </div>
+
+            <div className="d-flex align-items-center mr-3 order-3">
+              <div className="checkbox-01 checkbox-medium">
+                <span>
+                  <input
+                    type="checkbox"
+                    // onChange={evt => {
+                    //   // onConfirm('client', evt.currentTarget.checked);
+                    // }}
+                  />
+                </span>
+              </div>
+              <span>
+                <b>Contacté al cliente</b>
+              </span>
+            </div>
+
+            <Button
+              disabled={loading}
+              className="order-3 m-btn mr-2"
+              onClick={onConfirm}
+            >
+              Continuar
+            </Button>
+          </div>
         )}
         {entity.OfertaState === OFERTA_STATE[2] && (
           <Button className="order-3 m-btn  mr-2 m-btn-pen" onClick={onEdit}>
