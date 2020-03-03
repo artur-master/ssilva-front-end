@@ -16,7 +16,7 @@ const SyncMessage = WithLoading();
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string()
-    // .matches(/[0-9]{7,8}-[0-9Kk]{1}/, 'Rut Inválido')
+    // .matches(/[0-9]{1,2}.[0-9]{3}.[0-9]{3}-[0-9]{1}/, 'Rut Inválido')
     .required('Required'),
   password: Yup.string().required('Required'),
 });
