@@ -43,6 +43,9 @@ function DocumentItem({
     case 'pdf':
       fileAccept = '.pdf,application/pdf';
       break;
+    case 'image':
+      fileAccept = 'image/*';
+      break;
     default:
       fileAccept = '*';
   }
