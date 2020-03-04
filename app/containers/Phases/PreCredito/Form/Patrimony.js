@@ -25,11 +25,12 @@ const Patrimony = ({ form }) => {
   });
   const totalActivos =
     values.Patrimony.RealState +
-    values.Patrimony.CreditoHipotecario.PagosMensuales +
+    // values.Patrimony.CreditoHipotecario.PagosMensuales -
     values.Patrimony.Vehicle +
     values.Patrimony.DownPayment +
     values.Patrimony.Other;
   const totalPasivos =
+    values.Patrimony.CreditoHipotecario.Pasivos +
     values.Patrimony.CreditCard.Pasivos +
     values.Patrimony.CreditoConsumo.Pasivos +
     values.Patrimony.PrestamoEmpleador.Pasivos +
