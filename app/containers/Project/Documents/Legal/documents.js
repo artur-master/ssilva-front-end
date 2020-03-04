@@ -40,7 +40,7 @@ const documents = [
   },
   {
     documentoName: 'Contrato Corretaje',
-    accept: '*',
+    accept: 'image',
     documentoType: 'brokerage_contract',
     noExisteable: true,
   },
