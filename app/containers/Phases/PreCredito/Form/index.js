@@ -32,36 +32,34 @@ const PhasePreCreditoForm = ({
       }
       return (
         <>
-          <Box collapse isOpen={!values.ReservaID}>
-            <BoxHeader>
-              <b>PRE APROBACIÓN DE CRÉDITO</b>
-            </BoxHeader>
-            <BoxContent>
-              <div className="container-content bg-white pl-3 pr-3 pb-3">
-                {!isContado && (
-                  <>
-                    <article className="person-record pt-3">
-                      <Labor values={values} group="Cliente" />
-                      <Renta group="Cliente" form={form} />
-                    </article>
-                    {values.Codeudor && (
-                      <Codeudor
-                        form={form}
-                        removeCodeudor={evt => {
-                          evt.preventDefault();
-                          form.setFieldValue('Codeudor', null);
-                          form.setFieldValue('CodeudorID', null);
-                          form.setFieldValue('CoEmpleador', null);
-                        }}
-                      />
-                    )}
-                  </>
-                )}
-                {(step > 1 || values.ReservaID) && <Patrimony form={form} />}
-              </div>
-            </BoxContent>
-            {values.Codeudor && <Summary form={form} />}
-          </Box>
+          {!isContado && (
+            <Box collapse isOpen={!values.ReservaID}>
+              <BoxHeader>
+                <b>PRE APROBACIÓN DE CRÉDITO</b>
+              </BoxHeader>
+              <BoxContent>
+                <div className="container-content bg-white pl-3 pr-3 pb-3">
+                  <article className="person-record pt-3">
+                    <Labor values={values} group="Cliente" />
+                    <Renta group="Cliente" form={form} />
+                  </article>
+                  {values.Codeudor && (
+                    <Codeudor
+                      form={form}
+                      removeCodeudor={evt => {
+                        evt.preventDefault();
+                        form.setFieldValue('Codeudor', null);
+                        form.setFieldValue('CodeudorID', null);
+                        form.setFieldValue('CoEmpleador', null);
+                      }}
+                    />
+                  )}
+                  {(step > 1 || values.ReservaID) && <Patrimony form={form} />}
+                </div>
+              </BoxContent>
+              {values.Codeudor && <Summary form={form} />}
+            </Box>
+          )}
           {step < 3 && (
             <div className="p-3 d-flex align-items-center after-expands-2">
               <span className="order-1 font-14-rem">
