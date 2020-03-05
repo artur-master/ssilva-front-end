@@ -26,51 +26,53 @@ const PhasePreCreditoView = ({
   const { moneyErr } = calculateRenta(initialValues);
   return (
     <>
-      <Box collapse isOpen={!!initialValues.ReservaID || isCollapse}>
-        <BoxHeader
-          className={!isValid || moneyErr ? 'background-color-warning' : ''}
-        >
-          <b>PRE APROBACIÓN DE CRÉDITO</b>
-          {!isValid && (
-            <span className="font-14-rem order-3 mr-3">
-              <i className="icon icon-alert color-warning" />
-              <b>Faltan Datos</b>
-            </span>
-          )}
-          {isValid && moneyErr && (
-            <span className="font-14-rem order-3 mr-3">
-              <i className="icon icon-alert color-warning" />
-              <b>La Renta no es Suficiente</b>
-            </span>
-          )}
-          {canEdit && (
-            <Button
-              color="white"
-              className="m-btn-pen order-3"
-              onClick={() => setOpen(true)}
-            >
-              Editar
-            </Button>
-          )}
-        </BoxHeader>
-        <BoxContent className="p-0">
-          {!isContado && (
-            <>
-              <Labor values={initialValues} group="Cliente" />
-              <Renta group="Cliente" values={initialValues} />
-              {initialValues.Codeudor && <Codeudor values={initialValues} />}
-            </>
-          )}
-          <Patrimony values={initialValues} />
-          {(initialValues.OfertaID || initialValues.PromesaID) && (
-            <PhaseCredit
-              canEdit={canEditCredit}
-              EntityID={initialValues.OfertaID}
-              PayType={initialValues.PayType}
-            />
-          )}
-        </BoxContent>
-      </Box>
+      {isCredit && (
+        <Box collapse isOpen={!!initialValues.ReservaID || isCollapse}>
+          <BoxHeader
+            className={!isValid || moneyErr ? 'background-color-warning' : ''}
+          >
+            <b>PRE APROBACIÓN DE CRÉDITO</b>
+            {!isValid && (
+              <span className="font-14-rem order-3 mr-3">
+                <i className="icon icon-alert color-warning" />
+                <b>Faltan Datos</b>
+              </span>
+            )}
+            {isValid && moneyErr && (
+              <span className="font-14-rem order-3 mr-3">
+                <i className="icon icon-alert color-warning" />
+                <b>La Renta no es Suficiente</b>
+              </span>
+            )}
+            {canEdit && (
+              <Button
+                color="white"
+                className="m-btn-pen order-3"
+                onClick={() => setOpen(true)}
+              >
+                Editar
+              </Button>
+            )}
+          </BoxHeader>
+          <BoxContent className="p-0">
+            {!isContado && (
+              <>
+                <Labor values={initialValues} group="Cliente" />
+                <Renta group="Cliente" values={initialValues} />
+                {initialValues.Codeudor && <Codeudor values={initialValues} />}
+              </>
+            )}
+            <Patrimony values={initialValues} />
+            {(initialValues.OfertaID || initialValues.PromesaID) && (
+              <PhaseCredit
+                canEdit={canEditCredit}
+                EntityID={initialValues.OfertaID}
+                PayType={initialValues.PayType}
+              />
+            )}
+          </BoxContent>
+        </Box>
+      )}
       <PhasePreCreditoFormModal
         isOpen={isOpen}
         initialValues={initialValues}
