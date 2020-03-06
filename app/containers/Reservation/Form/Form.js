@@ -29,6 +29,7 @@ import {
   updateReservation,
 } from './actions';
 import AlertPopup from '../../../components/Alert/popup';
+import Log from '../../../components/Log';
 
 export function Form({ project, selector, dispatch }) {
   const entity = selector.reservation;
@@ -142,6 +143,7 @@ export function Form({ project, selector, dispatch }) {
           }
         />
       )}
+      <Log logs={entity.Logs} limit={10} />
     </>
   );
 }
