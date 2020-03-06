@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import Button from 'components/Button';
-import Alert from 'components/Alert';
+// import Alert from 'components/Alert';
 import WithLoading from 'components/WithLoading';
 
 const SyncMessage = WithLoading();

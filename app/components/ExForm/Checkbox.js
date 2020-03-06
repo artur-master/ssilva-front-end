@@ -46,7 +46,7 @@ const Checkbox = ({ className = '', label, readOnly, ...props }) => (
               {/* eslint-disable-next-line */}
               <label />
             </span>
-            <span className="font-14-rem">{label}</span>
+            <div className="font-14-rem">{label}</div>
             {getInTouched && getInErrors && (
               <div className="invalid-feedback d-block m-0">{getInErrors}</div>
             )}
