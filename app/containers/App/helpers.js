@@ -198,3 +198,8 @@ export const convertStringToNumber = str => {
 
   return str;
 };
+
+export const numberFormat = value => {
+  const formatter = new Intl.NumberFormat('es-CL');
+  return formatter.format(value);
+}
