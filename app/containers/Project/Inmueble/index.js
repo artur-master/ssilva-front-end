@@ -17,6 +17,8 @@ import makeSelectInitProject from '../Init/selectors';
 import reducer from './reducer';
 import saga from './saga';
 import makeSelectInmueble from './selectors';
+import { canEditProject } from '../helper';
+
 import {
   importFile,
   resetContainer,
@@ -57,6 +59,7 @@ export function Inmueble({
                 onSaveInmuebles={() =>
                   dispatch(saveEntities(project, selector.reviewInmuebles))
                 }
+                canEdit={canEditProject(project)}
               />
             </FormGroup>
             {selectorInmueble.entities && selectorInmueble.entities.length > 0 && (

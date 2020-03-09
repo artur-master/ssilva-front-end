@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -19,6 +19,9 @@ import makeSelectInmuebleInit from './selectors';
 import Summary from './Summary';
 const SyncMessage = WithLoading();
 
+import ReviewInmuebleList from '../../Project/Inmueble/Inmuebles/InmuebleList';
+import { localeData } from 'moment';
+
 export function Inmueble({
   defaultShowType = 'list',
   selected = [], // default selected
@@ -26,12 +29,17 @@ export function Inmueble({
   isOpen = true,
   multiple = true,
   focusChange = false,
+  canEdit = false,
+  drafSelector,
+  onImportFile,
+  onSave,
   selector,
   onHide,
   onSelect,
   dispatch,
 }) {
   const { entities, loading } = selector;
+
   useEffect(() => {
     dispatch(
       resetSelected(
@@ -41,6 +49,23 @@ export function Inmueble({
     );
     return () => dispatch(resetSelected([], focusChange));
   }, [isOpen]);
+
+  const fileUploader = useRef(null);
+  const [initLoading, setInitLoading] = useState(true);
+  const [drafLoading, setDrafLoading] = useState(false);
+  const { reviewInmuebles } = drafSelector;
+
+  useEffect(() => {
+    if (initLoading) return;
+
+    setDrafLoading(drafSelector.loading);    
+  }, [reviewInmuebles]);
+ 
+  useEffect(() => {
+    setInitLoading(true);
+    setDrafLoading(false);
+  }, [selector]);
+
   const onSelectItem = (entity, IsSelected) => {
     if (onSelect && !multiple) {
       if (IsSelected) {
@@ -57,7 +82,7 @@ export function Inmueble({
       <ModalHeader>Inmuebles</ModalHeader>
       <ModalBody>
         {loading && <SyncMessage {...selector} />}
-        {!loading && entities && (
+        {!loading && initLoading && entities && (
           <InmuebleList
             focusChange={focusChange}
             defaultShowType={defaultShowType}
@@ -66,8 +91,39 @@ export function Inmueble({
           />
         )}
         {!loading && entities && showSummary && <Summary selector={selector} />}
+
+        {/* for updating */}
+        {drafLoading && <SyncMessage {...drafSelector} />}
+        {!loading && !drafLoading && !initLoading && reviewInmuebles && (
+          <ReviewInmuebleList entities={reviewInmuebles} />
+        )}
       </ModalBody>
       <ModalFooter>
+        {canEdit && (
+          <>
+            <Button loading={drafLoading} disabled={loading || drafLoading} onClick={() => { fileUploader.current.click() }} >
+              Nueva carga
+            </Button>
+            <input
+              name="File"
+              accept=".csv,.xls,.xlsx"
+              style={{ display: 'none' }}
+              type="file"
+              ref={fileUploader}
+              onChange={event => {
+                const data = new FormData();
+                data.append('File', event.currentTarget.files[0]);
+                event.currentTarget.value = '';
+                setDrafLoading(true);
+                setInitLoading(false);
+                onImportFile(data);
+              }}
+            />
+            <Button loading={ drafLoading } disabled={ initLoading ? true: drafLoading } onClick={ ()=>{setDrafLoading(true); onSave(); setInitLoading(false);} }>
+              Guardar y continuar
+            </Button>
+          </>
+        )}
         {onSelect && (
           <Button
             disabled={loading}
@@ -79,7 +135,7 @@ export function Inmueble({
             Seleccionados
           </Button>
         )}
-        <Button disabled={loading} onClick={onHide} type="reset" color="white">
+        <Button disabled={loading} onClick={ onHide } type="reset" color="white">
           Volver
         </Button>
       </ModalFooter>
@@ -94,10 +150,13 @@ Inmueble.propTypes = {
   focusChange: PropTypes.bool,
   selected: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   isOpen: PropTypes.bool,
+  canEdit: PropTypes.bool,
   selector: PropTypes.object,
   onHide: PropTypes.func.isRequired,
   onSelectItem: PropTypes.func,
   onSelect: PropTypes.func,
+  onImportFile: PropTypes.func,
+  onSaveInmuebles: PropTypes.func,
   dispatch: PropTypes.func.isRequired,
 };
 
