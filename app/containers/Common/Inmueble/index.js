@@ -20,7 +20,6 @@ import Summary from './Summary';
 const SyncMessage = WithLoading();
 
 import ReviewInmuebleList from '../../Project/Inmueble/Inmuebles/InmuebleList';
-import { localeData } from 'moment';
 
 export function Inmueble({
   defaultShowType = 'list',
@@ -53,7 +52,9 @@ export function Inmueble({
   const fileUploader = useRef(null);
   const [initLoading, setInitLoading] = useState(true);
   const [drafLoading, setDrafLoading] = useState(false);
-  const { reviewInmuebles } = drafSelector;
+
+  let reviewInmuebles;
+  if ( drafSelector ) reviewInmuebles = drafSelector.reviewInmuebles;
 
   useEffect(() => {
     if (initLoading) return;
@@ -120,7 +121,7 @@ export function Inmueble({
               }}
             />
             <Button loading={ drafLoading } disabled={ initLoading ? true: drafLoading } onClick={ ()=>{setDrafLoading(true); onSave(); setInitLoading(false);} }>
-              Guardar y continuar
+              Guardarar
             </Button>
           </>
         )}
