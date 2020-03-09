@@ -16,6 +16,7 @@ import Checkbox from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';
 import Provincia from './Provincia';
 import ExFieldCurrency from './ExFieldCurrency';
+import NumberInput from './NumberInput';
 
 const Field = ({ type = 'text', ...props }) => {
   switch (type) {
@@ -47,6 +48,8 @@ const Field = ({ type = 'text', ...props }) => {
       return <File {...props} />;
     case 'currency':
       return <ExFieldCurrency {...props} type="text" />;
+    case 'number':
+      return <NumberInput {...props} />;
     default:
       return <ExField {...props} type={type} />;
   }
