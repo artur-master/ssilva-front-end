@@ -16,6 +16,7 @@ function Inmuebles({
   toggleScreen,
   onImportFile,
   onSaveInmuebles,
+  canEdit,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -37,6 +38,10 @@ function Inmuebles({
             defaultShowType="grid"
             isOpen={isOpen}
             onHide={() => setIsOpen(false)}
+            canEdit={canEdit}
+            drafSelector={selector}
+            onImportFile={onImportFile}
+            onSave={onSaveInmuebles}
           />
         </>
       )}
