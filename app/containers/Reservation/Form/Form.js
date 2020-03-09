@@ -143,7 +143,9 @@ export function Form({ project, selector, dispatch }) {
           }
         />
       )}
-      <Log logs={entity.Logs} limit={10} />
+      {entity.Logs  && (
+        <Log logs={entity.Logs} limit={10} />
+      )}
     </>
   );
 }
