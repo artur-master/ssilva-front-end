@@ -29,7 +29,9 @@ export const calculateRenta = (reserva = {}) => {
   const { Extra = { Values: {} } } = Cliente;
   const CoExtra = Codeudor.Extra || { Values: {} };
   if (Codeudor.Extra && !Codeudor.Extra.Values) Codeudor.Extra.Values = {};
-  const Renta =
+  if (!Extra.Values) Extra.Values = {};
+
+  const Renta = 
     (Extra.Values.LiquidIncome || 0) +
     (Extra.Values.VariableSalary || 0) +
     (Extra.Values.Honoraries || 0) +
