@@ -179,9 +179,10 @@ export const canEditOffer = offer =>
     ? false
     : !!(
       UserProject.in(window.project) &&
-        Auth.hasOneOfPermissions(['Es vendedor']) &&
-        offer.OfertaState !== OFERTA_STATE[3] &&
-        offer.OfertaState !== OFERTA_STATE[4]
+      (Auth.hasOneOfPermissions(['Es vendedor']) ||
+        Auth.hasOneOfPermissions(['Es asistente comercial'])) &&
+      offer.OfertaState !== OFERTA_STATE[3] &&
+      offer.OfertaState !== OFERTA_STATE[4]
     );
 
 export const canApproveModifyOffer = offer =>

@@ -1074,7 +1074,7 @@
         margin-right: 0.5em;
         input{
             @include absolute;
-            opacity: 0;
+            // opacity: 0;
             z-index: 2;
             cursor: pointer;
         }
