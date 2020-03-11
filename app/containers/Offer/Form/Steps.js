@@ -95,7 +95,8 @@ function SubSteps({ offer }) {
             <span>AC</span>
           </Link>
         </li>
-        <li
+        {/* Commented by Artru */}
+        {/* <li
           className={`m-counter-plus ${
             !isPendienteContacto(offer) ? 'success' : 'yellow'
           }`}
@@ -107,7 +108,7 @@ function SubSteps({ offer }) {
           >
             <span>Contato con cliente</span>
           </Link>
-        </li>
+        </li> */}
         {isCreditPayment && (
           <li
             className={`m-counter-plus ${
