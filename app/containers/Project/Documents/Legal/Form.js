@@ -3,7 +3,7 @@
  * Project
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { BoxFooter } from 'components/Box';
@@ -30,23 +30,58 @@ export function LegalForm({
   const canConfirm = canConfirmDocument(project);
   const canUpload = canUploadDocument('legal', project) && action !== 'view';
   const initialValues = documents.reduce((acc, document) => {
-    acc[document] = null;
+    acc[document.documentoType] =
+      (project.Documentos[document.documentoType]) ?
+        project.Documentos[document.documentoType].state : null;
+    // acc[document] = null;
     return acc;
   }, {});
+  const [isChanged, setIsChanged] = useState(false);
+  const onSeleted = () => {
+    setIsChanged(true);
+  }
+  const onReset = () => {
+    setIsChanged(false);
+  }
+
   return (
     <ExForm
       initialValues={initialValues}
       onSubmit={values => {
-        Object.keys(values).forEach(
-          /* eslint-disable-next-line */
-          type => values[type] || delete values[type],
-        );
-        if (Object.keys(values).length < 1) return;
-        const data = new FormData();
-        Object.keys(values).forEach(name => {
-          data.append(name, values[name]);
-        });
-        onSubmit(data);
+        let len = 0;
+        const keys = Object.keys(values);
+        if (canConfirm) {
+          const data = {};
+          for (let key of keys) {
+            if (initialValues[key] !== values[key])
+              data[key] = values[key];
+              len++;
+          }
+          if (len > 0) onConfirm(data);
+        }
+        else {
+          const data = new FormData();
+          for (let key of keys) {
+            if (values[key] && values[key] !== "to_confirm") {
+              data.append(key, values[key]);
+              len++;
+            }
+          }
+          if (len > 0) onSubmit(data);
+        }
+        setIsChanged(false);
+        /* Commented by Artur - start */
+        // Object.keys(values).forEach(
+        //   /* eslint-disable-next-line */
+        //   type => values[type] || delete values[type],
+        // );
+
+        // const data = new FormData();
+        // Object.keys(values).forEach(name => {
+        //   data.append(name, values[name]);
+        // });        
+        // onSubmit(data);
+        /* Commented by Artur - end */
       }}
     >
       {() => (
@@ -61,7 +96,7 @@ export function LegalForm({
                 className={index > 0 ? 'border-top' : ''}
                 canUpload={canUpload}
                 canConfirm={canConfirm}
-                onConfirm={onConfirm}
+                onConfirm={onSeleted}
                 loading={loading}
               />
             ))}
@@ -79,13 +114,13 @@ export function LegalForm({
             ))}
           {canUpload && (
             <BoxFooter inside>
-              <Button loading={loading} type="submit">
+              <Button loading={loading} disabled={!isChanged} type="submit">
                 Aceptar
               </Button>
               <Button
                 disabled={loading}
                 type="reset"
-                // onClick={onReset}
+                onClick={onReset}
                 className="ml-2"
                 color="white"
               >

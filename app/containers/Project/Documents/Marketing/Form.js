@@ -3,7 +3,7 @@
  * Project
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { BoxFooter } from 'components/Box';
@@ -29,60 +29,95 @@ export function MarketingForm({
   const canUpload =
     canUploadDocument('marketing', project) && action !== 'view';
   const initialValues = documents.reduce((acc, document) => {
-    acc[document] = null;
+    acc[document.documentoType] =
+      (project.Documentos[document.documentoType]) ?
+        project.Documentos[document.documentoType].state : null;
     return acc;
   }, {});
+  const [isChanged, setIsChanged] = useState(false);
+  const onSeleted = () => {
+    setIsChanged(true);
+  }
+  const onReset = () => {
+    setIsChanged(false);
+  }
+
   return (
     <ExForm
       initialValues={initialValues}
       onSubmit={values => {
-        Object.keys(values).forEach(
-          /* eslint-disable-next-line */
-          type => values[type] || delete values[type],
-        );
-        if (Object.keys(values).length < 1) return;
-        const data = new FormData();
-        Object.keys(values).forEach(name => {
-          data.append(name, values[name]);
-        });
-        onSubmit(data);
+        let len = 0;
+        const keys = Object.keys(values);
+        if (canConfirm) {
+          const data = {};
+          for (let key of keys) {
+            if (initialValues[key] !== values[key])
+              data[key] = values[key];
+              len++;
+          }
+          if (len > 0) onConfirm(data);
+        }
+        else {
+          const data = new FormData();
+          for (let key of keys) {
+            if (values[key] && values[key] !== "to_confirm") {
+              data.append(key, values[key]);
+              len++;
+            }
+          }
+          if (len > 0) onSubmit(data);
+        }
+        setIsChanged(false);
+        /* Commented by Artur - start */
+        // Object.keys(values).forEach(
+        //   /* eslint-disable-next-line */
+        //   type => values[type] || delete values[type],
+        // );
+
+        // const data = new FormData();
+        // Object.keys(values).forEach(name => {
+        //   data.append(name, values[name]);
+        // });        
+        // onSubmit(data);
+        /* Commented by Artur - end */
       }}
     >
       {() => (
-        <>
-          <SyncMessage {...restSelector} />
-          <List>
-            {documents.map((document, index) => (
-              <DocumentItem
-                key={document.documentoType}
-                {...document}
-                Documentos={project.Documentos}
-                className={index > 0 ? 'border-top' : ''}
-                canUpload={canUpload}
-                canConfirm={canConfirm}
-                onConfirm={onConfirm}
-                loading={loading}
-              />
-            ))}
-          </List>
-          {canUpload && (
-            <BoxFooter inside>
-              <Button loading={loading} type="submit">
-                Aceptar
-              </Button>
-              <Button
-                disabled={loading}
-                type="reset"
-                // onClick={onReset}
-                className="ml-2"
-                color="white"
-              >
-                Cancelar
-              </Button>
-            </BoxFooter>
-          )}
-        </>
-      )}
+          <>
+            <SyncMessage {...restSelector} />
+            <List>
+              {documents.map((document, index) => (
+                <DocumentItem
+                  key={document.documentoType}
+                  {...document}
+                  Documentos={project.Documentos}
+                  className={index > 0 ? 'border-top' : ''}
+                  canUpload={canUpload}
+                  canConfirm={canConfirm}
+                  onConfirm={onSeleted}
+                  loading={loading}
+                />
+              ))}
+            </List>
+            {canUpload && (
+              <BoxFooter inside>
+                <Button disabled={!isChanged} loading={loading} type="submit">
+                  Aceptar
+                </Button>
+                <Button
+                  disabled={loading}
+                  type="reset"
+                  onClick={onReset}
+                  className="ml-2"
+                  color="white"
+                >
+                  Cancelar
+                </Button>
+              </BoxFooter>
+            )}
+          </>
+        )
+      }
     </ExForm>
   );
 }
