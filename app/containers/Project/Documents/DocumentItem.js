@@ -117,7 +117,7 @@ function DocumentItem({
                   Documentos[documentoType] && Documentos[documentoType].url
                     ? 'd-none'
                     : ''
-                }`}
+                  }`}
                 style={{ height: 'auto' }}
                 title="Examinar..."
               >
@@ -138,6 +138,7 @@ function DocumentItem({
                   onChange={event => {
                     if (!noExist) {
                       setFieldValue(field.name, event.target.files[0]);
+                      onConfirm();
                     }
                   }}
                   type="file"
@@ -163,81 +164,95 @@ function DocumentItem({
         }}
       </FormikField>
       {Documentos[documentoType] && (
-        <>
-          <span
-            title={
-              Documentos[documentoType].state === 'rejected'
-                ? 'Este archivo es rechazado'
-                : ''
-            }
-            className={`font-14-rem  order-3 mr-3 ${
-              Documentos[documentoType].state === 'rejected'
-                ? 'color-warning'
-                : 'color-em'
-            }`}
-          >
-            <em>{getFileName(fileName || Documentos[documentoType].url)}</em>
-          </span>
-          {(canConfirm || Documentos[documentoType].state !== 'to_confirm') && (
-            <div className="d-flex align-items-center mr-3 order-3">
-              <div className="radio d-flex align-items-center font-14-rem mr-2">
-                <div className="m-radio">
-                  <input
-                    type="radio"
-                    name={documentoType}
-                    disabled={!canConfirm}
-                    checked={Documentos[documentoType].state === 'confirmed'}
-                    onChange={() => onConfirm(documentoType, true)}
-                  />
-                  <label />
-                </div>
-                <span className="ml-1 color-regular">
-                  <b>Visto</b>
-                </span>
-              </div>
-              <div className="radio d-flex align-items-center font-14-rem">
-                <div className="m-radio">
-                  <input
-                    type="radio"
-                    name={documentoType}
-                    disabled={!canConfirm}
-                    checked={Documentos[documentoType].state === 'rejected'}
-                    onChange={() => onConfirm(documentoType, false)}
-                  />
-                  <label />
-                </div>
-                <span className="ml-1 color-regular">
-                  <b>Rechazar</b>
-                </span>
-              </div>
-            </div>
-          )}
-          <UncontrolledDropdown className="order-3">
-            <DropdownToggle
-              tag="a"
-              className="icon icon-dots color-main font-21"
-            />
-            <DropdownMenu right positionFixed>
-              <DropdownItem
-                tag="a"
-                target="_blank"
-                href={Documentos[documentoType].url}
-              >
-                Ver documento
-              </DropdownItem>
-              {canUpload && !noExist && (
-                <DropdownItem
-                  tag="a"
-                  onClick={() =>
-                    document.getElementsByName(documentoType)[0].click()
+        <FormikField name={documentoType}>
+          {({ field, form: { setFieldValue } }) => {
+            const { value } = field;
+
+            return (
+              <>
+                <span
+                  title={
+                    value === 'rejected'
+                      ? 'Este archivo es rechazado'
+                      : ''
                   }
+                  className={`font-14-rem  order-3 mr-3 ${
+                    value === 'rejected'
+                      ? 'color-warning'
+                      : 'color-em'
+                    }`}
                 >
-                  Editar documento
-                </DropdownItem>
-              )}
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </>
+                  <em>{getFileName(fileName || Documentos[documentoType].url)}</em>
+                </span>
+                {(canConfirm || Documentos[documentoType].state !== 'to_confirm') && (
+                  <div className="d-flex align-items-center mr-3 order-3">
+                    <div className="radio d-flex align-items-center font-14-rem mr-2">
+                      <div className="m-radio">
+                        <input
+                          type="radio"
+                          name={documentoType}
+                          disabled={!canConfirm}
+                          checked={value === "confirmed"}
+                          onChange={() => {
+                            setFieldValue(documentoType, "confirmed"); 
+                            onConfirm();
+                          }}
+                        />
+                        <label />
+                      </div>
+                      <span className="ml-1 color-regular">
+                        <b>Visto</b>
+                      </span>
+                    </div>
+                    <div className="radio d-flex align-items-center font-14-rem">
+                      <div className="m-radio">
+                        <input
+                          type="radio"
+                          name={documentoType}
+                          disabled={!canConfirm}
+                          checked={value === "rejected"}
+                          onChange={() => {
+                            setFieldValue(documentoType, "rejected"); 
+                            onConfirm();
+                          }}
+                        />
+                        <label />
+                      </div>
+                      <span className="ml-1 color-regular">
+                        <b>Rechazar</b>
+                      </span>
+                    </div>
+                  </div>)
+                }
+                <UncontrolledDropdown className="order-3">
+                  <DropdownToggle
+                    tag="a"
+                    className="icon icon-dots color-main font-21"
+                  />
+                  <DropdownMenu right positionFixed>
+                    <DropdownItem
+                      tag="a"
+                      target="_blank"
+                      href={Documentos[documentoType].url}
+                    >
+                      Ver documento
+                  </DropdownItem>
+                    {canUpload && !noExist && (
+                      <DropdownItem
+                        tag="a"
+                        onClick={() =>
+                          document.getElementsByName(documentoType)[0].click()
+                        }
+                      >
+                        Editar documento
+                    </DropdownItem>
+                    )}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </>
+            )
+          }}
+        </FormikField>
       )}
     </Item>
   );

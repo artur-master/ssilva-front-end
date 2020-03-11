@@ -31,13 +31,7 @@ export function Marketing({ action, selectorProject, selector, dispatch }) {
       action={action}
       selectorProject={selectorProject}
       selector={selector}
-      onConfirm={(documentType, isConfirm) =>
-        dispatch(
-          reviewMarketing(project.ProyectoID, {
-            [documentType]: isConfirm ? 'confirmed' : 'rejected',
-          }),
-        )
-      }
+      onConfirm={values => dispatch(reviewMarketing(project.ProyectoID, values))}
       onSubmit={values => dispatch(saveMarketing(project.ProyectoID, values))}
     />
   );
