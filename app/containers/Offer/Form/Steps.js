@@ -30,9 +30,10 @@ function SubSteps({ offer }) {
     RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[1]
   )
     return null;
+  const marginLeft = '14em';
   return (
     <>
-      <ul className="m-counter mt-3 " style={{ marginLeft: '9.6em' }}>
+      <ul className="m-counter mt-3 " style={{ marginLeft: marginLeft }}>
         <li className="m-counter-plus warning-magent">
           <Link
             to="/"
@@ -58,7 +59,7 @@ function SubSteps({ offer }) {
           </Link>
         </li>
       </ul>
-      <ul className="m-counter mt-3 " style={{ marginLeft: '9.6em' }}>
+      <ul className="m-counter mt-3 " style={{ marginLeft: marginLeft }}>
         <li className="m-counter-plus warning-magent">
           <Link
             to="/"
@@ -84,7 +85,7 @@ function SubSteps({ offer }) {
           </Link>
         </li>
       </ul>
-      <ul className="m-counter mt-3 " style={{ marginLeft: '9.6em' }}>
+      <ul className="m-counter mt-3 " style={{ marginLeft: marginLeft }}>
         <li className="m-counter-plus warning-magent">
           <Link
             to="/"
@@ -94,7 +95,8 @@ function SubSteps({ offer }) {
             <span>AC</span>
           </Link>
         </li>
-        <li
+        {/* Commented by Artru */}
+        {/* <li
           className={`m-counter-plus ${
             !isPendienteContacto(offer) ? 'success' : 'yellow'
           }`}
@@ -106,7 +108,7 @@ function SubSteps({ offer }) {
           >
             <span>Contato con cliente</span>
           </Link>
-        </li>
+        </li> */}
         {isCreditPayment && (
           <li
             className={`m-counter-plus ${
@@ -157,7 +159,7 @@ function Steps({ offer }) {
     Node: [
       {
         Label: 'JP',
-        Description: 'Oferta',
+        Description: 'Pendiente Contacto',
         Color: isPendienteContacto(offer) ? 'yellow' : 'green',
       },
       {
@@ -165,11 +167,12 @@ function Steps({ offer }) {
         Description: 'Pendiente Aprobación',
         Color: isPendienteContacto(offer) ? 'white' : 'red',
       },
-      {
-        Label: 'LG',
-        Description: 'Aprueba confeccion promesa',
-        Color: 'white',
-      },
+      // Commented by Artur
+      // {
+      //   Label: 'LG',
+      //   Description: 'Aprueba confeccion promesa',
+      //   Color: 'white',
+      // },
       { Label: '', Description: 'Promesa', Color: 'white' },
     ],
   };
