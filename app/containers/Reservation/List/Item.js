@@ -60,7 +60,7 @@ const Item = ({ project, reservation, dispatch }) => {
         Cliente: {reservation.ClienteName} {reservation.ClienteLastNames} /{' '}
         {reservation.ClienteRut}
       </td>
-      <td />
+      <td>{Date}</td>
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
           {dateAgo && (
