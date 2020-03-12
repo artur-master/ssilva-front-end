@@ -67,7 +67,9 @@ export function Form({ selector, selectorCredit, dispatch }) {
       <Steps
         offer={{ ...selector.offer, Credits: selectorCredit.entities || [] }}
       />
-      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
+      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}
+        <span className="general-phase"> - Oferta</span>
+      </h4>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">
         <span className="font-16-rem line-height-1 color-success">
           {getActionTitle(selector.offer)}
