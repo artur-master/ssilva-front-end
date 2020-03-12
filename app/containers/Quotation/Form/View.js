@@ -21,7 +21,9 @@ export function QuotationView({ selector, onDownload }) {
 
   return (
     <>
-      <h4 className="font-21">{window.project.Name}</h4>
+      <h4 className="font-21">{window.project.Name}
+        <span className="general-phase"> - Cotización</span>
+      </h4>
       <h5 className="mb-3 font-16 d-flex align-items-center justify-content-between">
         <span className="line-height-1">Detalle Cotización </span>
 

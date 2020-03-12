@@ -261,7 +261,9 @@ export function Form({ selector, dispatch }) {
       <InitData User Client />
       <ProjectPhases project={project} active="promesa" />
       {stepsComponent}
-      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
+      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}
+        <span className="general-phase"> - Promesa</span> 
+      </h4>
       <h5 className="mb-3 d-flex align-items-center after-expands-2">
         <span className="font-16-rem line-height-1 color-success">
           {subtitle}

@@ -81,7 +81,7 @@ export function ReservationForm({
           <ProjectPhases project={project} active="reservation" />
           <Steps reservation={selector.reservation} />
           <h4 className="font-21 mt-3">
-            {project.Name} {Folio ? ` / ${Folio}` : ''}
+            {project.Name} {Folio ? ` / ${Folio}` : ''} <span className="general-phase">- Reserva</span>
           </h4>
           <h5 className="mb-3 d-flex align-items-center justify-content-between">
             <span className="font-16-rem line-height-1 color-success">
