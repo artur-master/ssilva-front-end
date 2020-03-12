@@ -27,7 +27,7 @@ import { PROMESA_STATE } from '../../App/constants';
 
 const Item = ({ project, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, PromesaState, Inmuebles, Cliente } = promesa;
+  const { Proyecto, Folio, PromesaState, Inmuebles, Cliente, Date } = promesa;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   let ColorBadge = 'badge-caution';
   switch (PromesaState) {
@@ -60,6 +60,7 @@ const Item = ({ project, promesa, dispatch }) => {
         ))}
       </td>
       <td>Cliente: {clientFullname(Cliente)}</td>
+      <td>{Date}</td>
       <td>
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
           <span className={`badge ${ColorBadge} px-2`}>{PromesaState}</span>
@@ -77,7 +78,6 @@ const Item = ({ project, promesa, dispatch }) => {
           </div>
         )}
       </td>
-
       <td className="no-whitespace">
         {UserProject.isInmobiliario() &&
           (promesa.PromesaState === PROMESA_STATE[14] && (
