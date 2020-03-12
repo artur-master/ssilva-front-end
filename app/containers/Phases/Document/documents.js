@@ -109,6 +109,12 @@ export const getDocuments = entity => {
         documentoType: 'DocumentCotizacionAFP',
       },
       {
+        documentoName: 'PreAprobación De Crédito',
+        documentoType: 'DocumentPreApprobation',
+        accept: 'pdf',
+        firmado: true,
+      },
+      {
         documentoName: 'Liquidacion 1',
         documentoType: 'DocumentLiquidacion1',
       },
