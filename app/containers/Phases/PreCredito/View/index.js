@@ -11,6 +11,13 @@ import Renta from './Renta';
 import PhasePreCreditoFormModal from '../Form/modal';
 import PhaseCredit from '../Credit';
 import { calculateRenta, isValidLabor } from '../helper';
+import {
+  downloadPreApprobation,
+} from '../Credit/actions';
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import reducer from '../Credit/reducer';
+import saga from '../Credit/saga';
 
 const PhasePreCreditoView = ({
   isCollapse,
@@ -18,12 +25,15 @@ const PhasePreCreditoView = ({
   canEditCredit,
   initialValues,
   onSubmit,
+  dispatch,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const isContado = isContadoPayment(initialValues.PayType);
   const isCredit = isCreditPayment(initialValues.PayType);
   const isValid = isValidLabor(initialValues);
   const { moneyErr } = calculateRenta(initialValues);
+  useInjectReducer({ key: 'credit', reducer });
+  useInjectSaga({ key: 'credit', saga });
   return (
     <>
       {isCredit && (
@@ -53,6 +63,12 @@ const PhasePreCreditoView = ({
                 Editar
               </Button>
             )}
+            <Button
+              onClick={() => dispatch(downloadPreApprobation(initialValues))}
+              className="m-btn-download order-3"
+            >
+              Exportar PDF
+            </Button>
           </BoxHeader>
           <BoxContent className="p-0">
             {!isContado && (
@@ -92,5 +108,6 @@ PhasePreCreditoView.propTypes = {
   canEditCredit: PropTypes.bool,
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 export default PhasePreCreditoView;
