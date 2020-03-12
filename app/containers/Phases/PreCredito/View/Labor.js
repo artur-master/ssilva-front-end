@@ -9,7 +9,10 @@ const Labor = ({ group = 'Cliente', values }) => {
   let Empleador = group === 'Codeudor' ? 'CoEmpleador' : 'Empleador';
   const { Extra, IsCompany } = values[group];
   if (IsCompany) Empleador = 'EmpresaCompradora';
-
+  console.log(Extra)
+  console.log(Empleador)
+  console.log(IsCompany)
+  console.log(values)
   return (
     <Collapse>
       <CollapseHeader>Antecedentes Laborales</CollapseHeader>

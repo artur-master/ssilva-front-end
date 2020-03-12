@@ -33,6 +33,7 @@ const PhasePreCredito = ({
       canEdit={canEdit}
       canEditCredit={canEditCredit}
       onSubmit={onContinue}
+      dispatch={dispatch}
     />
   );
 };

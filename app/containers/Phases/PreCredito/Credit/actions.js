@@ -15,6 +15,7 @@ import {
   REGISTER_SELECT_IF_ERROR,
   REGISTER_SELECT_IF_SUCCESS,
   REGISTER_SELECT_IF,
+  DOWNLOAD_PRE_APPROBATION
 } from './constants';
 
 export function resetContainer() {
@@ -82,5 +83,13 @@ export function registerSelectIFSuccess(response) {
   return {
     type: REGISTER_SELECT_IF_SUCCESS,
     response,
+  };
+}
+
+export function downloadPreApprobation(values) {
+  console.log(values)
+  return {
+    type: DOWNLOAD_PRE_APPROBATION,
+    values,
   };
 }
