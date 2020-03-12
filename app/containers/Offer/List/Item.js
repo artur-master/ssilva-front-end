@@ -25,7 +25,7 @@ import { canEditOffer } from '../helper';
 
 const Item = ({ project, offer, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente } = offer;
+  const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente, Date } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
 
   return (
@@ -47,7 +47,7 @@ const Item = ({ project, offer, dispatch }) => {
         ))}
       </td>
       <td className="">Cliente: {clientFullname(Cliente)}</td>
-      <td />
+      <td>{Date}</td>
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
           {OfertaStateFormat.map((state, index) => {
