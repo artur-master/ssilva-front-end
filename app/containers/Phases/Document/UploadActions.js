@@ -3,7 +3,7 @@
  * Reservation Upload Form
  *
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { Auth } from 'containers/App/helpers';
@@ -18,6 +18,22 @@ export function CarpetaDigitalUploadActions({
 }) {
   const { loading } = selector;
   const [withText, setWithText] = useState({ text: '', open: false });
+  const { values } = form;
+  const [canUpload, setCanUpload] = useState(false);
+
+  useEffect(() => {
+    setCanUpload( (entity.ReservaID) ? true :
+      (!!(values.DocumentPagoGarantia) && !!(values.DocumentCotizacion))
+    );
+  }, [values]);
+
+  useEffect(() => {
+    setCanUpload(false);
+  }, []);
+  
+  useEffect(() => {
+    setCanUpload(false);
+  }, [entity]);
 
   return (
     <>
@@ -26,7 +42,7 @@ export function CarpetaDigitalUploadActions({
           <b>RESERVA |</b> Paso 3 de 3
         </span>
         <Button
-          disabled={loading}
+          disabled={!canUpload ? true : loading}
           className="order-3 m-btn mr-2"
           onClick={onSave}
         >
