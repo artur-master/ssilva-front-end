@@ -60,7 +60,9 @@ export function InForm({ selector, dispatch }) {
   return (
     <>
       <InitData User Client />
-      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
+      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}
+        <span className="general-phase"> - Promesa</span>     
+      </h4>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">
         <span className="font-16-rem line-height-1">
           {entity.PromesaState === PROMESA_STATE[14]
