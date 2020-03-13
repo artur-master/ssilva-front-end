@@ -3,7 +3,7 @@
  * Reservation Upload Form
  *
  */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Tab from 'components/Tab';
@@ -20,7 +20,23 @@ export function CarpetaDigital({
   entity,
   isReview,
   onReview,
+  form,
 }) {
+  const { values } = form;
+  const [canPrint, setCanPrint] = useState(true);
+
+  useEffect(() => {
+    setCanPrint( true );
+  }, [values]);
+  
+  useEffect(() => {
+    setCanPrint( !(entity.ReservaID) );
+  }, []);
+
+  useEffect(() => {
+    setCanPrint( false );
+  }, [entity]);
+
   return (
     <>
       <Box collapse isOpen={isCollapse}>
@@ -43,7 +59,7 @@ export function CarpetaDigital({
                       sistema:
                     </em>
                   </span>
-                  <Button className="font-14-rem no-whitespace m-btn m-btn-white m-btn-printer">
+                  <Button disabled={ canPrint } className="font-14-rem no-whitespace m-btn m-btn-white m-btn-printer">
                     Imprimir Documentos
                   </Button>
                 </div>
