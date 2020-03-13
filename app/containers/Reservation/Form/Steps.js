@@ -64,7 +64,7 @@ function Steps({ reservation }) {
   const {
     Graph = {
       Node: [
-        { Label: 'V', Description: 'Crear reserva', Color: 'red' },
+        { Label: 'V, JP', Description: 'Crear reserva', Color: 'red' },
         {
           Label: 'V',
           Description: 'Pendiente información ',
