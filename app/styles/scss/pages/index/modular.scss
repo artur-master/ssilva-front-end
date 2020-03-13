@@ -151,6 +151,18 @@
             font-size: 0.8em;
         } 
     }
+    &.m-btn-history{
+        display: flex;
+        align-items: center;
+        float: right;
+        height: 100%;
+        &:before{
+            font-family: "icon";
+            content: "\E01D";
+            margin-right: 0.5em;
+            font-size: 0.8em;
+        } 
+    }
     &.m-btn-absolute-right-top{
         position: absolute;
         top: 0;

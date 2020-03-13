@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import {
@@ -17,7 +17,8 @@ import {
 } from 'reactstrap';
 import Thead from 'components/Table/Thead';
 import { Auth } from 'containers/App/helpers';
-import { PERMISSIONS } from 'containers/App/constants';
+// import { PERMISSIONS } from 'containers/App/constants';
+import DeleteConfirm from './DeleteConfirm';
 
 const List = ({
   canEdit = true,
@@ -27,11 +28,13 @@ const List = ({
   onEdit,
   onView,
   onSelect,
+  onDelete,
 }) => {
   const { clients, query = {} } = selector;
-  const canManage =
-    Auth.hasOneOfPermissions([PERMISSIONS[17], PERMISSIONS[18]]) && canEdit;
-  const { selected = [] } = query;
+  const canManage = Auth.isAdmin() && canEdit;
+  // Auth.hasOneOfPermissions([PERMISSIONS[17], PERMISSIONS[18]]) && canEdit; 
+  // const { selected = [] } = query;
+  // Commented by Artur
   const ths = [
     { field: 'Name', label: 'Nombres', sortable: true },
     { field: 'Rut', label: 'RUT', sortable: true },
@@ -41,6 +44,9 @@ const List = ({
   if (onSelect) {
     ths.push({});
   }
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState();
+
   return (
     <div>
       <div className="d-flex align-items-end justify-content-between after-expands-2">
@@ -71,9 +77,13 @@ const List = ({
                 <tr
                   key={client.UserID}
                   className="align-middle-group border-bottom"
+                  onClick={(event) => {
+                    if (event.target.tagName === "A") event.preventDefault();
+                    else onView(client)
+                  }}
                 >
                   <td className="pl-3 no-whitespace">
-                    <span className="font-14-rem">
+                    <span className="font-14-rem" >
                       <b>{`${client.Name} ${client.LastNames}`}</b>
                     </span>
                   </td>
@@ -85,25 +95,31 @@ const List = ({
                       {client.Comuna && client.Comuna.Name}
                     </span>
                   </td>
-                  <td className="no-whitespace text-right pr-3">
-                    <UncontrolledDropdown>
-                      <DropdownToggle
-                        tag="a"
-                        className="icon icon-dots main_color ml-1"
-                      />
-                      <DropdownMenu right positionFixed>
-                        <DropdownItem tag="a" onClick={() => onView(client)}>
-                          Ver datos
-                        </DropdownItem>
-                        {canManage && (
+                  {canManage && (
+                    <td className="no-whitespace text-right pr-3">
+                      <UncontrolledDropdown>
+                        <DropdownToggle
+                          tag="a"
+                          className="icon icon-dots main_color ml-1"
+                        />
+                        <DropdownMenu right positionFixed>
                           <DropdownItem tag="a" onClick={() => onEdit(client)}>
                             Editar
                           </DropdownItem>
-                        )}
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </td>
-                  {onSelect && (
+                          <DropdownItem tag="a" onClick={() => {
+                            setIsOpen(true);
+                            setSelectedClient(client);
+                            // onView(client)
+                          }}>
+                            {/* Ver datos */}
+                            Eliminar
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+                    </td>
+                  )}
+                  {/*commented by Artur*/}
+                  {/* {onSelect && (
                     <td className="no-whitespace text-right" width="1%">
                       {selected.includes(client.UserID) && 'Seleccionada'}
                       {!selected.includes(client.UserID) && (
@@ -112,11 +128,22 @@ const List = ({
                         </Button>
                       )}
                     </td>
-                  )}
+                  )} */}
                 </tr>
               ))}
           </tbody>
         </Table>
+        {canManage && (
+          <DeleteConfirm
+            isOpen={isOpen}
+            onHide={() => setIsOpen(false)}
+            onConfirm={() => {
+              setIsOpen(false);
+              onDelete(selectedClient.UserID);
+            }}
+            client={selectedClient}
+          />
+        )}
       </div>
     </div>
   );
@@ -130,6 +157,7 @@ List.propTypes = {
   onEdit: PropTypes.func,
   onView: PropTypes.func,
   onSelect: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 export default List;

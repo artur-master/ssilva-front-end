@@ -12,7 +12,7 @@ import { compose } from 'redux';
 import makeSelectClient from './selectors';
 import ClienteForm from './Form';
 import List from './List';
-import { toggleScreen, saveClient, queryClients } from './actions';
+import { toggleScreen, saveClient, queryClients, deleteClient } from './actions';
 import View from './View';
 
 function Client({
@@ -28,6 +28,7 @@ function Client({
   onSubmit,
   onHide,
   onSelect,
+  onDelete,
 }) {
   useEffect(() => {
     onQuery(query);
@@ -38,6 +39,7 @@ function Client({
         onQuery={onQuery}
         selector={selector}
         onCreate={onCreate}
+        onDelete={onDelete}
         onEdit={onEdit}
         onView={onView}
         onSelect={onSelect}
@@ -71,6 +73,7 @@ Client.propTypes = {
   onSubmit: PropTypes.func,
   onHide: PropTypes.func,
   onSelect: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -86,6 +89,7 @@ function mapDispatchToProps(dispatch) {
     onView: client => dispatch(toggleScreen('view', client)),
     onSubmit: values => dispatch(saveClient(values)),
     onHide: () => dispatch(toggleScreen(false, false)),
+    onDelete: client => dispatch( deleteClient(client) )
   };
 }
 

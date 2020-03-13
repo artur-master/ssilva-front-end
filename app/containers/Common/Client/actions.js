@@ -11,6 +11,11 @@ import {
   GET_CLIENT,
   GET_CLIENT_ERROR,
   GET_CLIENT_SUCCESS,
+  //Added by Artur
+  DELETE_CLIENT,
+  DELETE_CLIENT_ERROR,
+  DELETE_CLIENT_SUCCESS,
+  //Added by Artur
   QUERY_CLIENTS,
   SAVE_CLIENT,
   SAVE_CLIENT_ERROR,
@@ -66,6 +71,29 @@ export function getClientSuccess(client) {
     client,
   };
 }
+
+//Added by Artur
+export function deleteClient(UserID) {
+  return {
+    type: DELETE_CLIENT,
+    UserID,
+  };
+}
+
+export function deleteClientError(error) {
+  return {
+    type: DELETE_CLIENT_ERROR,
+    error,
+  };
+}
+
+export function deleteClientSuccess(response) {
+  return {
+    type: DELETE_CLIENT_SUCCESS,
+    response,
+  };
+}
+//Added by Artur
 
 export function saveClient(values) {
   return {

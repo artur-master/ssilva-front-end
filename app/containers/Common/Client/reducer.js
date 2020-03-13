@@ -11,6 +11,11 @@ import {
   GET_CLIENT,
   GET_CLIENT_ERROR,
   GET_CLIENT_SUCCESS,
+  //Added by Artur
+  DELETE_CLIENT,
+  DELETE_CLIENT_ERROR,
+  DELETE_CLIENT_SUCCESS,
+  //Added by Artur
   QUERY_CLIENTS,
   SAVE_CLIENT,
   SAVE_CLIENT_ERROR,
@@ -61,12 +66,14 @@ const clientReducer = (state = initialState, action) =>
         draft.clients = doQuery(draft.origin_clients, draft.query);
         break;
       case GET_CLIENT:
+      case DELETE_CLIENT:
       case SAVE_CLIENT:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
         break;
       case GET_CLIENT_ERROR:
+      case DELETE_CLIENT_ERROR:
       case SAVE_CLIENT_ERROR:
         draft.loading = false;
         draft.error = action.error;
@@ -77,6 +84,20 @@ const clientReducer = (state = initialState, action) =>
         draft.error = false;
         draft.client = action.client;
         break;
+      //added by Artur
+      case DELETE_CLIENT_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.success = action.response.detail;
+        draft.UserID = action.response.cliente;
+        draft.origin_clients = [
+          ...draft.origin_clients.filter(
+            client => client.UserID !== action.response.cliente,
+          )
+        ];
+        draft.clients = doQuery(draft.origin_clients, draft.query);
+        break;
+      //added by Artur 
       case SAVE_CLIENT_SUCCESS:
         draft.loading = false;
         draft.error = false;
