@@ -4,7 +4,7 @@
  * Reservation Form
  *
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { Redirect } from 'react-router-dom';
@@ -19,6 +19,7 @@ import PageHeader from 'containers/Common/PageHeader';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import WithLoading from 'components/WithLoading';
+import Button from 'components/Button';
 import makeSelectReservationForm from './selectors';
 import Form from './Form';
 import reducer from './reducer';
@@ -33,6 +34,8 @@ import {
 import Steps from './Steps';
 import ReservationCreation from './Creation';
 const SyncMessage = WithLoading();
+import History from 'components/History';
+
 export function ReservationForm({
   match,
   selectorProject,
@@ -56,7 +59,12 @@ export function ReservationForm({
   if (selector.success && selector.redirect) {
     return <Redirect to={`/proyectos/${project.ProyectoID}/reservas`} />;
   }
-
+  //Added by Artur
+  const [isHistoryOpen, setHistoryOpen] = useState(false);
+  const onHide = () => {
+    setHistoryOpen(false);
+  }
+  //Added by Artur
   if (!ReservaID && selector.reservation.ReservaID) {
     return (
       <Redirect
@@ -80,9 +88,18 @@ export function ReservationForm({
         <>
           <ProjectPhases project={project} active="reservation" />
           <Steps reservation={selector.reservation} />
-          <h4 className="font-21 mt-3">
-            {project.Name} {Folio ? ` / ${Folio}` : ''} <span className="general-phase">- Reserva</span>
-          </h4>
+          <div className="row m-0">
+            <h4 className="col p-0 font-21 mt-3">
+              {project.Name} {Folio ? ` / ${Folio}` : ''}
+              <span className="general-phase">- Reserva</span>
+            </h4>
+            <Button 
+              className="col-auto mt-3 m-btn-white m-btn-history"
+              onClick={()=> setHistoryOpen(true)}
+            >
+              Historial
+            </Button>
+          </div>
           <h5 className="mb-3 d-flex align-items-center justify-content-between">
             <span className="font-16-rem line-height-1 color-success">
               {getActionTitle(selector.reservation)}
@@ -93,6 +110,13 @@ export function ReservationForm({
           )}
           {(ReservaID || CotizacionID) && Folio && (
             <Form project={project} selector={selector} dispatch={dispatch} />
+          )}
+          {/* Added by Artur */}
+          {selector.reservation && (
+            <History logs={selector.reservation.Logs} 
+                     onHide={onHide} isOpen={isHistoryOpen}
+                     title={ project.Name + (Folio ? ` / ${Folio}`:'') }
+            />
           )}
         </>
       )}

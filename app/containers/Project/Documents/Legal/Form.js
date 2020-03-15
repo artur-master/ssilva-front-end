@@ -16,6 +16,7 @@ import Alert from 'components/Alert';
 import documents from './documents';
 import DocumentItem from '../DocumentItem';
 import { canConfirmDocument, canUploadDocument } from '../../helper';
+import { Auth } from 'containers/App/helpers';
 
 const SyncMessage = WithLoading();
 export function LegalForm({
@@ -55,7 +56,7 @@ export function LegalForm({
           for (let key of keys) {
             if (initialValues[key] !== values[key])
               data[key] = values[key];
-              len++;
+            len++;
           }
           if (len > 0) onConfirm(data);
         }
@@ -112,7 +113,7 @@ export function LegalForm({
                 falta del contrato de corretaje
               </Alert>
             ))}
-          {canUpload && (
+          {Auth.isPM() && (
             <BoxFooter inside>
               <Button loading={loading} disabled={!isChanged} type="submit">
                 Aceptar

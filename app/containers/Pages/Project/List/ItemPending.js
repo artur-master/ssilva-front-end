@@ -54,7 +54,11 @@ const ItemPending = ({ project, dispatch }) => {
             </DropdownMenu>
           </Dropdown>
         </h4>
-        <div className="content">
+        <div className="content"
+          onClick={() => {
+            dispatch(push(`/proyectos/${project.ProyectoID}`));
+          }}
+        >
           {pendings.length > 0 && (
             <>
               <span className="statement mb-4">Pendientes</span>

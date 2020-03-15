@@ -30,8 +30,9 @@ function Form({ selector, onHide, onSubmit }) {
     Rut: user.Rut || '',
     Email: user.Email || '',
     Roles: user.Roles || [],
-    RoleID: (user.Roles || [{ RoleID: '' }])[0].RoleID,
+    RoleID: (user.Roles && user.Roles.length) ? user.Roles[0].RoleID: '',
   };
+
   return (
     <Modal isOpen={selector.screen === 'form'} size="xl" scrollable>
       {user && user.UserID && !user.Rut && (

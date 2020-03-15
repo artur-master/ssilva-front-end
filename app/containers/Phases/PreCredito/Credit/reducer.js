@@ -15,6 +15,7 @@ import {
   REGISTER_SELECT_IF_ERROR,
   REGISTER_SELECT_IF_SUCCESS,
   RESET_CONTAINER,
+  DOWNLOAD_PRE_APPROBATION,
 } from './constants';
 
 export const initialState = {
@@ -67,6 +68,7 @@ const creditReducer = (state = initialState, action) =>
         draft.success = action.response.detail;
         draft.redirect = 'refresh';
         break;
+      case DOWNLOAD_PRE_APPROBATION:
     }
   });
 
