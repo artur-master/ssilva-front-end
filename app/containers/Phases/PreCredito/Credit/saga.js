@@ -2,7 +2,8 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { API_ROOT } from 'containers/App/constants';
 import { updateOffer } from 'containers/Offer/Form/actions';
-import { FETCH_IF, REGISTER_IF, REGISTER_SELECT_IF } from './constants';
+import FileSaver from 'file-saver';
+import { FETCH_IF, REGISTER_IF, REGISTER_SELECT_IF, DOWNLOAD_PRE_APPROBATION } from './constants';
 import {
   fetchIFError,
   fetchIFSuccess,
@@ -112,9 +113,27 @@ function* sagaRegisterSelectIF(action) {
   }
 }
 
+function* sagaDownloadPreApprobation(action) {
+  console.log("sdfsdf")
+  const requestURL = `${API_ROOT}/ventas/pre-approbation-download/`;
+  try {
+    const response = yield call(request, requestURL, {
+      method: 'post',
+      body: JSON.stringify({
+        ReservaID: action.values.ReservaID,
+        LetterSize: 80,
+      }),
+    });
+    FileSaver.saveAs(response, `Pre approbation${action.values.ReservaID}.pdf`);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // Individual exports for testing
 export default function* creditSaga() {
   yield takeLatest(FETCH_IF, sagaFetchIF);
   yield takeLatest(REGISTER_IF, sagaRegisterIF);
   yield takeLatest(REGISTER_SELECT_IF, sagaRegisterSelectIF);
+  yield takeLatest(DOWNLOAD_PRE_APPROBATION, sagaDownloadPreApprobation);
 }

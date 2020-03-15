@@ -54,13 +54,19 @@ export function Promesas({ match, selectorProject, selector, dispatch }) {
       {selector.loading && <SyncMessage {...selector} />}
       {!selector.loading && selector.promesas && (
         <>
-          <Filter
-            project={project}
-            selector={selector}
-            searchPromesas={(txtSearch, status) =>
-              dispatch(searchPromesas(txtSearch, status))
-            }
-          />
+          <h4 className="color-regular mt-3 mb-0">
+            {`${project.Name} - ${project.Symbol}`}
+          </h4>
+          <h5 className="font-18 d-flex align-items-center justify-content-between">
+            <span className="line-height-1">Promesa</span>
+            <Filter
+              project={project}
+              selector={selector}
+              searchPromesas={(txtSearch, status) =>
+                dispatch(searchPromesas(txtSearch, status))
+              }
+            />
+          </h5>
           <List {...selector} project={project} dispatch={dispatch} />
         </>
       )}

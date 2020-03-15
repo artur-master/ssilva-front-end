@@ -33,8 +33,8 @@ const List = ({
   const { clients, query = {} } = selector;
   const canManage = Auth.isAdmin() && canEdit;
   // Auth.hasOneOfPermissions([PERMISSIONS[17], PERMISSIONS[18]]) && canEdit; 
-  // const { selected = [] } = query;
   // Commented by Artur
+  const { selected = [] } = query;
   const ths = [
     { field: 'Name', label: 'Nombres', sortable: true },
     { field: 'Rut', label: 'RUT', sortable: true },
@@ -78,7 +78,7 @@ const List = ({
                   key={client.UserID}
                   className="align-middle-group border-bottom"
                   onClick={(event) => {
-                    if (event.target.tagName === "A") event.preventDefault();
+                    if (event.target.tagName === "A" || event.target.tagName === "BUTTON" ) event.preventDefault();
                     else onView(client)
                   }}
                 >
@@ -119,7 +119,7 @@ const List = ({
                     </td>
                   )}
                   {/*commented by Artur*/}
-                  {/* {onSelect && (
+                  {onSelect && (
                     <td className="no-whitespace text-right" width="1%">
                       {selected.includes(client.UserID) && 'Seleccionada'}
                       {!selected.includes(client.UserID) && (
@@ -128,7 +128,7 @@ const List = ({
                         </Button>
                       )}
                     </td>
-                  )} */}
+                  )}
                 </tr>
               ))}
           </tbody>

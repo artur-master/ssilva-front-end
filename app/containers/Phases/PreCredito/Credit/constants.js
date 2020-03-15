@@ -21,3 +21,5 @@ export const REGISTER_SELECT_IF_ERROR =
   'app/Phases/PreCredito/Credit/REGISTER_SELECT_IF_ERROR';
 export const REGISTER_SELECT_IF_SUCCESS =
   'app/Phases/PreCredito/Credit/REGISTER_SELECT_IF_SUCCESS';
+export const DOWNLOAD_PRE_APPROBATION =
+  'app/Phases/PreCredito/Credit/DOWNLOAD_PRE_APPROBATION';
