@@ -51,12 +51,6 @@ const Item = ({ project, offer, dispatch }) => {
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
           {OfertaStateFormat.map((state, index) => {
-            if (state.Label === OFERTA_STATE[3])
-              return (
-                <Button size="sm" key={String(index)}>
-                  {state.Label}
-                </Button>
-              );
             return (
               <span
                 key={String(index)}
