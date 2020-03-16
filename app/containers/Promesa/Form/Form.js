@@ -3,7 +3,7 @@
  * Promesa Form
  *
  */
-import React from 'react';
+import React,{ useState } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import PhaseGeneral from 'containers/Phases/General';
@@ -50,7 +50,10 @@ import { canEditConfeccionPromesa, canRefund } from '../helper';
 import StepsDesistimento from './StepsDesistimiento';
 import StepsResciliacion from './StepsResciliacion';
 import StepsResolucion from './StepsResolucion';
-import Log from '../../../components/Log';
+import Log from 'components/Log';
+import Button from 'components/Button';
+import History from 'components/History';
+
 export function Form({ selector, dispatch }) {
   const { project = {} } = window;
   const entity = selector.promesa;
@@ -255,15 +258,27 @@ export function Form({ selector, dispatch }) {
       stepsComponent = <Steps promesa={selector.promesa} />;
       subtitle = entity.PromesaState;
   }
-
+  //Added by Artur
+  const [isHistoryOpen, setHistoryOpen] = useState(false);
+  const onHide = () => setHistoryOpen(false);
+  //Added by Artur
   return (
     <>
       <InitData User Client />
       <ProjectPhases project={project} active="promesa" />
       {stepsComponent}
-      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}
-        <span className="general-phase"> - Promesa</span> 
-      </h4>
+      <div className="row m-0">
+        <h4 className="col p-0 font-21 mt-3">
+        {`${project.Name} / ${entity.Folio}`}
+          <span className="general-phase">- Promesa</span>
+        </h4>
+        <Button
+          className="col-auto mt-3 m-btn-white m-btn-history"
+          onClick={() => setHistoryOpen(true)}
+        >
+          Historial
+        </Button>
+      </div>
       <h5 className="mb-3 d-flex align-items-center after-expands-2">
         <span className="font-16-rem line-height-1 color-success">
           {subtitle}
@@ -304,6 +319,13 @@ export function Form({ selector, dispatch }) {
       {blockPromesa()}
       <Desistimiento promesa={entity} />
       <Log logs={entity.Logs} limit={10} />
+      {/* Added by Artur */}
+      {entity.Logs && (
+        <History logs={entity.Logs}
+          onHide={onHide} isOpen={isHistoryOpen}
+          title={`${project.Name} / ${entity.Folio}`}
+        />
+      )}
     </>
   );
 }

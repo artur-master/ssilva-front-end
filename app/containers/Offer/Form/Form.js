@@ -3,7 +3,7 @@
  * Offer Form
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import PhaseGeneral from 'containers/Phases/General';
@@ -28,6 +28,8 @@ import Steps from './Steps';
 import ApproveConfeccionPromesa from './ApproveConfeccionPromesa';
 import { approveConfeccionPromesa } from './actions';
 import FormActions from './FormActions';
+import Button from 'components/Button';
+import History from 'components/History';
 
 export function Form({ selector, selectorCredit, dispatch }) {
   const { project = {} } = window;
@@ -37,7 +39,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
     dispatch(
       push(
         `/proyectos/${project.ProyectoID}/oferta/editar?OfertaID=${
-          initialValues.OfertaID
+        initialValues.OfertaID
         }`,
       ),
     );
@@ -59,7 +61,12 @@ export function Form({ selector, selectorCredit, dispatch }) {
       onEdit={onEdit}
     />
   );
-
+  //Added by Artur
+  const [isHistoryOpen, setHistoryOpen] = useState(false);
+  const onHide = () => {
+    setHistoryOpen(false);
+  }
+  //Added by Artur
   return (
     <>
       <InitData User Client />
@@ -67,9 +74,19 @@ export function Form({ selector, selectorCredit, dispatch }) {
       <Steps
         offer={{ ...selector.offer, Credits: selectorCredit.entities || [] }}
       />
-      <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}
-        <span className="general-phase"> - Oferta</span>
-      </h4>
+      <div className="row m-0">
+        <h4 className="col p-0 font-21 mt-3">
+          {`${project.Name} / ${entity.Folio}`}
+          <span className="general-phase"> - Oferta</span>
+        </h4>
+        <Button
+          className="col-auto mt-3 m-btn-white m-btn-history"
+          onClick={() => console.log(selector)}
+            // setHistoryOpen(true)}
+        >
+          Historial
+        </Button>
+      </div>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">
         <span className="font-16-rem line-height-1 color-success">
           {getActionTitle(selector.offer)}
@@ -85,7 +102,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
         canEditCredit={
           initialValues.OfertaID &&
           initialValues.PreAprobacionCreditoState ===
-            PRE_APROBACION_CREDITO_STATE[1] &&
+          PRE_APROBACION_CREDITO_STATE[1] &&
           UserProject.isAC() &&
           !isPendienteContacto(initialValues)
         }
@@ -97,6 +114,13 @@ export function Form({ selector, selectorCredit, dispatch }) {
           canEdit={canEditOffer(entity)}
           onCancel={onCancel}
           onEdit={onEdit}
+        />
+      )}
+      {/* Added by Artur */}
+      {selector.reservation && (
+        <History logs={selector.reservation.Logs}
+          onHide={onHide} isOpen={isHistoryOpen}
+          title={`${project.Name} / ${entity.Folio}`}
         />
       )}
     </>

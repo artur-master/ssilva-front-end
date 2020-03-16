@@ -6,6 +6,7 @@ import {
   FETCH_CLIENTS,
   GET_CLIENT,
   SAVE_CLIENT,
+  DELETE_CLIENT,
   TOGGLE_FORM,
 } from './constants';
 import {
@@ -13,6 +14,8 @@ import {
   fetchClientsSuccess,
   getClientError,
   getClientSuccess,
+  deleteClientError,
+  deleteClientSuccess,
   saveClientError,
   saveClientSuccess,
 } from './actions';
@@ -38,6 +41,20 @@ function* getClient(action) {
     yield put(getClientError(error));
   }
 }
+
+//added by Artur
+function* deleteClient(action) {
+  const requestURL = `${API_ROOT}/ventas/clientes/${action.UserID}`;
+  try {
+    const response = yield call(request, requestURL, {
+      method: 'DELETE',  
+    });
+    yield put(deleteClientSuccess(response));
+  } catch (error) {
+    yield put(deleteClientError(error));
+  }
+}
+//added by Artur
 
 function* saveClient(action) {
   const selector = yield select(makeSelectClient());
@@ -73,6 +90,7 @@ function* toggleScreen(action) {
 export default function* clientSaga() {
   yield takeLatest(FETCH_CLIENTS, fetchClients);
   yield takeLatest(GET_CLIENT, getClient);
+  yield takeLatest(DELETE_CLIENT, deleteClient);
   yield takeLatest(SAVE_CLIENT, saveClient);
   yield takeLatest(TOGGLE_FORM, toggleScreen);
 }

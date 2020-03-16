@@ -23,7 +23,11 @@ export function CarpetaDigitalUploadActions({
 
   useEffect(() => {
     setCanUpload( (entity.ReservaID) ? true :
-      (!!(values.DocumentPagoGarantia) && !!(values.DocumentCotizacion))
+      (
+        !!(values.DocumentPagoGarantia) && 
+        !!(values.DocumentCotizacion) && 
+        !!(values.DocumentFotocopiaCarnet)
+      )
     );
   }, [values]);
 

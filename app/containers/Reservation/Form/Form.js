@@ -28,8 +28,8 @@ import {
   sendToControl,
   updateReservation,
 } from './actions';
-import AlertPopup from '../../../components/Alert/popup';
-import Log from '../../../components/Log';
+import AlertPopup from 'components/Alert/popup';
+import Log from 'components/Log';
 
 export function Form({ project, selector, dispatch }) {
   const entity = selector.reservation;
@@ -96,7 +96,6 @@ export function Form({ project, selector, dispatch }) {
         initialValues={initialValues}
         onUpdate={values => dispatch(updateReservation(values))}
       />
-
       <PhasePreCredito
         canEdit={canEdit}
         showScreen={!initialValues.ReservaID ? 'form' : 'view'}

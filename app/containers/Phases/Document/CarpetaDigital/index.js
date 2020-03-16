@@ -34,7 +34,7 @@ export function CarpetaDigital({
   }, []);
 
   useEffect(() => {
-    setCanPrint( false );
+    if(entity.ReservaID)  setCanPrint( false );
   }, [entity]);
 
   return (

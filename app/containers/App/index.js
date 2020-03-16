@@ -203,6 +203,12 @@ function App() {
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
         <AppRoute
+          exact
+          path="/clientes"
+          component={ClientesPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />
+        <AppRoute
           component={NotFoundPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
