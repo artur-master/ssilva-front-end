@@ -100,7 +100,7 @@ export function MarketingForm({
                 />
               ))}
             </List>
-            {Auth.isPM() && (
+            {(Auth.isPM() || canUpload) && (
               <BoxFooter inside>
                 <Button disabled={!isChanged} loading={loading} type="submit">
                   Aceptar

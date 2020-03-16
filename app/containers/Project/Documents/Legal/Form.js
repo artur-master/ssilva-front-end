@@ -27,6 +27,7 @@ export function LegalForm({
   onConfirm,
 }) {
   const { project = {} } = selectorProject;
+  const entregaInmediata = project.EntregaInmediata;  
   const { loading, ...restSelector } = selector;
   const canConfirm = canConfirmDocument(project);
   const canUpload = canUploadDocument('legal', project) && action !== 'view';
@@ -89,18 +90,22 @@ export function LegalForm({
         <>
           <SyncMessage {...restSelector} />
           <List>
-            {documents.map((document, index) => (
-              <DocumentItem
-                key={document.documentoType}
-                {...document}
-                Documentos={project.Documentos}
-                className={index > 0 ? 'border-top' : ''}
-                canUpload={canUpload}
-                canConfirm={canConfirm}
-                onConfirm={onSeleted}
-                loading={loading}
-              />
-            ))}
+            {documents.map((document, index) => {
+              if( (document.documentoType === 'title_folder') &&
+                  !entregaInmediata ) return null;
+              return (
+                <DocumentItem
+                  key={document.documentoType}
+                  {...document}
+                  Documentos={project.Documentos}
+                  className={index > 0 ? 'border-top' : ''}
+                  canUpload={canUpload}
+                  canConfirm={canConfirm}
+                  onConfirm={onSeleted}
+                  loading={loading}
+                />)
+            })
+            }
           </List>
           {Object.keys(project.Documentos).find(
             docType =>
@@ -113,7 +118,7 @@ export function LegalForm({
                 falta del contrato de corretaje
               </Alert>
             ))}
-          {Auth.isPM() && (
+          {(Auth.isPM() || canUpload) && (
             <BoxFooter inside>
               <Button loading={loading} disabled={!isChanged} type="submit">
                 Aceptar
