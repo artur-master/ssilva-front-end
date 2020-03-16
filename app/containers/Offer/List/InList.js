@@ -12,9 +12,7 @@ import InItem from './InItem';
 import { isPendienteContacto } from '../helper';
 
 const InList = ({ project = {}, offers, dispatch }) => {
-  const showOffers = (offers || []).filter(
-    offer => !isPendienteContacto(offer),
-  );
+  const showOffers = offers;
   return (
     <Box className="mt-3 pt-3 pb-3">
       {showOffers.length < 1 && <Empty tag="h2" />}
