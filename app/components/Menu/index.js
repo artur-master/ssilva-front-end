@@ -91,6 +91,17 @@ const Menu = ({ collapse, dispatch }) => (
         <span>Reportes</span>
         <Link to="/reports" />
       </li>
+      {!Auth.isAdmin() && 
+       (Auth.isLegal() || Auth.isFinanza() || Auth.isVendor() || Auth.isPM()) &&
+       (<li>
+          {/* <i className="icon icon-users">
+            <i className="icon" />
+          </i> */}
+          <span style={{width: '2.2em'}}></span>
+          <span>Clientes</span>
+          <Link to="/clientes" />
+        </li>
+      )}
     </ul>
   </Collapse>
 );

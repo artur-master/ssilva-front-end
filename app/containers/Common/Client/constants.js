@@ -14,6 +14,14 @@ export const GET_CLIENT_ERROR = 'app/containers/Common/Client/GET_CLIENT_ERROR';
 export const GET_CLIENT_SUCCESS =
   'app/containers/Common/Client/GET_CLIENT_SUCCESS';
 
+//Added by Artur
+export const DELETE_CLIENT = 'app/containers/Common/Client/DELETE_CLIENT';
+export const DELETE_CLIENT_ERROR = 
+  'app/containers/Common/Client/DELETE_CLIENT_ERROR';
+export const DELETE_CLIENT_SUCCESS = 
+  'app/containers/Common/Client/DELETE_CLIENT_SUCCESS';
+//Added by Artur
+
 export const RESET_FORM = 'app/containers/Common/Client/RESET_FORM';
 export const SAVE_CLIENT = 'app/containers/Common/Client/SAVE_CLIENT';
 export const SAVE_CLIENT_ERROR =

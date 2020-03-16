@@ -14,6 +14,7 @@ import WithLoading from 'components/WithLoading';
 import documents from './documents';
 import DocumentItem from '../DocumentItem';
 import { canConfirmDocument, canUploadDocument } from '../../helper';
+import { Auth } from 'containers/App/helpers';
 
 const SyncMessage = WithLoading();
 export function MarketingForm({
@@ -99,7 +100,7 @@ export function MarketingForm({
                 />
               ))}
             </List>
-            {canUpload && (
+            {(Auth.isPM() || canUpload) && (
               <BoxFooter inside>
                 <Button disabled={!isChanged} loading={loading} type="submit">
                   Aceptar

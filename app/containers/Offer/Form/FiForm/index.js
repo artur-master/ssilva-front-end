@@ -90,7 +90,7 @@ export function OfferFiForm({ selector, selectorGarantia, dispatch }) {
             color="white"
             onClick={onCancel}
           >
-            Cancelar
+            Volver
           </Button>
         </div>
       </h5>
