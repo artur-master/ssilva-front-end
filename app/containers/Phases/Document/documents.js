@@ -45,19 +45,23 @@ export const getDocuments = entity => {
         documentoName: 'Constitucion Sociedad',
         documentoType: 'DocumentConstitucionSociedad',
         firmado: true,
+        required: true,
       },
       {
         documentoName: 'Certificado de Vigencia de sociedad',
         accept: 'pdf',
         documentoType: 'DocumentCertificadoSociedad',
+        required: true,
       },
       {
         documentoName: 'Carpeta Tributaria de Últimos Dos Años',
         documentoType: 'DocumentCarpetaTributaria',
+        required: true,
       },
       {
         documentoName: '3 Últimos Balances Timbrados',
         documentoType: 'DocumentBalancesTimbrados',
+        required: true,
       },
     ];
   }
@@ -104,28 +108,34 @@ export const getDocuments = entity => {
       {
         documentoName: 'Fotocopia Carnet',
         documentoType: 'DocumentFotocopiaCarnet',
+        required: true,
       },
       {
         documentoName: 'Cotizaciones AFP',
         documentoType: 'DocumentCotizacionAFP',
+        required: true,
       },
       {
         documentoName: 'PreAprobación De Crédito',
         documentoType: 'DocumentPreApprobation',
         accept: 'pdf',
         firmado: true,
+        required: true,
       },
       {
         documentoName: 'Liquidacion 1',
         documentoType: 'DocumentLiquidacion1',
+        required: true,
       },
       {
         documentoName: 'Liquidacion 2',
         documentoType: 'DocumentLiquidacion2',
+        required: true,
       },
       {
         documentoName: 'Liquidacion 3',
         documentoType: 'DocumentLiquidacion3',
+        required: true,
       },
     ];
   }
