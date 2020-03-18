@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import { isAprobacionInmobiliariaState } from '../../helper';
+import { isPendienteContacto } from '../../helper';
 const SyncMessage = WithLoading();
 export function OfferInFormActions({ selector, onCancel, onApprove }) {
   const { loading, offer } = selector;
@@ -24,6 +25,12 @@ export function OfferInFormActions({ selector, onCancel, onApprove }) {
           Cerca
         </Button>
       </div>
+    );
+
+  if (isPendienteContacto(offer))
+    return (
+       <div className="d-flex after-expands-2 align-items-center">
+       </div>
     );
 
   return (

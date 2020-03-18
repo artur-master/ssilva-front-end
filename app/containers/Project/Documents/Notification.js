@@ -6,7 +6,7 @@ import { BoxFooter } from 'components/Box';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import legalDocuments from './Legal/documents';
+import { getDocuments } from './Legal/documents';
 import marketingDocuments from './Marketing/documents';
 import { canConfirmDocument } from '../helper';
 import makeSelectInitProject from '../Init/selectors';
@@ -14,6 +14,7 @@ import makeSelectFinance from './Finance/selectors';
 
 const Notification = ({ selectorProject, selectorFinance }) => {
   const { project = {} } = selectorProject;
+  const legalDocuments = getDocuments(project.EntregaInmediata);
   const { Documentos = {} } = project;
   const finance = selectorFinance.entity || {};
   const canConfirm = canConfirmDocument(project);

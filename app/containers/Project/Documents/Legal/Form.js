@@ -13,7 +13,7 @@ import { List } from 'components/List';
 import WithLoading from 'components/WithLoading';
 import { PROYECTO_DOCUMENT_STATE } from 'containers/App/constants';
 import Alert from 'components/Alert';
-import documents from './documents';
+import { getDocuments } from './documents';
 import DocumentItem from '../DocumentItem';
 import { canConfirmDocument, canUploadDocument } from '../../helper';
 import { Auth } from 'containers/App/helpers';
@@ -26,8 +26,8 @@ export function LegalForm({
   onSubmit,
   onConfirm,
 }) {
-  const { project = {} } = selectorProject;
-  const entregaInmediata = project.EntregaInmediata;  
+  const { project = {} } = selectorProject; 
+  const documents = getDocuments(project.EntregaInmediata);
   const { loading, ...restSelector } = selector;
   const canConfirm = canConfirmDocument(project);
   const canUpload = canUploadDocument('legal', project) && action !== 'view';
@@ -65,7 +65,9 @@ export function LegalForm({
           const data = new FormData();
           for (let key of keys) {
             if (values[key] && values[key] !== "to_confirm") {
-              data.append(key, values[key]);
+              let fileExtension = values[key].name.split('.').pop();
+              let newName = `${project.Name}_${project.Symbol}_${key}.${fileExtension}`;
+              data.append(key, values[key], newName);
               len++;
             }
           }
@@ -90,10 +92,7 @@ export function LegalForm({
         <>
           <SyncMessage {...restSelector} />
           <List>
-            {documents.map((document, index) => {
-              if( (document.documentoType === 'title_folder') &&
-                  !entregaInmediata ) return null;
-              return (
+            {documents.map((document, index) => 
                 <DocumentItem
                   key={document.documentoType}
                   {...document}
@@ -103,9 +102,8 @@ export function LegalForm({
                   canConfirm={canConfirm}
                   onConfirm={onSeleted}
                   loading={loading}
-                />)
-            })
-            }
+                />
+            )}
           </List>
           {Object.keys(project.Documentos).find(
             docType =>
