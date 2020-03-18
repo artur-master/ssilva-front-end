@@ -56,8 +56,8 @@ function PersonBasic({ form, focusHide }) {
                 />
               </FormGroup>
               <FormGroup className="mt-3">
-                <Label style={{ width: '11em' }}>Direccióne</Label>
-                <ExField className="flex-fill" name="Address" />
+                <Label style={{ width: '11em' }}>Dirección</Label>
+                <ExField className="flex-fill" name="Address" required />
               </FormGroup>
             </>
           )}

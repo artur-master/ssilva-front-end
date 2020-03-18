@@ -14,27 +14,29 @@ export function CarpetaDigitalUploadActions({
   selector,
   form,
   onCancel,
-  onSave,
+  onSendControl,
 }) {
   const { loading } = selector;
   const [withText, setWithText] = useState({ text: '', open: false });
   const { values } = form;
   const [canUpload, setCanUpload] = useState(false);
+  const [subReserva, setSubReserva] = useState(false);
 
   useEffect(() => {
-    setCanUpload( (entity.ReservaID) ? true :
-      (
-        !!(values.DocumentPagoGarantia) && 
-        !!(values.DocumentCotizacion) && 
-        !!(values.DocumentFotocopiaCarnet)
-      )
+    setCanUpload(
+      entity.ReservaID
+        ? true
+        : !!values.DocumentPagoGarantia ||
+            !!values.DocumentCotizacion ||
+            !!values.DocumentFotocopiaCarnet,
     );
+    setSubReserva(!!entity.ReservaID);
   }, [values]);
 
   useEffect(() => {
     setCanUpload(false);
   }, []);
-  
+
   useEffect(() => {
     setCanUpload(false);
   }, [entity]);
@@ -48,17 +50,16 @@ export function CarpetaDigitalUploadActions({
         <Button
           disabled={!canUpload ? true : loading}
           className="order-3 m-btn mr-2"
-          onClick={onSave}
-        >
-          Cargando
-        </Button>
-        <Button
-          disabled={loading}
-          onClick={() => form.submitForm()}
-          className="order-3 m-btn mr-2"
           type="submit"
         >
           Reservar
+        </Button>
+        <Button
+          onClick={onSendControl}
+          className="order-3 m-btn mr-2"
+          disabled={!subReserva ? true : loading}
+        >
+          Enviar a Control
         </Button>
         <Button
           disabled={loading}
@@ -152,7 +153,7 @@ CarpetaDigitalUploadActions.propTypes = {
   entity: PropTypes.object,
   selector: PropTypes.object,
   onCancel: PropTypes.func,
-  onSave: PropTypes.func,
+  onSendControl: PropTypes.func,
 };
 
 export default CarpetaDigitalUploadActions;
