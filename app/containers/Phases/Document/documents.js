@@ -45,23 +45,19 @@ export const getDocuments = entity => {
         documentoName: 'Constitucion Sociedad',
         documentoType: 'DocumentConstitucionSociedad',
         firmado: true,
-        required: true,
       },
       {
         documentoName: 'Certificado de Vigencia de sociedad',
         accept: 'pdf',
         documentoType: 'DocumentCertificadoSociedad',
-        required: true,
       },
       {
         documentoName: 'Carpeta Tributaria de Últimos Dos Años',
         documentoType: 'DocumentCarpetaTributaria',
-        required: true,
       },
       {
         documentoName: '3 Últimos Balances Timbrados',
         documentoType: 'DocumentBalancesTimbrados',
-        required: true,
       },
     ];
   }
@@ -72,28 +68,33 @@ export const getDocuments = entity => {
       {
         documentoName: '6 Últimas boletas de homorarios o pagos IVA',
         documentoType: 'Document6IVA',
+        required: true,
       },
       {
         documentoName: '2 Últimas declaraciones anuales de renta (DAI)',
         documentoType: 'Document2DAI',
+        required: true,
       },
     ];
     if (hasProfesion) {
       baseDocuments.push({
         documentoName: 'Título Profesional',
         documentoType: 'DocumentTituloProfesional',
+        required: true,
       });
     }
     if (hasTieneDeposito) {
       baseDocuments.push({
         documentoName: 'Acreditación de Ahorros',
         documentoType: 'DocumentAcredittacionAhorros',
+        required: true,
       });
     }
     if (hasTieneCredito)
       baseDocuments.push({
         documentoName: 'Acreditación de pago Deudas',
         documentoType: 'DocumentAcredittacionDeudas',
+        required: true,
       });
   }
 

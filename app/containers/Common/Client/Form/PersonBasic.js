@@ -29,7 +29,7 @@ function PersonBasic({ form, focusHide }) {
           </FormGroup>
           <FormGroup className="mt-3">
             <Label style={{ width: '11em' }}>Profesión</Label>
-            <ExField name="Ocupation" className="flex-fill" required />
+            <ExField name="Ocupation" className="flex-fill" />
           </FormGroup>
         </div>
 
@@ -41,7 +41,6 @@ function PersonBasic({ form, focusHide }) {
                 style={{ width: '100%' }}
                 type="datePicker"
                 name="BirthDate"
-                required
               />
             </div>
           </FormGroup>
