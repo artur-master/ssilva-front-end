@@ -44,7 +44,7 @@ export function PhaseGeneral({
             </span>
           </div>
         )}
-        {canEdit && (
+        {(canEdit) && (
           <Button
             color="white"
             className="m-btn-pen order-3"

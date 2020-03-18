@@ -10,6 +10,7 @@ import { BoxFooter } from 'components/Box';
 import { Form as ExForm, Field, FormGroup, Label } from 'components/ExForm';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
+import { Auth } from 'containers/App/helpers';
 
 const SyncMessage = WithLoading();
 function FinanceForm({ selector, onSubmit, onReset }) {
@@ -38,6 +39,7 @@ function FinanceForm({ selector, onSubmit, onReset }) {
                 min={0}
                 max={100}
                 placeholder="%"
+                disabled = {!Auth.isFinanza()}
               />
             </FormGroup>
             <FormGroup className="col-md-6 my-2">
@@ -50,6 +52,7 @@ function FinanceForm({ selector, onSubmit, onReset }) {
                 max={100}
                 type="number"
                 placeholder="%"
+                disabled = {!Auth.isFinanza()}
               />
             </FormGroup>
             <FormGroup className="col-md-6 my-2">
@@ -62,28 +65,31 @@ function FinanceForm({ selector, onSubmit, onReset }) {
                 max={100}
                 type="number"
                 placeholder="%"
+                disabled = {!Auth.isFinanza()}
               />
             </FormGroup>
           </div>
-          <BoxFooter inside>
-            <Button
-              loading={loading}
-              disabled={loading}
-              onClick={evt => {
-                evt.preventDefault();
-                submitForm();
-              }}
-            >
-              Aceptar
-            </Button>
-            <Button
-              disabled={loading}
-              onClick={onReset}
-              className="font-14-rem shadow-sm m-btn m-btn-white ml-2"
-            >
-              Cancelar
-            </Button>
-          </BoxFooter>
+          { Auth.isFinanza() &&
+            (<BoxFooter inside>
+              <Button
+                loading={loading}
+                disabled={loading}
+                onClick={evt => {
+                  evt.preventDefault();
+                  submitForm();
+                }}
+              >
+                Aceptar
+              </Button>
+              <Button
+                disabled={loading}
+                onClick={onReset}
+                className="font-14-rem shadow-sm m-btn m-btn-white ml-2"
+              >
+                Cancelar
+              </Button>
+            </BoxFooter>)
+          }     
         </>
       )}
     </ExForm>

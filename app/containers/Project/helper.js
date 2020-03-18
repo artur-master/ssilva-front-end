@@ -6,7 +6,7 @@ import {
 } from 'containers/App/constants';
 import { isUserProjectType, Auth } from 'containers/App/helpers';
 import marketingDocuments from './Documents/Marketing/documents';
-import legalDocuments from './Documents/Legal/documents';
+import { getDocuments } from './Documents/Legal/documents';
 
 export const currentProjectStep = (project = {}) => {
   const {
@@ -19,6 +19,8 @@ export const currentProjectStep = (project = {}) => {
     IngresoComisionesState,
     ProyectoApprovalState,
   } = project;
+  
+  const legalDocuments = getDocuments(EntregaInmediata);
 
   // 1. create new (general)
   if (!ProyectoID) return 1;
