@@ -14,6 +14,9 @@ import { calculates } from 'containers/Phases/FormaDePago/helper';
 import { inmuebleLabel } from 'containers/Common/Inmueble/helper';
 import PhaseInmuebleForm from './Form';
 
+import { Auth } from 'containers/App/helpers';
+import { UserProject } from 'containers/Project/helper';
+
 export function PhaseInmueble({
   isCollapse = false,
   canEdit,
@@ -51,7 +54,7 @@ export function PhaseInmueble({
                 </span>
               </div>
             )}
-            {canEdit && (
+            {(canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
               <Button
                 color="white"
                 className="m-btn-pen order-3"

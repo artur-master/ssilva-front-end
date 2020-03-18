@@ -26,11 +26,13 @@ function* sagaSaveProject(action) {
     });
     yield put(saveEntitySuccess(response));
     const { documentos } = response;
-    if (
-      !Object.keys(documentos).find(docType => !documentos[docType]) &&
-      Object.keys(documentos).find(
-        docType => documentos[docType] && documentos[docType].no_existed,
-      )
+    const noNull = Object.keys(documentos).find(docType => !documentos[docType]);
+    const flag = !noNull ? true: (noNull === "title_folder") ? !action.entregaInmediata : false;
+  
+    if ( flag && Object.keys(documentos).find(
+          docType => (documentos[docType] && documentos[docType].no_existed) || 
+                     (!action.entregaInmediata && docType==="title_folder")
+          )
     ) {
       yield call(
         request,

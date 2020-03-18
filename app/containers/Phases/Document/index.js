@@ -12,6 +12,7 @@ import CarpetaDigital from './CarpetaDigital';
 import { getDocuments } from './documents';
 import CarpetaDigitalUploadActions from './UploadActions';
 import CarpetaDigitalReviewActions from './ReviewActions';
+import { Auth } from 'containers/App/helpers';
 
 const SyncMessage = WithLoading();
 
@@ -52,13 +53,15 @@ export function PhaseDocument({
     <ExForm initialValues={initialValues} onSubmit={onSendControl}>
       {form => (
         <>
-          <Garantia
-            isCollapse={isCollapse}
-            entity={entity}
-            canUpload={canUpload}
-            onGarantia={onGarantia}
-            onCancel={onCancel}
-          />
+          { (Auth.isPM() || Auth.isVendor()) &&
+            (<Garantia
+              isCollapse={isCollapse}
+              entity={entity}
+              canUpload={canUpload}
+              onGarantia={onGarantia}
+              onCancel={onCancel}
+            />)
+          }
           <CarpetaDigital
             isCollapse={isCollapse}
             entity={entity}

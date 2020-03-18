@@ -24,10 +24,11 @@ export function resetContainer() {
   };
 }
 
-export function saveEntity(ProyectoID, values) {
+export function saveEntity(ProyectoID, values, entregaInmediata) {
   return {
     type: SAVE_ENTITY,
     values,
+    entregaInmediata,
     ProyectoID,
   };
 }
