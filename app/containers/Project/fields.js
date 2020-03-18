@@ -19,13 +19,14 @@ const buildUsersField = (form, options = {}) => {
     roles,
     multiple = false,
     query = {},
+    required = true,
   } = options;
   let selected = tmp.UsersProyecto[userProyectoType];
   if (!Array.isArray(selected) && selected) selected = [selected];
   return {
     ...options,
     label,
-    required: true,
+    required,
     name: `tmp.UsersProyecto[${userProyectoType}]`,
     multiple,
     value: selected,
@@ -219,12 +220,12 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
     buildUsersField(form, {
       label: 'Asistente Comercial',
       userProyectoType: 'Asistente Comercial',
-      required: true,
+      required: false,
     }),
     buildUsersField(form, {
       label: 'Vendedor',
       userProyectoType: 'Vendedor',
-      required: true,
+      required: false,
     }),
     buildUsersField(form, {
       label: 'Representante Inmobiliaria',
@@ -236,7 +237,7 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
           item => item.UserInmobiliariaType === 'Representante',
         ),
       },
-      required: true,
+      required: false,
     }),
     buildUsersField(form, {
       label: 'Aprobador Inmobiliaria',
@@ -248,7 +249,7 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
           item => item.UserInmobiliariaType === 'Aprobador',
         ),
       },
-      required: true,
+      required: false,
     }),
     buildUsersField(form, {
       label: 'Autorizador Inmobiliaria',
@@ -260,23 +261,23 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
           item => item.UserInmobiliariaType === 'Autorizador',
         ),
       },
-      required: true,
+      required: false,
     }),
     {
       label: 'Arquitecto',
       name: 'Arquitecto',
       view: Arquitecto || '',
-      required: true,
+      required: false,
     },
     buildUsersField(form, {
       label: 'Marketing',
       userProyectoType: 'Marketing',
-      required: true,
+      required: false,
     }),
     buildUsersField(form, {
       label: 'Legal',
       userProyectoType: 'Legal',
-      required: true,
+      required: false,
     }),
     buildUsersField(form, {
       label: 'Finanza',
@@ -291,14 +292,14 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       name: `ConstructoraID`,
       view: Constructora || '',
       Component: ExConstructoras,
-      required: true,
+      required: false,
     },
     {
       label: 'Duración Cotización',
       name: `CotizacionDuration`,
       view: `${CotizacionDuration || ''} Días`,
       type: 'number',
-      required: true,
+      required: false,
     },
     {
       label: 'Monto Reserva',
@@ -322,7 +323,7 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       name: `InstitucionFinancieraID`,
       view: InstitucionFinanciera || '',
       Component: ExInstitucionFinancieras,
-      required: true,
+      required: false,
     },
   ];
 };

@@ -3,6 +3,7 @@ const documents = [
     documentoName: 'Plan de Medios Excel',
     accept: 'excel',
     documentoType: 'marketing_excel',
+    required: true,
     // noExisteable: true,
   },
   {
@@ -10,6 +11,7 @@ const documents = [
     accept: 'pdf',
     documentoType: 'marketing_pdf',
     firmado: true,
+    required: true,
     // noExisteable: true,
   },
 ];

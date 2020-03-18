@@ -83,7 +83,7 @@ export function LegalForm({
         // const data = new FormData();
         // Object.keys(values).forEach(name => {
         //   data.append(name, values[name]);
-        // });        
+        // });
         // onSubmit(data);
         /* Commented by Artur - end */
       }}
@@ -93,16 +93,17 @@ export function LegalForm({
           <SyncMessage {...restSelector} />
           <List>
             {documents.map((document, index) => 
-                <DocumentItem
-                  key={document.documentoType}
-                  {...document}
-                  Documentos={project.Documentos}
-                  className={index > 0 ? 'border-top' : ''}
-                  canUpload={canUpload}
-                  canConfirm={canConfirm}
-                  onConfirm={onSeleted}
-                  loading={loading}
-                />
+              <DocumentItem
+                key={document.documentoType}
+                {...document}
+                Documentos={project.Documentos}
+                className={index > 0 ? 'border-top' : ''}
+                canUpload={canUpload}
+                canConfirm={canConfirm}
+                onConfirm={onSeleted}
+                loading={loading}
+                required={document.required}
+              />
             )}
           </List>
           {Object.keys(project.Documentos).find(

@@ -67,7 +67,9 @@ const checkRut = rut => {
 const defaultValidate = (value, props) => {
   // required validate
   /* eslint-disable-next-line */
-  if (props.required && (value === '' || value === null)) return 'Este campo es requerido';
+  if (props.required && (value === '' || value === null) && props.name=="Address") return 'Debe rellenar la dirección completa antes de continuar'; //address must not null
+  if (props.required && (value === '' || value === null))
+    return 'Este campo es requerido';
 
   // rut validate
   if (props.rut || props.name.toLowerCase() === 'rut') return checkRut(value);
