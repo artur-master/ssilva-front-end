@@ -16,6 +16,9 @@ import ClienteForm from 'containers/Common/Client/Form';
 import PhaseClientView from './View';
 import { isValidClient } from './helper';
 
+import { Auth } from 'containers/App/helpers';
+import { UserProject } from 'containers/Project/helper';
+
 export function PhaseClient({
   payType,
   canEdit,
@@ -64,7 +67,7 @@ export function PhaseClient({
             </span>
           </div>
         )}
-        {canEdit && (
+        {(canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
           <Button
             color="white"
             disabled={selectorClient.loading}
