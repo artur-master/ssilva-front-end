@@ -114,7 +114,6 @@ function* sagaRegisterSelectIF(action) {
 }
 
 function* sagaDownloadPreApprobation(action) {
-  console.log("sdfsdf")
   const requestURL = `${API_ROOT}/ventas/pre-approbation-download/`;
   try {
     const response = yield call(request, requestURL, {

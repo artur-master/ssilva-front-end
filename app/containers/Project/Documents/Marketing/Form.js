@@ -62,7 +62,9 @@ export function MarketingForm({
           const data = new FormData();
           for (let key of keys) {
             if (values[key] && values[key] !== "to_confirm") {
-              data.append(key, values[key]);
+              let fileExtension = values[key].name.split('.').pop();
+              let newName = `${project.Name}_${project.Symbol}_${key}.${fileExtension}`;
+              data.append(key, values[key], newName);
               len++;
             }
           }

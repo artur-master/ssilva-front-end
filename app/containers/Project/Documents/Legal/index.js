@@ -38,7 +38,7 @@ export function Legal({ action, selectorProject, selector, dispatch }) {
       selectorProject={selectorProject}
       selector={selector}
       onConfirm={values => dispatch(reviewEntity(project.ProyectoID, values))}
-      onSubmit={values => dispatch(saveEntity(project.ProyectoID, values))}
+      onSubmit={values => dispatch(saveEntity(project.ProyectoID, values, project.EntregaInmediata))}
       onApprove={isApprove => {
         dispatch(approveDocuments(project.ProyectoID, isApprove));
       }}

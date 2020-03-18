@@ -87,7 +87,6 @@ export function registerSelectIFSuccess(response) {
 }
 
 export function downloadPreApprobation(values) {
-  console.log(values)
   return {
     type: DOWNLOAD_PRE_APPROBATION,
     values,
