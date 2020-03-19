@@ -12,7 +12,7 @@ import Item from './Item';
 import { searchQuotations } from './actions';
 import Filter from './Filter';
 
-const List = ({ quotations, filter, reports, project, dispatch }) => (
+const List = ({ quotations, filter, reports, project, reservations, dispatch }) => (
   <div>
     <Filter
       reports={reports}
@@ -29,6 +29,7 @@ const List = ({ quotations, filter, reports, project, dispatch }) => (
               <Item
                 key={item.CotizacionID}
                 quotation={item}
+                reservation={(reservations || []).find(reservation => item.Folio === reservation.Folio)}
                 dispatch={dispatch}
               />
             ))}

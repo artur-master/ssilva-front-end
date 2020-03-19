@@ -9,7 +9,7 @@ import { Box } from 'components/Box';
 import Empty from 'components/Empty';
 import Item from './Item';
 
-const List = ({ project, reservations, dispatch }) => (
+const List = ({ project, reservations, offers, dispatch }) => (
   <Box className="mt-3 pt-3 pb-3">
     {reservations && reservations.length < 1 && <Empty tag="h2" />}
     {reservations && reservations.length > 0 && (
@@ -20,6 +20,7 @@ const List = ({ project, reservations, dispatch }) => (
               key={reservation.ReservaID}
               reservation={reservation}
               project={project}
+              offer={(offers || []).find(offer => offer.Folio === reservation.Folio)}
               dispatch={dispatch}
             />
           ))}
