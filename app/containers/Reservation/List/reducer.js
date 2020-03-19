@@ -61,7 +61,7 @@ const reservationReducer = (state = initialState, action) =>
           switch (reservation.ReservaState) {
             case 'Oferta':
               ReservaStateColor = 'badge-info';
-              ReservaStateLabel = 'Reservas';
+              ReservaStateLabel = 'Oferta';
               break;
             case 'Pendiente información':
               ReservaStateColor = 'badge-success';
