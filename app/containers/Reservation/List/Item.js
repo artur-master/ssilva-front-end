@@ -21,7 +21,7 @@ import {
 import moment from 'components/moment';
 import { canEditReservation } from '../Form/helper';
 
-const Item = ({ project, reservation, dispatch }) => {
+const Item = ({ project, reservation, offer, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const {
     Proyecto,
@@ -94,6 +94,22 @@ const Item = ({ project, reservation, dispatch }) => {
             >
               Ver datos
             </DropdownItem>
+            {offer && (
+              <DropdownItem
+                tag="a"
+                onClick={() => {
+                  dispatch(
+                    push(
+                      `/proyectos/${project.ProyectoID}/oferta?OfertaID=${
+                        offer.OfertaID
+                      }`,
+                    ),
+                  );
+                }}
+              >
+                Detalle Oferta
+              </DropdownItem>)
+            }
             {canEditReservation(reservation) && (
               <DropdownItem
                 tag="a"

@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import { inmuebleWithRestrictions } from 'containers/Common/Inmueble/helper';
 
-const Item = ({ quotation, dispatch }) => {
+const Item = ({ quotation, reservation, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const {
     CotizacionID,
@@ -91,6 +91,22 @@ const Item = ({ quotation, dispatch }) => {
             >
               Ver datos
             </DropdownItem>
+            {reservation && (
+              <DropdownItem
+                tag="a"
+                onClick={() => {
+                  dispatch(
+                    push(
+                      `/proyectos/${project.ProyectoID}/reserva?ReservaID=${
+                      reservation.ReservaID
+                      }`,
+                    ),
+                  );
+                }}
+              >
+                Detalle Reserva
+              </DropdownItem>
+            )}
           </DropdownMenu>
         </Dropdown>
       </td>
