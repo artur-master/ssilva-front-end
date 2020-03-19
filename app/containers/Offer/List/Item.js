@@ -23,7 +23,7 @@ import { OFERTA_STATE } from 'containers/App/constants';
 import Button from 'components/Button';
 import { canEditOffer } from '../helper';
 
-const Item = ({ project, offer, dispatch }) => {
+const Item = ({ project, offer, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente, Date } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
@@ -89,6 +89,22 @@ const Item = ({ project, offer, dispatch }) => {
             >
               Ver datos
             </DropdownItem>
+            {promesa && (
+              <DropdownItem
+                tag="a"
+                onClick={() => {
+                  dispatch(
+                    push(
+                      `/proyectos/${project.ProyectoID}/promesa?PromesaID=${
+                        promesa.PromesaID
+                      }`,
+                    ),
+                  );
+                }}
+              >
+                Detalle Promesa
+              </DropdownItem>
+            )}
             {canEditOffer(offer) && (
               <DropdownItem
                 tag="a"
