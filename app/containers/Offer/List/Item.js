@@ -23,7 +23,7 @@ import { OFERTA_STATE } from 'containers/App/constants';
 import Button from 'components/Button';
 import { canEditOffer } from '../helper';
 
-const Item = ({ project, offer, dispatch }) => {
+const Item = ({ project, offer, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente, Date } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
@@ -51,12 +51,6 @@ const Item = ({ project, offer, dispatch }) => {
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
           {OfertaStateFormat.map((state, index) => {
-            if (state.Label === OFERTA_STATE[3])
-              return (
-                <Button size="sm" key={String(index)}>
-                  {state.Label}
-                </Button>
-              );
             return (
               <span
                 key={String(index)}
@@ -95,6 +89,22 @@ const Item = ({ project, offer, dispatch }) => {
             >
               Ver datos
             </DropdownItem>
+            {promesa && (
+              <DropdownItem
+                tag="a"
+                onClick={() => {
+                  dispatch(
+                    push(
+                      `/proyectos/${project.ProyectoID}/promesa?PromesaID=${
+                        promesa.PromesaID
+                      }`,
+                    ),
+                  );
+                }}
+              >
+                Detalle Promesa
+              </DropdownItem>
+            )}
             {canEditOffer(offer) && (
               <DropdownItem
                 tag="a"

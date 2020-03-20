@@ -29,6 +29,7 @@ export function PhaseCreationForm({
   const [step, setStep] = useState(1);
 
   const initialValues = model({ project, entity: quotation });
+  const defaultPercent = project.GuaranteePercent || 20;
 
   let directAfterSubmitted = 'list';
 
@@ -76,6 +77,7 @@ export function PhaseCreationForm({
                     directAfterSubmitted = 'reserva';
                     submitForm();
                   }}
+                  defaultPercent={defaultPercent}
                 />
               </>
             )}

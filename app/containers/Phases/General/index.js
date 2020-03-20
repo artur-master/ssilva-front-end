@@ -13,6 +13,9 @@ import { createStructuredSelector } from 'reselect';
 import PhaseGeneralView from './View';
 import PhaseGeneralForm from './Form';
 
+import { Auth } from 'containers/App/helpers';
+import { UserProject } from 'containers/Project/helper';
+
 export function PhaseGeneral({
   isCollapse = false,
   canEdit,
@@ -44,7 +47,7 @@ export function PhaseGeneral({
             </span>
           </div>
         )}
-        {(canEdit) && (
+        {(canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
           <Button
             color="white"
             className="m-btn-pen order-3"

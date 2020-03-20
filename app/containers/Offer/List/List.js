@@ -9,7 +9,7 @@ import { Box } from 'components/Box';
 import Empty from 'components/Empty';
 import Item from './Item';
 
-const List = ({ project, offers, dispatch }) => (
+const List = ({ project, offers, promesas, dispatch }) => (
   <Box className="mt-3 pt-3 pb-3">
     {offers && offers.length < 1 && <Empty tag="h2" />}
     {offers && offers.length > 0 && (
@@ -20,6 +20,7 @@ const List = ({ project, offers, dispatch }) => (
               key={offer.OfertaID}
               offer={offer}
               project={project}
+              promesa={(promesas || []).find(promesa => offer.Folio === promesa.Folio)}
               dispatch={dispatch}
             />
           ))}
@@ -31,6 +32,7 @@ const List = ({ project, offers, dispatch }) => (
 
 List.propTypes = {
   offers: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  promesas: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dispatch: PropTypes.func,
 };

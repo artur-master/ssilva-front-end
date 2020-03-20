@@ -72,28 +72,33 @@ export const getDocuments = entity => {
       {
         documentoName: '6 Últimas boletas de homorarios o pagos IVA',
         documentoType: 'Document6IVA',
+        required: true,
       },
       {
         documentoName: '2 Últimas declaraciones anuales de renta (DAI)',
         documentoType: 'Document2DAI',
+        required: true,
       },
     ];
     if (hasProfesion) {
       baseDocuments.push({
         documentoName: 'Título Profesional',
         documentoType: 'DocumentTituloProfesional',
+        required: true,
       });
     }
     if (hasTieneDeposito) {
       baseDocuments.push({
         documentoName: 'Acreditación de Ahorros',
         documentoType: 'DocumentAcredittacionAhorros',
+        required: true,
       });
     }
     if (hasTieneCredito)
       baseDocuments.push({
         documentoName: 'Acreditación de pago Deudas',
         documentoType: 'DocumentAcredittacionDeudas',
+        required: true,
       });
   }
 
@@ -103,28 +108,34 @@ export const getDocuments = entity => {
       {
         documentoName: 'Fotocopia Carnet',
         documentoType: 'DocumentFotocopiaCarnet',
+        required: true,
       },
       {
         documentoName: 'Cotizaciones AFP',
         documentoType: 'DocumentCotizacionAFP',
+        required: true,
       },
       {
         documentoName: 'PreAprobación De Crédito',
         documentoType: 'DocumentPreApprobation',
         accept: 'pdf',
         firmado: true,
+        required: true,
       },
       {
         documentoName: 'Liquidacion 1',
         documentoType: 'DocumentLiquidacion1',
+        required: true,
       },
       {
         documentoName: 'Liquidacion 2',
         documentoType: 'DocumentLiquidacion2',
+        required: true,
       },
       {
         documentoName: 'Liquidacion 3',
         documentoType: 'DocumentLiquidacion3',
+        required: true,
       },
     ];
   }
