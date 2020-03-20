@@ -15,6 +15,9 @@ import GeneralReview from '../GeneralApprove/GeneralReview';
 import Notification from './Notification';
 
 export default function Documents({ project = {}, action }) {
+  if(project && !project.EntregaInmediata && project.Documentos)
+    delete project.Documentos['title_folder'];
+  
   return (
     <Box collapse>
       <BoxHeader>
