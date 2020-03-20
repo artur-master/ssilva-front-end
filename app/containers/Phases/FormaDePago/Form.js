@@ -21,9 +21,10 @@ import {
   simulateCalculation,
   updatePaymentValues,
 } from './helper';
+import { Auth } from 'containers/App/helpers';
 
 // eslint-disable-next-line no-unused-vars
-function PhaseFormaDePagoForm({ form }) {
+function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
   const [openCuotas, setOpenCuotas] = useState(0);
   const { values, setValues } = form;
   const { paymentUtils } = window.preload;
@@ -37,7 +38,8 @@ function PhaseFormaDePagoForm({ form }) {
   };
 
   const handleChangePercent = (payFor, val) => {
-    const value = (parseFloat(val || 0) / 100) * cost;
+    // const value = (parseFloat(val || 0) / 100) * cost;
+    const value = (parseFloat(defaultPercent || 0) / 100) * cost;
     updatePaymentValues({ payFor, value, values, setValues });
   };
 
@@ -133,6 +135,7 @@ function PhaseFormaDePagoForm({ form }) {
                   <input
                     className="form-control form-control-sm"
                     type="number"
+                    readOnly={ !Auth.isPM() }
                     value={
                       percent.PaymentFirmaPromesa
                         ? formatNumber(percent.PaymentFirmaPromesa)

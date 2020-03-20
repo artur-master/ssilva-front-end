@@ -7,12 +7,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form as ExForm } from 'components/ExForm';
 import WithLoading from 'components/WithLoading';
+import { Auth } from 'containers/App/helpers';
 import Garantia from './Garantia';
 import CarpetaDigital from './CarpetaDigital';
 import { getDocuments } from './documents';
 import CarpetaDigitalUploadActions from './UploadActions';
 import CarpetaDigitalReviewActions from './ReviewActions';
-import { Auth } from 'containers/App/helpers';
 
 const SyncMessage = WithLoading();
 
@@ -50,18 +50,18 @@ export function PhaseDocument({
   );
 
   return (
-    <ExForm initialValues={initialValues} onSubmit={onSendControl}>
+    <ExForm initialValues={initialValues} onSubmit={onSave}>
       {form => (
         <>
-          { (Auth.isPM() || Auth.isVendor()) &&
-            (<Garantia
+          {(Auth.isPM() || Auth.isVendor()) && (
+            <Garantia
               isCollapse={isCollapse}
               entity={entity}
               canUpload={canUpload}
               onGarantia={onGarantia}
               onCancel={onCancel}
-            />)
-          }
+            />
+          )}
           <CarpetaDigital
             isCollapse={isCollapse}
             entity={entity}
@@ -80,6 +80,7 @@ export function PhaseDocument({
               onSave={() => onSave(form.values)}
               selector={selector}
               form={form}
+              onSendControl={() => onSendControl(form.values)}
             />
           )}
           {canReview && (

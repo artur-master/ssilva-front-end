@@ -26,6 +26,7 @@ function DocumentItem({
   noExisteable = false,
   className = '',
   onConfirm,
+  required = false,
 }) {
   const [fileName, setFileName] = useState('');
   const [noExist, setNoExist] = useState(
@@ -64,12 +65,7 @@ function DocumentItem({
       <FormikField
         name={documentoType}
         validate={value => {
-          if (
-            Documentos[documentoType] &&
-            Documentos[documentoType].no_existed &&
-            !noExist &&
-            !value
-          )
+          if (required && !Documentos[documentoType] && !noExist && !value)
             return 'Este campo es requerido';
           return null;
         }}
@@ -111,13 +107,12 @@ function DocumentItem({
               {noExisteable && !canUpload && noExist && (
                 <span className="order-1 italic-gray">No existe</span>
               )}
-
               <div
                 className={`custom-file custom-input-file order-3 ${
                   Documentos[documentoType] && Documentos[documentoType].url
                     ? 'd-none'
                     : ''
-                  }`}
+                }`}
                 style={{ height: 'auto' }}
                 title="Examinar..."
               >
@@ -169,88 +164,109 @@ function DocumentItem({
             const { value } = field;
 
             return (
-              <>
-                <span
-                  title={
-                    value === 'rejected'
-                      ? 'Este archivo es rechazado'
-                      : ''
-                  }
-                  className={`font-14-rem  order-3 mr-3 ${
-                    value === 'rejected'
-                      ? 'color-warning'
-                      : 'color-em'
+              <div className="align-items-center mr-3 order-3">
+                <div className="d-flex ">
+                  <span
+                    title={
+                      value !== 'confirmed' ? 'Este archivo es rechazado' : ''
+                    }
+                    className={`font-14-rem d-flex align-items-center order-3 mr-3 ${
+                      value !== 'confirmed' ? 'color-warning' : 'color-em'
                     }`}
-                >
-                  <em>{getFileName(fileName || Documentos[documentoType].url)}</em>
-                </span>
-                {(canConfirm || Documentos[documentoType].state !== 'to_confirm') && (
-                  <div className="d-flex align-items-center mr-3 order-3">
-                    <div className="radio d-flex align-items-center font-14-rem mr-2">
-                      <div className="m-radio">
-                        <input
-                          type="radio"
-                          name={documentoType}
-                          disabled={!canConfirm}
-                          checked={value === "confirmed"}
-                          onChange={() => {
-                            setFieldValue(documentoType, "confirmed"); 
-                            onConfirm();
-                          }}
-                        />
-                        <label />
+                  >
+                    <em>
+                      {getFileName(fileName || Documentos[documentoType].url)}
+                    </em>
+                  </span>
+                  {(canConfirm ||
+                    Documentos[documentoType].state !== 'to_confirm') && (
+                    <div className="d-flex align-items-center mr-3 order-3">
+                      <div className="radio d-flex align-items-center font-14-rem mr-2">
+                        <div className="m-radio">
+                          <input
+                            type="radio"
+                            name={documentoType}
+                            disabled={!canConfirm}
+                            checked={value === 'confirmed'}
+                            onChange={() => {
+                              setFieldValue(documentoType, 'confirmed');
+                              onConfirm();
+                            }}
+                          />
+                          <label />
+                        </div>
+                        <span className="ml-1 color-regular">
+                          <b>Visto</b>
+                        </span>
                       </div>
-                      <span className="ml-1 color-regular">
-                        <b>Visto</b>
-                      </span>
-                    </div>
-                    <div className="radio d-flex align-items-center font-14-rem">
-                      <div className="m-radio">
-                        <input
-                          type="radio"
-                          name={documentoType}
-                          disabled={!canConfirm}
-                          checked={value === "rejected"}
-                          onChange={() => {
-                            setFieldValue(documentoType, "rejected"); 
-                            onConfirm();
-                          }}
-                        />
-                        <label />
+                      <div className="radio d-flex align-items-center font-14-rem">
+                        <div className="m-radio">
+                          <input
+                            type="radio"
+                            name={documentoType}
+                            disabled={!canConfirm}
+                            checked={value !== 'confirmed'}
+                            onChange={() => {
+                              setFieldValue(documentoType, 'rejected');
+                              onConfirm();
+                            }}
+                          />
+                          <label />
+                        </div>
+                        <span className="ml-1 color-regular">
+                          <b>Rechazar</b>
+                        </span>
                       </div>
-                      <span className="ml-1 color-regular">
-                        <b>Rechazar</b>
-                      </span>
                     </div>
-                  </div>)
-                }
-                <UncontrolledDropdown className="order-3">
-                  <DropdownToggle
-                    tag="a"
-                    className="icon icon-dots color-main font-21"
-                  />
-                  <DropdownMenu right positionFixed>
-                    <DropdownItem
+                  )}
+                  <UncontrolledDropdown className="order-3">
+                    <DropdownToggle
                       tag="a"
-                      target="_blank"
-                      href={Documentos[documentoType].url}
-                    >
-                      Ver documento
-                  </DropdownItem>
-                    {canUpload && !noExist && (
+                      className="icon icon-dots color-main font-21"
+                    />
+                    <DropdownMenu right positionFixed>
                       <DropdownItem
                         tag="a"
-                        onClick={() =>
-                          document.getElementsByName(documentoType)[0].click()
-                        }
+                        target="_blank"
+                        href={Documentos[documentoType].url}
                       >
-                        Editar documento
-                    </DropdownItem>
-                    )}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </>
-            )
+                        Ver documento
+                      </DropdownItem>
+                      {canUpload && !noExist && (
+                        <DropdownItem
+                          tag="a"
+                          onClick={() =>
+                            document.getElementsByName(documentoType)[0].click()
+                          }
+                        >
+                          Editar documento
+                        </DropdownItem>
+                      )}
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                </div>
+
+                {value !== 'confirmed' && ( // added comments why deny if rejected
+                  <div className="w-100 order-3">
+                    <textarea
+                      className="w-100 rounded-lg shadow-sm"
+                      onChange={evt => {
+                        setFieldValue(
+                          documentoType,
+                          `rejected${evt.target.value}`,
+                        );
+                        onConfirm();
+                      }}
+                      value={
+                        value.startsWith('rejected:')
+                          ? value.slice(9)
+                          : value.slice(8)
+                      }
+                    />
+                  </div>
+                )}
+              </div>
+            );
           }}
         </FormikField>
       )}
@@ -259,7 +275,7 @@ function DocumentItem({
 }
 
 DocumentItem.propTypes = {
-  loading: PropTypes.bool,
+  required: PropTypes.bool,
   canUpload: PropTypes.bool,
   canConfirm: PropTypes.bool,
   Documentos: PropTypes.object,

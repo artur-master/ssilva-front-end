@@ -29,16 +29,21 @@ import InList from './InList';
 import FiList from './FiList';
 import OfferGarantia from '../Form/FiForm/Garantia';
 
+import { fetchPromesas } from 'containers/Promesa/List/actions';
+import makeSelectPromesas from 'containers/Promesa/List/selectors';
+
 const SyncMessage = WithLoading();
 
-export function Offers({ match, selectorProject, selector, dispatch }) {
+export function Offers({ match, selectorProject, selector, promesas, dispatch }) {
   const { project } = selectorProject;
   useInjectReducer({ key: 'offers', reducer });
   useInjectSaga({ key: 'offers', saga });
 
   useEffect(() => {
-    if (match.params.id && !selector.loading)
+    if (match.params.id && !selector.loading){
       dispatch(fetchOffers(match.params.id));
+      dispatch(fetchPromesas(match.params.id));      
+    }
   }, []);
 
   // header
@@ -63,7 +68,7 @@ export function Offers({ match, selectorProject, selector, dispatch }) {
                   dispatch(searchOffers(txtSearch, status))
                 }
               />
-              <List {...selector} project={project} dispatch={dispatch} />
+              <List {...selector} project={project} promesas={promesas.promesas} dispatch={dispatch} />
             </>
           )}
         </>
@@ -112,12 +117,14 @@ Offers.propTypes = {
   match: PropTypes.object,
   selectorProject: PropTypes.object,
   selector: PropTypes.object,
+  promesas: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   selector: makeSelectOffers(),
   selectorProject: makeSelectInitProject(),
+  promesas: makeSelectPromesas(),
 });
 
 function mapDispatchToProps(dispatch) {

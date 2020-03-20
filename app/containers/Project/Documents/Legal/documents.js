@@ -4,6 +4,7 @@ export const getDocuments = entregaInmediata => {
       documentoName: 'Maqueta Promesa Contado WORD',
       accept: 'word',
       documentoType: 'counter_word',
+      required: true,
       // noExisteable: true,
     },
     {
@@ -11,12 +12,14 @@ export const getDocuments = entregaInmediata => {
       accept: 'pdf',
       documentoType: 'counter_pdf',
       firmado: true,
+      required: true,
       // noExisteable: true,
     },
     {
       documentoName: 'Maqueta Promesa Crédito WORD',
       accept: 'word',
       documentoType: 'credit_word',
+      required: true,
       // noExisteable: true,
     },
     {
@@ -24,12 +27,14 @@ export const getDocuments = entregaInmediata => {
       accept: 'pdf',
       documentoType: 'credit_pdf',
       firmado: true,
+      required: true,
       // noExisteable: true,
     },
     {
       documentoName: 'Maqueta Promesa Empresa WORD',
       accept: 'word',
       documentoType: 'company_word',
+      required: true,
       // noExisteable: true,
     },
     {
@@ -37,6 +42,7 @@ export const getDocuments = entregaInmediata => {
       accept: 'pdf',
       documentoType: 'company_pdf',
       firmado: true,
+      required: true,
       // noExisteable: true,
     },
     {
@@ -44,17 +50,20 @@ export const getDocuments = entregaInmediata => {
       accept: 'image',
       documentoType: 'brokerage_contract',
       noExisteable: true,
+      required: true,
     },
     {
       documentoName: 'Certificado de Dominio Vigente',
       accept: '*',
       documentoType: 'domain_certificate',
+      required: true,
       // noExisteable: true,
     },
     {
       documentoName: 'Escritura de Sociedad',
       accept: '*',
       documentoType: 'company_deed',
+      required: true,
       // noExisteable: true,
     },
     {
@@ -62,6 +71,7 @@ export const getDocuments = entregaInmediata => {
       accept: '*',
       documentoType: 'approved_price_list',
       firmado: true,
+      required: true,
       // noExisteable: true,
     },
   ];
