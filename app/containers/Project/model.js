@@ -53,6 +53,7 @@ export default function model(project = {}) {
     ComunaID = '',
     CotizacionDuration,
     GuaranteeAmount,
+    GuaranteePercent = 20,
     Aseguradora = {},
   } = project;
   return {
@@ -72,6 +73,7 @@ export default function model(project = {}) {
     ComunaID,
     CotizacionDuration,
     GuaranteeAmount,
+    GuaranteePercent,
     Aseguradora,
     tmp: {
       UsersProyecto: UsersProyecto.reduce((acc, user) => {
