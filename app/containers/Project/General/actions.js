@@ -36,6 +36,11 @@ export function saveProject(newValues) {
       [],
     );
   }
+  /* Entrega Inmediata Value */
+  const estato_obj = document.getElementsByName('EtapaStateID')[0];
+  const estado_val = estato_obj.options[estato_obj.selectedIndex].text;
+  (estado_val=="En escrituración")? (values.EntregaInmediata=1) : (values.EntregaInmediata=0);
+
   return {
     type: SAVE_PROJECT,
     values,
