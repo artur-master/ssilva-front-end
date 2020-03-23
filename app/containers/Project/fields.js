@@ -328,14 +328,6 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       min: 0,
       max: 100,
     }, 
-    {
-      label: 'Entrega Inmediata',
-      name: 'EntregaInmediata',
-      view: EntregaInmediata ? 'Si' : 'No',
-      type: 'radioGroup',
-      required: true,
-      options: [{ value: 1, label: 'Si' }, { value: 0, label: 'No' }],
-    },
   ];
 };
 
