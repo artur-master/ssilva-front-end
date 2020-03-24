@@ -23,7 +23,7 @@ import PromesaRefundGarantia from 'containers/Phases/Promesa/RefundGarantia';
 import makeSelectPromesas from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { fetchPromesas, searchPromesas } from './actions';
+import { fetchPromesas, searchPromesas, queryPromesas } from './actions';
 import List from './List';
 import Filter from './Filter';
 
@@ -67,7 +67,10 @@ export function Promesas({ match, selectorProject, selector, dispatch }) {
               }
             />
           </h5>
-          <List {...selector} project={project} dispatch={dispatch} />
+          <List {...selector} project={project}
+            onQuery={query => {dispatch(queryPromesas(query))}}
+            dispatch={dispatch}
+          />
         </>
       )}
     </>

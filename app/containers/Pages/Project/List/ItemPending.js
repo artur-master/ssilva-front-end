@@ -77,7 +77,7 @@ const ItemPending = ({ project, dispatch }) => {
             </>
           )}
 
-          <div className="advance mt-5 pt-5">
+          <div className="advance">
             <span className="title">Avance del Proyecto</span>
             <div className="percent">
               <progress className={color} value={progress} max="100" />

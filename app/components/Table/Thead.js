@@ -9,13 +9,14 @@ const Thead = ({ ths = [], onQuery, query = {} }) => {
         {ths.map((th, index) => (
           <td
             key={index}
-            className={`${index > 0 ? '' : 'pl-3'} ${th.className}`}
+            className={`${index > 0 ? '' : 'pl-3'} ${th.className || ''}`}
             style={{cursor: 'pointer'}}
             onClick={() =>
               th.sortable
                 ? onQuery({ sort: { by: th.field, asc: !sort.asc } })
                 : ''
             }
+            colSpan={th.colSpan || 1}
           >
             <span className="font-14-rem color-regular">
               <b>

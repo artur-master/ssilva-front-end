@@ -19,8 +19,8 @@ import {
   matchRestrictionsFromAList,
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
-import { OFERTA_STATE } from 'containers/App/constants';
-import Button from 'components/Button';
+// import { OFERTA_STATE } from 'containers/App/constants';
+// import Button from 'components/Button';
 import { canEditOffer } from '../helper';
 
 const Item = ({ project, offer, promesa, dispatch }) => {

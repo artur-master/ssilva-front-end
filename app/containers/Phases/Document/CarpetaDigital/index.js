@@ -84,10 +84,10 @@ export function CarpetaDigital({
                   />
                 ),
               },
-              {
-                label: 'PROMESA',
-                content: <Promise entity={entity} />,
-              },
+              // {
+              //   label: 'PROMESA',
+              //   content: <Promise entity={entity} />,
+              // },
               {
                 label: 'OFERTA',
                 content: (

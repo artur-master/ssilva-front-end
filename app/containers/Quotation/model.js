@@ -29,6 +29,7 @@ export default function model({ project = {}, entity = {} }) {
     PaymentInstitucionFinanciera: entity.PaymentInstitucionFinanciera || 0,
     AhorroPlus: entity.AhorroPlus || 0,
     DateFirmaPromesa: entity.DateFirmaPromesa || new Date(),
+    DiscountMaxPercent: parseFloat(project.DiscountMaxPercent) || 100,
     step: 1,
   };
   if (initialModel.Cuotas.length < 1)

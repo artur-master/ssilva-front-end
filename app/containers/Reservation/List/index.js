@@ -20,7 +20,7 @@ import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
 import makeSelectReservations from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { fetchReservations, searchReservations } from './actions';
+import { fetchReservations, searchReservations, queryReservations } from './actions';
 import { fetchOffers } from 'containers/Offer/List/actions';
 import makeSelectOffers from 'containers/Offer/List/selectors';
 import List from './List';
@@ -55,7 +55,10 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
               dispatch(searchReservations(txtSearch, status))
             }
           />
-          <List {...selector} project={project} offers={offers.offers} dispatch={dispatch} />
+          <List {...selector} project={project} 
+            onQuery={ query => dispatch(queryReservations(query))} 
+            offers={offers.offers} dispatch={dispatch} 
+          />
         </>
       )}
     </>

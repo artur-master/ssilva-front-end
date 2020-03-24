@@ -27,4 +27,27 @@ export const canCreateReservation = () =>
   !window.project
     ? false
     : UserProject.in(window.project) &&
-      Auth.hasOneOfPermissions(['Es vendedor']);
+    Auth.hasOneOfPermissions(['Es vendedor']);
+
+export const doQuery = (entities, query = {}) => {
+  if (!entities) return [];
+  let queriedEntities = [...entities];
+  /* sort */
+  const { sort } = query;
+  if (sort) {
+    queriedEntities = queriedEntities.sort((a, b) => {
+      let aa = a[sort.by], bb = b[sort.by];
+      if (sort.by === "Cliente") {
+        aa = `${a['ClienteName']} ${a['ClienteLastNames']} ${a['ClienteRut']}`;
+        bb = `${b['ClienteName']} ${b['ClienteLastNames']} ${b['ClienteRut']}`;
+      }
+      if (aa.toLowerCase() > bb.toLowerCase())
+        return sort.asc ? 1 : -1;
+      if (aa.toLowerCase() < bb.toLowerCase())
+        return sort.asc ? -1 : 1;
+      return 0;
+    });
+  }
+
+  return queriedEntities;
+};

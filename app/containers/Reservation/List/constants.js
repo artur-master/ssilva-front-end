@@ -6,6 +6,9 @@
 /* Reservations */
 export const SEARCH_RESERVATIONS =
   'app/containers/Reservation/List/SEARCH_RESERVATIONS';
+  
+export const QUERY_RESERVATIONS =
+  'app/containers/Reservation/List/QUERY_RESERVATIONS';
 
 export const FETCH_RESERVATIONS =
   'app/containers/Reservation/List/FETCH_RESERVATIONS';

@@ -5,6 +5,7 @@
  */
 
 import {
+  QUERY_QUOTATIONS,
   FETCH_QUOTATIONS,
   FETCH_QUOTATIONS_ERROR,
   FETCH_QUOTATIONS_SUCCESS,
@@ -23,6 +24,13 @@ export function toggleQuotationForm(toggle) {
   return {
     type: TOGGLE_QUOTATION_FORM,
     toggle,
+  };
+}
+
+export function queryQuotations(query) {
+  return {
+    type: QUERY_QUOTATIONS,
+    query,
   };
 }
 

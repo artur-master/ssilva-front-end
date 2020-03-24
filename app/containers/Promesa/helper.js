@@ -75,3 +75,26 @@ export const isNoteCredit = promesa =>
       promesa.PromesaState,
     ) && promesa.DateRegresoPromesa
   );
+
+export const doQuery = (entities, query = {}) => {
+  if (!entities) return [];
+  let queriedEntities = [...entities];
+  /* sort */
+  const { sort } = query;
+  if (sort) {
+    queriedEntities = queriedEntities.sort((a, b) => {
+      let aa = a[sort.by], bb = b[sort.by];
+      if (sort.by === "Cliente") {
+        aa = `${aa['Name']} ${aa['LastNames']} ${aa['Rut']}`;
+        bb = `${bb['Name']} ${bb['LastNames']} ${bb['Rut']}`;
+      }
+      if (aa.toLowerCase() > bb.toLowerCase())
+        return sort.asc ? 1 : -1;
+      if (aa.toLowerCase() < bb.toLowerCase())
+        return sort.asc ? -1 : 1;
+      return 0;
+    });
+  }
+
+  return queriedEntities;
+};
