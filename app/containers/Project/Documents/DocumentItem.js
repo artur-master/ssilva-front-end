@@ -246,7 +246,7 @@ function DocumentItem({
                   </UncontrolledDropdown>
                 </div>
 
-                {value !== 'confirmed' && ( // added comments why deny if rejected
+                {value !== 'confirmed' || Documentos[documentoType].state !== 'to_confirm' && ( // added comments why deny if rejected
                   <div className="w-100 order-3">
                     <textarea
                       className="w-100 rounded-lg shadow-sm"
