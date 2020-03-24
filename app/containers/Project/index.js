@@ -33,6 +33,7 @@ const SyncMessage = WithLoading();
 
 export function Project({
   match,
+  user,
   action = 'view',
   selectorProject,
   selectorFinance,
@@ -45,6 +46,7 @@ export function Project({
     finanza: selectorFinance.entity,
     inmuebles: selectorInmuebles.entities,
   });
+
   return (
     <>
       <InitData
@@ -68,7 +70,7 @@ export function Project({
           {project.EntregaInmediata && <Poliza action={action} />}
           {isCollectedDatos(project) && (
             <>
-              <Documents project={project} action={action} />
+              <Documents project={project} action={action} user={user} />
               <Inmueble project={project} action={action} />
               <Comment project={project} action={action} />
               {

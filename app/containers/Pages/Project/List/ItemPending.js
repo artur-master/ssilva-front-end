@@ -55,15 +55,17 @@ const ItemPending = ({ project, dispatch }) => {
           </Dropdown>
         </h4>
         <div className="content"
-          onClick={() => {
-            dispatch(push(`/proyectos/${project.ProyectoID}`));
-          }}
+          
         >
           {pendings.length > 0 && (
             <>
               <span className="statement mb-4">Pendientes</span>
               {pendings.map((item, index) => (
-                <div key={String(index)} className="status row mt-0">
+                <div key={String(index)} className="status row mt-0"
+                      onClick={() => {
+                        dispatch(push(`/proyectos/${project.ProyectoID}/editar?user=${index}`));
+                      }}
+                >
                   <span className="col">{item.label}</span>
                   <Link
                     to="#"
