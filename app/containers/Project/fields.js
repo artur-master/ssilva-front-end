@@ -328,6 +328,16 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       required: true,
       min: 0,
       max: 100,
+    },
+    {
+      label: 'Descuentos Límite',
+      name: `DiscountMaxPercent`,
+      view: `${DiscountMaxPercent || 100}`,
+      maskOptions: { prefix: '%' },
+      type: 'number',
+      required: true,
+      min: 0,
+      max: 100,
     }, 
   ];
 };
