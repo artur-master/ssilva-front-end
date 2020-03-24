@@ -21,8 +21,8 @@ const logLabel = logType => {
 const Log = ({ logs, logTypes = [], limit = 0 }) => {
   let showLogs =
     logTypes.length > 0
-      ? logs.filter(log => logTypes.includes(log.VentaLogType))
-      : logs;
+      ? logs.filter(log => logTypes.includes(log.VentaLogType) && log.Comment !=="")
+      : logs.filter(log => log.Comment !=="");
   if (limit) showLogs = showLogs.slice(0, limit);
   if (showLogs.length > 0) {
     return (
