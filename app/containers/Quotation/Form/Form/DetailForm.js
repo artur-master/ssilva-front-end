@@ -157,6 +157,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
                       : false
                   }
                   required
+                  canAdd={ Auth.isPM() || Auth.isVendor() }
                 />
               </FormGroup>
               <FormGroup className="col-md-6 my-2">
