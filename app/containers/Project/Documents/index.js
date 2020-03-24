@@ -14,7 +14,7 @@ import Finance from './Finance/Loadable';
 import GeneralReview from '../GeneralApprove/GeneralReview';
 import Notification from './Notification';
 
-export default function Documents({ project = {}, action }) {
+export default function Documents({ project = {}, action, user }) {
   if(project && !project.EntregaInmediata && project.Documentos)
     delete project.Documentos['title_folder'];
   
@@ -46,6 +46,7 @@ export default function Documents({ project = {}, action }) {
               content: <Finance project={project} action={action} />,
             },
           ]}
+          activeTab = {user || 0}
         />
       </BoxContent>
       <GeneralReview dataType="document" />

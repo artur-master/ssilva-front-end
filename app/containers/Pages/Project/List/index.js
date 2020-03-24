@@ -32,9 +32,11 @@ export function ProjectListPage({ dispatch, selector }) {
   useInjectSaga({ key: 'projectList', saga });
 
   const { entities, loading } = selector;
+
   useEffect(() => {
     if (!loading) dispatch(fetchEntities());
   }, []);
+ 
   const assignEntities = [];
   const otherEntities = [];
   const creationEntities = [];
@@ -47,20 +49,22 @@ export function ProjectListPage({ dispatch, selector }) {
     }
     return otherEntities.push(entity);
   });
+
   return (
     <div>
       <Helmet title="Project list" />
       <PageHeader>Proyectos</PageHeader>
       {!entities && <SyncMessage {...selector} />}
-      {entities && !loading && !Auth.isInmobiliario() && !Auth.isFinanza() && (
+      {entities && !loading && !Auth.isInmobiliario() && (  
+        // !Auth.isFinanza() && (
         <List dispatch={dispatch} selector={selector} />
       )}
       {entities && !loading && Auth.isInmobiliario() && (
         <InList dispatch={dispatch} selector={selector} />
       )}
-      {entities && !loading && Auth.isFinanza() && (
+      {/* {entities && !loading && Auth.isFinanza() && (
         <FiList dispatch={dispatch} selector={selector} />
-      )}
+      )} */}
     </div>
   );
 }
