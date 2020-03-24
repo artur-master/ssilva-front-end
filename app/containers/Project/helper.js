@@ -19,7 +19,7 @@ export const currentProjectStep = (project = {}) => {
     IngresoComisionesState,
     ProyectoApprovalState,
   } = project;
-  
+
   const legalDocuments = getDocuments(EntregaInmediata);
 
   // 1. create new (general)
