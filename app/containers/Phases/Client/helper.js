@@ -36,6 +36,7 @@ export const isValidClient = ({ Cliente, PayType, CotizacionType }) => {
       field => getDescendantProp(Cliente, field) === '',
     );
   }
+
   return !requiredOfPersonal.find(
     field => getDescendantProp(Cliente, field) === '',
   );

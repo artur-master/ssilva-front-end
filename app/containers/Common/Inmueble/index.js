@@ -20,6 +20,7 @@ import Summary from './Summary';
 const SyncMessage = WithLoading();
 
 import ReviewInmuebleList from '../../Project/Inmueble/Inmuebles/InmuebleList';
+import ReplaceConfirm from './ReplaceConfirm';
 
 export function Inmueble({
   defaultShowType = 'list',
@@ -53,15 +54,21 @@ export function Inmueble({
   const [initLoading, setInitLoading] = useState(true);
   const [drafLoading, setDrafLoading] = useState(false);
 
+  const [isReplaceOpen, setReplaceOpen] = useState(false);
+  const [replaceData, setReplaceData] = useState(null);
+  const usedEntities = (entities || []).filter(entity =>
+    entity.InmuebleState !== 'Disponible'
+  );
+
   let reviewInmuebles;
-  if ( drafSelector ) reviewInmuebles = drafSelector.reviewInmuebles;
+  if (drafSelector) reviewInmuebles = drafSelector.reviewInmuebles;
 
   useEffect(() => {
     if (initLoading) return;
 
-    setDrafLoading(drafSelector.loading);    
+    setDrafLoading(drafSelector.loading);
   }, [reviewInmuebles]);
- 
+
   useEffect(() => {
     setInitLoading(true);
     setDrafLoading(false);
@@ -77,6 +84,24 @@ export function Inmueble({
       dispatch(selectEntity(entity, IsSelected, focusChange));
     }
   };
+
+  const onConfirm = () => {
+    setReplaceOpen(false);
+    
+    setDrafLoading(true);
+    setInitLoading(false);
+    
+    if(usedEntities.length){
+      console.log(usedEntities);
+    }
+
+    onImportFile(replaceData);
+  }
+
+  const onCancel = () => {
+    setReplaceData(null);
+    setReplaceOpen(false);
+  }
 
   return (
     <Modal isOpen={isOpen} size="xl" scrollable id="seleccion_inmuebles_modal">
@@ -98,11 +123,19 @@ export function Inmueble({
         {!loading && !drafLoading && !initLoading && reviewInmuebles && (
           <ReviewInmuebleList entities={reviewInmuebles} />
         )}
+
+        <ReplaceConfirm
+          isOpen={isReplaceOpen}
+          onHide={onCancel}
+          onConfirm={onConfirm}
+        />
       </ModalBody>
       <ModalFooter>
         {canEdit && (
           <>
-            <Button loading={drafLoading} disabled={loading || drafLoading} onClick={() => { fileUploader.current.click() }} >
+            <Button loading={drafLoading} disabled={loading || drafLoading}
+              onClick={() => { fileUploader.current.click() }}
+            >
               Nueva carga
             </Button>
             <input
@@ -115,12 +148,15 @@ export function Inmueble({
                 const data = new FormData();
                 data.append('File', event.currentTarget.files[0]);
                 event.currentTarget.value = '';
-                setDrafLoading(true);
-                setInitLoading(false);
-                onImportFile(data);
+                setReplaceData(data);
+                
+                if (usedEntities.length) setReplaceOpen(true);
+                else onConfirm();
               }}
             />
-            <Button loading={ drafLoading } disabled={ initLoading ? true: drafLoading } onClick={ ()=>{setDrafLoading(true); onSave(); setInitLoading(false);} }>
+            <Button loading={drafLoading} disabled={initLoading ? true : drafLoading}
+              onClick={() => { setDrafLoading(true); onSave(); setInitLoading(false); }}
+            >
               Guardarar
             </Button>
           </>

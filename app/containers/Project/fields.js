@@ -212,7 +212,8 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
     CotizacionDuration,
     GuaranteeAmount,
     GuaranteePercent,
-    EntregaInmediata,
+    DiscountMaxPercent,
+    // EntregaInmediata,
     InstitucionFinanciera,
   } = form.values;
 
@@ -322,7 +323,7 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       label: 'Por ciento',
       name: `GuaranteePercent`,
       view: `${GuaranteePercent || 20}`,
-      maskOptions: { prefix: '% ' },
+      maskOptions: { prefix: '%' },
       type: 'number',
       required: true,
       min: 0,

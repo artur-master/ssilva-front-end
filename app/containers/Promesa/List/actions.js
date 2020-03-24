@@ -9,12 +9,20 @@ import {
   FETCH_PROMESAS_ERROR,
   FETCH_PROMESAS_SUCCESS,
   SEARCH_PROMESAS,
+  QUERY_PROMESAS,
 } from './constants';
 
 export function searchPromesas(filter) {
   return {
     type: SEARCH_PROMESAS,
     filter,
+  };
+}
+
+export function queryPromesas(query) {
+  return {
+    type: QUERY_PROMESAS,
+    query,
   };
 }
 

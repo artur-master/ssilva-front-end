@@ -6,12 +6,13 @@
 import Fuse from 'fuse.js';
 import produce from 'immer';
 import {
+  QUERY_RESERVATIONS,
   FETCH_RESERVATIONS,
   FETCH_RESERVATIONS_ERROR,
   FETCH_RESERVATIONS_SUCCESS,
   SEARCH_RESERVATIONS,
 } from './constants';
-import { getReports, initReports } from './helper';
+import { getReports, initReports, doQuery } from './helper';
 
 export const initialState = {
   loading: false,
@@ -20,6 +21,7 @@ export const initialState = {
   reports: initReports(),
   origin_reservations: false,
   filter: { txtSearch: '' },
+  query: { sort: { by: 'Date', asc: true } },
 };
 /* eslint-disable default-case, no-param-reassign */
 const reservationReducer = (state = initialState, action) =>
@@ -43,6 +45,12 @@ const reservationReducer = (state = initialState, action) =>
             item => item.ReservaState === draft.filter.status,
           );
 
+        break;
+      case QUERY_RESERVATIONS:
+        draft.query = !action.query
+          ? initialState.query
+          : { ...draft.query, ...action.query };
+        draft.reservations = doQuery(state.origin_reservations, draft.query);
         break;
       case FETCH_RESERVATIONS:
         draft.loading = true;
@@ -87,7 +95,7 @@ const reservationReducer = (state = initialState, action) =>
             ReservaStateColor,
           };
         });
-        draft.reservations = draft.origin_reservations;
+        draft.reservations = doQuery(draft.origin_reservations, draft.query);
         draft.reports = getReports(draft.reservations);
         break;
     }
