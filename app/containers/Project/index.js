@@ -71,11 +71,13 @@ export function Project({
               <Documents project={project} action={action} />
               <Inmueble project={project} action={action} />
               <Comment project={project} action={action} />
-              {UserProject.isPM(project) &&
+              {
+                UserProject.isPM(project) &&
                 (project.ProyectoApprovalState !== PROYECTO_APPROVAL_STATE[2] &&
-                  ((!project.IsFinished || action !== 'view') && (
-                    <SendToLegal hasFullData={hasFullData} project={project} />
-                  )))}
+                ((!project.IsFinished || action !== 'view') && (
+                  <SendToLegal hasFullData={hasFullData} project={project} />
+                )))
+              }
             </>
           )}
           {!project.IsFinished &&

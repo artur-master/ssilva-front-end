@@ -81,7 +81,7 @@ function GridItem({ entity = {}, focusChange, onSelect }) {
             <span>
               Sup U: {entity.UtilSquareMeters} m<sup>2</sup>
             </span>
-            <span>Or: {entity.Orientation[0].Name}</span>
+            <span>Or: {entity.Orientation[0] ? entity.Orientation[0].Name : ''}</span>
           </li>
           <li className="font-14-rem w-100 d-flex justify-content-between align-items-center">
             <span>

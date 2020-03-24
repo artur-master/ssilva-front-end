@@ -10,8 +10,9 @@ import {
   FETCH_PROMESAS_ERROR,
   FETCH_PROMESAS_SUCCESS,
   SEARCH_PROMESAS,
+  QUERY_PROMESAS,
 } from './constants';
-import { getReports, initReports } from '../helper';
+import { getReports, initReports, doQuery } from '../helper';
 
 export const initialState = {
   loading: false,
@@ -20,6 +21,7 @@ export const initialState = {
   reports: initReports(),
   origin_promesas: false,
   filter: { txtSearch: '' },
+  query: { sort: { by: 'Date', asc: true } },
 };
 /* eslint-disable default-case, no-param-reassign */
 const promesaReducer = (state = initialState, action) =>
@@ -45,6 +47,12 @@ const promesaReducer = (state = initialState, action) =>
         }
 
         break;
+      case QUERY_PROMESAS:
+        draft.query = !action.query
+          ? initialState.query
+          : { ...draft.query, ...action.query };
+        draft.promesas = doQuery(state.origin_promesas, draft.query);
+        break;
       case FETCH_PROMESAS:
         draft.loading = true;
         draft.error = false;
@@ -57,7 +65,7 @@ const promesaReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = false;
         draft.origin_promesas = action.promesas;
-        draft.promesas = draft.origin_promesas;
+        draft.promesas = doQuery(draft.origin_promesas, draft.query);
         draft.reports = getReports(draft.promesas);
         break;
     }

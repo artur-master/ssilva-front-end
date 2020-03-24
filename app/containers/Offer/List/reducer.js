@@ -10,12 +10,14 @@ import {
   FETCH_OFFERS_ERROR,
   FETCH_OFFERS_SUCCESS,
   SEARCH_OFFERS,
+  QUERY_OFFERS,
 } from './constants';
 import {
   getReports,
   initReports,
   formatOffer,
   isPendienteContacto,
+  doQuery,
 } from '../helper';
 
 export const initialState = {
@@ -25,6 +27,7 @@ export const initialState = {
   reports: initReports(),
   origin_offers: false,
   filter: { txtSearch: '' },
+  query: { sort: { by: 'Date', asc: true } },
 };
 /* eslint-disable default-case, no-param-reassign */
 const offerReducer = (state = initialState, action) =>
@@ -58,6 +61,12 @@ const offerReducer = (state = initialState, action) =>
         }
 
         break;
+      case QUERY_OFFERS:
+        draft.query = !action.query
+          ? initialState.query
+          : { ...draft.query, ...action.query };
+        draft.offers = doQuery(state.origin_offers, draft.query);
+        break;
       case FETCH_OFFERS:
         draft.loading = true;
         draft.error = false;
@@ -70,7 +79,7 @@ const offerReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = false;
         draft.origin_offers = action.offers.map(offer => formatOffer(offer));
-        draft.offers = draft.origin_offers;
+        draft.offers = doQuery(draft.origin_offers, draft.query);
         draft.reports = getReports(draft.offers);
         break;
     }

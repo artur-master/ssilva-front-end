@@ -8,12 +8,25 @@ import PropTypes from 'prop-types';
 import { Box } from 'components/Box';
 import Empty from 'components/Empty';
 import Item from './Item';
+import Thead from 'components/Table/Thead';
 
-const List = ({ project, reservations, offers, dispatch }) => (
-  <Box className="mt-3 pt-3 pb-3">
+const List = ({ project, reservations, query, onQuery, offers, dispatch }) => (
+  <Box className="mt-3 pb-3">
     {reservations && reservations.length < 1 && <Empty tag="h2" />}
     {reservations && reservations.length > 0 && (
       <table className="table table-responsive-sm table-fixed table-sm border-bottom">
+        <Thead
+          ths={[
+            { field: 'ReservaID', label: 'Reserva', sortable: true },
+            { field: 'Inmuebles', label: 'Inmuebles' },
+            { field: 'Cliente', label: 'Cliente', sortable: true },
+            { field: 'Date', label: 'Fecha', sortable: true },
+            { field: 'ReservaState', label: 'ReservaState', className: "text-right", sortable: true },
+            { field: '', label: '' },
+          ]}
+          onQuery={ onQuery }
+          query={ query }
+        />
         <tbody>
           {reservations.map(reservation => (
             <Item

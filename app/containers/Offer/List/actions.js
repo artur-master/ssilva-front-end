@@ -9,12 +9,20 @@ import {
   FETCH_OFFERS_ERROR,
   FETCH_OFFERS_SUCCESS,
   SEARCH_OFFERS,
+  QUERY_OFFERS,
 } from './constants';
 
 export function searchOffers(filter) {
   return {
     type: SEARCH_OFFERS,
     filter,
+  };
+}
+
+export function queryOffers(query) {
+  return {
+    type: QUERY_OFFERS,
+    query,
   };
 }
 

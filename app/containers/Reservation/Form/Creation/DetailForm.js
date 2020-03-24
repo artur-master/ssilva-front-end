@@ -28,21 +28,22 @@ export function DetailForm({ form }) {
 
   const { total, discount } = calculates({ Inmuebles: values.Inmuebles });
 
-  const cotizacionTypeIDs = quotationUtils.CotizacionTypes.map(({ Name }) => ({
-    label: Name,
-    value: Name,
-  }));
+  // const cotizacionTypeIDs = quotationUtils.CotizacionTypes.map(({ Name }) => ({
+  //   label: Name,
+  //   value: Name,
+  // }));
 
   return (
     <>
       <Box>
         <BoxHeader className="d-none">
           <div className="row p-2 d-flex align-items-center pl-4">
-            <RadioGroup
+            <span className="title">Forma de pago</span>
+            {/* <RadioGroup
               required
               name="CotizacionType"
               options={cotizacionTypeIDs}
-            />
+            /> */}
           </div>
         </BoxHeader>
         <BoxContent>
@@ -157,6 +158,7 @@ export function DetailForm({ form }) {
                       : false
                   }
                   required
+                  canAdd={ Auth.isPM() || Auth.isVendor() }
                 />
               </FormGroup>
               <FormGroup className="col-md-6 my-2">

@@ -212,7 +212,8 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
     CotizacionDuration,
     GuaranteeAmount,
     GuaranteePercent,
-    EntregaInmediata,
+    DiscountMaxPercent,
+    // EntregaInmediata,
     InstitucionFinanciera,
   } = form.values;
 
@@ -322,20 +323,22 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       label: 'Por ciento',
       name: `GuaranteePercent`,
       view: `${GuaranteePercent || 20}`,
-      maskOptions: { prefix: '% ' },
+      maskOptions: { prefix: '%' },
+      type: 'number',
+      required: true,
+      min: 0,
+      max: 100,
+    },
+    {
+      label: 'Descuentos Límite',
+      name: `DiscountMaxPercent`,
+      view: `${DiscountMaxPercent || 100}`,
+      maskOptions: { prefix: '%' },
       type: 'number',
       required: true,
       min: 0,
       max: 100,
     }, 
-    {
-      label: 'Entrega Inmediata',
-      name: 'EntregaInmediata',
-      view: EntregaInmediata ? 'Si' : 'No',
-      type: 'radioGroup',
-      required: true,
-      options: [{ value: 1, label: 'Si' }, { value: 0, label: 'No' }],
-    },
   ];
 };
 

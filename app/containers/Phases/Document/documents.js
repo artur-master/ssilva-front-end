@@ -110,18 +110,18 @@ export const getDocuments = entity => {
         documentoType: 'DocumentFotocopiaCarnet',
         required: true,
       },
-      {
-        documentoName: 'Cotizaciones AFP',
-        documentoType: 'DocumentCotizacionAFP',
-        required: true,
-      },
-      {
-        documentoName: 'PreAprobación De Crédito',
-        documentoType: 'DocumentPreApprobation',
-        accept: 'pdf',
-        firmado: true,
-        required: true,
-      },
+      // {
+      //   documentoName: 'Cotizaciones AFP',
+      //   documentoType: 'DocumentCotizacionAFP',
+      //   required: true,
+      // },
+      // {
+      //   documentoName: 'PreAprobación De Crédito',
+      //   documentoType: 'DocumentPreApprobation',
+      //   accept: 'pdf',
+      //   firmado: true,
+      //   required: true,
+      // },
       {
         documentoName: 'Liquidacion 1',
         documentoType: 'DocumentLiquidacion1',

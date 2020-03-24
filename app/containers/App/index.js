@@ -36,7 +36,8 @@ import EditReservationPage from 'containers/Pages/Reservation/Edit/Loadable';
 import OfferPage from 'containers/Pages/Offer/View/Loadable';
 import OffersPage from 'containers/Pages/Offer/List/Loadable';
 import EditOfferPage from 'containers/Pages/Offer/Edit/Loadable';
-import EditProjectPage from 'containers/Pages/Project/Edit';
+import EditProjectPage from 'containers/Pages/Project/Edit/Loadable';
+import InmueblesPage from 'containers/Pages/Project/Inmuebles/Loadable';
 import PromesasPage from 'containers/Pages/Promesa/List';
 import PromesaPage from 'containers/Pages/Promesa/View/Loadable';
 
@@ -122,6 +123,12 @@ function App() {
           exact
           path="/proyectos/:id/editar"
           component={EditProjectPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />
+        <AppRoute
+          exact
+          path="/proyectos/:id/inmuebles"
+          component={InmueblesPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
         <AppRoute

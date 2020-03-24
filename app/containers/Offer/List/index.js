@@ -21,7 +21,7 @@ import PageHeader from 'containers/Common/PageHeader';
 import makeSelectOffers from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { fetchOffers, searchOffers } from './actions';
+import { fetchOffers, searchOffers, queryOffers } from './actions';
 import List from './List';
 import Filter from './Filter';
 import { Auth } from '../../App/helpers';
@@ -68,7 +68,10 @@ export function Offers({ match, selectorProject, selector, promesas, dispatch })
                   dispatch(searchOffers(txtSearch, status))
                 }
               />
-              <List {...selector} project={project} promesas={promesas.promesas} dispatch={dispatch} />
+              <List {...selector} project={project}
+                onQuery={query => dispatch(queryOffers(query))}
+                promesas={promesas.promesas} dispatch={dispatch} 
+              />
             </>
           )}
         </>

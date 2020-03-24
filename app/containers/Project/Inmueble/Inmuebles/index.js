@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Label } from 'components/ExForm';
-import CommonInmueble from 'containers/Common/Inmueble';
+// import CommonInmueble from 'containers/Common/Inmueble';
 import InmuebleReview from './Review';
 
 function Inmuebles({
@@ -16,15 +16,24 @@ function Inmuebles({
   toggleScreen,
   onImportFile,
   onSaveInmuebles,
-  canEdit,
+  // canEdit,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
+  const { project = {} } = window;
+
   return (
     <>
       <Label style={{ width: '10em' }}>Detalle Inmuebles</Label>
       {selectorInmueble.entities && selectorInmueble.entities.length > 0 && (
         <>
           <Link
+            className="font-14-rem color-main btn-arrow mt-2"
+            to={`/proyectos/${project.ProyectoID}/inmuebles`}
+            target="_blank"
+          >
+            <b>Ver Detalle Inmuebles</b>
+          </Link>
+          {/* <Link
             className="font-14-rem color-main btn-arrow mt-2"
             to="/"
             onClick={evt => {
@@ -42,7 +51,7 @@ function Inmuebles({
             drafSelector={selector}
             onImportFile={onImportFile}
             onSave={onSaveInmuebles}
-          />
+          /> */}
         </>
       )}
       {selectorInmueble.entities.length < 1 && (
