@@ -53,9 +53,7 @@ function* sagaDownloadQuotation(action) {
         LetterSize: 80,
       }),
     });
-    console.log(response)
     FileSaver.saveAs(response, `Cotizacion_${action.Cotizacion.Folio}.pdf`);
-
     yield put(downloadQuotationSuccess(response));
   } catch (error) {
     yield put(downloadQuotationError(error));

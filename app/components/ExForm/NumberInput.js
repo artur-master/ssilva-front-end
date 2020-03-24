@@ -4,7 +4,7 @@ import { Field as FormikField, getIn } from 'formik';
 import { numberFormat, formatNumber } from 'containers/App/helpers';
 import ExField from './ExField';
 
-const NumberInput = ({ className = '', label, ...props }) => (
+const NumberInput = ({ className = '', label = '', ...props }) => (
   <ExField
     validate={value => {
       /* eslint-disable-next-line */
@@ -17,6 +17,9 @@ const NumberInput = ({ className = '', label, ...props }) => (
       const [isEditing, setIsEditing] = useState(false);
       const getInTouched = getIn(form.touched, field.name);
       const getInErrors = getIn(form.errors, field.name);
+      
+      const prefix = props.maskOptions && props.maskOptions['prefix'];
+      
       return (
         <div style={props.style}>
           <div className={`btype shadow-sm ${className.includes('caution') ? 'caution' : ''}`}>
@@ -26,20 +29,24 @@ const NumberInput = ({ className = '', label, ...props }) => (
                 {...props}
                 value={field.value}
                 onChange={evt => {
-                  form.setFieldValue(props.name, evt.currentTarget.value);
+                  let val = evt.currentTarget.value;
+                  if (val > props.max) val = props.max;
+                  if (val < props.min) val = props.min;
+                  form.setFieldValue(props.name, val);
                 }}
                 onBlur={() => { setIsEditing(false) }}
                 className={`w-100 form-control form-control-sm ${className}`}
               />
             ) : (
-                <input
-                  type="text"
-                  {...props}
-                  value={field.value ? numberFormat(field.value) : ''}
-                  onFocus={() => { setIsEditing(true) }}
-                  readOnly
-                  className={`w-100 form-control form-control-sm ${className}`}
-                />)}
+              <input
+                type="text"
+                {...props}
+                value={field.value ? `${prefix || ''}${numberFormat(field.value)}` : ''}
+                placeholder={prefix || ''}
+                onFocus={() => { setIsEditing(true) }}
+                readOnly
+                className={`w-100 form-control form-control-sm ${className}`}
+              />)}
             {/* eslint-disable-next-line */}
             <label />
             <div className="font-14-rem">{label}</div>

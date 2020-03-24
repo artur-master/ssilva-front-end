@@ -7,6 +7,7 @@ import Fuse from 'fuse.js';
 import produce from 'immer';
 import moment from 'components/moment';
 import {
+  QUERY_QUOTATIONS,
   FETCH_QUOTATIONS,
   FETCH_QUOTATIONS_ERROR,
   FETCH_QUOTATIONS_SUCCESS,
@@ -14,9 +15,10 @@ import {
   SEARCH_QUOTATIONS,
   TOGGLE_QUOTATION_FORM,
 } from './constants';
-import { getReports } from './helper';
+import { getReports, doQuery } from './helper';
 
 export const initialState = {
+  query: { sort: { by: 'Date', asc: true } },
   show_form: false,
   loading: false,
   error: false,
@@ -31,6 +33,12 @@ const quotationReducer = (state = initialState, action) =>
     switch (action.type) {
       case RESET_CONTAINER:
         return initialState;
+      case QUERY_QUOTATIONS:
+        draft.query = !action.query
+          ? initialState.query
+          : { ...draft.query, ...action.query };
+        draft.quotations = doQuery(state.origin_quotations, draft.query);
+        break;
       case SEARCH_QUOTATIONS:
         draft.filter = { ...state.filter, ...action.filter };
         draft.quotations = [...(draft.origin_quotations || [])];
@@ -85,12 +93,14 @@ const quotationReducer = (state = initialState, action) =>
       case FETCH_QUOTATIONS_SUCCESS:
         draft.loading = false;
         draft.error = false;
-        draft.origin_quotations = action.quotations.sort((a, b) => {
-          if (a.Date > b.Date) return -1;
-          if (a.Date < b.Date) return 1;
-          return 0;
-        });
-        draft.quotations = draft.origin_quotations;
+        draft.quotations = action.quotations
+        // .sort((a, b) => {
+        //   if (a.Date > b.Date) return -1;
+        //   if (a.Date < b.Date) return 1;
+        //   return 0;
+        // });
+        draft.query = action.query || initialState.query;
+        draft.origin_quotations = doQuery(action.quotations, draft.query);
         draft.reports = getReports(draft.origin_quotations);
         break;
     }

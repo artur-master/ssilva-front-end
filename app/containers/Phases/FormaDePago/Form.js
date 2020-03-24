@@ -24,7 +24,7 @@ import {
 import { Auth } from 'containers/App/helpers';
 
 // eslint-disable-next-line no-unused-vars
-function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
+function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
   const [openCuotas, setOpenCuotas] = useState(0);
   const { values, setValues } = form;
   const { paymentUtils } = window.preload;
@@ -38,8 +38,7 @@ function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
   };
 
   const handleChangePercent = (payFor, val) => {
-    // const value = (parseFloat(val || 0) / 100) * cost;
-    const value = (parseFloat(defaultPercent || 0) / 100) * cost;
+    const value = (parseFloat(val || 0) / 100) * cost;
     updatePaymentValues({ payFor, value, values, setValues });
   };
 
@@ -87,7 +86,7 @@ function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
         <div className="w-50 d-flex justify-content-end">
           <Button
             onClick={() => {
-              handleChangePercent('PaymentFirmaPromesa', 20);
+              handleChangePercent('PaymentFirmaPromesa', defaultPercent);
             }}
             className="m-btn m-btn-white shadow-sm"
           >
@@ -110,8 +109,8 @@ function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
             <tr>
               <td>PIE / Monto Firma Promesa</td>
               <td>
-                <div className="search-filter">
-                  <input
+                {Auth.isPM() ? (
+                  <Input
                     className="form-control form-control-sm"
                     type="number"
                     value={
@@ -119,43 +118,54 @@ function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
                         ? formatNumber(values.PaymentFirmaPromesa)
                         : ''
                     }
-                    placeholder="0"
-                    min={0}
-                    onChange={evt =>
-                      handleChangeUF(
-                        'PaymentFirmaPromesa',
-                        evt.currentTarget.value,
-                      )
-                    }
-                  />
-                </div>
+                    onChange={evt =>{
+                      let value = evt.currentTarget.value
+                      if ( value < 0) return;
+                      handleChangeUF('PaymentFirmaPromesa',value);
+                    }}
+                  />) : (
+                    <div className="search-filter">
+                      <span class="form-control form-control-sm" style={{ width: 120, height: 28 }}>
+                        {values.PaymentFirmaPromesa
+                          ? formatNumber(values.PaymentFirmaPromesa)
+                          : ''
+                        }
+                      </span>
+                    </div>)
+                }
               </td>
               <td>
-                <div className="search-filter">
-                  <input
+                {Auth.isPM() ? (
+                  <Input
                     className="form-control form-control-sm"
                     type="number"
-                    readOnly={ !Auth.isPM() }
+                    prefix="%"
                     value={
                       percent.PaymentFirmaPromesa
                         ? formatNumber(percent.PaymentFirmaPromesa)
                         : ''
                     }
-                    onChange={evt =>
-                      handleChangePercent(
-                        'PaymentFirmaPromesa',
-                        evt.currentTarget.value,
-                      )
-                    }
-                    placeholder="0"
-                  />
-                </div>
+                    onChange={evt => {
+                      let value = evt.currentTarget.value;
+                      if (value > 100 || value < 0) return;
+                      handleChangePercent('PaymentFirmaPromesa', value);
+                    }}
+                  />) : (
+                    <div className="search-filter">
+                      <span class="form-control form-control-sm" style={{ width: 120, height: 28 }}>
+                        {percent.PaymentFirmaPromesa
+                          ? `%${formatNumber(percent.PaymentFirmaPromesa)}`
+                          : ''
+                        }
+                      </span>
+                    </div>)
+                }
               </td>
               <td>
                 <div className="search-filter">
                   <IntlFormatCurrency
                     className="form-control form-control-sm"
-                    style={{ width: 120 }}
+                    style={{ width: 120, height: 28 }}
                     value={convert.PaymentFirmaPromesa}
                   />
                 </div>
@@ -185,39 +195,39 @@ function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
             <tr>
               <td>PIE / Monto a Financiar en Cuotas</td>
               <td>
-                <div className="search-filter">
-                  <input
-                    placeholder="0"
-                    min="0"
-                    type="number"
-                    className="form-control form-control-sm"
-                    value={cuota ? formatNumber(cuota) : ''}
-                    readOnly={values.Cuotas.length > 1}
-                    onChange={evt => {
-                      handleChangeUF(
-                        'Cuotas.0.Amount',
-                        evt.currentTarget.value,
-                      );
-                    }}
-                  />
-                </div>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  readOnly={values.Cuotas.length > 1}
+                  value={
+                    percent.Cuotas
+                      ? formatNumber(percent.Cuotas)
+                      : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if ( value < 0) return;
+                    handleChangeUF('Cuotas.0.Amount', value);
+                  }}
+                />
               </td>
               <td>
-                <div className="search-filter">
-                  <input
-                    className="form-control form-control-sm"
-                    type="number"
-                    readOnly={values.Cuotas.length > 1}
-                    value={percent.Cuotas ? formatNumber(percent.Cuotas) : ''}
-                    onChange={evt => {
-                      handleChangePercent(
-                        'Cuotas.0.Amount',
-                        evt.currentTarget.value,
-                      );
-                    }}
-                    placeholder="0"
-                  />
-                </div>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  prefix="%"
+                  readOnly={values.Cuotas.length > 1}
+                  value={
+                    percent.Cuotas
+                      ? formatNumber(percent.Cuotas)
+                      : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if (value > 100 || value < 0) return;
+                    handleChangePercent('Cuotas.0.Amount', value);
+                  }}
+                />
               </td>
               <td>
                 <div className="search-filter">
@@ -299,17 +309,12 @@ function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
                 </td>
                 <td>
                   <div className="search-filter">
-                    <input
-                      className="form-control form-control-sm"
-                      type="number"
-                      readOnly
-                      value={
-                        percent.PaymentFirmaEscritura
-                          ? formatNumber(percent.PaymentFirmaEscritura)
-                          : ''
+                    <span class="form-control form-control-sm" style={{ width: 120, height: 28 }}>
+                      {percent.PaymentFirmaEscritura
+                        ? `%${formatNumber(percent.PaymentFirmaEscritura)}`
+                        : ' '
                       }
-                      placeholder="0"
-                    />
+                    </span>
                   </div>
                 </td>
                 <td>
@@ -423,8 +428,8 @@ function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
                   {_.isString(dividend$) ? (
                     '-'
                   ) : (
-                    <FormattedNumber value={dividend$} />
-                  )}
+                      <FormattedNumber value={dividend$} />
+                    )}
                 </td>
               </tr>
             </tbody>
@@ -452,35 +457,35 @@ function PhaseFormaDePagoForm({ defaultPercent=20, form }) {
             <tr>
               <td>Ahorro Plus</td>
               <td>
-                <div className="search-filter">
-                  <input
-                    className="form-control form-control-sm"
-                    type="number"
-                    value={
-                      values.AhorroPlus ? formatNumber(values.AhorroPlus) : ''
-                    }
-                    placeholder="0"
-                    min={0}
-                    onChange={evt =>
-                      handleChangeUF('AhorroPlus', evt.currentTarget.value)
-                    }
-                  />
-                </div>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  value={
+                    values.AhorroPlus ? formatNumber(values.AhorroPlus) : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if ( value < 0) return;
+                    handleChangeUF('AhorroPlus', value);
+                  }}
+                />
               </td>
               <td>
-                <div className="search-filter">
-                  <input
-                    className="form-control form-control-sm"
-                    type="number"
-                    value={
-                      percent.AhorroPlus ? formatNumber(percent.AhorroPlus) : ''
-                    }
-                    onChange={evt =>
-                      handleChangePercent('AhorroPlus', evt.currentTarget.value)
-                    }
-                    placeholder="0"
-                  />
-                </div>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  prefix="%"
+                  value={
+                    percent.AhorroPlus
+                      ? formatNumber(percent.AhorroPlus)
+                      : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if (value > 100 || value < 0) return;
+                    handleChangePercent('AhorroPlus', value);
+                  }}
+                />
               </td>
               <td>
                 <div className="search-filter">

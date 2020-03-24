@@ -5,6 +5,7 @@
  */
 
 import {
+  QUERY_RESERVATIONS,
   FETCH_RESERVATIONS,
   FETCH_RESERVATIONS_ERROR,
   FETCH_RESERVATIONS_SUCCESS,
@@ -15,6 +16,13 @@ export function searchReservations(filter) {
   return {
     type: SEARCH_RESERVATIONS,
     filter,
+  };
+}
+
+export function queryReservations(query) {
+  return {
+    type: QUERY_RESERVATIONS,
+    query,
   };
 }
 

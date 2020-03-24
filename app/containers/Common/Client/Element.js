@@ -29,6 +29,7 @@ const Element = ({
   onSelect,
   autoSelect = false,
   openModal = false,
+  canAdd = false,
 }) => {
   const [isOpen, setIsOpen] = useState(openModal);
 
@@ -81,6 +82,7 @@ const Element = ({
                 setIsOpen(false);
                 onSelect(client);
               }}
+              canAdd={canAdd}
             />
           </div>
         </ModalBody>

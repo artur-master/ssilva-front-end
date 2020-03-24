@@ -29,6 +29,7 @@ const List = ({
   onView,
   onSelect,
   onDelete,
+  canAdd = false,
 }) => {
   const { clients, query = {} } = selector;
   const canManage = Auth.isAdmin() && canEdit;
@@ -62,7 +63,7 @@ const List = ({
             placeholder="Escribe lo que deseas buscar..."
           />
         </div>
-        {canManage && (
+        {(canManage || canAdd) && (
           <Button className="m-btn-plus order-3 mr-3" onClick={onCreate}>
             Agregar cliente
           </Button>

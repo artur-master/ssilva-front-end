@@ -29,10 +29,12 @@ function Client({
   onHide,
   onSelect,
   onDelete,
+  canAdd=false,
 }) {
   useEffect(() => {
     onQuery(query);
   }, []);
+
   return (
     <>
       <List
@@ -44,6 +46,7 @@ function Client({
         onView={onView}
         onSelect={onSelect}
         canEdit={canEdit}
+        canAdd={canAdd}
       />
       {canEdit && (
         <ClienteForm

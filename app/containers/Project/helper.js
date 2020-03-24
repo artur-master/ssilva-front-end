@@ -168,6 +168,7 @@ export const pending = project => {
   let progress = 100;
   let color = 'red';
   const pendings = [];
+
   if (
     !project.UsersProyecto.find(
       user => user.UserProyectoType === USER_PROYECTO_TYPE[3] && user.UserID,
@@ -190,36 +191,44 @@ export const pending = project => {
       ),
     });
     progress = 20;
-  } else if (project.PlanMediosState === PROYECTO_DOCUMENT_STATE[0]) {
-    pendings.push({
-      label: (
-        <>
-          <b>Carga Documentos</b> Marketing
-        </>
-      ),
-      remind: '',
-    });
+  } else if (project.PlanMediosState === PROYECTO_DOCUMENT_STATE[0] ||
+             project.BorradorPromesaState === PROYECTO_DOCUMENT_STATE[0] ||
+             project.IngresoComisionesState === PROYECTO_DOCUMENT_STATE[0] ) 
+  {
     progress = 30;
-  } else if (project.BorradorPromesaState === PROYECTO_DOCUMENT_STATE[0]) {
-    pendings.push({
-      label: (
-        <>
-          <b>Carga Documentos</b> Legal
-        </>
-      ),
-      remind: '',
-    });
-    progress = 40;
-  } else if (project.IngresoComisionesState === PROYECTO_DOCUMENT_STATE[0]) {
-    pendings.push({
-      label: (
-        <>
-          <b>Carga Comisiones</b> Finanzas
-        </>
-      ),
-      remind: '',
-    });
-    progress = 50;
+    if (project.PlanMediosState === PROYECTO_DOCUMENT_STATE[0]){
+      pendings.push({
+        label: (
+          <>
+            <b>Carga Documentos</b> Marketing
+          </>
+        ),
+        remind: '',
+      });
+    }else progress += 10;
+
+    if (project.BorradorPromesaState === PROYECTO_DOCUMENT_STATE[0]){
+      pendings.push({
+        label: (
+          <>
+            <b>Carga Documentos</b> Legal
+          </>
+        ),
+        remind: '',
+      });
+    }else progress += 10;
+
+    if (project.IngresoComisionesState === PROYECTO_DOCUMENT_STATE[0]){
+      pendings.push({
+        label: (
+          <>
+            <b>Carga Comisiones</b> Finanzas
+          </>
+        ),
+        remind: '',
+      });
+    }else progress += 10;
+
   } else if (project.ProyectoApprovalState === PROYECTO_APPROVAL_STATE[1]) {
     pendings.push({
       label: (

@@ -24,7 +24,6 @@ import { fetchEntities } from './actions';
 import List from './List';
 import InList from './InList';
 import FiList from './FIList';
-import ProjectMeta from '../../../Common/ProjectMeta';
 
 const SyncMessage = WithLoading();
 

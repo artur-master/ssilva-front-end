@@ -43,10 +43,10 @@ const InmueblesElement = ({ values, onSelect }) => {
                           name={`Inmuebles.${index}.Discount`}
                           type="number"
                           min={0}
-                          max={inmueble.MaximunDiscount || 100}
+                          max={values.DiscountMaxPercent || 100}
                           style={{ width: '11.5em' }}
                           onChange={evt => {
-                            const maxDiscount = inmueble.MaximunDiscount || 100;
+                            const maxDiscount = values.DiscountMaxPercent || 100;
                             let percent = evt.currentTarget.value;
                             if (
                               parseFloat(evt.currentTarget.value) > maxDiscount
@@ -66,7 +66,7 @@ const InmueblesElement = ({ values, onSelect }) => {
                         />
                       </div>
                       <span className="italic-gray">
-                        Límite {inmueble.MaximunDiscount || 100}%
+                        Límite {values.DiscountMaxPercent || 100}%
                       </span>
                     </div>
                     {!inmueble.isRequiredRestriction && (
