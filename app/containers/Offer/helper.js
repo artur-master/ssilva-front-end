@@ -113,7 +113,8 @@ export const formatOffer = offer => {
 
 export const isPendienteContacto = offer =>
   [OFERTA_STATE[0], OFERTA_STATE[2]].includes(offer.OfertaState) &&
-  offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[0];
+  // offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[0];
+  offer.PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[0];
 
 export const isWaitAprobacionInmobiliariaState = offer =>
   offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[1];

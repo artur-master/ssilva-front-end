@@ -31,6 +31,7 @@ function SubSteps({ offer }) {
   )
     return null;
   const marginLeft = '14em';
+
   return (
     <>
       <ul className="m-counter mt-3 " style={{ marginLeft: marginLeft }}>
@@ -227,7 +228,7 @@ function Steps({ offer }) {
             );
           })}
       </ul>
-      <SubSteps offer={offer} />
+      {(isPendienteContacto(offer)) && <SubSteps offer={offer} />}
     </nav>
   );
 }
