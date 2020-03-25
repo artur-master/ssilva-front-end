@@ -13,7 +13,7 @@ import {
   RECEPCION_GARANTIA_STATE,
   PRE_APROBACION_CREDITO_STATE,
 } from 'containers/App/constants';
-import { isPendienteContacto } from '../helper';
+import { isPendienteContacto,isPendienteAprobacion } from '../helper';
 import { isCreditType } from '../../Phases/FormaDePago/helper';
 
 function SubSteps({ offer }) {
@@ -228,7 +228,7 @@ function Steps({ offer }) {
             );
           })}
       </ul>
-      {(isPendienteContacto(offer)) && <SubSteps offer={offer} />}
+      {!(isPendienteAprobacion(offer)) && <SubSteps offer={offer} />}
     </nav>
   );
 }

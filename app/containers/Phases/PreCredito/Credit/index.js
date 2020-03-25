@@ -34,6 +34,7 @@ export function PhaseCredit({
   canEdit,
   EntityID,
   PayType,
+  isPendienteAprobacion,
   selector,
   dispatch,
 }) {
@@ -63,6 +64,7 @@ export function PhaseCredit({
     return (
       <CreditForm
         selector={selector}
+        isPendienteAprobacion={isPendienteAprobacion}
         onCancel={() =>
           dispatch(push(`/proyectos/${window.project.ProyectoID}/ofertas`))
         }
