@@ -24,6 +24,7 @@ const PhasePreCreditoView = ({
   canEdit,
   canEditCredit,
   initialValues,
+  isPendienteAprobacion,
   onSubmit,
   dispatch,
 }) => {
@@ -84,6 +85,7 @@ const PhasePreCreditoView = ({
                 canEdit={canEditCredit}
                 EntityID={initialValues.OfertaID}
                 PayType={initialValues.PayType}
+                isPendienteAprobacion={isPendienteAprobacion}
               />
             )}
           </BoxContent>
