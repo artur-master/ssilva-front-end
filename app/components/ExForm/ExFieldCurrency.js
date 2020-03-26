@@ -15,7 +15,7 @@ import Label from './Label';
 // eslint-disable-next-line no-unused-vars
 const defaultValidate = (value, props) => {
   /* eslint-disable-next-line */
-  if (props.required && (value === '' || value === null)) return 'Este campo es requerido';
+  if (props.required && (value === undefined || value === '' || value === 0 || value === null)) return 'Este campo es requerido';
   /* eslint-disable */
   if (
       value != '' &&
@@ -76,15 +76,15 @@ const ExFieldCurrency = ({
     >
       {({ field, form }) => {
         let className = props.className || '';
+        if (props.required && (field.value === undefined || field.value === '' || field.value === 0 || field.value === null)) className += ' caution';
         /* eslint-disable-next-line */
-          if (props.required && (field.value === '' || field.value === null)) className += ' caution';
         const getInTouched = getIn(form.touched, field.name);
         const getInErrors = getIn(form.errors, field.name);
         const inputElement = component ? (
           component(field, form)
         ) : (
           <div
-            className={className}
+            className={` ${className}`}
             style={props.type === 'hidden' ? { display: 'none' } : style}
           >
             <MaskedInput
@@ -98,13 +98,13 @@ const ExFieldCurrency = ({
               }
               placeholder={maskOptions.prefix || defaultMaskOptions.prefix}
               mask={currencyMask}
-              className={`form-control form-control-sm ${
+              className={`form-control form-control-sm btype ${
                 getInTouched && getInErrors ? 'is-invalid' : ''
               } ${inputClass} ${
                 className.includes('caution') ? 'caution' : ''
               }`}
             />
-            {getInTouched && getInErrors && (
+            {(getInTouched || form.submitCount>0) && getInErrors && (
               <div className="invalid-feedback d-block m-0">{getInErrors}</div>
             )}
           </div>

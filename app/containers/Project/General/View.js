@@ -9,7 +9,7 @@ import { Box, BoxContent, BoxHeader } from 'components/Box';
 import { FormGroup, Label } from 'components/ExForm';
 import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
-import { getGeneralFields } from '../fields';
+import { getGeneralFields, getPolizaFields } from '../fields';
 import GeneralReview from '../GeneralApprove/GeneralReview';
 import model from '../model';
 
@@ -18,6 +18,11 @@ const SyncMessage = WithLoading();
 function GeneralView({ canEdit, selectorProject, selector, onEdit }) {
   const { project = {} } = selectorProject;
   const fields = getGeneralFields({ values: model(project) });
+  if(project.EntregaInmediata){
+    const polizafields = getPolizaFields(project);
+    fields.push(...polizafields);
+  }
+  
   return (
     <Box collapse>
       <BoxHeader>

@@ -287,3 +287,10 @@ export const countIN = () =>
   (window.project.UsersProyecto || []).filter(
     user => user.UserProyectoType === 'Aprobador',
   ).length;
+
+export const Is_EntregaInmediata = () =>{
+  const estato_obj = document.getElementsByName('EtapaStateID')[0];
+  if(!estato_obj) return false;
+  const estado_val = estato_obj.options[estato_obj.selectedIndex].text;
+  return (estado_val==="Entrega inmediata")
+}

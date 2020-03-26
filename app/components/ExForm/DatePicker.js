@@ -36,7 +36,7 @@ export const DatePickerInput = ({
     }
   }, [value]);
   /* eslint-disable */
-  if (props.required && (value == '' || value === null))
+  if (props.required && (value == undefined || value == '' || value === null))
     className += ' caution';
   /* eslint-enable */
   return (
@@ -71,7 +71,7 @@ const DatePicker = ({ name, style, valueFormat = null, ...props }) => (
     name={name}
     {...props}
     validate={value => {
-      if (props.required && !value) return 'Este campo es requerido';
+      if (props.required && (value === undefined || value === '' || value === null)) return 'Este campo es requerido';
       return null;
     }}
   >
@@ -88,7 +88,7 @@ const DatePicker = ({ name, style, valueFormat = null, ...props }) => (
             }}
             value={field.value}
           />
-          {isInvalid && (
+          {(isInvalid || (form.submitCount>0 && meta.error)) && (
             <div className="invalid-feedback d-block m-0">{meta.error}</div>
           )}
         </div>

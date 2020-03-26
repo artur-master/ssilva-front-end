@@ -37,7 +37,7 @@ const ExAseguradoras = props => {
               className={className}
               isInvalid={!!(getInTouched && getInErrors)}
             />
-            {getInTouched && getInErrors && (
+            {(getInTouched || form.submitCount>0) && getInErrors && (
               <div className="invalid-feedback d-block m-0">{getInErrors}</div>
             )}
           </div>
