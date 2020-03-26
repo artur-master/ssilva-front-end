@@ -306,8 +306,8 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
     {
       label: 'Monto Reserva',
       name: `GuaranteeAmount`,
-      view: <IntlFormatNumber prefix="UF " value={GuaranteeAmount} />,
-      maskOptions: { prefix: 'UF ' },
+      view: <IntlFormatNumber prefix="$ " value={GuaranteeAmount} />,
+      maskOptions: { prefix: '$ ' },
       type: 'currency',
       min: 0,
       required: true,
@@ -338,7 +338,7 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       required: true,
       min: 0,
       max: 100,
-    }, 
+    },
   ];
 };
 
