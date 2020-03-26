@@ -10,21 +10,30 @@ import { Box } from 'components/Box';
 import Thead from 'components/Table/Thead';
 import Empty from 'components/Empty';
 import Item from './Item';
+import { requiredData } from './helper'
+import Alert from 'components/Alert';
 import { searchQuotations, queryQuotations } from './actions';
 import Filter from './Filter';
 
 const List = ({ quotations, query, filter, reports, project, reservations, dispatch }) => (
   <div>
-    <Filter
-      reports={reports}
-      project={project}
-      filter={filter}
-      searchQuotations={txtSearch => dispatch(searchQuotations(txtSearch))}
-    />
+    {requiredData(project) && (
+      <Filter
+        reports={reports}
+        project={project}
+        filter={filter}
+        searchQuotations={txtSearch => dispatch(searchQuotations(txtSearch))}
+        />
+    )}
+    {!requiredData(project) && (
+      <Alert type="danger" className="mb-0">
+        {`Debe completar los datos del proyecto antes de continuar`}
+      </Alert>
+    )}
     <Box className="mt-3 pb-3">
-      {quotations && quotations.length < 1 && <Empty tag="h2" />}
-      {quotations && quotations.length > 0 && (
-        <table className="table table-responsive-sm table-fixed table-sm border-bottom">
+        {quotations && quotations.length < 1 && <Empty tag="h2" />}
+        {quotations && quotations.length > 0 && (
+          <table className="table table-responsive-sm table-fixed table-sm border-bottom">
           <Thead
             ths={[
               { field: 'CotizacionID', label: 'Cotización', sortable: true },
@@ -38,14 +47,14 @@ const List = ({ quotations, query, filter, reports, project, reservations, dispa
             query={query}
           />
           <tbody>
-            {quotations.map(item => (
-              <Item
-                key={item.CotizacionID}
-                quotation={item}
-                reservation={(reservations || []).find(reservation => item.Folio === reservation.Folio)}
-                dispatch={dispatch}
-              />
-            ))}
+              {quotations.map(item => (
+                <Item
+                  key={item.CotizacionID}
+                  quotation={item}
+                  reservation={(reservations || []).find(reservation => item.Folio === reservation.Folio)}
+                  dispatch={dispatch}
+                />
+              ))}
           </tbody>
         </table>
       )}

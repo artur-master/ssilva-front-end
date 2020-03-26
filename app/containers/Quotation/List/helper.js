@@ -44,3 +44,24 @@ export const doQuery = (entities, query = {}) => {
 
   return queriedEntities;
 };
+export const requiredData = (project = []) => {
+  if (!project) return false;
+  const ac_commerial = project.UsersProyecto.find(user=>(user.UserProyectoType === "Asistente Comercial"));
+  const vn_commerial = project.UsersProyecto.find(user=>(user.UserProyectoType === "Vendedor"));
+  const ap_inmobial = project.UsersProyecto.find(user=>(user.UserProyectoType === "Aprobador"));
+  const re_inmobial = project.UsersProyecto.find(user=>(user.UserProyectoType === "Representante"));
+  const au_inmobial = project.UsersProyecto.find(user=>(user.UserProyectoType === "Autorizador"));
+  if(project.InstitucionFinanciera &&
+     project.Arquitecto && 
+     project.CotizacionDuration && 
+     project.GuaranteeAmount && 
+     project.InmobiliariaID &&
+     project.ProyectoApprovalState === "Aprobado" && 
+     ac_commerial &&
+     vn_commerial &&
+     ap_inmobial && 
+     re_inmobial && 
+     au_inmobial)
+    return true;
+  return false;
+};
