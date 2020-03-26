@@ -98,3 +98,18 @@ export const doQuery = (entities, query = {}) => {
 
   return queriedEntities;
 };
+
+export const isReadyData = ( project = {}) => {
+  if(!project) return false;
+  const entraga_in = (project.EntregaInmediata)? (project.Aseguradora.AseguradoraID) &&
+                                                  (project.Aseguradora.Aseguradora) &&
+                                                  (project.Aseguradora.Amount)
+                                                : true;
+  if (project.Constructora &&
+      project.InstitucionFinanciera &&
+      entraga_in &&
+      project.GuaranteeAmount&& 
+      project.GuaranteePercent)
+      return true;
+  return false;
+};
