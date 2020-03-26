@@ -68,7 +68,7 @@ const defaultValidate = (value, props) => {
   // required validate
   /* eslint-disable-next-line */
   if (props.required && (value === '' || value === null) && props.name=="Address") return 'Debe rellenar la dirección completa antes de continuar'; //address must not null
-  if (props.required && (value === '' || value === null))
+  if (props.required && (value === undefined || value === '' || value === null))
     return 'Este campo es requerido';
 
   // rut validate

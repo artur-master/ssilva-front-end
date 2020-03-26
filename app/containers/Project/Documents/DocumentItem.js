@@ -15,6 +15,7 @@ import {
   DropdownToggle,
 } from 'reactstrap';
 import { getFileName } from 'containers/App/helpers';
+import { Auth } from '../../App/helpers';
 function DocumentItem({
   canUpload,
   canConfirm,
@@ -171,7 +172,7 @@ function DocumentItem({
                       value !== 'confirmed' ? 'Este archivo es rechazado' : ''
                     }
                     className={`font-14-rem d-flex align-items-center order-3 mr-3 ${
-                      value !== 'confirmed' ? 'color-warning' : 'color-em'
+                      value.startsWith('rejected') ? 'color-warning' : 'color-em'
                     }`}
                   >
                     <em>
@@ -187,7 +188,7 @@ function DocumentItem({
                             type="radio"
                             name={documentoType}
                             disabled={!canConfirm}
-                            checked={value === 'confirmed'}
+                            checked={value === "confirmed"}
                             onChange={() => {
                               setFieldValue(documentoType, 'confirmed');
                               onConfirm();
@@ -205,7 +206,7 @@ function DocumentItem({
                             type="radio"
                             name={documentoType}
                             disabled={!canConfirm}
-                            checked={value !== 'confirmed'}
+                            checked={value.startsWith('rejected')}
                             onChange={() => {
                               setFieldValue(documentoType, 'rejected');
                               onConfirm();
@@ -246,9 +247,10 @@ function DocumentItem({
                   </UncontrolledDropdown>
                 </div>
 
-                {value !== 'confirmed' || Documentos[documentoType].state !== 'to_confirm' && ( // added comments why deny if rejected
+                {(!(value.startsWith('confirmed')) && !value.startsWith('to_confirm')) && ( // added comments why deny if rejected
                   <div className="w-100 order-3">
                     <textarea
+                      disabled = {!Auth.isPM()}
                       className="w-100 rounded-lg shadow-sm"
                       onChange={evt => {
                         setFieldValue(
@@ -257,11 +259,14 @@ function DocumentItem({
                         );
                         onConfirm();
                       }}
-                      value={
-                        value.startsWith('rejected:')
-                          ? value.slice(9)
-                          : value.slice(8)
-                      }
+                      value={( () =>{
+                        switch (value.slice(0,8)) {
+                          case "rejected":   return value.slice(8);
+                          case "confirme": return "";
+                          case "to_confir":  return "";
+                          default:      return value.slice(8);
+                        }
+                      })}
                     />
                   </div>
                 )}
