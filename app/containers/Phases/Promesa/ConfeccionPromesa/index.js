@@ -51,7 +51,7 @@ export function PhaseConfeccionPromesa({
         <>
           <Box>
             <BoxHeader>
-              <b>PROMESA</b>
+              <b>Confección de Promesa</b>
             </BoxHeader>
             <BoxContent>
               {canUpload && (

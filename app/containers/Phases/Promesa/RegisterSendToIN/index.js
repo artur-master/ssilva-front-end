@@ -19,7 +19,7 @@ export function PhaseRegisterSendToIN({ selector, entity, onSubmit }) {
     <>
       <Box>
         <BoxHeader>
-          <b>PROMESA</b>
+          <b>Registro de fase Enviar a IN</b>
         </BoxHeader>
         <BoxContent>
           <div className="d-flex align-items-center">
