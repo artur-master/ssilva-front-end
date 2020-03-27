@@ -31,7 +31,7 @@ export function PhaseFirmaDocumentsPromesa({
     <>
       <Box>
         <BoxHeader>
-          <b>FIRMA PROMESA</b>
+          <b>Documento De Firma</b>
         </BoxHeader>
         {canUpload && (
           <BoxContent className="p-0 border-bottom">

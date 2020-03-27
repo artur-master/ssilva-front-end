@@ -25,7 +25,7 @@ export function PhaseReviewNegociacionPromesa({
     <>
       <Box>
         <BoxHeader>
-          <b>PROMESA</b>
+          <b>Revisión de Fase de Negociación Promesa</b>
         </BoxHeader>
         <BoxContent>
           <div className="d-flex align-items-center">
