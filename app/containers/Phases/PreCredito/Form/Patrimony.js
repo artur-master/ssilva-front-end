@@ -297,11 +297,11 @@ const Patrimony = ({ form }) => {
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
               name="CreditCard"
-              value={1}
+              value={hasCredits.CreditCard}
               onChange={handleChangeHasCredits}
             />
           </div>
-
+          {hasCredits.CreditCard && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CUÁNTO PAGA MENSUAL?</b>
@@ -327,6 +327,7 @@ const Patrimony = ({ form }) => {
                 />
               </FormGroup>
             </>
+          )}
         </div>
 
         <div className="mt-4 row">
@@ -337,10 +338,11 @@ const Patrimony = ({ form }) => {
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
               name="CreditoConsumo"
-              value={1}
+              value={hasCredits.CreditoConsumo}
               onChange={handleChangeHasCredits}
             />
           </div>
+          {hasCredits.CreditoConsumo && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CUÁNTO PAGA MENSUAL?</b>
@@ -368,6 +370,7 @@ const Patrimony = ({ form }) => {
                 />
               </FormGroup>
             </>
+          )}
         </div>
 
         <div className="mt-4 row">
@@ -378,10 +381,11 @@ const Patrimony = ({ form }) => {
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
               name="PrestamoEmpleador"
-              value={1}
+              value={hasCredits.PrestamoEmpleador}
               onChange={handleChangeHasCredits}
             />
           </div>
+          {hasCredits.PrestamoEmpleador && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CUÁNTO PAGA MENSUAL?</b>
@@ -408,6 +412,7 @@ const Patrimony = ({ form }) => {
                 />
               </FormGroup>
             </>
+          )}
         </div>
 
         <div className="mt-4 row">
@@ -418,10 +423,11 @@ const Patrimony = ({ form }) => {
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
               name="DeudaIndirecta"
-              value={1}
+              value={hasCredits.DeudaIndirecta}
               onChange={handleChangeHasCredits}
             />
           </div>
+          {hasCredits.DeudaIndirecta && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CUÁNTO PAGA MENSUAL?</b>
@@ -447,6 +453,7 @@ const Patrimony = ({ form }) => {
                 />
               </FormGroup>
             </>
+          )}
         </div>
 
         <div className="mt-4 row">
@@ -457,10 +464,11 @@ const Patrimony = ({ form }) => {
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
               name="AnotherCredit"
-              value={1}
+              value={hasCredits.AnotherCredit}
               onChange={handleChangeHasCredits}
             />
           </div>
+          {hasCredits.AnotherCredit && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b className="text-uppercase">¿Otro crédito?</b>
@@ -484,6 +492,7 @@ const Patrimony = ({ form }) => {
                 />
               </FormGroup>
             </>
+          )}
         </div>
 
         <div className="mt-4 row">
@@ -494,10 +503,11 @@ const Patrimony = ({ form }) => {
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
               name="CreditoComercio"
-              value={1}
+              value={hasCredits.CreditoComercio}
               onChange={handleChangeHasCredits}
             />
           </div>
+          {hasCredits.CreditoComercio && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CREDITO COMERCIO?</b>
@@ -523,6 +533,7 @@ const Patrimony = ({ form }) => {
                 />
               </FormGroup>
             </>
+          )}
         </div>
       </div>
       <div className="background-color-tab mt-2 px-2 font-18 rounded-lg">
