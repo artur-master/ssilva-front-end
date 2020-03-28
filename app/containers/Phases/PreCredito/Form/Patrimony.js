@@ -301,7 +301,7 @@ const Patrimony = ({ form }) => {
               onChange={handleChangeHasCredits}
             />
           </div>
-          {hasCredits.CreditCard && (
+          { hasCredits.CreditCard && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CUÁNTO PAGA MENSUAL?</b>
@@ -342,7 +342,7 @@ const Patrimony = ({ form }) => {
               onChange={handleChangeHasCredits}
             />
           </div>
-          {hasCredits.CreditoConsumo && (
+          { hasCredits.CreditoConsumo && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CUÁNTO PAGA MENSUAL?</b>
@@ -385,7 +385,7 @@ const Patrimony = ({ form }) => {
               onChange={handleChangeHasCredits}
             />
           </div>
-          {hasCredits.PrestamoEmpleador && (
+          { hasCredits.PrestamoEmpleador && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CUÁNTO PAGA MENSUAL?</b>
@@ -427,7 +427,7 @@ const Patrimony = ({ form }) => {
               onChange={handleChangeHasCredits}
             />
           </div>
-          {hasCredits.DeudaIndirecta && (
+          { hasCredits.DeudaIndirecta && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CUÁNTO PAGA MENSUAL?</b>
@@ -468,7 +468,7 @@ const Patrimony = ({ form }) => {
               onChange={handleChangeHasCredits}
             />
           </div>
-          {hasCredits.AnotherCredit && (
+          { hasCredits.AnotherCredit && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b className="text-uppercase">¿Otro crédito?</b>
@@ -507,7 +507,7 @@ const Patrimony = ({ form }) => {
               onChange={handleChangeHasCredits}
             />
           </div>
-          {hasCredits.CreditoComercio && (
+          { hasCredits.CreditoComercio && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b>¿CREDITO COMERCIO?</b>

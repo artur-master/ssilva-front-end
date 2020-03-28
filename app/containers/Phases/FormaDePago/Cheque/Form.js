@@ -30,6 +30,7 @@ export function ChequeForm({
   isOpen = false,
   onSubmit,
   onHide,
+  onPrint,
 }) {
   writtenNumber.defaults.lang = 'es';
 
@@ -50,7 +51,7 @@ export function ChequeForm({
       initialValues={initialValues}
       onSubmit={values => {
         const ActiveCuota = values.Cuotas[values.ActiveIndex];
-        if (downSingleCheque) onSubmit([ActiveCuota]);
+        if (downSingleCheque) onPrint([ActiveCuota]);
         else
           onSubmit(
             values.Cuotas.map(cuota => ({
@@ -227,7 +228,7 @@ export function ChequeForm({
                     <Button
                       className="m-btn-white m-btn-printer"
                       onClick={() => {
-                        downSingleCheque = false;
+                        downSingleCheque = true; //false;
                         form.submitForm();
                       }}
                     >
@@ -354,11 +355,12 @@ export function ChequeForm({
                     disabled={selector.loading}
                     className="ml-2"
                     onClick={() => {
-                      downSingleCheque = true;
+                      downSingleCheque = false; //true;
                       form.submitForm();
                     }}
                   >
-                    Descargar
+                    {/* Descargar */}
+                    Salvar
                   </Button>
                   <Button
                     disabled={selector.loading}

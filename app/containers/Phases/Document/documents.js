@@ -11,8 +11,13 @@ export const getDocuments = entity => {
       documentoName: 'Transferencia',
       documentoType: 'DocumentPagoGarantia',
       required: true,
+    }, 
+    {
+      documentoName: 'Cheques',
+      documentoType: 'DocumentFirmadoCheques',
+      accept: 'pdf',
+      firmado: true,
     },
-
     {
       documentoName: 'Ficha Pre-aprobacion',
       documentoType: 'DocumentFichaPreAprobacion',
@@ -41,6 +46,12 @@ export const getDocuments = entity => {
   if (isCompany) {
     baseDocuments = [
       ...baseDocuments,
+      {
+        documentoName: 'Simulación de crédito',
+        documentoType: 'DocumentFirmadoSimulador',
+        accept: 'pdf',
+        firmado: true,
+      },
       {
         documentoName: 'Constitucion Sociedad',
         documentoType: 'DocumentConstitucionSociedad',

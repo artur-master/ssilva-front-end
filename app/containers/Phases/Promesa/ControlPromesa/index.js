@@ -17,7 +17,7 @@ export function PhaseControlPromesa({ selector, entity, onControl }) {
     <>
       <Box collapse>
         <BoxHeader>
-          <b>FIRMA PROMESA</b>
+          <b>Control de Promesa</b>
         </BoxHeader>
         <BoxContent>
           <PhaseFirmaDocumentsPromesaView entity={entity} />

@@ -13,7 +13,7 @@ import {
   RECEPCION_GARANTIA_STATE,
   PRE_APROBACION_CREDITO_STATE,
 } from 'containers/App/constants';
-import { isPendienteContacto } from '../helper';
+import { isPendienteContacto,isPendienteAprobacion } from '../helper';
 import { isCreditType } from '../../Phases/FormaDePago/helper';
 
 function SubSteps({ offer }) {
@@ -31,6 +31,7 @@ function SubSteps({ offer }) {
   )
     return null;
   const marginLeft = '14em';
+
   return (
     <>
       <ul className="m-counter mt-3 " style={{ marginLeft: marginLeft }}>
@@ -227,7 +228,7 @@ function Steps({ offer }) {
             );
           })}
       </ul>
-      <SubSteps offer={offer} />
+      {!(isPendienteAprobacion(offer)) && <SubSteps offer={offer} />}
     </nav>
   );
 }

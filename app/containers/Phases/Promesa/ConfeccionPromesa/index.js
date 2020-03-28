@@ -51,21 +51,23 @@ export function PhaseConfeccionPromesa({
         <>
           <Box>
             <BoxHeader>
-              <b>PROMESA</b>
+              <b>Confección de Promesa</b>
             </BoxHeader>
             <BoxContent>
-              <div className="row m-0 p-0">
-                <div className="col-lg-6 border-bottom p-0 pb-3 d-flex align-items-center">
-                  <a
-                    className="m-btn m-btn-white m-btn-download"
-                    href={maquetaWord.url}
-                    target="_blank"
-                    download
-                  >
-                    Descargar Maqueta
-                  </a>
+              {canUpload && (
+                <div className="row m-0 p-0">
+                  <div className="col-lg-6 border-bottom p-0 pb-3 d-flex align-items-center">
+                    <a
+                      className="m-btn m-btn-white m-btn-download"
+                      href={maquetaWord.url}
+                      target="_blank"
+                      download
+                    >
+                      Descargar Maqueta
+                    </a>
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="pt-4 pb-4 border-bottom">
                 <FormGroup className="align-items-center">
                   <Label className="mr-3">

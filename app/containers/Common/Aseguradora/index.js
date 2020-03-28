@@ -6,13 +6,18 @@
 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import makeSelectAseguradora from './selectors';
 import Form from './Form';
 import List from './List';
-import { toggleScreen, saveEntity, queryEntities } from './actions';
+import reducer from './reducer';
+import saga from './saga';
+import { toggleScreen, saveEntity, queryEntities,fetchEntities } from './actions';
 
 function Aseguradora({
   query,
@@ -24,8 +29,13 @@ function Aseguradora({
   onSubmit,
   onHide,
   onSelect,
+  dispatch,
 }) {
+  useInjectReducer({ key: 'aseguradora', reducer });
+  useInjectSaga({ key: 'aseguradora', saga });
+
   useEffect(() => {
+    if (!selector.entities && !selector.loading) dispatch(fetchEntities());
     onQuery(query);
   }, []);
   return (

@@ -27,6 +27,7 @@ import {
   saveReservation,
   sendToControl,
   updateReservation,
+  printDocuments,
 } from './actions';
 import AlertPopup from 'components/Alert/popup';
 import Log from 'components/Log';
@@ -44,6 +45,7 @@ export function Form({ project, selector, dispatch }) {
     inmueble: false,
     forma: false,
   });
+  const [canPrint, setCanPrint] = useState(true);
   const isValid = isValidData(entity);
   const canEdit = canEditReservation(entity);
   const canConfirm = canConfirmReservation(entity);
@@ -94,7 +96,9 @@ export function Form({ project, selector, dispatch }) {
         canConfirm={canConfirm}
         onConfirm={handleConfirm}
         initialValues={initialValues}
-        onUpdate={values => dispatch(updateReservation(values))}
+        onUpdate={values => {
+          dispatch(updateReservation(values))
+        }}
       />
       <PhasePreCredito
         canEdit={canEdit}
@@ -111,6 +115,7 @@ export function Form({ project, selector, dispatch }) {
         }}
       />
       {(step === 3 || entity.ReservaID) && (
+        <>
         <PhaseDocument
           isCollapse
           entity={initialValues}
@@ -140,9 +145,27 @@ export function Form({ project, selector, dispatch }) {
           onControlReview={values =>
             dispatch(controlReview({ ...values, ReservaID: entity.ReservaID }))
           }
+          onPrint={() => {
+            if (!entity.printCutoas) {
+              setCanPrint(false);
+              setOpenAlert(true);
+            }
+            else
+              return dispatch(printDocuments({ ...initialValues, ...entity }))
+          }}
         />
+          {!canPrint && (
+            <AlertPopup
+              title="Faltan Datos"
+              isOpen={openAlert}
+              onHide={() => setOpenAlert(false)}
+            >
+              Por favor complete los datos faltantes 'Cheques'
+            </AlertPopup>
+          )}
+        </>
       )}
-      {entity.Logs  && (
+      {entity.Logs && (
         <Log logs={entity.Logs} limit={10} />
       )}
     </>

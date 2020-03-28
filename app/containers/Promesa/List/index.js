@@ -16,6 +16,7 @@ import { Helmet } from 'react-helmet';
 import InitData from 'containers/Common/InitData';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
 import WithLoading from 'components/WithLoading';
+import Alert from 'components/Alert';
 import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
 import PageHeader from 'containers/Common/PageHeader';
 import Factura from 'containers/Phases/Factura';
@@ -24,6 +25,7 @@ import makeSelectPromesas from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { fetchPromesas, searchPromesas, queryPromesas } from './actions';
+import { isReadyData } from "../helper";
 import List from './List';
 import Filter from './Filter';
 
@@ -67,10 +69,17 @@ export function Promesas({ match, selectorProject, selector, dispatch }) {
               }
             />
           </h5>
-          <List {...selector} project={project}
-            onQuery={query => {dispatch(queryPromesas(query))}}
-            dispatch={dispatch}
-          />
+          {isReadyData(project) &&(
+            <List {...selector} project={project}
+              onQuery={query => {dispatch(queryPromesas(query))}}
+              dispatch={dispatch}
+            />
+          )}
+          {!isReadyData(project) && (
+            <Alert type="danger" className="mb-0">
+              {`Debe completar los datos del proyecto antes de continuar`}
+            </Alert>
+          )}
         </>
       )}
     </>

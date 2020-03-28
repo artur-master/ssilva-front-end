@@ -18,6 +18,7 @@ function* generateCheque(cheque) {
   );
   return response;
 }
+
 function* sagaGenerateCheque(action) {
   try {
     const genCheques = [];
