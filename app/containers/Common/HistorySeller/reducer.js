@@ -13,7 +13,7 @@ import {
 import { doQuery } from './helper';
 
 export const initialState = {
-  query: { sort: { by: 'VentaLogTypel', asc: false } },
+  query: { sort: { by: 'Folio', asc: false } },
   loading: false,
   error: false,
   histories: false,
@@ -44,7 +44,7 @@ const historyReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = false;
         draft.origin_histories = action.histories;
-        draft.histories = doQuery(draft.origin_histories, draft.query);
+        draft.histories = doQuery(draft.origin_histories, state.query);
         break;
     }
   });
