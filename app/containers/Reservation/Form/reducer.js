@@ -26,6 +26,9 @@ import {
   CONTROL_REVIEW,
   CONTROL_REVIEW_ERROR,
   CONTROL_REVIEW_SUCCESS,
+  PRINT_DOCUMENTS,
+  PRINT_DOCUMENTS_ERROR,
+  PRINT_DOCUMENTS_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -55,9 +58,15 @@ const reservationReducer = (state = initialState, action) =>
       case SEND_TO_CONTROL:
       case CONTROL_REVIEW:
       case CANCEL_RESERVATION:
+      case PRINT_DOCUMENTS:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
+        break;
+      case PRINT_DOCUMENTS_SUCCESS:        
+        draft.loading = false;
+        draft.error = false;
+        draft.success = true;
         break;
       case GET_QUOTATION_ERROR:
       case GET_RESERVATION_ERROR:
@@ -65,6 +74,7 @@ const reservationReducer = (state = initialState, action) =>
       case SEND_TO_CONTROL_ERROR:
       case CONTROL_REVIEW_ERROR:
       case CANCEL_RESERVATION_ERROR:
+      case PRINT_DOCUMENTS_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;

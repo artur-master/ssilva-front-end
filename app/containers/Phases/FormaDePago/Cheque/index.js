@@ -19,7 +19,7 @@ import saga from './saga';
 import ChequeForm from './Form';
 import { generateCheque, resetContainer } from './actions';
 
-export function Cheque({ cuotas, selector, dispatch }) {
+export function Cheque({ cuotas, onSetCuotas, selector, dispatch }) {
   useInjectReducer({ key: 'cheque', reducer });
   useInjectSaga({ key: 'cheque', saga });
 
@@ -40,7 +40,11 @@ export function Cheque({ cuotas, selector, dispatch }) {
         selector={selector}
         isOpen={isOpen}
         onHide={() => setIsOpen(false)}
-        onSubmit={cheques => dispatch(generateCheque(cheques))}
+        onSubmit={values => {
+          setIsOpen(false);
+          if(onSetCuotas) onSetCuotas(values)
+        }}
+        onPrint={cheques => dispatch(generateCheque(cheques))}
       />
     </>
   );
@@ -49,6 +53,7 @@ export function Cheque({ cuotas, selector, dispatch }) {
 Cheque.propTypes = {
   cuotas: PropTypes.array,
   selector: PropTypes.object,
+  onSetCuotas: PropTypes.func,
   dispatch: PropTypes.func.isRequired,
 };
 

@@ -53,7 +53,7 @@ export function Project({
         StageState
         RealEstate
         User
-        Aseguradora
+        // Aseguradora
         InstitucionFinanciera
         Project={{ ProyectoID: match.params.id }}
         ProjectLog={{ project }}
@@ -67,7 +67,7 @@ export function Project({
           <TopPage action={action} project={project} dispatch={dispatch} />
           <General action={action} />
           <Commercial action={action} />
-          {project.EntregaInmediata && <Poliza action={action} />}
+          {/* {project.EntregaInmediata && <Poliza action={action} />} */}
           {isCollectedDatos(project) && (
             <>
               <Documents project={project} action={action} user={user} />

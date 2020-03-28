@@ -22,7 +22,7 @@ const RealEstate = ({ selector, ...props }) => (
           key={realEstate.InmobiliariaID}
           value={realEstate.InmobiliariaID}
         >
-          {realEstate.RazonSocial}
+          {realEstate ? realEstate.RazonSocial : ''}
         </option>
       ))}
   </ExField>

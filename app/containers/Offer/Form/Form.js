@@ -23,6 +23,7 @@ import {
   canEditOffer,
   getActionTitle,
   isPendienteContacto,
+  isPendienteAprobacion,
 } from '../helper';
 import Steps from './Steps';
 import ApproveConfeccionPromesa from './ApproveConfeccionPromesa';
@@ -106,6 +107,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
           UserProject.isAC() &&
           !isPendienteContacto(initialValues)
         }
+        isPendienteAprobacion={isPendienteAprobacion(initialValues)}
       />
       <PhaseDocument entity={initialValues} />
       {canApproveConfeccionPromesa(initialValues) && controlAction}

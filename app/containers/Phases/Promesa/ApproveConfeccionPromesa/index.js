@@ -20,7 +20,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
     <>
       <Box>
         <BoxHeader>
-          <b>PROMESA</b>
+          <b>Aprobacion Confeccion Promesa</b>
         </BoxHeader>
         <BoxContent>
           <div className="d-flex align-items-center mt-3">

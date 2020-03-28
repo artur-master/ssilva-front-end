@@ -14,10 +14,11 @@ import { FieldArray } from 'formik';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import CreditList from './List';
+import Alert from 'components/Alert';
 
 const SyncMessage = WithLoading();
 
-const CreditForm = ({ selector, onSubmit, onCancel, onSelect }) => {
+const CreditForm = ({ selector,isPendienteAprobacion, onSubmit, onCancel, onSelect }) => {
   const initCredit = {
     Type: 'ac',
     InstitucionFinanciera: '',
@@ -29,6 +30,10 @@ const CreditForm = ({ selector, onSubmit, onCancel, onSelect }) => {
   const initialValues = {
     Credits: [initCredit],
   };
+  const { project } = window;  
+  const aprobaState = project.EntregaInmediata ? 
+                  !isPendienteAprobacion
+                  :true;
   return (
     <ExForm initialValues={initialValues} onSubmit={onSubmit}>
       {({ values, setFieldValue, submitForm }) => (
@@ -36,6 +41,11 @@ const CreditForm = ({ selector, onSubmit, onCancel, onSelect }) => {
           <Collapse isOpen>
             <CollapseHeader>CRÉDITOS PRE APROBADOS</CollapseHeader>
             <CollapseContent>
+              {!aprobaState && (
+                <Alert type="warning">
+                  Todas las ofertas requieren aprobación. 
+                </Alert>
+              )}
               {selector.entities && (
                 <CreditList selector={selector} onSelect={onSelect} />
               )}
@@ -156,9 +166,11 @@ const CreditForm = ({ selector, onSubmit, onCancel, onSelect }) => {
           </Collapse>
           <div className="p-3 text-right border-top">
             <SyncMessage {...selector} />
-            <Button disabled={selector.loading} onClick={submitForm}>
-              Aceptar
-            </Button>
+            {aprobaState && (
+              <Button disabled={selector.loading} onClick={submitForm}>
+                Aceptar
+              </Button>
+            )}
             <Button
               disabled={selector.loading}
               onClick={onCancel}

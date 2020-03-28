@@ -19,7 +19,7 @@ export function PhaseControlNegociacionPromesa({ selector, entity, onSubmit }) {
     <>
       <Box>
         <BoxHeader>
-          <b>PROMESA</b>
+          <b>Control de Negociación Promesa</b>
         </BoxHeader>
         <BoxContent>
           <div className="d-flex align-items-center">

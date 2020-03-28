@@ -51,3 +51,10 @@ export const CANCEL_RESERVATION_ERROR =
   'app/containers/Reservation/Form/CANCEL_RESERVATION_ERROR';
 export const CANCEL_RESERVATION_SUCCESS =
   'app/containers/Reservation/Form/CANCEL_RESERVATION_SUCCESS';
+
+export const PRINT_DOCUMENTS =
+  'app/containers/Reservation/Form/PRINT_DOCUMENTS';
+export const PRINT_DOCUMENTS_ERROR =
+  'app/containers/Reservation/Form/PRINT_DOCUMENTS_ERROR';
+export const PRINT_DOCUMENTS_SUCCESS =
+  'app/containers/Reservation/Form/PRINT_DOCUMENTS_SUCCESS';

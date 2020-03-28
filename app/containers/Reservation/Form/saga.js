@@ -1,6 +1,8 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, all, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { API_ROOT } from 'containers/App/constants';
+import FileSaver from 'file-saver';
+import moment from 'moment';
 import {
   SAVE_RESERVATION,
   GET_RESERVATION,
@@ -8,6 +10,7 @@ import {
   SEND_TO_CONTROL,
   CANCEL_RESERVATION,
   CONTROL_REVIEW,
+  PRINT_DOCUMENTS,
 } from './constants';
 import {
   saveReservationError,
@@ -22,6 +25,8 @@ import {
   cancelReservationSuccess,
   controlReviewError,
   controlReviewSuccess,
+  printDocumentsError,
+  printDocumentsSuccess,
 } from './actions';
 
 function* getQuotation(action) {
@@ -146,6 +151,47 @@ function* controlReview(action) {
   }
 }
 
+const downloadFile = async (url, fileName) => {
+  console.log(url)
+  if(url !== '')
+    FileSaver.saveAs( url,fileName );
+}
+
+function* generateCheque(cheque) {
+  const requestURL = `${API_ROOT}/ventas/generate-check/`;
+  const response = yield call(request, requestURL, {
+    method: 'POST',
+    body: JSON.stringify(cheque),
+  });
+  FileSaver.saveAs(
+    response,
+    `cheque-${moment(cheque.Date).format('YYYY_MM_DD')}.pdf`,
+  );
+  return response;
+}
+
+function* printDocuments(action) {
+  try {
+    const response = yield call(save, action);
+    downloadFile(response.reserva.Documents.DocumentCotizacion, 'cotización.pdf')
+    downloadFile(response.reserva.Documents.DocumentOferta, 'oferta.pdf')
+    downloadFile(response.reserva.Documents.DocumentFichaPreAprobacion, 'ficha pre aprobación.pdf')
+    downloadFile(response.reserva.Documents.DocumentSimulador, 'simulador de crédito.pdf')
+
+    const genCheques = [];
+    const cheques = action.values.printCutoas;
+    for (let i = 0; i < cheques.length; i += 1) {
+      genCheques.push(yield call(generateCheque, cheques[i]));
+    }
+    const chequesFiles = yield all(genCheques);
+
+    yield put(printDocumentsSuccess({...response, ...chequesFiles}));
+    
+  } catch (error) {
+    yield put(printDocumentsError(error));
+  }
+}
+
 export default function* projectSaga() {
   yield takeLatest(SAVE_RESERVATION, saveReservation);
   yield takeLatest(SEND_TO_CONTROL, sendToControl);
@@ -153,4 +199,5 @@ export default function* projectSaga() {
   yield takeLatest(CANCEL_RESERVATION, cancelReservation);
   yield takeLatest(GET_RESERVATION, getReservation);
   yield takeLatest(GET_QUOTATION, getQuotation);
+  yield takeLatest(PRINT_DOCUMENTS, printDocuments);
 }

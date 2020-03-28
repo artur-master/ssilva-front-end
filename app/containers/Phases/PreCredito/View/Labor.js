@@ -45,16 +45,16 @@ const Labor = ({ group = 'Cliente', values }) => {
           </span>
           <FormGroup className="col-12 col-md-6 d-flex mt-3">
             <Label className="w-50">Nombre Empleador</Label>
-            <span>{values[Empleador].RazonSocial}</span>
+            <span>{values[Empleador] ? values[Empleador].RazonSocial : ""}</span>
           </FormGroup>
           <FormGroup className="col-12 col-md-6 d-flex mt-3">
             <Label className="w-50 ">RUT Empleador</Label>
-            <span>{values[Empleador].Rut}</span>
+            <span>{values[Empleador] ? values[Empleador].Rut: ''}</span>
           </FormGroup>
           {!IsCompany && (
             <FormGroup className="col-12 col-md-6 d-flex mt-3">
               <Label className="w-50">Teléfono Empleador</Label>
-              <span>{values[Empleador].Extra.Phone}</span>
+              <span>{values[Empleador] ? values[Empleador].Extra.Phone : ''}</span>
             </FormGroup>
           )}
           <FormGroup className="col-12 col-md-6 d-flex mt-3">
@@ -62,7 +62,7 @@ const Labor = ({ group = 'Cliente', values }) => {
             <span>{`${
               IsCompany
                 ? values.EmpresaCompradora.Address
-                : values[Empleador].Extra.Address
+                : values[Empleador] ? values[Empleador].Extra.Address: ''
             }`}</span>
           </FormGroup>
         </div>

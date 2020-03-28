@@ -16,12 +16,14 @@ import { Helmet } from 'react-helmet';
 import InitData from 'containers/Common/InitData';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
 import WithLoading from 'components/WithLoading';
+import Alert from 'components/Alert';
 import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
 import makeSelectReservations from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { fetchReservations, searchReservations, queryReservations } from './actions';
 import { fetchOffers } from 'containers/Offer/List/actions';
+import { requiredData } from '../../Quotation/List/helper'
 import makeSelectOffers from 'containers/Offer/List/selectors';
 import List from './List';
 import Filter from './Filter';
@@ -48,17 +50,21 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
       {selector.loading && <SyncMessage {...selector} />}
       {!selector.loading && selector.reservations && (
         <>
-          <Filter
-            project={project}
-            selector={selector}
-            searchReservations={(txtSearch, status) =>
-              dispatch(searchReservations(txtSearch, status))
-            }
-          />
-          <List {...selector} project={project} 
-            onQuery={ query => dispatch(queryReservations(query))} 
-            offers={offers.offers} dispatch={dispatch} 
-          />
+          {requiredData(project) && (
+            <Filter
+              project={project}
+              selector={selector}
+              searchReservations={(txtSearch, status) =>
+                dispatch(searchReservations(txtSearch, status))
+              }
+            />
+          )}
+          {!requiredData(project) && (
+            <Alert type="danger" className="mb-0">
+              {`Debe completar los datos del proyecto antes de continuar`}
+            </Alert>
+          )}
+          <List {...selector} project={project} offers={offers.offers} dispatch={dispatch} />
         </>
       )}
     </>

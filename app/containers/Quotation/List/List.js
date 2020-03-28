@@ -10,17 +10,26 @@ import { Box } from 'components/Box';
 import Thead from 'components/Table/Thead';
 import Empty from 'components/Empty';
 import Item from './Item';
+import { requiredData } from './helper'
+import Alert from 'components/Alert';
 import { searchQuotations, queryQuotations } from './actions';
 import Filter from './Filter';
 
 const List = ({ quotations, query, filter, reports, project, reservations, dispatch }) => (
   <div>
-    <Filter
-      reports={reports}
-      project={project}
-      filter={filter}
-      searchQuotations={txtSearch => dispatch(searchQuotations(txtSearch))}
-    />
+    {requiredData(project) && (
+      <Filter
+        reports={reports}
+        project={project}
+        filter={filter}
+        searchQuotations={txtSearch => dispatch(searchQuotations(txtSearch))}
+        />
+    )}
+    {!requiredData(project) && (
+      <Alert type="danger" className="mb-0">
+        {`Debe completar los datos del proyecto antes de continuar`}
+      </Alert>
+    )}
     <Box className="mt-3 pb-3">
       {quotations && quotations.length < 1 && <Empty tag="h2" />}
       {quotations && quotations.length > 0 && (
@@ -28,7 +37,7 @@ const List = ({ quotations, query, filter, reports, project, reservations, dispa
           <Thead
             ths={[
               { field: 'CotizacionID', label: 'Cotización', sortable: true },
-              { field: 'Inmuebles', label: 'Inmuebles' },
+              { field: 'Inmuebles', label: 'Inmuebles', className: "pl-3" },
               { field: 'Cliente', label: 'Cliente', sortable: true },
               { field: 'Date', label: 'Fecha', sortable: true },
               { field: 'CotizacionState', label: 'CotizacionState', colSpan: 2, className: "pl-6", sortable: true },

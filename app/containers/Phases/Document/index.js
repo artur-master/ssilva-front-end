@@ -27,6 +27,7 @@ export function PhaseDocument({
   onCancel,
   onControlReview,
   onGarantia,
+  onPrint,
 }) {
   const documents = getDocuments(entity);
   const initialValues = documents.reduce(
@@ -72,12 +73,13 @@ export function PhaseDocument({
             onReview={(documentoType, review) =>
               setReviews({ ...reviews, [documentoType]: review })
             }
+            onPrint={onPrint}
           />
           {canUpload && (
             <CarpetaDigitalUploadActions
               entity={entity}
               onCancel={onCancel}
-              onSave={() => onSave(form.values)}
+              // onSave={() => onSave(form.values)}
               selector={selector}
               form={form}
               onSendControl={() => onSendControl(form.values)}

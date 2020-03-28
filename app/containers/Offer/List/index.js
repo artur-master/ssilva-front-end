@@ -103,9 +103,18 @@ export function Offers({ match, selectorProject, selector, promesas, dispatch })
                 {`${project.Name} - ${project.Symbol}`}
               </h4>
               <OfferGarantia />
+              <Filter
+                project={project}
+                selector={selector}
+                searchOffers={(txtSearch, status) =>
+                  dispatch(searchOffers(txtSearch, status))
+                }
+              />
               <FiList
                 offers={selector.offers}
                 project={project}
+                query={selector.query}
+                onQuery={query => dispatch(queryOffers(query))}
                 dispatch={dispatch}
               />
             </>

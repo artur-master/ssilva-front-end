@@ -11,6 +11,7 @@ const PhasePreCredito = ({
   canEditCredit,
   step,
   initialValues,
+  isPendienteAprobacion,
   onContinue,
   dispatch,
   showScreen,
@@ -32,6 +33,7 @@ const PhasePreCredito = ({
       initialValues={initialValues}
       canEdit={canEdit}
       canEditCredit={canEditCredit}
+      isPendienteAprobacion={isPendienteAprobacion}
       onSubmit={onContinue}
       dispatch={dispatch}
     />

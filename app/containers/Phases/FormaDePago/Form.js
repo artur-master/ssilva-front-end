@@ -24,7 +24,7 @@ import {
 import { Auth } from 'containers/App/helpers';
 
 // eslint-disable-next-line no-unused-vars
-function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
+function PhaseFormaDePagoForm({ defaultPercent = 20, onSetCuotas, form }) {
   const [openCuotas, setOpenCuotas] = useState(0);
   const { values, setValues } = form;
   const { paymentUtils } = window.preload;
@@ -125,7 +125,7 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
                     }}
                   />) : (
                     <div className="search-filter">
-                      <span class="form-control form-control-sm" style={{ width: 120, height: 28 }}>
+                      <span className="form-control form-control-sm" style={{ width: 120, height: 28 }}>
                         {values.PaymentFirmaPromesa
                           ? formatNumber(values.PaymentFirmaPromesa)
                           : ''
@@ -152,7 +152,7 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
                     }}
                   />) : (
                     <div className="search-filter">
-                      <span class="form-control form-control-sm" style={{ width: 120, height: 28 }}>
+                      <span className="form-control form-control-sm" style={{ width: 120, height: 28 }}>
                         {percent.PaymentFirmaPromesa
                           ? `%${formatNumber(percent.PaymentFirmaPromesa)}`
                           : ''
@@ -200,9 +200,11 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
                   type="number"
                   readOnly={values.Cuotas.length > 1}
                   value={
-                    percent.Cuotas
-                      ? formatNumber(percent.Cuotas)
+                    values.Cuotas[0] ?
+                    values.Cuotas[0].Amount
+                      ? formatNumber(values.Cuotas[0].Amount)
                       : ''
+                    : ''
                   }
                   onChange={evt => {
                     let value = evt.currentTarget.value;
@@ -309,7 +311,7 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
                 </td>
                 <td>
                   <div className="search-filter">
-                    <span class="form-control form-control-sm" style={{ width: 120, height: 28 }}>
+                    <span className="form-control form-control-sm" style={{ width: 120, height: 28 }}>
                       {percent.PaymentFirmaEscritura
                         ? `%${formatNumber(percent.PaymentFirmaEscritura)}`
                         : ' '
@@ -572,6 +574,7 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
         onHide={() => setOpenCuotas(0)}
         onView={() => setOpenCuotas(2)}
         onEdit={() => setOpenCuotas(1)}
+        onSetCuotas={onSetCuotas}
       />
     </>
   );
@@ -579,5 +582,6 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
 
 PhaseFormaDePagoForm.propTypes = {
   form: PropTypes.object,
+  onSetCuotas: PropTypes.func,
 };
 export default PhaseFormaDePagoForm;

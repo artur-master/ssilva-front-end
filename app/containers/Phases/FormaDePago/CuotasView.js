@@ -15,7 +15,7 @@ import { calculates } from './helper';
 import Cheque from './Cheque';
 
 // eslint-disable-next-line no-unused-vars
-function CuotasView({ values, onHide, onEdit }) {
+function CuotasView({ values, onSetCuotas, onHide, onEdit }) {
   const { cuota, balance, moneyErr } = calculates(values);
   return (
     <>
@@ -26,7 +26,7 @@ function CuotasView({ values, onHide, onEdit }) {
             Editar Cuotas
           </Button>
           <div className="order-3">
-            <Cheque cuotas={values.Cuotas}>Cheques</Cheque>
+            <Cheque cuotas={values.Cuotas} onSetCuotas={onSetCuotas}>Cheques</Cheque>
           </div>
         </div>
 
@@ -150,6 +150,7 @@ function CuotasView({ values, onHide, onEdit }) {
 CuotasView.propTypes = {
   onHide: PropTypes.func.isRequired,
   onEdit: PropTypes.func,
+  onSetCuotas: PropTypes.func,
   values: PropTypes.object,
 };
 

@@ -20,6 +20,7 @@ export function CarpetaDigital({
   entity,
   isReview,
   onReview,
+  onPrint,
   form,
 }) {
   const { values } = form;
@@ -59,7 +60,12 @@ export function CarpetaDigital({
                       sistema:
                     </em>
                   </span>
-                  <Button disabled={ canPrint } className="font-14-rem no-whitespace m-btn m-btn-white m-btn-printer">
+                  <Button className="font-14-rem no-whitespace m-btn m-btn-white m-btn-printer"
+                    disabled={ false } 
+                    onClick={()=>{
+                      onPrint();
+                    }}
+                  >
                     Imprimir Documentos
                   </Button>
                 </div>

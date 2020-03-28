@@ -11,13 +11,13 @@ import { Modal, ModalFooter, ModalHeader, ModalBody } from 'components/Modal';
 
 import PhaseFormaDePagoForm from './Form';
 
-function FormModal({ form, onHide, onUpdate, isOpen }) {
+function FormModal({ form, onHide, onUpdate, onSetCuotas, isOpen }) {
   return (
     <>
       <Modal isOpen={isOpen} size="xl" scrollable>
         <ModalHeader>Editar Cuotas</ModalHeader>
         <ModalBody className="p-3">
-          <PhaseFormaDePagoForm form={form} />
+          <PhaseFormaDePagoForm form={form} onSetCuotas={onSetCuotas}/>
         </ModalBody>
         <ModalFooter>
           <Button className="ml-2" onClick={onUpdate}>
@@ -37,6 +37,7 @@ FormModal.propTypes = {
   form: PropTypes.object,
   onHide: PropTypes.func,
   onUpdate: PropTypes.func,
+  onSetCuotas: PropTypes.func,
 };
 
 export default FormModal;

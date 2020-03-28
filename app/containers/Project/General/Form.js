@@ -11,7 +11,9 @@ import { Form as ExForm, Field, FormGroup, Label } from 'components/ExForm';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import model from '../model';
-import { getGeneralFields } from '../fields';
+import { Is_EntregaInmediata } from '../helper'
+import { getGeneralFields, getPolizaFields } from '../fields';
+import Aseguradora from 'containers/Common/Aseguradora';
 
 const SyncMessage = WithLoading();
 export function GeneralForm({ selector, selectorProject, onSubmit, onReset }) {
@@ -22,6 +24,11 @@ export function GeneralForm({ selector, selectorProject, onSubmit, onReset }) {
     <ExForm initialValues={initialValues} onSubmit={values => onSubmit(values)}>
       {form => {
         const fields = getGeneralFields(form);
+        if(Is_EntregaInmediata()){
+          const polizafields = getPolizaFields(form.values);
+          fields.push(...polizafields);
+        }
+
         return (
           <Box>
             <BoxHeader>

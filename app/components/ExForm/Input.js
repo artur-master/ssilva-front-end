@@ -34,7 +34,7 @@ const Input = ({ className = '', loading = false, children, ...props }) => {
         </ReactInput>) :
       props.type === "number" ? (
         <>
-          {isEditing ? (
+          {isEditing && !(props.readOnly) ? (
             <ReactInput
               {...props}
               type="number"

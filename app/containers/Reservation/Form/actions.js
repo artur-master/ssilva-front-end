@@ -27,6 +27,9 @@ import {
   CONTROL_REVIEW,
   CONTROL_REVIEW_ERROR,
   CONTROL_REVIEW_SUCCESS,
+  PRINT_DOCUMENTS,
+  PRINT_DOCUMENTS_ERROR,
+  PRINT_DOCUMENTS_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -235,6 +238,28 @@ export function cancelReservationError(error) {
 export function cancelReservationSuccess(response) {
   return {
     type: CANCEL_RESERVATION_SUCCESS,
+    response,
+  };
+}
+
+export function printDocuments(newValues) {
+  const values = prepareBeforeSave(newValues);
+  return {
+    type: PRINT_DOCUMENTS,
+    values,
+  };
+}
+
+export function printDocumentsError(error) {
+  return {
+    type: PRINT_DOCUMENTS_ERROR,
+    error,
+  };
+}
+
+export function printDocumentsSuccess(response) {
+  return {
+    type: PRINT_DOCUMENTS_SUCCESS,
     response,
   };
 }
