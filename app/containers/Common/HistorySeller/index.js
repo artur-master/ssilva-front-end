@@ -5,6 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -45,21 +46,16 @@ function HistorySeller({ UserID, selector, dispatch }) {
             <Thead
               ths={[
                 {
-                  field: 'VentaLogTypel',
-                  label: 'Tipo de Entrada',
+                  field: 'Project',
+                  label: 'Proyecto',
                   sortable: true,
                 },
-                { field: 'ClienteName', label: 'Nombre', sortable: true },
-                {
-                  field: 'ClienteLastNames',
-                  label: 'Apellido',
-                  sortable: true,
-                },
-                { field: 'ClienteRut', label: 'RUT', sortable: true },
+                { field: 'ClienteName', label: 'Etapa ', sortable: true },
+                { field: 'ClienteName', label: 'Creado por', sortable: true },
                 { field: 'Date', label: 'Fecha', sortable: true },
-                { field: 'Comment', label: 'Comentarios' },
+                { field: 'ClienteRut', label: 'Ver', sortable: false },
               ]}
-              onQuery={query => dispatch(queryHistories(query))}
+              onQuery={(query) => dispatch(queryHistories(query))}
             />
             <tbody>
               {histories.map((history, index) => (
@@ -67,25 +63,32 @@ function HistorySeller({ UserID, selector, dispatch }) {
                 <tr key={index}>
                   <td className="pl-3 no-whitespace">
                     <span className="font-14-rem color-regular">
-                      {history.VentaLogTypel}
+                      {history.Folio}
                     </span>
                   </td>
                   <td className="no-whitespace">
-                    <span className="font-14-rem">{history.ClienteName}</span>
+                    <span className="font-14-rem">{history.dis_state}</span>
                   </td>
                   <td className="no-whitespace">
                     <span className="font-14-rem">
-                      {history.ClienteLastNames}
+                      {history.VentaLogType}
                     </span>
-                  </td>
-                  <td className="no-whitespace">
-                    <span className="font-14-rem">{history.ClienteRut}</span>
                   </td>
                   <td className="no-whitespace">
                     <span className="font-14-rem">{history.Date}</span>
                   </td>
                   <td className="no-whitespace">
-                    <span className="font-14-rem">{history.Comment}</span>
+                    <span className="font-14-rem">
+                    <a
+                      className="font-14-rem color-main btn-arrow mt-2"
+                      href={(history.state=="Cotizacion") ?
+                        `/proyectos/${history.ProyectoID}/${history.state}/${history.VentaID}`:
+                        `/proyectos/${history.ProyectoID}/${history.state}?${history.state}ID=${history.VentaID}`
+                      }
+                    >
+                      <b>Ver</b>
+                    </a>
+                    </span>
                   </td>
                 </tr>
               ))}
