@@ -4,62 +4,26 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-import { createStructuredSelector } from 'reselect';
 
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import { Auth } from 'containers/App/helpers';
-import { fetchReservations } from 'containers/Reservation/List/actions';
-import { fetchPromesas } from 'containers/Promesa/List/actions';
-import reservationReducer from 'containers/Reservation/List/reducer';
-import reservationSaga from 'containers/Reservation/List/saga';
-import reducer from 'containers/Promesa/List/reducer';
-import saga from 'containers/Promesa/List/saga';
-import makeSelectReservations from 'containers/Reservation/List/selectors';
-import makeSelectPromesas from 'containers/Promesa/List/selectors';
-import { Calculate_Meta } from './helper';
-import { numberFormat } from 'containers/App/helpers';
+import { formatNumber } from 'containers/App/helpers';
+import { fetchAllReservations, fetchAllPromesas } from './helper';
 
-export function ProjectMeta({ project = {}, dispatch, promesas, reservations, selector, active }) {
+export function ProjectMeta({ project = {}, active }) {
   if (Auth.isInmobiliario()) return null;
 
-  useInjectReducer({ key: 'reservations', reducer: reservationReducer});
-  useInjectSaga({ key: 'reservations', saga: reservationSaga});
-  const { ProyectoID } = project;
+  const { ProyectoID } = project;  
+  const [reserva, setReserva] = useState({"total": 0, "sum": 0, 'valpro': 0});
+  const [promesa, setPromesa] = useState({"total": 0, "sum": 0, 'valpro': 0});
+
   useEffect(() => {
-    if (ProyectoID && !reservations.loading){
-      dispatch(fetchReservations(ProyectoID));
-    }
-  }, [dispatch, ProyectoID]);
-
-  useInjectReducer({ key: 'promesas', reducer });
-  useInjectSaga({ key: 'promesas', saga });
-  useEffect(() => {
-    if(project.ProyectoID && !promesas.loading){
-      dispatch(fetchPromesas(project.ProyectoID));
-    }
-  }, [dispatch, ProyectoID])
-
-  const reserva_meta = 
-    reservations.reservations ?
-      Calculate_Meta(
-        reservations.reservations.filter(
-          reserva=> reserva.ReservaState==="Oferta"
-        )
-      ): '';
-
-  const promesa_meta = 
-    promesas.promesas ?
-      Calculate_Meta(
-        promesas.promesas.filter(
-          promesas=> promesas.PromesaState==="Escritura"
-        )      
-      ): '';
+    if (!ProyectoID) return;
+    fetchAllReservations(ProyectoID).then(res => setReserva(res));
+    fetchAllPromesas(ProyectoID).then(res => setPromesa(res));
+  }, [ProyectoID]);
 
   return (
     <>
@@ -74,13 +38,13 @@ export function ProjectMeta({ project = {}, dispatch, promesas, reservations, se
               <div className="box">
                 <span className="sub-title">Llevamos</span>
                 <span className="title">
-                  UF <b>{numberFormat(reserva_meta.sum)}</b>
+                  UF <b>{formatNumber(reserva.sum)}</b>
                 </span>
                 <figure className="progress-card green">
-                  <progress className="" value={reserva_meta.valpro} max="100" />
+                  <progress className="" value={reserva.valpro} max="100" />
                   <span className="key">Meta</span>
                   <span className="value">
-                    UF <b>{numberFormat(reserva_meta.total)}</b>
+                    UF <b>{formatNumber(reserva.total)}</b>
                   </span>
                 </figure>
               </div>
@@ -89,13 +53,13 @@ export function ProjectMeta({ project = {}, dispatch, promesas, reservations, se
               <div className="box">
                 <span className="sub-title">Llevamos</span>
                 <span className="title">
-                  Promesas <b>{numberFormat(promesa_meta.sum)}</b>
+                  Promesas <b>{formatNumber(promesa.sum)}</b>
                 </span>
                 <figure className="progress-card yellow">
-                  <progress className="" value={promesa_meta.valpro} max="100" />
+                  <progress className="" value={promesa.valpro} max="100" />
                   <span className="key">Meta</span>
                   <span className="value">
-                    <b>{numberFormat(promesa_meta.total)}</b>
+                    <b>{formatNumber(promesa.total)}</b>
                   </span>
                 </figure>
               </div>
@@ -112,25 +76,7 @@ export function ProjectMeta({ project = {}, dispatch, promesas, reservations, se
 ProjectMeta.propTypes = {
   active: PropTypes.string,
   project: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  reservations: PropTypes.object,
-  promesas: PropTypes.object,
-  selector: PropTypes.object,
-  dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  reservations: makeSelectReservations(),
-  promesas: makeSelectPromesas(),
-});
+export default ProjectMeta;
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-export default compose(withConnect)(ProjectMeta);
