@@ -78,7 +78,7 @@ export function CarpetaDigital({
       />
     ),
   };
-  // if(entity.Codeudor)
+  if(entity.Codeudor)
     tabs.push(codeudor_document)
   return (
     <>
