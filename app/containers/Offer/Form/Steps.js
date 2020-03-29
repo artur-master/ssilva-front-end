@@ -14,7 +14,7 @@ import {
   PRE_APROBACION_CREDITO_STATE,
 } from 'containers/App/constants';
 import { isPendienteContacto,isPendienteAprobacion } from '../helper';
-import { isCreditType } from '../../Phases/FormaDePago/helper';
+import { isCreditType } from 'containers/Phases/FormaDePago/helper';
 
 function SubSteps({ offer }) {
   const {
@@ -86,31 +86,31 @@ function SubSteps({ offer }) {
           </Link>
         </li>
       </ul>
-      <ul className="m-counter mt-3 " style={{ marginLeft: marginLeft }}>
-        <li className="m-counter-plus warning-magent">
-          <Link
-            to="/"
-            className="m-counter-item"
-            onClick={evt => evt.preventDefault()}
+      { isCreditPayment && (
+        <ul className="m-counter mt-3 " style={{ marginLeft: marginLeft }}>
+          <li className="m-counter-plus warning-magent">
+            <Link
+              to="/"
+              className="m-counter-item"
+              onClick={evt => evt.preventDefault()}
+            >
+              <span>AC</span>
+            </Link>
+          </li>
+          {/* Commented by Artru */}
+          {/* <li
+            className={`m-counter-plus ${
+              !isPendienteContacto(offer) ? 'success' : 'yellow'
+            }`}
           >
-            <span>AC</span>
-          </Link>
-        </li>
-        {/* Commented by Artru */}
-        {/* <li
-          className={`m-counter-plus ${
-            !isPendienteContacto(offer) ? 'success' : 'yellow'
-          }`}
-        >
-          <Link
-            to="/"
-            className="m-counter-item"
-            onClick={evt => evt.preventDefault()}
-          >
-            <span>Contato con cliente</span>
-          </Link>
-        </li> */}
-        {isCreditPayment && (
+            <Link
+              to="/"
+              className="m-counter-item"
+              onClick={evt => evt.preventDefault()}
+            >
+              <span>Contato con cliente</span>
+            </Link>
+          </li> */}
           <li
             className={`m-counter-plus ${
               [
@@ -129,23 +129,23 @@ function SubSteps({ offer }) {
               <span>Pre-Aprobacíon</span>
             </Link>
           </li>
-        )}
-        {!isCreditPayment && (
-          <li
-            className={`m-counter-plus ${
-              isPendienteContacto(offer) ? '' : 'success'
-            }`}
-          >
-            <Link
-              to="/"
-              className="m-counter-item"
-              onClick={evt => evt.preventDefault()}
+          {/* {!isCreditPayment && (
+            <li
+              className={`m-counter-plus ${
+                isPendienteContacto(offer) ? '' : 'success'
+              }`}
             >
-              <span>Aprobacíon Formal</span>
-            </Link>
-          </li>
-        )}
-      </ul>
+              <Link
+                to="/"
+                className="m-counter-item"
+                onClick={evt => evt.preventDefault()}
+              >
+                <span>Aprobacíon Formal</span>
+              </Link>
+            </li>
+          )} */}
+        </ul>             
+      )}
     </>
   );
 }
@@ -155,7 +155,8 @@ SubSteps.propTypes = {
 };
 
 function Steps({ offer }) {
-  const { OfertaState } = offer;
+  const { OfertaState, PayType } = offer;
+
   const Graph = {
     Node: [
       {
@@ -164,7 +165,7 @@ function Steps({ offer }) {
         Color: isPendienteContacto(offer) ? 'yellow' : 'green',
       },
       {
-        Label: 'IN, FI, AC',
+        Label: isCreditType(PayType) ? 'IN, FI, AC' : 'IN, FI',
         Description: 'Pendiente Aprobación',
         Color: isPendienteContacto(offer) ? 'white' : 'red',
       },
@@ -228,7 +229,7 @@ function Steps({ offer }) {
             );
           })}
       </ul>
-      {!(isPendienteAprobacion(offer)) && <SubSteps offer={offer} />}
+      {!(isPendienteContacto(offer)) && <SubSteps offer={offer} />}
     </nav>
   );
 }

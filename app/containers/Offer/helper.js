@@ -9,7 +9,7 @@ import {
 import { UserProject } from 'containers/Project/helper';
 import { Auth } from 'containers/App/helpers';
 import { isValidLabor } from 'containers/Phases/PreCredito/helper';
-import { calculates } from 'containers/Phases/FormaDePago/helper';
+import { calculates, isCreditType } from 'containers/Phases/FormaDePago/helper';
 import { isValidClient } from 'containers/Phases/Client/helper';
 
 export const initReports = () =>
@@ -76,16 +76,18 @@ export const formatOffer = offer => {
               ? 'badge-success'
               : 'badge-warning',
         });
-        OfertaStateFormat.push({
-          Label: 'AC',
-          Color:
-            offer.PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2]
-              ? 'badge-success'
-              : offer.PreAprobacionCreditoState ===
-                PRE_APROBACION_CREDITO_STATE[3]
-                ? 'badge-danger'
-                : 'badge-warning',
-        });
+
+        if(isCreditType(offer.PayType))
+          OfertaStateFormat.push({
+            Label: 'AC',
+            Color:
+              offer.PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2]
+                ? 'badge-success'
+                : offer.PreAprobacionCreditoState ===
+                  PRE_APROBACION_CREDITO_STATE[3]
+                  ? 'badge-danger'
+                  : 'badge-warning',
+          });
       }
       break;
     case 'Pendiente control':
@@ -94,9 +96,12 @@ export const formatOffer = offer => {
       break;
     case 'Rechazada por legal':
       OfertaStateFormat[0].Color = 'badge-danger';
+      if (offer.AprobacionInmobiliariaState === 'Rechazada')
+        OfertaStateFormat[0].Label = "Rechazada IN";
       break;
     case 'Cancelada':
       OfertaStateFormat[0].Color = 'badge-warning';
+      OfertaStateFormat[0].Label = "Cancelada JP";
       break;
     case 'Modificado':
       OfertaStateFormat[0].Color = 'badge-caution';

@@ -70,8 +70,8 @@ export function OfferEditForm({ selector, dispatch }) {
       />
       <PhaseInmueble
         initialValues={initialValues}
-        canEdit
-        onUpdate={values => dispatch(updateOffer(values))}
+        // canEdit
+        // onUpdate={values => dispatch(updateOffer(values))}
       />
       <PhaseFormaDePago
         initialValues={initialValues}

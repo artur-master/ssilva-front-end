@@ -18,7 +18,7 @@ const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
         <Thead
           ths={[
             { field: 'OfertaID', label: 'Oferta', sortable: true },
-            { field: 'Inmuebles', label: 'Inmuebles', className: "pl-3" },
+            { field: 'Inmuebles', label: 'Inmuebles' },
             { field: 'Cliente', label: 'Cliente', sortable: true },
             { field: 'Date', label: 'Fecha', sortable: true },
             { field: 'OfertaState', label: 'OfertaState', className: "text-right px-3", sortable: true },
