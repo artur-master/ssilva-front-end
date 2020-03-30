@@ -19,14 +19,33 @@ import {
   matchRestrictionsFromAList,
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
-// import { OFERTA_STATE } from 'containers/App/constants';
+import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
 // import Button from 'components/Button';
 import { canEditOffer } from '../helper';
 
 const Item = ({ project, offer, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, Inmuebles, PromesaID = '', OfertaStateFormat = [], Cliente, Date } = offer;
+  const { 
+    Proyecto, Folio, Inmuebles, OfertaStateFormat = [],
+    Cliente, Date, AprobacionInmobiliariaState 
+  } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
+
+  let responsible='';
+  switch(AprobacionInmobiliariaState){
+    case APROBACION_INMOBILIARIA_STATE[0]:
+      responsible = 'JP';
+      break;
+    case APROBACION_INMOBILIARIA_STATE[1]:
+      responsible = 'IN';
+      break;
+    case APROBACION_INMOBILIARIA_STATE[2]:
+      responsible = 'FI';
+      break;
+    default:
+      responsible = '';
+  }
+
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
@@ -58,6 +77,7 @@ const Item = ({ project, offer, promesa, dispatch }) => {
       </td>
       <td className="">Cliente: {clientFullname(Cliente)}</td>
       <td>{Date}</td>
+      <td className="px-3">{ responsible }</td>
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
           {OfertaStateFormat.map((state, index) => {
