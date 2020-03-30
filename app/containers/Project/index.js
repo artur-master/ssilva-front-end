@@ -14,6 +14,7 @@ import { compose } from 'redux';
 import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
 import makeSelectInmueble from 'containers/Common/Inmueble/selectors';
+import makeSelectRestriction from 'containers/Common/Restriction/selectors';
 import TopPage from './TopPage';
 import General from './General';
 import makeSelectInitProject from './Init/selectors';
@@ -38,6 +39,7 @@ export function Project({
   selectorProject,
   selectorFinance,
   selectorInmuebles,
+  selectorRestrictions,
   dispatch,
 }) {
   const { project } = selectorProject;
@@ -45,6 +47,7 @@ export function Project({
     project,
     finanza: selectorFinance.entity,
     inmuebles: selectorInmuebles.entities,
+    restrictions:selectorRestrictions.entities,
   });
 
   return (
@@ -110,6 +113,7 @@ Project.propTypes = {
   selectorProject: PropTypes.object,
   selectorFinance: PropTypes.object,
   selectorInmuebles: PropTypes.object,
+  selectorRestrictions: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
@@ -117,6 +121,7 @@ const mapStateToProps = createStructuredSelector({
   selectorProject: makeSelectInitProject(),
   selectorFinance: makeSelectFinance(),
   selectorInmuebles: makeSelectInmueble(),
+  selectorRestrictions: makeSelectRestriction(),
 });
 
 function mapDispatchToProps(dispatch) {

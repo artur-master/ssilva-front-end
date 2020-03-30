@@ -144,6 +144,7 @@ export const hasCollectedFullData = ({
   project = {},
   finanza = {},
   inmuebles = [],
+  restrictions = [],
 }) =>
   project &&
   project.Documentos &&
@@ -154,7 +155,8 @@ export const hasCollectedFullData = ({
   finanza &&
   finanza.State === 'confirmed' &&
   inmuebles &&
-  inmuebles.length > 0;
+  inmuebles.length > 0 &&
+  restrictions.length > 0;
 
 export const canApproveLegal = project =>
   UserProject.isLegal(project) &&

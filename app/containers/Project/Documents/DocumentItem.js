@@ -172,7 +172,7 @@ function DocumentItem({
                       value !== 'confirmed' ? 'Este archivo es rechazado' : ''
                     }
                     className={`font-14-rem d-flex align-items-center order-3 mr-3 ${
-                      value.startsWith('rejected') ? 'color-warning' : 'color-em'
+                      value && value.startsWith('rejected') ? 'color-warning' : 'color-em'
                     }`}
                   >
                     <em>

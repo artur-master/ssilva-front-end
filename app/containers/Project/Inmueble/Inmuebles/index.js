@@ -3,12 +3,13 @@
  * Project
  *
  */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Label } from 'components/ExForm';
 // import CommonInmueble from 'containers/Common/Inmueble';
 import InmuebleReview from './Review';
+import { Auth } from 'containers/App/helpers';
 
 function Inmuebles({
   selectorInmueble,
@@ -74,6 +75,7 @@ function Inmuebles({
                 event.currentTarget.value = '';
                 onImportFile(data);
               }}
+              disabled ={!Auth.isPM()}
             />
             {/* eslint-disable-next-line */}
             <label

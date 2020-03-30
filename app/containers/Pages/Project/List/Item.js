@@ -5,7 +5,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
@@ -17,8 +17,19 @@ import {
   DropdownToggle,
 } from 'reactstrap';
 
+import {fetchAllReservations, fetchAllPromesas} from 'containers/Common/ProjectMeta/helper';
+
 const Item = ({ project, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { ProyectoID } = project;
+  const [reserva, setReserva] = useState({});
+  const [promesa, setPromesa] = useState({});
+
+  useEffect(() => {
+    fetchAllReservations(ProyectoID).then(res => setReserva(res));
+    fetchAllPromesas(ProyectoID).then(res => setPromesa(res));
+  }, []);
+
   return (
     <article className="proyect-item-box col-sm-6 col-xl-4 px-2">
       <div className="box shadow-sm">
@@ -65,15 +76,15 @@ const Item = ({ project, dispatch }) => {
           <div className="graphics">
             <div className="row">
               <span className="title col-5">
-                UF <b>15.607</b>
+                UF <b>{reserva.cost}</b>
               </span>
               <div className="col-7">
                 <ProgressBar
                   title="de"
-                  percent={40}
+                  percent={reserva.percent}
                   label={
                     <>
-                      UF <b>500.000</b>
+                      UF <b>{reserva.total}</b>
                     </>
                   }
                 />
@@ -81,15 +92,15 @@ const Item = ({ project, dispatch }) => {
             </div>
             <div className="row">
               <span className="title col-5">
-                UF <b>15.607</b>
+                UF <b>{promesa.sum ? promesa.sum : 0}</b>
               </span>
               <div className="col-7">
                 <ProgressBar
                   title="de"
-                  percent={40}
+                  percent={promesa.valpro ? promesa.valpro : 0}
                   label={
                     <>
-                      UF <b>500.000</b>
+                      UF <b>{promesa.total ? promesa.total : 0}</b>
                     </>
                   }
                 />

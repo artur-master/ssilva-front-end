@@ -25,7 +25,16 @@ export function RegisterDesistimiento({ selector, promesa, onSubmit }) {
     PromesaResciliacionState,
     PromesaResolucionState,
     PromesaModificacionState,
+    Comment,
   } = promesa;
+
+  const isDesistimiento = (PromesaState === "Desistimiento");
+  const [withText, setWithText] = useState(
+    { text: isDesistimiento ? Comment:'',
+      open: isDesistimiento
+    }
+  );
+
   let labelButton = '';
   if (
     [
@@ -44,6 +53,7 @@ export function RegisterDesistimiento({ selector, promesa, onSubmit }) {
     PromesaModificacionState
   )
     labelButton = `Aproba ${labelButton}`;
+
   return (
     <>
       {!withText.open && (
@@ -67,6 +77,8 @@ export function RegisterDesistimiento({ selector, promesa, onSubmit }) {
               onChange={evt =>
                 setWithText({ ...withText, text: evt.currentTarget.value })
               }
+              value= {Comment}
+              readOnly = {isDesistimiento}
             />
           </div>
           {canDesistimiento(promesa) && (
