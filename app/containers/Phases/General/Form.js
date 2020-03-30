@@ -60,6 +60,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                         ClienteID: client.UserID,
                         Cliente: client,
                         Empleador: client.Empleador,
+                        DocumentNew: true
                       })
                     }
                     focusHide={
