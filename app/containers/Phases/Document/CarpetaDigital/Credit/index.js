@@ -26,7 +26,7 @@ export function Credit({ entity, canUpload, canReview, onReview }) {
               (document.documentoType === 'DocumentCertificadoMatrimonio' &&
                 entity.Cliente.CivilStatus === 'Casado(a)')
             }
-            Documentos={entity.Documents || {}}
+            Documentos={entity.DocumentNew? {} : entity.Documents || {}}
             className={index > 0 ? 'border-top' : ''}
             canUpload={canUpload}
             canReview={canReview}
