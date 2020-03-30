@@ -30,7 +30,7 @@ export function InList({ dispatch, selector }) {
                 role="presentation"
                 className="pointer"
                 onClick={() =>
-                  dispatch(push(`/proyectos/${project.ProyectoID}`))
+                  dispatch(push(`/proyectos/${project.ProyectoID}/reservas`))
                 }
               >
                 {project.Symbol} - {project.Name}
