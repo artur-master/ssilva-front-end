@@ -1,17 +1,26 @@
 import request from 'utils/request';
 import { API_ROOT } from 'containers/App/constants';
-import { calculates } from 'containers/Phases/FormaDePago/helper';
+import { formatNumber } from 'containers/App/helpers';
 
-export const calculate = ( meta_data={} ) => {
-    if(!meta_data.length) return {"total": 0, "sum": 0, 'valpro': 0};
-    let sum = 0;
-    let total_sum = 0;
-    for(const i in meta_data){
-      const {total, discount} = calculates(meta_data[i]);
-      sum += (total-discount);
-      total_sum += total;
-    }
-    return {"total": total_sum, "sum": sum, 'valpro': (100*sum/total_sum)};
+export const calculate = ( datas ) => {
+    let total = 0, cost = 0;
+    datas.forEach(meta_data => {
+        const { Inmuebles=[] } = meta_data;
+        const price = Inmuebles.reduce((acc, item) => acc + item.Price, 0);
+        const discount = Inmuebles.reduce(
+            (acc, item) => acc + ((item.Discount || 0) / 100) * item.Price,
+            0,
+        );
+        cost += price - discount;
+        total += price;
+    });
+    const percent = total ? 100*cost/total : 0;
+    
+    return {
+      total: formatNumber(total), 
+      cost: formatNumber(cost), 
+      percent: formatNumber(percent)
+    };
 };
 
 export const fetchAllReservations = projectId => {

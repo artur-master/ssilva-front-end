@@ -9,15 +9,14 @@ import PropTypes from 'prop-types';
 
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import { Auth } from 'containers/App/helpers';
-import { formatNumber } from 'containers/App/helpers';
 import { fetchAllReservations, fetchAllPromesas } from './helper';
 
 export function ProjectMeta({ project = {}, active }) {
   if (Auth.isInmobiliario()) return null;
 
   const { ProyectoID } = project;  
-  const [reserva, setReserva] = useState({"total": 0, "sum": 0, 'valpro': 0});
-  const [promesa, setPromesa] = useState({"total": 0, "sum": 0, 'valpro': 0});
+  const [reserva, setReserva] = useState({total:0, cost:0, percent:0});
+  const [promesa, setPromesa] = useState({total:0, cost:0, percent:0});
 
   useEffect(() => {
     if (!ProyectoID) return;
@@ -38,13 +37,13 @@ export function ProjectMeta({ project = {}, active }) {
               <div className="box">
                 <span className="sub-title">Llevamos</span>
                 <span className="title">
-                  UF <b>{formatNumber(reserva.sum)}</b>
+                  UF <b>{reserva.cost}</b>
                 </span>
                 <figure className="progress-card green">
-                  <progress className="" value={reserva.valpro} max="100" />
+                  <progress className="" value={reserva.percent} max="100" />
                   <span className="key">Meta</span>
                   <span className="value">
-                    UF <b>{formatNumber(reserva.total)}</b>
+                    UF <b>{reserva.total}</b>
                   </span>
                 </figure>
               </div>
@@ -53,13 +52,13 @@ export function ProjectMeta({ project = {}, active }) {
               <div className="box">
                 <span className="sub-title">Llevamos</span>
                 <span className="title">
-                  Promesas <b>{formatNumber(promesa.sum)}</b>
+                  Promesas <b>{promesa.cost}</b>
                 </span>
                 <figure className="progress-card yellow">
-                  <progress className="" value={promesa.valpro} max="100" />
+                  <progress className="" value={promesa.percent} max="100" />
                   <span className="key">Meta</span>
                   <span className="value">
-                    <b>{formatNumber(promesa.total)}</b>
+                    <b>{promesa.total}</b>
                   </span>
                 </figure>
               </div>
