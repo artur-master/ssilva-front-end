@@ -21,17 +21,21 @@ const logLabel = logType => {
 };
 
 function Histroy({ logs, onHide, isOpen=false, title='' }) {
+  const showIndex = 
+    (logs&&logs.length) ? 
+    logs.findIndex(log=> log.VentaLogType=="Creacion reserva"): 0;
+  const showLogs = logs? logs.slice(0, (showIndex+1)): [];
   return (
     <Modal isOpen={isOpen} size="xl" scrollable>
       <ModalHeader> HISTORIALS </ModalHeader>
       <ModalBody className="p-3 bg-light">
-        {logs && (
+        {showLogs && (
           <Box>
             <BoxHeader>
               <b>{title}</b>
             </BoxHeader>
             <BoxContent className="p-3">
-              {logs.map(log => (
+              {showLogs.map(log => (
                 <div key={log.VentaLogID} className="p-3 border-bottom">
                   <div className="font-14-rem pb-2">
                     <div>
