@@ -85,6 +85,15 @@ export function CarpetaDigital({
       <Box collapse isOpen={isCollapse}>
         <BoxHeader>
           <b>CARPETA DIGITAL</b>
+          <Button
+            onClick={() => window.open(
+              `/proyectos/${entity.ProyectoID}/carpeta?OfertaID=${entity.OfertaID}`,
+              '_blank')
+            }
+            className="m-btn-plant order-3"
+          >
+            Ver Carpeta
+          </Button>
         </BoxHeader>
         <BoxContent>
           {canEit && (
