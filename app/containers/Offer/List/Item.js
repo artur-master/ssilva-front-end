@@ -25,19 +25,29 @@ import { canEditOffer } from '../helper';
 
 const Item = ({ project, offer, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, Inmuebles, OfertaStateFormat = [], Cliente, Date } = offer;
+  const { Proyecto, Folio, Inmuebles, PromesaID = '', OfertaStateFormat = [], Cliente, Date } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
-
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        <Link
-          to={`/proyectos/${project.ProyectoID}/oferta?OfertaID=${
-            offer.OfertaID
-          }`}
-        >
-          <b>{`${Proyecto} / ${Folio}`}</b>
-        </Link>
+        {!PromesaID && (
+          <Link
+            to={`/proyectos/${project.ProyectoID}/oferta?OfertaID=${
+              offer.OfertaID
+            }`}
+          >
+            <b>{`${Proyecto} / ${Folio}`}</b>
+          </Link>
+        )}
+        {PromesaID && (
+          <Link
+            to={`/proyectos/${project.ProyectoID}/promesa?PromesaID=${
+              PromesaID
+            }`}
+          >
+            <b>{`${Proyecto} / ${Folio}`}</b>
+          </Link>
+        )}
       </td>
       <td className="px-3">
         {tmpInmuebles.map(Inmueble => (
@@ -66,6 +76,11 @@ const Item = ({ project, offer, promesa, dispatch }) => {
               </span>
             );
           })}
+          {PromesaID && (
+            <span className="badge px-2 badge-caution">
+              PROMESA
+            </span>
+          )}
         </div>
       </td>
       <td className="font-21 px-3">
@@ -75,20 +90,22 @@ const Item = ({ project, offer, promesa, dispatch }) => {
         >
           <DropdownToggle tag="a" className="icon icon-dots main_color ml-1" />
           <DropdownMenu right positionFixed>
-            <DropdownItem
-              tag="a"
-              onClick={() => {
-                dispatch(
-                  push(
-                    `/proyectos/${project.ProyectoID}/oferta?OfertaID=${
-                      offer.OfertaID
-                    }`,
-                  ),
-                );
-              }}
-            >
+            {!PromesaID && (
+              <DropdownItem
+                tag="a"
+                onClick={() => {
+                  dispatch(
+                    push(
+                      `/proyectos/${project.ProyectoID}/oferta?OfertaID=${
+                        offer.OfertaID
+                      }`
+                    ),
+                  );
+                }}
+              >
               Ver datos
-            </DropdownItem>
+              </DropdownItem>
+            )}
             {promesa && (
               <DropdownItem
                 tag="a"
@@ -96,16 +113,16 @@ const Item = ({ project, offer, promesa, dispatch }) => {
                   dispatch(
                     push(
                       `/proyectos/${project.ProyectoID}/promesa?PromesaID=${
-                        promesa.PromesaID
+                        PromesaID
                       }`,
                     ),
                   );
                 }}
               >
-                Detalle Promesa
+                Ver datos
               </DropdownItem>
             )}
-            {canEditOffer(offer) && (
+            {!PromesaID && canEditOffer(offer) && (
               <DropdownItem
                 tag="a"
                 onClick={() =>
@@ -113,7 +130,7 @@ const Item = ({ project, offer, promesa, dispatch }) => {
                     push(
                       `/proyectos/${
                         project.ProyectoID
-                      }/oferta/editar?OfertaID=${offer.OfertaID}`,
+                      }/oferta/editar?OfertaID=${offer.OfertaID}`
                     ),
                   )
                 }
