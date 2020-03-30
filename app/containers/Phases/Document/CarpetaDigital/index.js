@@ -12,6 +12,7 @@ import Alert from 'components/Alert';
 import Credit from './Credit';
 import Promise from './Promise';
 import Offer from './Offer';
+import { Codeudor } from './Codeudor';
 
 export function CarpetaDigital({
   isCollapse,
@@ -37,7 +38,48 @@ export function CarpetaDigital({
   useEffect(() => {
     if(entity.ReservaID)  setCanPrint( false );
   }, [entity]);
-
+  const tabs = [
+    {
+      label: 'CRÉDITO',
+      content: (
+        <Credit
+          canUpload={canEit}
+          canReview={canReview}
+          entity={entity}
+          onReview={onReview}
+        />
+      ),
+    },
+    // {
+    //   label: 'PROMESA',
+    //   content: <Promise entity={entity} />,
+    // },
+    {
+      label: 'OFERTA',
+      content: (
+        <Offer
+          canUpload={canEit}
+          canReview={canReview}
+          entity={entity}
+          onReview={onReview}
+        />
+      ),
+    },
+  ];
+  const codeudor_document = 
+  {
+    label: 'Codeudor',
+    content: (
+      <Codeudor
+        canUpload={canEit}
+        canReview={canReview}
+        entity={entity}
+        onReview={onReview}
+      />
+    ),
+  };
+  if(entity.Codeudor)
+    tabs.push(codeudor_document)
   return (
     <>
       <Box collapse isOpen={isCollapse}>
@@ -78,34 +120,7 @@ export function CarpetaDigital({
             </Alert>
           )}
           <Tab
-            tabs={[
-              {
-                label: 'CRÉDITO',
-                content: (
-                  <Credit
-                    canUpload={canEit}
-                    canReview={canReview}
-                    entity={entity}
-                    onReview={onReview}
-                  />
-                ),
-              },
-              // {
-              //   label: 'PROMESA',
-              //   content: <Promise entity={entity} />,
-              // },
-              {
-                label: 'OFERTA',
-                content: (
-                  <Offer
-                    canUpload={canEit}
-                    canReview={canReview}
-                    entity={entity}
-                    onReview={onReview}
-                  />
-                ),
-              },
-            ]}
+            tabs={tabs}
           />
         </BoxContent>
       </Box>
