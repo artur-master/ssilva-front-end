@@ -31,7 +31,7 @@ import OfferGarantia from '../Form/FiForm/Garantia';
 
 import { fetchPromesas } from 'containers/Promesa/List/actions';
 import makeSelectPromesas from 'containers/Promesa/List/selectors';
-
+import ProjectPhases from 'containers/Common/ProjectPhases';
 const SyncMessage = WithLoading();
 
 export function Offers({ match, selectorProject, selector, promesas, dispatch }) {
@@ -42,7 +42,7 @@ export function Offers({ match, selectorProject, selector, promesas, dispatch })
   useEffect(() => {
     if (match.params.id && !selector.loading){
       dispatch(fetchOffers(match.params.id));
-      dispatch(fetchPromesas(match.params.id));      
+      dispatch(fetchPromesas(match.params.id));
     }
   }, []);
 
@@ -70,7 +70,7 @@ export function Offers({ match, selectorProject, selector, promesas, dispatch })
               />
               <List {...selector} project={project}
                 onQuery={query => dispatch(queryOffers(query))}
-                promesas={promesas.promesas} dispatch={dispatch} 
+                promesas={promesas.promesas} dispatch={dispatch}
               />
             </>
           )}
@@ -85,9 +85,18 @@ export function Offers({ match, selectorProject, selector, promesas, dispatch })
               <h4 className="color-regular mt-3">
                 {`${project.Name} - ${project.Symbol}`}
               </h4>
+              <OfferGarantia />
               <h5 className="mb-3 font-18 d-flex align-items-center justify-content-between">
                 <span className="line-height-1">Oferta</span>
               </h5>
+            <ProjectPhases project={project} active="offer" />
+            <Filter
+                project={project}
+                selector={selector}
+                searchOffers={(txtSearch, status) =>
+                  dispatch(searchOffers(txtSearch, status))
+                }
+              />
               <InList {...selector} project={project} dispatch={dispatch} />
             </>
           )}
