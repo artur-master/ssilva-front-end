@@ -37,7 +37,7 @@ const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
               dispatch={dispatch}
             />
           ))}
-          {promesas.map(promesa => (
+          {promesas && promesas.map(promesa => (
             <Item
               key={promesa.PromesaID}
               project={project}
