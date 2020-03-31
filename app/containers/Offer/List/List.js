@@ -12,7 +12,7 @@ import Thead from 'components/Table/Thead';
 
 const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
   <Box className="mt-3 pb-3">
-    {offers && promesas && offers.length < 1 && promesas.length < 1 && <Empty tag="h2" />}
+    {offers && promesas && offers.length < 1 && promesas.length && <Empty tag="h2" />}
     {((offers && offers.length > 0 ) || (promesas && promesas.length >0)) && (
       <table className="table table-responsive-sm table-fixed table-sm border-bottom">
         <Thead
@@ -29,16 +29,16 @@ const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
           query={ query }
         />
         <tbody>
-          {offers.map(offer => (
+          {offers && offers.map(offer => (
             <Item
               key={offer.OfertaID}
               offer={offer}
               project={project}
-              promesa={(promesas || []).find(promesa => offer.Folio === promesa.Folio)}
+              promesa={promesas.length && (promesas || []).find(promesa => offer.Folio === promesa.Folio)}
               dispatch={dispatch}
             />
           ))}
-          {promesas && promesas.map(promesa => (
+          {promesas.length && promesas.map(promesa => (
             <Item
               key={promesa.PromesaID}
               project={project}

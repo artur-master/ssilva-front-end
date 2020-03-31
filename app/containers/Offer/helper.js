@@ -11,6 +11,8 @@ import { Auth } from 'containers/App/helpers';
 import { isValidLabor } from 'containers/Phases/PreCredito/helper';
 import { calculates, isCreditType } from 'containers/Phases/FormaDePago/helper';
 import { isValidClient } from 'containers/Phases/Client/helper';
+import { API_ROOT } from 'containers/App/constants';
+import request from 'utils/request';
 
 export const initReports = () =>
   OFERTA_STATE.reduce(
@@ -224,3 +226,9 @@ export const doQuery = (entities, query = {}) => {
 
   return queriedEntities;
 };
+
+export const fetchAllPromesas = projectId => {
+  const requestURL = `${API_ROOT}/ventas/promesas/?q=${projectId}`;  
+  return request(requestURL)
+          .then(res=> res)
+}
