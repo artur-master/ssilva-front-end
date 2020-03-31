@@ -5,13 +5,14 @@ import {
   PRE_APROBACION_CREDITO_STATE,
   RECEPCION_GARANTIA_STATE,
   PERMISSIONS,
+  API_ROOT,
 } from 'containers/App/constants';
 import { UserProject } from 'containers/Project/helper';
 import { Auth } from 'containers/App/helpers';
 import { isValidLabor } from 'containers/Phases/PreCredito/helper';
 import { calculates, isCreditType } from 'containers/Phases/FormaDePago/helper';
 import { isValidClient } from 'containers/Phases/Client/helper';
-import { API_ROOT } from 'containers/App/constants';
+
 import request from 'utils/request';
 
 export const initReports = () =>
@@ -79,11 +80,12 @@ export const formatOffer = offer => {
               : 'badge-warning',
         });
 
-        if(isCreditType(offer.PayType))
+        if (isCreditType(offer.PayType))
           OfertaStateFormat.push({
             Label: 'AC',
             Color:
-              offer.PreAprobacionCreditoState === PRE_APROBACION_CREDITO_STATE[2]
+              offer.PreAprobacionCreditoState ===
+              PRE_APROBACION_CREDITO_STATE[2]
                 ? 'badge-success'
                 : offer.PreAprobacionCreditoState ===
                   PRE_APROBACION_CREDITO_STATE[3]
@@ -99,11 +101,11 @@ export const formatOffer = offer => {
     case 'Rechazada por legal':
       OfertaStateFormat[0].Color = 'badge-danger';
       if (offer.AprobacionInmobiliariaState === 'Rechazada')
-        OfertaStateFormat[0].Label = "Rechazada IN";
+        OfertaStateFormat[0].Label = 'Rechazada IN';
       break;
     case 'Cancelada':
       OfertaStateFormat[0].Color = 'badge-warning';
-      OfertaStateFormat[0].Label = "Cancelada JP";
+      OfertaStateFormat[0].Label = 'Cancelada JP';
       break;
     case 'Modificado':
       OfertaStateFormat[0].Color = 'badge-caution';
@@ -190,10 +192,10 @@ export const canEditOffer = offer =>
     ? false
     : !!(
       UserProject.in(window.project) &&
-      (Auth.hasOneOfPermissions(['Es vendedor']) ||
-        Auth.hasOneOfPermissions(['Es asistente comercial'])) &&
-      offer.OfertaState !== OFERTA_STATE[3] &&
-      offer.OfertaState !== OFERTA_STATE[4]
+        (Auth.hasOneOfPermissions(['Es vendedor']) ||
+          Auth.hasOneOfPermissions(['Es asistente comercial'])) &&
+        offer.OfertaState !== OFERTA_STATE[3] &&
+        offer.OfertaState !== OFERTA_STATE[4]
     );
 
 export const canApproveModifyOffer = offer =>
@@ -211,15 +213,14 @@ export const doQuery = (entities, query = {}) => {
   const { sort } = query;
   if (sort) {
     queriedEntities = queriedEntities.sort((a, b) => {
-      let aa = a[sort.by], bb = b[sort.by];
-      if (sort.by === "Cliente") {
-        aa = `${aa['Name']} ${aa['LastNames']} ${aa['Rut']}`;
-        bb = `${bb['Name']} ${bb['LastNames']} ${bb['Rut']}`;
+      let aa = a[sort.by];
+      let bb = b[sort.by];
+      if (sort.by === 'Cliente') {
+        aa = `${aa.Name} ${aa.LastNames} ${aa.Rut}`;
+        bb = `${bb.Name} ${bb.LastNames} ${bb.Rut}`;
       }
-      if (aa.toLowerCase() > bb.toLowerCase())
-        return sort.asc ? 1 : -1;
-      if (aa.toLowerCase() < bb.toLowerCase())
-        return sort.asc ? -1 : 1;
+      if (aa.toLowerCase() > bb.toLowerCase()) return sort.asc ? 1 : -1;
+      if (aa.toLowerCase() < bb.toLowerCase()) return sort.asc ? -1 : 1;
       return 0;
     });
   }
@@ -228,7 +229,6 @@ export const doQuery = (entities, query = {}) => {
 };
 
 export const fetchAllPromesas = projectId => {
-  const requestURL = `${API_ROOT}/ventas/promesas/?q=${projectId}`;  
-  return request(requestURL)
-          .then(res=> res)
-}
+  const requestURL = `${API_ROOT}/ventas/promesas/?q=${projectId}`;
+  return request(requestURL).then(res => res);
+};
