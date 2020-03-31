@@ -17,7 +17,7 @@ import Notification from './Notification';
 export default function Documents({ project = {}, action, user }) {
   if(project && !project.EntregaInmediata && project.Documentos)
     delete project.Documentos['title_folder'];
-  
+
   return (
     <Box collapse>
       <BoxHeader>

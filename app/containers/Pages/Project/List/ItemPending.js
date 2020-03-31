@@ -63,7 +63,7 @@ const ItemPending = ({ project, dispatch }) => {
               {pendings.map((item, index) => (
                 <div key={String(index)} className="status row mt-0"
                       onClick={() => {
-                        dispatch(push(`/proyectos/${project.ProyectoID}/editar?user=${index}`));
+                        dispatch(push(`/proyectos/${project.ProyectoID}/editar?user=${item.remind}`));
                       }}
                 >
                   <span className="col">{item.label}</span>

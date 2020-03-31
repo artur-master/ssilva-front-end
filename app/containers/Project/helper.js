@@ -205,7 +205,7 @@ export const pending = project => {
             <b>Carga Documentos</b> Marketing
           </>
         ),
-        remind: '',
+        remind: 'marketing',
       });
     }else progress += 10;
 
@@ -216,7 +216,7 @@ export const pending = project => {
             <b>Carga Documentos</b> Legal
           </>
         ),
-        remind: '',
+        remind: 'legal',
       });
     }else progress += 10;
 
@@ -227,7 +227,7 @@ export const pending = project => {
             <b>Carga Comisiones</b> Finanzas
           </>
         ),
-        remind: '',
+        remind: 'finanzas',
       });
     }else progress += 10;
 
