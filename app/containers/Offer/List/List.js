@@ -12,10 +12,8 @@ import Item from './Item';
 
 const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
   <Box className="mt-3 pb-3">
-    {offers && promesas && offers.length < 1 && promesas.length && (
-      <Empty tag="h2" />
-    )}
-    {((offers && offers.length > 0) || (promesas && promesas.length > 0)) && (
+    {offers && promesas && offers.length < 1 && promesas.length < 1 && <Empty tag="h2" />}
+    {((offers && offers.length > 0 ) || (promesas && promesas.length >0)) && (
       <table className="table table-responsive-sm table-fixed table-sm border-bottom">
         <Thead
           ths={[
