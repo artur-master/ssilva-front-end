@@ -25,10 +25,7 @@ import { canEditOffer } from '../helper';
 
 const Item = ({ project, offer, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const {
-    Proyecto, Folio, Inmuebles, OfertaStateFormat = [],
-    Cliente, Date, AprobacionInmobiliariaState
-  } = offer;
+  const { Proyecto, Folio, Inmuebles, PromesaID = '', OfertaStateFormat = [], Cliente, Date, AprobacionInmobiliariaState  } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
 
   let responsible='';
@@ -126,7 +123,7 @@ const Item = ({ project, offer, promesa, dispatch }) => {
               Ver datos
               </DropdownItem>
             )}
-            {promesa && (
+            {PromesaID && (
               <DropdownItem
                 tag="a"
                 onClick={() => {

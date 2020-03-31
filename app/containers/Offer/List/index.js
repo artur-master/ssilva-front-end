@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -27,6 +27,7 @@ import Filter from './Filter';
 import { Auth } from '../../App/helpers';
 import InList from './InList';
 import FiList from './FiList';
+import {fetchAllPromesas} from '../helper'
 import OfferGarantia from '../Form/FiForm/Garantia';
 
 import { fetchPromesas } from 'containers/Promesa/List/actions';
@@ -35,14 +36,16 @@ import ProjectPhases from 'containers/Common/ProjectPhases';
 const SyncMessage = WithLoading();
 
 export function Offers({ match, selectorProject, selector, promesas, dispatch }) {
+  
   const { project } = selectorProject;
+  const [promesa, setPromesa] = useState({promesa:[]});
   useInjectReducer({ key: 'offers', reducer });
   useInjectSaga({ key: 'offers', saga });
 
   useEffect(() => {
     if (match.params.id && !selector.loading){
       dispatch(fetchOffers(match.params.id));
-      dispatch(fetchPromesas(match.params.id));
+      fetchAllPromesas(match.params.id).then(res => setPromesa(res));
     }
   }, []);
 
@@ -70,7 +73,7 @@ export function Offers({ match, selectorProject, selector, promesas, dispatch })
               />
               <List {...selector} project={project}
                 onQuery={query => dispatch(queryOffers(query))}
-                promesas={promesas.promesas} dispatch={dispatch}
+                promesas={promesa} dispatch={dispatch}
               />
             </>
           )}
