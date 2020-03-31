@@ -18,6 +18,9 @@ import makeSelectInitProject from 'containers/Project/Init/selectors';
 import WithLoading from 'components/WithLoading';
 import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
 import PageHeader from 'containers/Common/PageHeader';
+import { fetchPromesas } from 'containers/Promesa/List/actions';
+import makeSelectPromesas from 'containers/Promesa/List/selectors';
+import ProjectPhases from 'containers/Common/ProjectPhases';
 import makeSelectOffers from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -27,23 +30,25 @@ import Filter from './Filter';
 import { Auth } from '../../App/helpers';
 import InList from './InList';
 import FiList from './FiList';
-import {fetchAllPromesas} from '../helper'
+import { fetchAllPromesas } from '../helper';
 import OfferGarantia from '../Form/FiForm/Garantia';
 
-import { fetchPromesas } from 'containers/Promesa/List/actions';
-import makeSelectPromesas from 'containers/Promesa/List/selectors';
-import ProjectPhases from 'containers/Common/ProjectPhases';
 const SyncMessage = WithLoading();
 
-export function Offers({ match, selectorProject, selector, promesas, dispatch }) {
-  
+export function Offers({
+  match,
+  selectorProject,
+  selector,
+  promesas,
+  dispatch,
+}) {
   const { project } = selectorProject;
-  const [promesa, setPromesa] = useState({promesa:[]});
+  const [promesa, setPromesa] = useState({ promesa: [] });
   useInjectReducer({ key: 'offers', reducer });
   useInjectSaga({ key: 'offers', saga });
 
   useEffect(() => {
-    if (match.params.id && !selector.loading){
+    if (match.params.id && !selector.loading) {
       dispatch(fetchOffers(match.params.id));
       fetchAllPromesas(match.params.id).then(res => setPromesa(res));
     }
@@ -71,9 +76,12 @@ export function Offers({ match, selectorProject, selector, promesas, dispatch })
                   dispatch(searchOffers(txtSearch, status))
                 }
               />
-              <List {...selector} project={project}
+              <List
+                {...selector}
+                project={project}
                 onQuery={query => dispatch(queryOffers(query))}
-                promesas={promesa} dispatch={dispatch}
+                promesas={promesa}
+                dispatch={dispatch}
               />
             </>
           )}
@@ -92,8 +100,8 @@ export function Offers({ match, selectorProject, selector, promesas, dispatch })
               <h5 className="mb-3 font-18 d-flex align-items-center justify-content-between">
                 <span className="line-height-1">Oferta</span>
               </h5>
-            <ProjectPhases project={project} active="offer" />
-            <Filter
+              <ProjectPhases project={project} active="offer" />
+              <Filter
                 project={project}
                 selector={selector}
                 searchOffers={(txtSearch, status) =>

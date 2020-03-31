@@ -25,11 +25,20 @@ import { canEditOffer } from '../helper';
 
 const Item = ({ project, offer, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, Inmuebles, PromesaID = '', OfertaStateFormat = [], Cliente, Date, AprobacionInmobiliariaState  } = offer;
+  const {
+    Proyecto,
+    Folio,
+    Inmuebles,
+    PromesaID = '',
+    OfertaStateFormat = [],
+    Cliente,
+    Date,
+    AprobacionInmobiliariaState,
+  } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
 
-  let responsible='';
-  switch(AprobacionInmobiliariaState){
+  let responsible = '';
+  switch (AprobacionInmobiliariaState) {
     case APROBACION_INMOBILIARIA_STATE[0]:
       responsible = 'JP';
       break;
@@ -57,9 +66,9 @@ const Item = ({ project, offer, promesa, dispatch }) => {
         )}
         {PromesaID && (
           <Link
-            to={`/proyectos/${project.ProyectoID}/promesa?PromesaID=${
-              PromesaID
-            }`}
+            to={`/proyectos/${
+              project.ProyectoID
+            }/promesa?PromesaID=${PromesaID}`}
           >
             <b>{`${Proyecto} / ${Folio}`}</b>
           </Link>
@@ -74,29 +83,25 @@ const Item = ({ project, offer, promesa, dispatch }) => {
       </td>
       <td className="">Cliente: {clientFullname(Cliente)}</td>
       <td>{Date}</td>
-      <td className="px-3">{ responsible }</td>
+      <td className="px-3">{responsible}</td>
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          {OfertaStateFormat.map((state, index) => {
-            return (
-              <span
-                key={String(index)}
-                className={`badge px-2 ${state.Color} ${
-                  index > 0 ? 'rounded-0' : ''
-                } ${
-                  index === 0 && OfertaStateFormat.length > 1
-                    ? 'rounded-left rounded-0'
-                    : ''
-                }`}
-              >
-                {state.Label.toUpperCase()}
-              </span>
-            );
-          })}
-          {PromesaID && (
-            <span className="badge px-2 badge-caution">
-              PROMESA
+          {OfertaStateFormat.map((state, index) => (
+            <span
+              key={String(index)}
+              className={`badge px-2 ${state.Color} ${
+                index > 0 ? 'rounded-0' : ''
+              } ${
+                index === 0 && OfertaStateFormat.length > 1
+                  ? 'rounded-left rounded-0'
+                  : ''
+              }`}
+            >
+              {state.Label.toUpperCase()}
             </span>
+          ))}
+          {PromesaID && (
+            <span className="badge px-2 badge-caution">PROMESA</span>
           )}
         </div>
       </td>
@@ -115,12 +120,12 @@ const Item = ({ project, offer, promesa, dispatch }) => {
                     push(
                       `/proyectos/${project.ProyectoID}/oferta?OfertaID=${
                         offer.OfertaID
-                      }`
+                      }`,
                     ),
                   );
                 }}
               >
-              Ver datos
+                Ver datos
               </DropdownItem>
             )}
             {PromesaID && (
@@ -129,9 +134,9 @@ const Item = ({ project, offer, promesa, dispatch }) => {
                 onClick={() => {
                   dispatch(
                     push(
-                      `/proyectos/${project.ProyectoID}/promesa?PromesaID=${
-                        PromesaID
-                      }`,
+                      `/proyectos/${
+                        project.ProyectoID
+                      }/promesa?PromesaID=${PromesaID}`,
                     ),
                   );
                 }}
@@ -147,7 +152,7 @@ const Item = ({ project, offer, promesa, dispatch }) => {
                     push(
                       `/proyectos/${
                         project.ProyectoID
-                      }/oferta/editar?OfertaID=${offer.OfertaID}`
+                      }/oferta/editar?OfertaID=${offer.OfertaID}`,
                     ),
                   )
                 }
