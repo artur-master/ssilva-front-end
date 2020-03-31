@@ -24,19 +24,19 @@ const Patrimony = ({ form }) => {
     CreditoComercio: !!values.Patrimony.CreditoComercio.PagosMensuales,
   });
   const totalActivos =
-    values.Patrimony.RealState +
+    (parseInt(values.Patrimony.RealState) || 0) +
     // values.Patrimony.CreditoHipotecario.PagosMensuales -
-    values.Patrimony.Vehicle +
-    values.Patrimony.DownPayment +
-    values.Patrimony.Other;
+    (parseInt(values.Patrimony.Vehicle) || 0) +
+    (parseInt(values.Patrimony.DownPayment) || 0) +
+    (parseInt(values.Patrimony.Other) || 0);
   const totalPasivos =
-    values.Patrimony.CreditoHipotecario.Pasivos +
-    values.Patrimony.CreditCard.Pasivos +
-    values.Patrimony.CreditoConsumo.Pasivos +
-    values.Patrimony.PrestamoEmpleador.Pasivos +
-    values.Patrimony.DeudaIndirecta.Pasivos +
-    values.Patrimony.AnotherCredit.Pasivos +
-    values.Patrimony.CreditoComercio.Pasivos;
+    (parseInt(values.Patrimony.CreditoHipotecario.Pasivos) || 0) +
+    (parseInt(values.Patrimony.CreditCard.Pasivos)  || 0) +
+    (parseInt(values.Patrimony.CreditoConsumo.Pasivos)  || 0) +
+    (parseInt(values.Patrimony.PrestamoEmpleador.Pasivos)  || 0) +
+    (parseInt(values.Patrimony.DeudaIndirecta.Pasivos)  || 0) +
+    (parseInt(values.Patrimony.AnotherCredit.Pasivos)  || 0)+
+    (parseInt(values.Patrimony.CreditoComercio.Pasivos) || 0);
 
   const handleChangeHasCredits = evt => {
     const hasValue = stringToBoolean(evt.currentTarget.value);
