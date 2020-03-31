@@ -36,7 +36,7 @@ const List = ({ quotations, query, filter, reports, project, reservations, dispa
         <table className="table table-responsive-sm table-fixed table-sm border-bottom">
           <Thead
             ths={[
-              { field: 'CotizacionID', label: 'Cotización', sortable: true },
+              { field: 'CotizacionID', label: 'Cotizacion', sortable: true },
               { field: 'Inmuebles', label: 'Inmuebles', className: "pl-3" },
               { field: 'Cliente', label: 'Cliente', sortable: true },
               { field: 'Date', label: 'Fecha', sortable: true },

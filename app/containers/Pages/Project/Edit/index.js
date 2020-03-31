@@ -13,7 +13,16 @@ import { compose } from 'redux';
 import Project from 'containers/Project';
 
 export function EditProjectPage({ match, location }) {
-  const user = parseInt(queryString.parse(location.search).user);
+  let user;
+  switch(queryString.parse(location.search).user){
+    case "legal":
+      user = 1; break;
+    case "finanzas":
+      user = 2; break;
+    default:
+      user = 0;
+  }
+
   return <Project action="edit" match={match} user={user} />;
 }
 
