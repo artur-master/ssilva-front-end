@@ -15,6 +15,7 @@ export function OfferConfirmActions({
   onCancel,
   onConfirm,
   onEdit,
+  onDelete,
 }) {
   const { loading } = selector;
   return (
@@ -76,6 +77,14 @@ export function OfferConfirmActions({
         >
           Cancerlar
         </Button>
+        <Button
+          disabled={loading}
+          onClick={onDelete}
+          className="order-3 m-btn"
+          color="white"
+        >
+          Rechazar
+        </Button>
       </div>
       <SyncMessage {...selector} />
     </>
@@ -88,6 +97,7 @@ OfferConfirmActions.propTypes = {
   onCancel: PropTypes.func,
   onConfirm: PropTypes.func,
   onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 export default OfferConfirmActions;
