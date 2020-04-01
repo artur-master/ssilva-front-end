@@ -55,16 +55,17 @@ export function ReservationForm({
     else dispatch(updateReservation({ ProyectoID: project.ProyectoID }));
     return () => dispatch(resetContainer());
   }, [location.search]);
-
-  if (selector.success && selector.redirect) {
-    return <Redirect to={`/proyectos/${project.ProyectoID}/reservas`} />;
-  }
+  
   //Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
   const onHide = () => {
     setHistoryOpen(false);
   }
   //Added by Artur
+
+  if (selector.success && selector.redirect) {
+    return <Redirect to={`/proyectos/${project.ProyectoID}/reservas`} />;
+  }
   if (!ReservaID && selector.reservation.ReservaID) {
     return (
       <Redirect
