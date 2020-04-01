@@ -14,7 +14,7 @@ import PhaseDocument from 'containers/Phases/Document';
 import { push } from 'connected-react-router';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import model from '../../model';
-import { confirmToClient, updateOffer } from '../actions';
+import { deleteOffer, confirmToClient, updateOffer } from '../actions';
 import OfferConfirmObservation from './Observation';
 import OfferConfirmActions from './Actions';
 import Steps from '../Steps';
@@ -74,6 +74,7 @@ export function OfferConfirm({ selector, dispatch }) {
             ),
           )
         }
+        onDelete={() => dispatch(deleteOffer(entity))}
       />
     </>
   );
