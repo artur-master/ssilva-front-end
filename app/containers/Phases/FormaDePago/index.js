@@ -23,13 +23,10 @@ export function PhaseFormaDePago({
   onUpdate,
 }) {
   const [isOpen, setOpen] = useState(false);
-  const [newCuotas, onSetCuotas] = useState([]);
+  
   return (
     <ExForm initialValues={initialValues}
-            onSubmit={(values)=>{
-              values.printCutoas = newCuotas;
-              onUpdate(values);
-            }}
+            onSubmit={onUpdate}
     >
       {form => {
         const { total, discount, balance, moneyErr } = calculates(form.values);
@@ -88,7 +85,6 @@ export function PhaseFormaDePago({
                   setOpen(false);
                   form.submitForm();
                 }}
-                onSetCuotas={onSetCuotas}
               />
             )}
           </Box>

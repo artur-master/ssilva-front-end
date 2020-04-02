@@ -38,11 +38,11 @@ export function ChequeForm({
     ActiveIndex: 0,
     Cuotas: cuotas.map(cuota => ({
       Date: cuota.Date,
-      AccountNumber: '',
+      AccountNumber: cuota.AccountNumber || '',
       Number: convertUfToPeso(cuota.Amount),
-      Beneficiary: '',
-      City: 'Santiago',
-      Serie: '',
+      Beneficiary: cuota.Beneficiary || '',
+      City: cuota.City || 'Santiago',
+      Serie: cuota.Serie || '',
     })),
   };
   let downSingleCheque = true;

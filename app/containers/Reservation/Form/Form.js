@@ -146,7 +146,7 @@ export function Form({ project, selector, dispatch }) {
             dispatch(controlReview({ ...values, ReservaID: entity.ReservaID }))
           }
           onPrint={() => {
-            if (!entity.printCutoas) {
+            if (!entity.printCuotas || !entity.printCuotas.length) {
               setCanPrint(false);
               setOpenAlert(true);
             }
