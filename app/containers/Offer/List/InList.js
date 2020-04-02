@@ -9,6 +9,7 @@ import { Box } from 'components/Box';
 import Empty from 'components/Empty';
 import { countIN } from 'containers/Project/helper';
 import InItem from './InItem';
+import Thead from 'components/Table/Thead';
 import { isPendienteContacto } from '../helper';
 
 const InList = ({ project = {}, offers, dispatch }) => {
@@ -18,6 +19,21 @@ const InList = ({ project = {}, offers, dispatch }) => {
       {showOffers.length < 1 && <Empty tag="h2" />}
       {showOffers.length > 0 && (
         <table className="table table-responsive-sm table-fixed table-sm border-bottom">
+          <Thead
+          ths={[
+            { field: 'OfertaID', label: 'Oferta', sortable: true },
+            { field: 'Inmuebles', label: 'Inmuebles', className: 'pl-3' },
+            { field: 'Cliente', label: 'Cliente', sortable: true },
+            {
+              field: 'OfertaState',
+              label: 'OfertaState',
+              className: 'text-right pr-3',
+              sortable: true,
+            },
+            { field: 'FIRMAS', label: 'FIRMAS', sortable: true },
+            { field: '', label: '' },
+          ]}
+        />
           <tbody>
             {showOffers.map(offer => (
               <InItem
