@@ -50,7 +50,7 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
       {selector.loading && <SyncMessage {...selector} />}
       {!selector.loading && selector.reservations && (
         <>
-          {requiredData(project) && (
+          {!requiredData(project) && (
             <Filter
               project={project}
               selector={selector}
@@ -59,9 +59,9 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
               }
             />
           )}
-          {!requiredData(project) && (
+          {requiredData(project) && (
             <Alert type="danger" className="mb-0">
-              {`Debe completar los datos del proyecto antes de continuar`}
+              {`Para seguir debes completar los datos del proyecto: `+requiredData(project)}
             </Alert>
           )}
           <List {...selector} project={project}
