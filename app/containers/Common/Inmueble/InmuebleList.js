@@ -4,11 +4,21 @@
  *
  */
 import React, { useState, useEffect } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import InmuebleFilter from './InmuebleFilter';
+import BluePrint from './BluePrint';
 import Grid from './Grid/index';
 import List from './List/index';
+import {uploadblueFiles} from './actions'
+import {
+  Form as ExForm,
+  FormGroup,
+  Label,
+  Field as ExField,
+} from 'components/ExForm';
 
 const InmuebleList = ({
   defaultShowType = 'list',
@@ -16,6 +26,7 @@ const InmuebleList = ({
   children,
   focusChange,
   onSelectItem,
+  dispatch,
 }) => {
   const { entities, selected } = selector;
   const [showEntities, setState] = useState(entities);
@@ -26,11 +37,11 @@ const InmuebleList = ({
         ...entity,
         IsSelected: !!selected.find(
           item => item.InmuebleID === entity.InmuebleID,
-        ),
-      })),
-    );
-  }, [selector.selected]);
-
+          ),
+        })),
+        );
+      }, [selector.selected]);
+      
   const [showType, setShowType] = useState(defaultShowType);
   const handleChangeQuery = query => {
     setState(
@@ -72,6 +83,7 @@ const InmuebleList = ({
       <InmuebleFilter entities={entities} onQuery={handleChangeQuery} />
       {children}
       <div className="d-flex p-3 justify-content-end">
+        
         <Button
           color="white"
           disabled={showType === 'list'}
@@ -86,6 +98,15 @@ const InmuebleList = ({
         >
           grid
         </Button>
+        <ExForm method="POST" enctype="multipart/form-data">
+          <FormGroup className="align-items-center">
+            <BluePrint
+              required
+              onSubmit={ values=>dispatch(uploadblueFiles(values, entities)) }
+              name="BlueUP"
+            />
+          </FormGroup>
+        </ExForm>
       </div>
       <Child
         focusChange={focusChange}
@@ -103,6 +124,17 @@ InmuebleList.propTypes = {
   selector: PropTypes.object,
   children: PropTypes.node,
   onSelectItem: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
-export default InmuebleList;
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(InmuebleList);

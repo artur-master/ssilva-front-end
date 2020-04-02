@@ -172,7 +172,7 @@ function DocumentItem({
                       value !== 'confirmed' ? 'Este archivo es rechazado' : ''
                     }
                     className={`font-14-rem d-flex align-items-center order-3 mr-3 ${
-                      value && value.startsWith('rejected') ? 'color-warning' : 'color-em'
+                      (typeof value === 'string' && value.startsWith('rejected')) ? 'color-warning' : 'color-em'
                     }`}
                   >
                     <em>
@@ -206,7 +206,7 @@ function DocumentItem({
                             type="radio"
                             name={documentoType}
                             disabled={!canConfirm}
-                            checked={value.startsWith('rejected')}
+                            checked={typeof value === 'string'?value.startsWith('rejected'):"false"}
                             onChange={() => {
                               setFieldValue(documentoType, 'rejected');
                               onConfirm();
@@ -247,7 +247,7 @@ function DocumentItem({
                   </UncontrolledDropdown>
                 </div>
 
-                {(!(value.startsWith('confirmed')) && !value.startsWith('to_confirm')) && ( // added comments why deny if rejected
+                {(typeof value === 'string' && !(value.startsWith('confirmed')) && !value.startsWith('to_confirm')) && ( // added comments why deny if rejected
                   <div className="w-100 order-3">
                     <textarea
                       disabled = {!Auth.isPM()}

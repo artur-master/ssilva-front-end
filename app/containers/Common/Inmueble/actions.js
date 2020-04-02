@@ -11,6 +11,9 @@ import {
   MATCH_RESTRICTION,
   RESET_SELECT,
   SELECT_ENTITY,
+  UPLOAD_BLUEPRINT,
+  SUCESS_UPLOAD,
+  ERROR_UPLOAD,
 } from './constants';
 
 export function selectEntity(entity, IsSelected, focusChange = false) {
@@ -55,5 +58,28 @@ export function matchRestriction(restrictions) {
   return {
     type: MATCH_RESTRICTION,
     restrictions,
+  };
+}
+
+export function uploadblueFiles(values, entities) {
+  
+  return {
+    type: UPLOAD_BLUEPRINT,
+    values,
+    entities,
+  };
+}
+
+export function sucessUpload(response) {
+  return {
+    type: SUCESS_UPLOAD,
+    response,
+  };
+}
+
+export function errorUpload(response) {
+  return {
+    type: ERROR_UPLOAD,
+    response,
   };
 }

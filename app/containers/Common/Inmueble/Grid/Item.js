@@ -61,6 +61,13 @@ function GridItem({ entity = {}, focusChange, onSelect }) {
         <ul className="m-0 p-0">
           <li className="font-14-rem w-100 d-flex justify-content-between align-items-center">
             <span>{entity.IsNotUsoyGoce ? 'Tandem' : 'Uso Gose'}</span>
+              {entity.Up_Print&& (
+                <span className="mr-2">
+                    <li style={{color:'blue'}}>
+                        <i className="icon icon-check" />
+                    </li>
+                </span>
+              )}
           </li>
           <li className="font-14-rem w-100 d-flex justify-content-between align-items-center">
             <span>Precio:</span>

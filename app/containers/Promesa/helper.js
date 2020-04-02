@@ -101,15 +101,22 @@ export const doQuery = (entities, query = {}) => {
 
 export const isReadyData = ( project = {}) => {
   if(!project) return false;
+  let comments = '';
   const entraga_in = (project.EntregaInmediata)? (project.Aseguradora.AseguradoraID) &&
                                                   (project.Aseguradora.Aseguradora) &&
                                                   (project.Aseguradora.Amount)
                                                 : true;
-  if (project.Constructora &&
-      project.InstitucionFinanciera &&
-      entraga_in &&
-      project.GuaranteeAmount&& 
-      project.GuaranteePercent)
-      return true;
+  if(!entraga_in)
+    comments += ", Aseguradora";
+  if(!project.Constructora)
+    comments += ", Constructora";
+  if(!project.InstitucionFinanciera)
+    comments += ", Institución Financiera";
+  if(!project.GuaranteeAmount)
+    comments += ", Monto Reserva";
+  if(!project.GuaranteePercent)
+    comments += ", Por ciento";
+  if(comments)
+    return comments.slice(2);
   return false;
 };

@@ -17,7 +17,7 @@ import Filter from './Filter';
 
 const List = ({ quotations, query, filter, reports, project, reservations, dispatch }) => (
   <div>
-    {requiredData(project) && (
+    {!requiredData(project) && (
       <Filter
         reports={reports}
         project={project}
@@ -25,9 +25,9 @@ const List = ({ quotations, query, filter, reports, project, reservations, dispa
         searchQuotations={txtSearch => dispatch(searchQuotations(txtSearch))}
         />
     )}
-    {!requiredData(project) && (
+    {requiredData(project) && (
       <Alert type="danger" className="mb-0">
-        {`Debe completar los datos del proyecto antes de continuar`}
+        {`Para seguir debes completar los datos del proyecto: `+requiredData(project)}
       </Alert>
     )}
     <Box className="mt-3 pb-3">

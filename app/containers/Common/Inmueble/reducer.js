@@ -11,6 +11,9 @@ import {
   MATCH_RESTRICTION,
   RESET_SELECT,
   SELECT_ENTITY,
+  SUCESS_UPLOAD,
+  UPLOAD_BLUEPRINT,
+  ERROR_UPLOAD,
 } from './constants';
 import { matchRestrictions } from './helper';
 
@@ -101,6 +104,21 @@ const inmuebleReducer = (state = initialState, action) =>
           restrictions: action.restrictions,
         });
         break;
+    case UPLOAD_BLUEPRINT:
+      draft.loading = true;
+      draft.error = false;
+      draft.success = false;
+      break;
+    case SUCESS_UPLOAD:
+        draft.loading = true;
+        draft.error = false;
+        draft.success = true;
+      break;
+    case ERROR_UPLOAD:
+        draft.loading = false;
+        draft.error = true;
+        draft.success = false;
+      break;
     }
   });
 
