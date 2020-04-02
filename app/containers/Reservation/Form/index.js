@@ -55,7 +55,7 @@ export function ReservationForm({
     else dispatch(updateReservation({ ProyectoID: project.ProyectoID }));
     return () => dispatch(resetContainer());
   }, [location.search]);
-  
+
   //Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
   const onHide = () => {

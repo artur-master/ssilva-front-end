@@ -80,16 +80,22 @@ export function CarpetaDigital({
   };
   if(entity.Codeudor)
     tabs.push(codeudor_document)
+
+  let pdfURL = `/proyectos/${entity.ProyectoID}/carpeta`;
+  if(entity.ReservaID)
+    pdfURL = `${pdfURL}?ReservaID=${entity.ReservaID}`;
+  else if(entity.OfertaID)
+    pdfURL = `${pdfURL}?OfertaID=${entity.OfertaID}`;
+  else
+    pdfURL = pdfURL;
+  
   return (
     <>
       <Box collapse isOpen={isCollapse}>
         <BoxHeader>
           <b>CARPETA DIGITAL</b>
           <Button
-            onClick={() => window.open(
-              `/proyectos/${entity.ProyectoID}/carpeta?OfertaID=${entity.OfertaID}`,
-              '_blank')
-            }
+            onClick={() => window.open(pdfURL, '_blank')}
             className="m-btn-plant order-3"
           >
             Ver Carpeta

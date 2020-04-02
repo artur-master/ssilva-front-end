@@ -34,7 +34,7 @@ import ReservationsPage from 'containers/Pages/Reservation/List/Loadable';
 import CreateReservationPage from 'containers/Pages/Reservation/Create/Loadable';
 import EditReservationPage from 'containers/Pages/Reservation/Edit/Loadable';
 import OfferPage from 'containers/Pages/Offer/View/Loadable';
-import CarpetaPage from 'containers/Pages/Offer/Carpeta/Loadable';
+import CarpetaPage from 'containers/Pages/Carpeta/Loadable';
 import OffersPage from 'containers/Pages/Offer/List/Loadable';
 import EditOfferPage from 'containers/Pages/Offer/Edit/Loadable';
 import EditProjectPage from 'containers/Pages/Project/Edit/Loadable';

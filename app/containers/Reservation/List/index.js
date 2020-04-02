@@ -64,7 +64,10 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
               {`Debe completar los datos del proyecto antes de continuar`}
             </Alert>
           )}
-          <List {...selector} project={project} offers={offers.offers} dispatch={dispatch} />
+          <List {...selector} project={project}
+                onQuery={query => {dispatch(queryReservations(query))}}
+                offers={offers.offers} dispatch={dispatch}
+          />
         </>
       )}
     </>
