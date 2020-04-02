@@ -23,7 +23,7 @@ export function PhaseFormaDePago({
   onUpdate,
 }) {
   const [isOpen, setOpen] = useState(false);
-  
+
   return (
     <ExForm initialValues={initialValues}
             onSubmit={onUpdate}

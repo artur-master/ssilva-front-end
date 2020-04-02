@@ -30,7 +30,7 @@ const PdfTab = ({ tabs }) => {
       <div className="tab-content">
         {tabs.map((tab, index) => (
           /* eslint-disable-next-line */
-          <div id={index} className={activeTab === index ? "tab-pane active" : 'tab-pane'}>
+          <div id={index} key={index} className={activeTab === index ? "tab-pane active" : 'tab-pane'}>
             {tab.content.map((content, idx) => {
               if (content.url && content.url !== '')
                 return (
