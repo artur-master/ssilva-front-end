@@ -69,15 +69,15 @@ export function Promesas({ match, selectorProject, selector, dispatch }) {
               }
             />
           </h5>
-          {isReadyData(project) &&(
+          {!isReadyData(project) &&(
             <List {...selector} project={project}
               onQuery={query => {dispatch(queryPromesas(query))}}
               dispatch={dispatch}
             />
           )}
-          {!isReadyData(project) && (
+          {isReadyData(project) && (
             <Alert type="danger" className="mb-0">
-              {`Debe completar los datos del proyecto antes de continuar`}
+              {`Para seguir debes completar los datos del proyecto: `+isReadyData(project)}
             </Alert>
           )}
         </>

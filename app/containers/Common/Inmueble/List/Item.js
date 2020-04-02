@@ -34,6 +34,13 @@ function ListItem({ entity = {}, focusChange, onSelect }) {
         </p>
       </th>
       <td className="expand orientation">{inmuebleSortDetail(entity)}</td>
+      <td className="mr-2">
+        {entity.Up_Print&& (
+          <li style={{color:'blue'}}>
+              <i className="icon icon-check" />
+          </li>
+        )}
+      </td>
       <td>
         {entity.InmuebleState !== 'Disponible' && (
           <span className="badge badge-danger mr-2">

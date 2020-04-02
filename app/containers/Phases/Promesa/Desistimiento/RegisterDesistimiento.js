@@ -18,6 +18,7 @@ import {
 } from './helper';
 
 export function RegisterDesistimiento({ selector, promesa, onSubmit }) {
+  const [withText, setWithText] = useState({ text: '', open: false });
   const {
     PromesaState,
     PromesaDesistimientoState,

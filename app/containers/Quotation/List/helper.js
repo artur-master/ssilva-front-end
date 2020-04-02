@@ -51,17 +51,28 @@ export const requiredData = (project = []) => {
   const ap_inmobial = project.UsersProyecto.find(user=>(user.UserProyectoType === "Aprobador"));
   const re_inmobial = project.UsersProyecto.find(user=>(user.UserProyectoType === "Representante"));
   const au_inmobial = project.UsersProyecto.find(user=>(user.UserProyectoType === "Autorizador"));
-  if(project.InstitucionFinanciera &&
-     project.Arquitecto && 
-     project.CotizacionDuration && 
-     project.GuaranteeAmount && 
-     project.InmobiliariaID &&
-     project.ProyectoApprovalState === "Aprobado" && 
-     ac_commerial &&
-     vn_commerial &&
-     ap_inmobial && 
-     re_inmobial && 
-     au_inmobial)
-    return true;
+  let comments = ''
+  if(!project.Arquitecto)
+    comments += ", Arquitecto";
+  if(!project.CotizacionDuration)
+    comments += ", Duración de la cotización";
+  if(!project.GuaranteeAmount)
+    comments += ", Monto Garantía";
+  if(!project.InmobiliariaID)
+    comments += ", Comisiones Inmobiliaria";
+  if(!ac_commerial)
+    comments += ", Asistaente Commercial";
+  if(!vn_commerial)
+    comments += ", Vendedor";
+  if(!ap_inmobial)
+    comments += ", Aprobador Inmobiliaria";
+  if(!re_inmobial)
+    comments += ", Representante Inmobiliaria";
+  if(!au_inmobial)
+    comments += ", Autorizador Inmobiliaria";
+  if(project.ProyectoApprovalState !== "Aprobado")
+      comments = "El proyecto aún no está aprobado"; 
+  if(comments)
+    return (comments.slice(2));
   return false;
 };
