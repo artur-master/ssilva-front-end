@@ -261,6 +261,7 @@ export function Form({ selector, dispatch }) {
   //Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
   const onHide = () => setHistoryOpen(false);
+  const [canEdit, setCanEdit] = useState(false);
   //Added by Artur
   return (
     <>
@@ -278,6 +279,15 @@ export function Form({ selector, dispatch }) {
         >
           Historial
         </Button>
+        {UserProject.isPM() && (
+          <Button
+            className="col-auto mt-3 m-btn m-btn-pen"
+            onClick={() => setCanEdit(true)}
+          >
+            Modificación
+          </Button>
+        )}    
+        <Desistimiento promesa={entity} />
       </div>
       <h5 className="mb-3 d-flex align-items-center after-expands-2">
         <span className="font-16-rem line-height-1 color-success">
@@ -309,15 +319,14 @@ export function Form({ selector, dispatch }) {
         selector={selector}
         onChange={Condition => dispatch(updatePromesa({ Condition }))}
       />
-      <PhaseGeneral initialValues={initialValues} />
-      <PhaseClient payType={entity.PayType} client={entity.Cliente} />
-      <PhaseInmueble initialValues={initialValues} />
-      <PhaseFormaDePago initialValues={initialValues} />
-      <PhasePreCredito isCollapse={false} initialValues={initialValues} />
+      <PhaseGeneral initialValues={initialValues} canEdit={canEdit}/>
+      <PhaseClient payType={entity.PayType} client={entity.Cliente} canEdit={canEdit} />
+      <PhaseInmueble initialValues={initialValues} canEdit={canEdit} />
+      <PhaseFormaDePago initialValues={initialValues} canEdit={canEdit} />
+      <PhasePreCredito isCollapse={false} initialValues={initialValues} canEdit={canEdit} />
       <PhaseDocument entity={initialValues} />
 
       {blockPromesa()}
-      <Desistimiento promesa={entity} />
       <Log logs={entity.Logs} limit={10} />
       {/* Added by Artur */}
       {entity.Logs && (

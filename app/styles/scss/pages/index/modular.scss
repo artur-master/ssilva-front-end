@@ -103,6 +103,7 @@
     &.m-btn-pen{
         display: flex;
         align-items: center;
+        height: fit-content;
         &:before{
             font-family: "icon";
             content: "\E023";
