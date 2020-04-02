@@ -12,7 +12,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import queryString from 'query-string';
 import InitData from 'containers/Common/InitData';
 import PageHeader from 'containers/Common/PageHeader';
 import makeSelectInitProject from 'containers/Project/Init/selectors';

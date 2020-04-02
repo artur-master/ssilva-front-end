@@ -118,6 +118,15 @@ const Item = ({ project, dispatch }) => {
               </Link>
             </li>
             <li className="row justify-content-between">
+              <span className="col-auto">Ofertas</span>
+              <Link
+                to={`/proyectos/${project.ProyectoID}/ofertas`}
+                className="col-auto icon icon-arrow-complete icon-right"
+              >
+                Ver ofertas
+              </Link>
+            </li>
+            <li className="row justify-content-between">
               <span className="col-auto">Promesas</span>
               <Link
                 to={`/proyectos/${project.ProyectoID}/promesas`}
