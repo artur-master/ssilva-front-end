@@ -26,7 +26,7 @@ function CuotasView({ values, onSetCuotas, onHide, onEdit }) {
             Editar Cuotas
           </Button>
           <div className="order-3">
-            <Cheque cuotas={values.Cuotas} onSetCuotas={onSetCuotas}>Cheques</Cheque>
+            <Cheque cuotas={values.printCuotas} onSetCuotas={onSetCuotas} />
           </div>
         </div>
 

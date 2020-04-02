@@ -24,7 +24,7 @@ import {
 import { Auth } from 'containers/App/helpers';
 
 // eslint-disable-next-line no-unused-vars
-function PhaseFormaDePagoForm({ defaultPercent = 20, onSetCuotas, form }) {
+function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
   const [openCuotas, setOpenCuotas] = useState(0);
   const { values, setValues } = form;
   const { paymentUtils } = window.preload;
@@ -574,7 +574,6 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, onSetCuotas, form }) {
         onHide={() => setOpenCuotas(0)}
         onView={() => setOpenCuotas(2)}
         onEdit={() => setOpenCuotas(1)}
-        onSetCuotas={onSetCuotas}
       />
     </>
   );
@@ -582,6 +581,5 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, onSetCuotas, form }) {
 
 PhaseFormaDePagoForm.propTypes = {
   form: PropTypes.object,
-  onSetCuotas: PropTypes.func,
 };
 export default PhaseFormaDePagoForm;

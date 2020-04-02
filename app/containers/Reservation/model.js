@@ -107,6 +107,7 @@ export default function model({ project = {}, entity = {} }) {
     CotizacionStateID: entity.CotizacionStateID || '',
     PayType: entity.PayType || window.preload.paymentUtils[0].PayTypeID,
     Cuotas,
+    printCuotas: entity.printCuotas || Cuotas,
     PaymentFirmaPromesa: entity.PaymentFirmaPromesa || 0,
     PaymentFirmaEscritura: entity.PaymentFirmaEscritura || 0,
     PaymentInstitucionFinanciera: entity.PaymentInstitucionFinanciera || 0,

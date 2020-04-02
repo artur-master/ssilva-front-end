@@ -179,7 +179,7 @@ function* printDocuments(action) {
     downloadFile(response.reserva.Documents.DocumentSimulador, 'simulador de crédito.pdf')
 
     const genCheques = [];
-    const cheques = action.values.printCutoas;
+    const cheques = action.values.printCuotas;
     for (let i = 0; i < cheques.length; i += 1) {
       genCheques.push(yield call(generateCheque, cheques[i]));
     }

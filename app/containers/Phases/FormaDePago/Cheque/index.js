@@ -42,7 +42,7 @@ export function Cheque({ cuotas, onSetCuotas, selector, dispatch }) {
         onHide={() => setIsOpen(false)}
         onSubmit={values => {
           setIsOpen(false);
-          if(onSetCuotas) onSetCuotas(values)
+          if(onSetCuotas) onSetCuotas(values);
         }}
         onPrint={cheques => dispatch(generateCheque(cheques))}
       />

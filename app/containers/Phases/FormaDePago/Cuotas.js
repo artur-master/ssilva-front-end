@@ -12,15 +12,20 @@ import { Modal } from 'components/Modal';
 import CuotasView from './CuotasView';
 import CuotasForm from './CuotasForm';
 
-function Cuotas({ form, isOpen, onHide, onView, onEdit, onSetCuotas }) {
+function Cuotas({ form, isOpen, onHide, onView, onEdit }) {
+  const { values, setValues } = form;
+
   return (
     <Modal isOpen={isOpen !== 0} size="xl" scrollable>
       {isOpen === 1 && (
         <CuotasForm form={form} onView={onView} onHide={onView} />
       )}
       {isOpen === 2 && (
-        <CuotasView values={form.values} onSetCuotas={onSetCuotas}
+        <CuotasView values={values} 
                     onEdit={onEdit} onHide={onHide} 
+                    onSetCuotas={cuotas => 
+                      setValues({...values, printCuotas: cuotas})
+                    }
         />
       )}
     </Modal>
@@ -32,7 +37,6 @@ Cuotas.propTypes = {
   onHide: PropTypes.func.isRequired,
   onView: PropTypes.func,
   onEdit: PropTypes.func,
-  onSetCuotas: PropTypes.func,
   form: PropTypes.object,
 };
 
