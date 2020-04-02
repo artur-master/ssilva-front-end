@@ -96,11 +96,9 @@ export function Offers({
               <h4 className="color-regular mt-3">
                 {`${project.Name} - ${project.Symbol}`}
               </h4>
-              <OfferGarantia />
               <h5 className="mb-3 font-18 d-flex align-items-center justify-content-between">
                 <span className="line-height-1">Oferta</span>
               </h5>
-              <ProjectPhases project={project} active="offer" />
               <Filter
                 project={project}
                 selector={selector}
