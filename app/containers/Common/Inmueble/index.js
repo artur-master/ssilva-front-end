@@ -110,6 +110,7 @@ export function Inmueble({
         {loading && <SyncMessage {...selector} />}
         {!loading && initLoading && entities && (
           <InmuebleList
+            dispatch = {dispatch}
             focusChange={focusChange}
             defaultShowType={defaultShowType}
             selector={selector}

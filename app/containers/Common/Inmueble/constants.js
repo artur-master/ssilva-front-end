@@ -15,3 +15,12 @@ export const RESET_SELECT = 'app/containers/Common/Inmueble/RESET_SELECT';
 
 export const MATCH_RESTRICTION =
   'app/containers/Common/Inmueble/MATCH_RESTRICTION';
+
+export const UPLOAD_BLUEPRINT =
+  'app/containers/Common/Inmueble/UPLOAD_BLUEPRINT';
+
+export const SUCESS_UPLOAD =
+  'app/containers/Common/Inmueble/SUCESS_UPLOAD';
+
+  export const ERROR_UPLOAD =
+  'app/containers/Common/Inmueble/ERROR_UPLOAD';
