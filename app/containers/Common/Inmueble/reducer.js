@@ -112,6 +112,7 @@ const inmuebleReducer = (state = initialState, action) =>
     case SUCESS_UPLOAD:
         draft.loading = true;
         draft.error = false;
+        draft.entities = action.response.entities;
         draft.success = true;
       break;
     case ERROR_UPLOAD:
