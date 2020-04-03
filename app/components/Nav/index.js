@@ -20,9 +20,11 @@ import { compose } from 'redux';
 import { logout } from 'containers/App/actions';
 import { Auth } from 'containers/App/helpers';
 import CurrencyConverter from 'containers/Common/CurrencyConverter';
+import SimulatorCredito from 'containers/Common/SimulatorCredito';
 
 function Nav({ dispatch }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenSimulator, setIsOpenSimulator] = useState(false);
 
   return (
     <>
@@ -45,7 +47,9 @@ function Nav({ dispatch }) {
               <DropdownItem tag="a" onClick={() => setIsOpen(true)}>
                 Calculadora de UF
               </DropdownItem>
-              <DropdownItem tag="a">Simulador de credito</DropdownItem>
+              <DropdownItem tag="a" onClick={() => setIsOpenSimulator(true)}>
+                Simulador de credito
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown tag="li">
@@ -71,6 +75,7 @@ function Nav({ dispatch }) {
         </ul>
       </nav>
       <CurrencyConverter isOpen={isOpen} onHide={() => setIsOpen(false)} />
+      <SimulatorCredito isOpen={isOpenSimulator} onHide={() => setIsOpenSimulator(false)} />
     </>
   );
 }

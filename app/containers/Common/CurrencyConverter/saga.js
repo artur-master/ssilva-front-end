@@ -8,7 +8,11 @@ function* convertAction(action) {
   try {
     const response = yield call(
       request,
-      `${API_ROOT}/uf/${action.values.fecha || ''}`,
+      `${API_ROOT}/uf-de/`,
+      {
+        method: 'POST',
+        body: JSON.stringify(action.values),
+      }
     );
     yield put(convertActionSuccess(response));
   } catch (error) {
