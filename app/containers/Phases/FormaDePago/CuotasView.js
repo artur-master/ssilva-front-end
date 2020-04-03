@@ -17,6 +17,8 @@ import Cheque from './Cheque';
 // eslint-disable-next-line no-unused-vars
 function CuotasView({ values, onSetCuotas, onHide, onEdit }) {
   const { cuota, balance, moneyErr } = calculates(values);
+  const cutoas = values.printCuotas ? values.printCuotas : values.Cuotas;
+
   return (
     <>
       <ModalHeader>Ver Cuotas</ModalHeader>
@@ -26,7 +28,7 @@ function CuotasView({ values, onSetCuotas, onHide, onEdit }) {
             Editar Cuotas
           </Button>
           <div className="order-3">
-            <Cheque cuotas={values.printCuotas} onSetCuotas={onSetCuotas} />
+            <Cheque cuotas={cutoas} onSetCuotas={onSetCuotas} />
           </div>
         </div>
 
