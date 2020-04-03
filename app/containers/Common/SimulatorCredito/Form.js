@@ -31,15 +31,15 @@ export function Form({
   const initialValues = entity;
   return (
     <Modal isOpen={isOpen} size="xl" scrollable toggle={onHide}>
-      <ModalHeader>Calculadora de UF</ModalHeader>
+      <ModalHeader>Simulador de Crédito</ModalHeader>
       <ModalBody className="p-3">
         <ExForm initialValues={initialValues} onSubmit={onSubmit}>
           {({ values }) => {
             const success =
-              values.fecha && values.valor ? (
+              values.dividendo && values.renta ? (
                 <span>
-                  Valor UF: $ <FormattedNumber value={values.valor} /> / Fecha:{' '}
-                  {moment(values.fecha).format('DD/MM/YYYY')}
+                  Dividendo: <FormattedNumber value={values.dividendo} /> /
+                  Renta mínima: <FormattedNumber value={values.renta} />
                 </span>
               ) : (
                 false
@@ -47,33 +47,64 @@ export function Form({
             return (
               <>
                 <SyncMessage timeout={-1} {...selector} success={success} />
-                <span className="font-14-rem color-main mt-3">
-                  <b>FECHA VALOR UF:</b>
-                </span>
                 <div className="background-color-tab mt-4 p-3">
                   <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-4 mt-2">
                       <span className="font-14-rem">
-                        <b>FECHA</b>
-                      </span>
-                      <div className="d-flex align-items-center mt-2">
-                        <ExField
-                          type="datePicker"
-                          name="fecha"
-                          valueFormat="YYYY-MM-DD"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <span className="font-14-rem">
-                        <b>Monto</b>
+                        <b>Monto total</b>
                       </span>
                       <div className="d-flex align-items-center mt-2">
                         <ExField
                             type="number"
                             name="monto"
                         />
-                        <Button type="submit">Calculadora </Button>
+                      </div>
+                    </div>
+                    <div className="col-md-4 mt-2">
+                      <span className="font-14-rem">
+                        <b>Porcentaje a financiar</b>
+                      </span>
+                      <div className="d-flex align-items-center mt-2">
+                        <ExField
+                            type="number"
+                            name="porcentaje"
+                            min="0"
+                            max="100"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-4 mt-2">
+                      <span className="font-14-rem">
+                        <b>Tasa</b>
+                      </span>
+                      <div className="d-flex align-items-center mt-2">
+                        <ExField
+                            type="number"
+                            name="tasa"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-4 mt-2">
+                      <span className="font-14-rem">
+                        <b>Plazo</b>
+                      </span>
+                      <div className="d-flex align-items-center mt-2">
+                        <ExField
+                            type="number"
+                            name="plazo"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-4 mt-2">
+                      <span className="font-14-rem">
+                        <b>Titular x2</b>
+                      </span>
+                      <div className="d-flex align-items-center mt-2">
+                        <ExField
+                            type="checkbox"
+                            name="titular"
+                        />
+                        <Button type="submit">Calculadora</Button>
                       </div>
                     </div>
                   </div>
