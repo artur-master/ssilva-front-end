@@ -83,7 +83,6 @@ const InmuebleList = ({
       <InmuebleFilter entities={entities} onQuery={handleChangeQuery} />
       {children}
       <div className="d-flex p-3 justify-content-end">
-        
         <Button
           color="white"
           disabled={showType === 'list'}
