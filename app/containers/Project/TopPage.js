@@ -22,11 +22,11 @@ export function getNextResponer(project = {}) {
   if (project.EntregaInmediata && !project.Aseguradora.AseguradoraID)
     responer.push('AC');
 
-  if (project.PlanMediosState === 'Pendiente') responer.push('MK');
-  if (project.BorradorPromesaState === 'Pendiente') responer.push('LG');
-  if (project.IngresoComisionesState === 'Pendiente') responer.push('FI');
+  if (project.ConstructoraID && (project.PlanMediosState === 'Pendiente')) responer.push('MK');
+  if (project.ConstructoraID && (project.BorradorPromesaState === 'Pendiente')) responer.push('LG');
+  if (project.ConstructoraID && (project.IngresoComisionesState === 'Pendiente')) responer.push('FI');
 
-  if (project.ProyectoApprovalState === PROYECTO_APPROVAL_STATE[0])
+  if (project.ConstructoraID && (project.ProyectoApprovalState === PROYECTO_APPROVAL_STATE[0]))
     responer.push('JP');
   if (project.ProyectoApprovalState === PROYECTO_APPROVAL_STATE[1])
     responer.push('LG');

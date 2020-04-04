@@ -330,7 +330,7 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       max: 100,
     },
     {
-      label: 'Descuentos Límite',
+      label: 'Descuento limite cotización',
       name: `DiscountMaxPercent`,
       view: `${DiscountMaxPercent || 100}`,
       maskOptions: { prefix: '%' },

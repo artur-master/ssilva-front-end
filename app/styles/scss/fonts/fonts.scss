@@ -2,9 +2,11 @@
 //// PATHS
 $webfont-path: "../fonts/webfonts/" !default;
 $icon_rute: '../fonts/iconfonts/';
+$tello_rute: '../fonts/fontello/';
 
 //// IMPORTS
 @import 'webfonts';
+@import '../../fonts/fontello/fontello';
 @import '../../fonts/iconfonts/icon';
 
 ///// VARIABLES
