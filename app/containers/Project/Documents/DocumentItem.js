@@ -206,7 +206,7 @@ function DocumentItem({
                             type="radio"
                             name={documentoType}
                             disabled={!canConfirm}
-                            checked={typeof value === 'string'?value.startsWith('rejected'):"false"}
+                            checked={(typeof value === 'string') ? value.startsWith('rejected') : false}
                             onChange={() => {
                               setFieldValue(documentoType, 'rejected');
                               onConfirm();

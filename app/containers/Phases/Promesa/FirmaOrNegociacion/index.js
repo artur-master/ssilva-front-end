@@ -152,7 +152,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                     </div>
                   </div>
                 )}
-                {form.values.currentAction === 'rechazar' && (
+                {(form.values.currentAction === 'rechazar') && (
                   <div className="py-3 ">
                     <span className="d-block text-left font-14-rem">
                       <b>Comentarios (En caso de Rechazo)</b>

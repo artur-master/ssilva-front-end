@@ -89,7 +89,6 @@ export function PhaseDocument({
             <CarpetaDigitalReviewActions
               form={form}
               isReview={isReview}
-              onCancel={onCancel}
               selector={selector}
               onControlReview={onControlReview}
             />

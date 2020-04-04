@@ -22,7 +22,6 @@ import makeSelectReservations from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { fetchReservations, searchReservations, queryReservations } from './actions';
-import { fetchOffers } from 'containers/Offer/List/actions';
 import { requiredData } from '../../Quotation/List/helper'
 import makeSelectOffers from 'containers/Offer/List/selectors';
 import List from './List';
@@ -38,13 +37,11 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
   useEffect(() => {
     if (match.params.id && !selector.loading){
       dispatch(fetchReservations(match.params.id));
-      dispatch(fetchOffers(match.params.id));
     }
   }, []);
   return (
     <>
       <InitData Project={{ ProyectoID: match.params.id }} />
-
       <Helmet title={`Reservas - ${project.Name || '...'}`} />
       <ProjectMeta action="view" project={project} active="reservation" />
       {selector.loading && <SyncMessage {...selector} />}

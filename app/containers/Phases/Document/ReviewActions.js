@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 
 export function CarpetaDigitalReviewActions({
+  form,
   isReview,
   selector,
   onControlReview,
@@ -16,8 +17,8 @@ export function CarpetaDigitalReviewActions({
   const [withText, setWithText] = useState({ text: '', open: false });
 
   return (
-    <>
-      {withText.open && (
+    withText.open ? (
+      <>
         <div className="py-3">
           <span className="d-block font-14-rem">
             <b>Comentarios</b>
@@ -32,44 +33,49 @@ export function CarpetaDigitalReviewActions({
             />
           </div>
         </div>
-      )}
-      <div className="d-flex py-3 after-expands-2 align-items-center">
-        <Button
-          className="order-3 m-btn mr-2"
-          type="submit"
-          disabled={!isReview || loading}
-          onClick={() =>
-            onControlReview({
-              Comment: withText.text.trim(),
-              Resolution: true,
-            })
-          }
-        >
-          Aprobar
-        </Button>
-        {!withText.open && (
+        <div className="d-flex py-3 after-expands-2 align-items-center">
           <Button
-            className="order-3 m-btn m-btn-white mr-2 m-btn-plus"
-            disabled={!isReview}
-            onClick={() => setWithText({ ...withText, open: true })}
+            disabled={loading}
+            className="order-3 m-btn m-btn-white mr-2"
+            onClick={() =>
+              onControlReview({
+                Comment: withText.text.trim(),
+                Resolution: false,
+              })
+            }
           >
-            Agregar Comentarios
+            Rechazar
           </Button>
-        )}
-        <Button
-          disabled={!isReview || loading}
-          className="order-3 m-btn m-btn-white mr-2"
-          onClick={() =>
-            onControlReview({
-              Comment: withText.text.trim(),
-              Resolution: false,
-            })
-          }
-        >
-          Rechazar
-        </Button>
-      </div>
-    </>
+          <Button
+            disabled={loading}
+            className="order-3 m-btn m-btn-white mr-2"
+            onClick={() => setWithText({ text: '', open: false })}
+          >
+            Cancelar
+          </Button>
+        </div>
+      </>) : (
+        <div className="d-flex py-3 after-expands-2 align-items-center">
+          <Button
+            className="order-3 m-btn mr-2"
+            disabled={!isReview}
+            onClick={() =>
+              onControlReview({
+                Comment: withText.text.trim(),
+                Resolution: true,
+              })
+            }
+          >
+            Aprobar
+          </Button>
+            <Button
+              disabled={loading}
+              className="order-3 m-btn m-btn-white mr-2"
+              onClick={() => setWithText({ text: '', open: true })}
+            >
+              Rechazar
+          </Button>
+        </div>)
   );
 }
 

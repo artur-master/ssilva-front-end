@@ -53,7 +53,7 @@ export function Promesas({ match, selectorProject, selector, dispatch }) {
       <ProjectMeta action="view" project={project} active="promesa" />
       <Factura />
       <PromesaRefundGarantia />
-      {selector.loading && <SyncMessage {...selector} />}
+      {<SyncMessage {...selector} />}
       {!selector.loading && selector.promesas && (
         <>
           <h4 className="color-regular mt-3 mb-0">

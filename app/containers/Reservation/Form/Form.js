@@ -31,6 +31,7 @@ import {
 } from './actions';
 import AlertPopup from 'components/Alert/popup';
 import Log from 'components/Log';
+import { RESERVA_STATE } from 'containers/App/constants';
 
 export function Form({ project, selector, dispatch }) {
   const entity = selector.reservation;
@@ -165,6 +166,17 @@ export function Form({ project, selector, dispatch }) {
           )}
         </>
       )}
+      {/* {(entity.ReservaState === RESERVA_STATE[3]) && (
+        <>
+          <strong>Comentarios</strong>
+          <textarea
+            className="w-100 d-block rounded-lg shadow-sm"
+            rows="2"
+            readOnly
+            value={entity.Logs[0].Comment}
+          />
+        </>
+      )} */}
       {entity.Logs && (
         <Log logs={entity.Logs} limit={10} />
       )}

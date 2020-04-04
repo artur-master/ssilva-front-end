@@ -71,7 +71,7 @@ const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
 
 List.propTypes = {
   offers: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  promesas: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  promesas: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dispatch: PropTypes.func,
 };
