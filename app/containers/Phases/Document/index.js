@@ -90,6 +90,7 @@ export function PhaseDocument({
               form={form}
               isReview={isReview}
               selector={selector}
+              entity={entity}
               onControlReview={onControlReview}
             />
           )}

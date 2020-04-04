@@ -106,6 +106,7 @@ const prepareBeforeSave = newValues => {
 };
 
 export function saveReservation(newValues, documents = false) {
+  newValues['Condition'] = documents['Condition'];
   const values = prepareBeforeSave(newValues);
   return {
     type: SAVE_RESERVATION,
@@ -129,6 +130,7 @@ export function saveReservationSuccess(response) {
 }
 
 export function sendToControl(newValues, documents = false) {
+  newValues['Condition'] = documents['Condition'];
   const values = prepareBeforeSave(newValues);
   return {
     type: SEND_TO_CONTROL,
