@@ -119,7 +119,6 @@ const promesaReducer = (state = initialState, action) =>
       case SEND_TO_REVIEW_NEGOCIACION_SUCCESS:
       case REVIEW_NEGOCIACION_SUCCESS:
       case CONTROL_NEGOCIACION_SUCCESS:
-      case UPLOAD_FIRMA_DOCUMENTS_PROMESA_SUCCESS:
       case CONTROL_PROMESA_SUCCESS:
       case SEND_PROMESA_TO_IN_SUCCESS:
       case SEND_PROMESA_TO_CLIENTE_SUCCESS:
@@ -133,6 +132,13 @@ const promesaReducer = (state = initialState, action) =>
         draft.promesa = { ...draft.promesa, ...action.response.promesa };
         break;
       /* remove --> */
+
+      case UPLOAD_FIRMA_DOCUMENTS_PROMESA_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.success = action.response.detail;
+        draft.redirect = 'list';
+        break;
       case RESET_CONTAINER:
         return initialState;
 
