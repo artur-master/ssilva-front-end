@@ -51,12 +51,18 @@ export function CarpetaDigitalUploadActions({
           disabled={!canUpload ? true : loading}
           className="order-3 m-btn mr-2"
           type="submit"
+          onClick={() => {
+            form.values.Condition.push(...entity.Condition);
+          }}
         >
           Reservar
         </Button>
         {Auth.isPM() && (
           <Button
-            onClick={onSendControl}
+            onClick={() => {
+              form.values.Condition.push(...entity.Condition);
+              onSendControl(form.values);
+            }}
             className="order-3 m-btn mr-2"
             disabled={!subReserva ? true : loading}
           >
@@ -66,15 +72,10 @@ export function CarpetaDigitalUploadActions({
         <Button
           disabled={loading}
           className="order-3 m-btn m-btn-white m-btn-plus mr-2"
-          onClick={() => {
+          onClick={() => {            
             const { Condition = [] } = form.values;
-            if (
-              Condition.length < 1 ||
-              Condition[Condition.length - 1].Description.trim() !== ''
-            ) {
-              Condition.push({ Description: '' });
-              form.setFieldValue('Condition', Condition);
-            }
+            Condition.push({ Description: '' });
+            form.setFieldValue('Condition', Condition);
           }}
         >
           Agregar Observación
@@ -103,21 +104,11 @@ export function CarpetaDigitalUploadActions({
           </Button>
         )}
       </div>
-      {form.values.Condition.length > 0 && (
-        <div className="p-0">
-          <DocumentCondition form={form} />
-          <div className="py-3 text-right">
-            <Button
-              className="m-btn"
-              type="submit"
-              onClick={() => form.submitForm()}
-              disabled={loading}
-            >
-              Reservar con Observaciones
-            </Button>
+        {(entity && values && entity.Condition.length > 0 || values.Condition.length > 0) && ( 
+          <div className="p-0">
+            <DocumentCondition form={form} entity={entity} />
           </div>
-        </div>
-      )}
+        )}
       {withText.open && (
         <>
           <div className="mt-3">
