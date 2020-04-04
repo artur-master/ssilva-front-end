@@ -35,7 +35,7 @@ const Item = ({ project, reservation, offer, dispatch }) => {
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   let dateAgo;
   if (ReservaState === 'Pendiente control') {
-    dateAgo = moment(Date).fromNow();
+    dateAgo = moment.utc(Date).fromNow();
   }
 
   return (
