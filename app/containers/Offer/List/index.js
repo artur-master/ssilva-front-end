@@ -18,9 +18,6 @@ import makeSelectInitProject from 'containers/Project/Init/selectors';
 import WithLoading from 'components/WithLoading';
 import ProjectMeta from 'containers/Common/ProjectMeta/Loadable';
 import PageHeader from 'containers/Common/PageHeader';
-import { fetchPromesas } from 'containers/Promesa/List/actions';
-import makeSelectPromesas from 'containers/Promesa/List/selectors';
-import ProjectPhases from 'containers/Common/ProjectPhases';
 import makeSelectOffers from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -39,7 +36,6 @@ export function Offers({
   match,
   selectorProject,
   selector,
-  promesas,
   dispatch,
 }) {
   const { project } = selectorProject;
@@ -66,7 +62,7 @@ export function Offers({
       {!(Auth.isInmobiliario() || Auth.isFinanza()) && (
         <>
           <ProjectMeta action="view" project={project} active="offer" />
-          {selector.loading && <SyncMessage {...selector} />}
+          <SyncMessage {...selector} />
           {!selector.loading && selector.offers && (
             <>
               <Filter
@@ -147,14 +143,12 @@ Offers.propTypes = {
   match: PropTypes.object,
   selectorProject: PropTypes.object,
   selector: PropTypes.object,
-  promesas: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   selector: makeSelectOffers(),
   selectorProject: makeSelectInitProject(),
-  promesas: makeSelectPromesas(),
 });
 
 function mapDispatchToProps(dispatch) {

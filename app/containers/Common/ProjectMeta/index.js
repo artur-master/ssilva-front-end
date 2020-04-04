@@ -8,7 +8,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import { Auth } from 'containers/App/helpers';
-import { formatNumber } from 'containers/App/helpers';
 import { fetchAllReservations, fetchAllPromesas } from './helper';
 
 export function ProjectMeta({ project = {}, active }) {

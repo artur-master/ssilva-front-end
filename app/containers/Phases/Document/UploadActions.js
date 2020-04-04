@@ -54,13 +54,15 @@ export function CarpetaDigitalUploadActions({
         >
           Reservar
         </Button>
-        <Button
-          onClick={onSendControl}
-          className="order-3 m-btn mr-2"
-          disabled={!subReserva ? true : loading}
-        >
-          Enviar a Control
-        </Button>
+        {Auth.isPM() && (
+          <Button
+            onClick={onSendControl}
+            className="order-3 m-btn mr-2"
+            disabled={!subReserva ? true : loading}
+          >
+            Enviar a Control
+          </Button>
+        )}
         <Button
           disabled={loading}
           className="order-3 m-btn m-btn-white m-btn-plus mr-2"
