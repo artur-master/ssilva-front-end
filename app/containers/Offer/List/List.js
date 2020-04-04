@@ -53,8 +53,8 @@ const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
                 dispatch={dispatch}
               />
             ))}
-          {promesas.length &&
-            promesas.map(promesa => (
+          {promesas.length>0 &&
+            (promesas.map(promesa => (
               <Item
                 key={promesa.PromesaID}
                 project={project}
@@ -62,7 +62,7 @@ const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
                 dispatch={dispatch}
                 offer={promesa}
               />
-            ))}
+            )))}
         </tbody>
       </table>
     )}

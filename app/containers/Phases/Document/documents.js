@@ -134,18 +134,8 @@ export const getDocuments = entity => {
       //   required: true,
       // },
       {
-        documentoName: 'Liquidacion 1',
+        documentoName: 'Últimos 3 liquidaciones',
         documentoType: 'DocumentLiquidacion1',
-        required: true,
-      },
-      {
-        documentoName: 'Liquidacion 2',
-        documentoType: 'DocumentLiquidacion2',
-        required: true,
-      },
-      {
-        documentoName: 'Liquidacion 3',
-        documentoType: 'DocumentLiquidacion3',
         required: true,
       },
     ];
