@@ -6,12 +6,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import DocumentCondition from '../Conditions';
 
 export function CarpetaDigitalReviewActions({
-  form,
   isReview,
   selector,
   onControlReview,
+  form,
+  entity,
 }) {
   const { loading } = selector;
   const [withText, setWithText] = useState({ text: '', open: false });
@@ -54,7 +56,13 @@ export function CarpetaDigitalReviewActions({
             Cancelar
           </Button>
         </div>
+        {(entity && form.values && entity.Condition.length > 0 || form.values.Condition.length > 0) && ( 
+          <div className="p-0">
+            <DocumentCondition form={form} entity={entity} />
+          </div>
+         )}
       </>) : (
+      <>
         <div className="d-flex py-3 after-expands-2 align-items-center">
           <Button
             className="order-3 m-btn mr-2"
@@ -75,7 +83,14 @@ export function CarpetaDigitalReviewActions({
             >
               Rechazar
           </Button>
-        </div>)
+        </div>
+        {(entity && form.values && entity.Condition.length > 0 || form.values.Condition.length > 0) && ( 
+          <div className="p-0">
+            <DocumentCondition form={form} entity={entity} />
+          </div>
+         )}
+          </>
+        )
   );
 }
 
@@ -83,6 +98,8 @@ CarpetaDigitalReviewActions.propTypes = {
   isReview: PropTypes.bool,
   selector: PropTypes.object,
   onControlReview: PropTypes.func,
+  entity: PropTypes.object,
+  form: PropTypes.object,
 };
 
 export default CarpetaDigitalReviewActions;
