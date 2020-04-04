@@ -138,7 +138,7 @@ export function Form({ project, selector, dispatch }) {
           }}
           onSendControl={documents => {
             if (!isValid) return setOpenAlert(true);
-            entity.Condition = documents.Condition;
+            // entity.Condition = documents.Condition;
             return dispatch(
               sendToControl({ ...initialValues, ...entity }, documents),
             );

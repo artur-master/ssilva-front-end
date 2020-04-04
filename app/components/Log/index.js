@@ -27,7 +27,7 @@ const Log = ({ logs, logTypes = [], limit = 0 }) => {
   if (showLogs.length > 0) {
     return (
       <Box collapse isOpen={false}>
-        <BoxHeader className="background-color-warning">LOGS</BoxHeader>
+        <BoxHeader className="background-color-warning">Comentarios</BoxHeader>
         <BoxContent
           className="background-color-warning"
           style={{ maxHeight: 300, overflow: 'auto' }}
@@ -35,17 +35,9 @@ const Log = ({ logs, logTypes = [], limit = 0 }) => {
           {showLogs.map(log => (
             <div key={log.VentaLogID} className="p-3 border-bottom">
               <div className="font-14-rem pb-2">
-                <div>
-                  <span className="badge badge-info">
-                    {log.User.Roles[0].Name}
-                  </span>{' '}
-                  <b>{logLabel(log.VentaLogType)}</b>
-                </div>
-                <span className="font-12-rem">Creado por </span>{' '}
-                <span className="badge badge-light">
-                  {userFullname(log.User)}
+                <span className="badge badge-info">
+                   {log.User.Roles[0].Name}
                 </span>{' '}
-                <span className="font-12-rem">en </span>
                 <span className="badge badge-light">
                   {moment(log.Date).format('DD MMM YYYY HH:mm:ss')}
                 </span>
