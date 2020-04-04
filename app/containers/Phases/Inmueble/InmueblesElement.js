@@ -11,13 +11,14 @@ const InmueblesElement = ({ values, onSelect }) => {
       if (item.InmuebleInmuebleType === 'Required') acc.push(item.InmuebleBID);
       return acc;
     }, []);
-    onSelect(
-      values.Inmuebles.filter(
-        item =>
-          item.InmuebleID !== inmueble.InmuebleID &&
-          !required.includes(item.InmuebleID),
-      ),
-    );
+    if(onSelect)
+      onSelect(
+        values.Inmuebles.filter(
+          item =>
+            item.InmuebleID !== inmueble.InmuebleID &&
+            !required.includes(item.InmuebleID),
+        ),
+      );
   };
   return (
     <FieldArray
@@ -73,8 +74,10 @@ const InmueblesElement = ({ values, onSelect }) => {
                       <button
                         type="button"
                         className="close close-absolute"
-                        aria-label="Close"
-                        onClick={() => handleRemove(inmueble)}
+                        onClick={() => {
+                          handleRemove(inmueble);
+                          remove(index);
+                        }}
                       >
                         <span aria-hidden="true">×</span>
                       </button>
