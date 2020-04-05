@@ -70,9 +70,9 @@ export function InForm({ selector, dispatch }) {
             : ''}
         </span>
       </h5>
-      {entity.PromesaState === PROMESA_STATE[14] && (
+      {/* {entity.PromesaState === PROMESA_STATE[14] && (
         <PromesaObservation entity={entity} selector={selector} />
-      )}
+      )} */}
       {blockPromesa()}
       <Desistimiento promesa={entity} />
     </>
