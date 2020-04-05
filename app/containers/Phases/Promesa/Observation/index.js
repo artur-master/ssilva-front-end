@@ -14,12 +14,12 @@ export function PromesaObservation({ entity, onChange }) {
     entity.PromesaState === PROMESA_STATE[13] && UserProject.isPM();
 
   if (
-    (entity.PromesaState !== PROMESA_STATE[13] &&
-      entity.PromesaState !== PROMESA_STATE[14]) ||
-    entity.Condition.length < 1 ||
-    (!UserProject.isPM() &&
-      !UserProject.isVendor() &&
-      !UserProject.isInmobiliario())
+    (entity.PromesaState !== PROMESA_STATE[1] &&
+    //   entity.PromesaState !== PROMESA_STATE[14]) ||
+    // entity.Condition.length < 1 ||
+    // (!UserProject.isPM() &&
+    //   !UserProject.isVendor() &&
+      !UserProject.isLegal())
   )
     return null;
 
