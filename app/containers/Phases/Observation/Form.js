@@ -16,7 +16,7 @@ function PhaseObservationForm({ form }) {
         <b>Neuva Observación</b>
       </div>
       <ExField rows={5} type="textarea" className="mb-3" name="NewCondition" />
-      {Condition.map((item, index) => (
+      {/* {Condition.map((item, index) => (
         <Alert
           key={String(index)}
           onDismiss={() => {
@@ -29,7 +29,7 @@ function PhaseObservationForm({ form }) {
         >
           {item.Description}
         </Alert>
-      ))}
+      ))} */}
     </>
   );
 }
