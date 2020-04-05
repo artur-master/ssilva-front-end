@@ -3,7 +3,7 @@
  * Reservation Upload Form
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
@@ -25,9 +25,12 @@ export function PhaseConfeccionPromesa({
   selector,
   entity,
   onSubmit,
+  onReject,
   onCancel,
 }) {
   const { maquetaWord } = getPromesa(entity);
+  const [withText, setWithText] = useState({ text: '', open: false });
+
   return (
     <ExForm
       initialValues={{
@@ -170,20 +173,57 @@ export function PhaseConfeccionPromesa({
             </BoxContent>
             <BoxFooter>
               {canUpload && (
-                <Button
-                  disabled={selector.loading}
-                  onClick={() => form.submitForm()}
-                >
-                  Aceptar
-                </Button>
+                withText.open ? (
+                  <div className="py-3 ">
+                    <span className="d-block text-left font-14-rem">
+                      <b>Comentarios (En caso de Rechazo)</b>
+                    </span>
+                    <div className="py-3 ">
+                      <textarea
+                        className="w-100 d-block rounded-lg shadow-sm"
+                        rows="5"
+                        onChange={evt =>
+                          setWithText({ ...withText, text: evt.currentTarget.value })
+                        }
+                      />
+                    </div>
+                    <Button
+                      disabled={selector.loading}
+                      onClick={() => onReject(withText.text.trim())}
+                    >
+                      Rechazar
+                    </Button>
+                    <Button
+                      disabled={selector.loading}
+                      color="white"
+                      onClick={() => setWithText({ text: '', open: false })}
+                    >
+                      Cancelar
+                    </Button>
+                  </div>) : (
+                  <>
+                    <Button
+                      disabled={selector.loading}
+                      onClick={() => form.submitForm()}
+                    >
+                      Aprobar
+                    </Button>
+                    <Button
+                      disabled={selector.loading}
+                      color="white"
+                      onClick={() => setWithText({ text: '', open: true })}
+                    >
+                      Rechazar
+                    </Button>
+                    <Button
+                      disabled={selector.loading}
+                      color="white"
+                      onClick={onCancel}
+                    >
+                      Cancelar
+                    </Button>
+                  </>)
               )}
-              <Button
-                disabled={selector.loading}
-                color="white"
-                onClick={onCancel}
-              >
-                Cancelar
-              </Button>
             </BoxFooter>
           </Box>
           <div className="py-3">
@@ -201,6 +241,7 @@ PhaseConfeccionPromesa.propTypes = {
   selector: PropTypes.object,
   form: PropTypes.bool,
   onSubmit: PropTypes.func,
+  onReject: PropTypes.func,
   onCancel: PropTypes.func,
 };
 

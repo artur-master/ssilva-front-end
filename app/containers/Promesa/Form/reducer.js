@@ -14,6 +14,9 @@ import {
   UPLOAD_CONFECCION_PROMESA,
   UPLOAD_CONFECCION_PROMESA_ERROR,
   UPLOAD_CONFECCION_PROMESA_SUCCESS,
+  REJECT_CONFECCION_PROMESA,
+  REJECT_CONFECCION_PROMESA_ERROR,
+  REJECT_CONFECCION_PROMESA_SUCCESS,
   APPROVE_UPLOAD_CONFECCION_PROMESA,
   APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR,
   APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS,
@@ -67,6 +70,7 @@ const promesaReducer = (state = initialState, action) =>
     switch (action.type) {
       case GET_PROMESA:
       case UPLOAD_CONFECCION_PROMESA:
+      case REJECT_CONFECCION_PROMESA:
       case APPROVE_UPLOAD_CONFECCION_PROMESA:
       case SEND_TO_REVIEW_NEGOCIACION:
       case REVIEW_NEGOCIACION:
@@ -86,6 +90,7 @@ const promesaReducer = (state = initialState, action) =>
         break;
       case GET_PROMESA_ERROR:
       case UPLOAD_CONFECCION_PROMESA_ERROR:
+      case REJECT_CONFECCION_PROMESA_ERROR:
       case APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR:
       case SEND_TO_REVIEW_NEGOCIACION_ERROR:
       case REVIEW_NEGOCIACION_ERROR:
@@ -145,6 +150,12 @@ const promesaReducer = (state = initialState, action) =>
       case UPDATE_PROMESA:
         draft.promesa = { ...draft.promesa, ...action.values };
         break;
+      
+      case REJECT_CONFECCION_PROMESA_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.success = action.response.detail;
+        draft.redirect='list';
     }
   });
 
