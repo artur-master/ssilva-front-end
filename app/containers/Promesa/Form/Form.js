@@ -34,6 +34,7 @@ import {
   controlPromesa,
   approveUploadConfeccionPromesa,
   uploadConfeccionPromesa,
+  rejectConfeccionPromesa,
   uploadFirmaDocumentsPromesa,
   sendPromesaToIn,
   signIn,
@@ -133,6 +134,9 @@ export function Form({ selector, dispatch }) {
             selector={selector}
             onSubmit={values =>
               dispatch(uploadConfeccionPromesa(entity.PromesaID, values))
+            }
+            onReject={(comment)=>
+              dispatch(rejectConfeccionPromesa(entity.PromesaID, comment))
             }
             onCancel={onCancel}
           />
@@ -287,7 +291,6 @@ export function Form({ selector, dispatch }) {
             Modificación
           </Button>
         )}    
-        <Desistimiento promesa={entity} />
       </div>
       <h5 className="mb-3 d-flex align-items-center after-expands-2">
         <span className="font-16-rem line-height-1 color-success">
@@ -325,8 +328,8 @@ export function Form({ selector, dispatch }) {
       <PhaseFormaDePago initialValues={initialValues} canEdit={canEdit} />
       <PhasePreCredito isCollapse={false} initialValues={initialValues} canEdit={canEdit} />
       <PhaseDocument entity={initialValues} />
-
       {blockPromesa()}
+      <Desistimiento promesa={entity} />
       <Log logs={entity.Logs} limit={10} />
       {/* Added by Artur */}
       {entity.Logs && (

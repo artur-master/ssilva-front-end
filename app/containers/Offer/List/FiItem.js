@@ -36,7 +36,7 @@ const SyncMessage = WithLoading();
 
 const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, Inmuebles, Cliente } = offer;
+  const { Proyecto, Folio, Inmuebles, Cliente, Date } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   const { loading, error, success } = selectorGarantia;
 
@@ -59,7 +59,7 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
         ))}
       </td>
       <td className="">Cliente: {clientFullname(Cliente)}</td>
-      <td />
+      <td>{Date}</td>
       <td className="px-3">
         <div className=" d-flex justify-content-end align-items-center">
           {offer.OfertaState !== OFERTA_STATE[4] &&
