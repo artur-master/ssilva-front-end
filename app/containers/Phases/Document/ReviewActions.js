@@ -20,7 +20,7 @@ export function CarpetaDigitalReviewActions({
 
   return (
     <>
-      withText.open ? (
+      { withText.open ? (
       <>
         <div className="py-3">
           <span className="d-block font-14-rem">
@@ -78,7 +78,8 @@ export function CarpetaDigitalReviewActions({
         >
           Rechazar
         </Button>
-      </div>)
+      </div>
+      )}
       {(entity && form.values && entity.Condition.length > 0 || form.values.Condition.length > 0) && (
         <div className="p-0">
           <DocumentCondition form={form} entity={entity} />
