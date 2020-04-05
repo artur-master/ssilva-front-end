@@ -4,6 +4,7 @@ import { API_ROOT } from 'containers/App/constants';
 import {
   GET_PROMESA,
   UPLOAD_CONFECCION_PROMESA,
+  REJECT_CONFECCION_PROMESA,
   APPROVE_UPLOAD_CONFECCION_PROMESA,
   CONTROL_PROMESA,
   UPLOAD_FIRMA_DOCUMENTS_PROMESA,
@@ -22,6 +23,8 @@ import {
   getPromesaSuccess,
   uploadConfeccionPromesaError,
   uploadConfeccionPromesaSuccess,
+  rejectConfeccionPromesaError,
+  rejectConfeccionPromesaSuccess,
   approveUploadConfeccionPromesaSuccess,
   approveUploadConfeccionPromesaError,
   controlPromesaSuccess,
@@ -84,6 +87,23 @@ function* sagaUploadConfeccionPromesa(action) {
     yield put(uploadConfeccionPromesaSuccess(response));
   } catch (error) {
     yield put(uploadConfeccionPromesaError(error));
+  }
+}
+
+function* sagaRejectConfeccionPromesa(action) {
+  try {
+    const response = yield call(
+      request,
+      `${API_ROOT}/ventas/promesas/${action.PromesaID}/`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({'Comment': action.Comment}),
+      },
+    );
+
+    yield put(rejectConfeccionPromesaSuccess(response));
+  } catch (error) {
+    yield put(rejectConfeccionPromesaError(error));
   }
 }
 
@@ -290,6 +310,7 @@ function* sagaGenerateFactura(action) {
 export default function* projectSaga() {
   yield takeLatest(GET_PROMESA, sagaGetPromesa);
   yield takeLatest(UPLOAD_CONFECCION_PROMESA, sagaUploadConfeccionPromesa);
+  yield takeLatest(REJECT_CONFECCION_PROMESA, sagaRejectConfeccionPromesa);
   yield takeLatest(
     APPROVE_UPLOAD_CONFECCION_PROMESA,
     sagaApproveUploadConfeccionPromesa,

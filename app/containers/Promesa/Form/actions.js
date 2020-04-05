@@ -13,6 +13,9 @@ import {
   UPLOAD_CONFECCION_PROMESA,
   UPLOAD_CONFECCION_PROMESA_ERROR,
   UPLOAD_CONFECCION_PROMESA_SUCCESS,
+  REJECT_CONFECCION_PROMESA,
+  REJECT_CONFECCION_PROMESA_ERROR,
+  REJECT_CONFECCION_PROMESA_SUCCESS,
   APPROVE_UPLOAD_CONFECCION_PROMESA_ERROR,
   APPROVE_UPLOAD_CONFECCION_PROMESA_SUCCESS,
   APPROVE_UPLOAD_CONFECCION_PROMESA,
@@ -103,6 +106,28 @@ export function uploadConfeccionPromesaError(error) {
 export function uploadConfeccionPromesaSuccess(response) {
   return {
     type: UPLOAD_CONFECCION_PROMESA_SUCCESS,
+    response,
+  };
+}
+
+export function rejectConfeccionPromesa(PromesaID, Comment) {
+  return {
+    type: REJECT_CONFECCION_PROMESA,
+    PromesaID,
+    Comment,
+  };
+}
+
+export function rejectConfeccionPromesaError(error) {
+  return {
+    type: REJECT_CONFECCION_PROMESA_ERROR,
+    error,
+  };
+}
+
+export function rejectConfeccionPromesaSuccess(response) {
+  return {
+    type: REJECT_CONFECCION_PROMESA_SUCCESS,
     response,
   };
 }
