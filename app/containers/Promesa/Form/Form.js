@@ -3,7 +3,7 @@
  * Promesa Form
  *
  */
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import PhaseGeneral from 'containers/Phases/General';
@@ -29,6 +29,9 @@ import Factura from 'containers/Phases/Factura';
 import Desistimiento from 'containers/Phases/Promesa/Desistimiento';
 import PromesaRefundGarantia from 'containers/Phases/Promesa/RefundGarantia';
 import RefundGrantiaButton from 'containers/Phases/Promesa/RefundGarantia/Buttons';
+import Log from 'components/Log';
+import Button from 'components/Button';
+import History from 'components/History';
 import Steps from './Steps';
 import {
   controlPromesa,
@@ -51,9 +54,6 @@ import { canEditConfeccionPromesa, canRefund } from '../helper';
 import StepsDesistimento from './StepsDesistimiento';
 import StepsResciliacion from './StepsResciliacion';
 import StepsResolucion from './StepsResolucion';
-import Log from 'components/Log';
-import Button from 'components/Button';
-import History from 'components/History';
 
 export function Form({ selector, dispatch }) {
   const { project = {} } = window;
@@ -135,7 +135,7 @@ export function Form({ selector, dispatch }) {
             onSubmit={values =>
               dispatch(uploadConfeccionPromesa(entity.PromesaID, values))
             }
-            onReject={(comment)=>
+            onReject={comment =>
               dispatch(rejectConfeccionPromesa(entity.PromesaID, comment))
             }
             onCancel={onCancel}
@@ -262,11 +262,11 @@ export function Form({ selector, dispatch }) {
       stepsComponent = <Steps promesa={selector.promesa} />;
       subtitle = entity.PromesaState;
   }
-  //Added by Artur
+  // Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
   const onHide = () => setHistoryOpen(false);
   const [canEdit, setCanEdit] = useState(false);
-  //Added by Artur
+  // Added by Artur
   return (
     <>
       <InitData User Client />
@@ -274,7 +274,7 @@ export function Form({ selector, dispatch }) {
       {stepsComponent}
       <div className="row m-0">
         <h4 className="col p-0 font-21 mt-3">
-        {`${project.Name} / ${entity.Folio}`}
+          {`${project.Name} / ${entity.Folio}`}
           <span className="general-phase">- Promesa</span>
         </h4>
         <Button
@@ -288,9 +288,9 @@ export function Form({ selector, dispatch }) {
             className="col-auto mt-3 m-btn m-btn-pen"
             onClick={() => setCanEdit(true)}
           >
-            Modificación
+            Modificaciï¿½n
           </Button>
-        )}    
+        )}
       </div>
       <h5 className="mb-3 d-flex align-items-center after-expands-2">
         <span className="font-16-rem line-height-1 color-success">
@@ -322,19 +322,29 @@ export function Form({ selector, dispatch }) {
         selector={selector}
         onChange={Condition => dispatch(updatePromesa({ Condition }))}
       />
-      <PhaseGeneral initialValues={initialValues} canEdit={canEdit}/>
-      <PhaseClient payType={entity.PayType} client={entity.Cliente} canEdit={canEdit} />
+      <PhaseGeneral initialValues={initialValues} canEdit={canEdit} />
+      <PhaseClient
+        payType={entity.PayType}
+        client={entity.Cliente}
+        canEdit={canEdit}
+      />
       <PhaseInmueble initialValues={initialValues} canEdit={canEdit} />
       <PhaseFormaDePago initialValues={initialValues} canEdit={canEdit} />
-      <PhasePreCredito isCollapse={false} initialValues={initialValues} canEdit={canEdit} />
+      <PhasePreCredito
+        isCollapse={false}
+        initialValues={initialValues}
+        canEdit={canEdit}
+      />
       <PhaseDocument entity={initialValues} />
       {blockPromesa()}
       <Desistimiento promesa={entity} />
       <Log logs={entity.Logs} limit={10} />
       {/* Added by Artur */}
       {entity.Logs && (
-        <History logs={entity.Logs}
-          onHide={onHide} isOpen={isHistoryOpen}
+        <History
+          logs={entity.Logs}
+          onHide={onHide}
+          isOpen={isHistoryOpen}
           title={`${project.Name} / ${entity.Folio}`}
         />
       )}
