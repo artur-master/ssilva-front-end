@@ -229,6 +229,7 @@ export function Form({ selector, dispatch }) {
       <PhaseFirmaDocumentsPromesa
         entity={entity}
         selector={selector}
+        isEntregaInmediata={project.EtapaState.Name==='Entrega Inmediata'}
         onCancel={onCancel}
         onSubmit={values =>
           dispatch(uploadFirmaDocumentsPromesa(entity.PromesaID, values))
