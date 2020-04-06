@@ -11,6 +11,7 @@ import WithLoading from 'components/WithLoading';
 import { getFileName } from 'containers/App/helpers';
 import { Form as ExForm, Field as ExField } from 'components/ExForm';
 import PromesaObservationForm from '../Observation/Form';
+import { UserProject } from 'containers/Project/helper';
 
 const SyncMassage = WithLoading();
 
@@ -120,18 +121,20 @@ export function PhaseFirmaOrNegociacionPromesa({
                   >
                     El cliente quiere negociar
                   </Button>
-                  <Button
-                    disabled={selector.loading}
-                    color="white"
-                    onClick={() =>
-                      form.setValues({
-                        ...form.values,
-                        currentAction: 'rechazar',
-                      })
-                    }
-                  >
-                    Rechazar Promesa
-                  </Button>
+                  {!UserProject.isVendor() && (
+                    <Button
+                      disabled={selector.loading}
+                      color="white"
+                      onClick={() =>
+                        form.setValues({
+                          ...form.values,
+                          currentAction: 'rechazar',
+                        })
+                      }
+                    >
+                      Rechazar Promesa
+                    </Button>
+                  )}
                 </div>
 
                 {form.values.currentAction === 'nego' && (
