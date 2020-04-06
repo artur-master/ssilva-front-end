@@ -47,7 +47,6 @@ export function PhaseTimeline({
             isPending={step < 1}
             canEdit={step === 0 && UserProject.isPM()}
           />
-
           <PhaseTimelineFacturaPromesa
             isPending={step < 2}
             canEdit={step === 1 && UserProject.isFinanza()}
@@ -55,7 +54,6 @@ export function PhaseTimeline({
             entity={entity}
             onSubmit={onGenerateFactura}
           />
-
           <PhaseTimelineSignIn
             entity={entity}
             selector={selector}

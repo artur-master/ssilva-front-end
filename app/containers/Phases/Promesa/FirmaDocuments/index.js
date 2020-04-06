@@ -8,16 +8,17 @@ import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
-import { Form as ExForm } from 'components/ExForm';
+import { Form as ExForm, Field as ExField } from 'components/ExForm';
 import DocumentItem from './DocumentItem';
 import PhaseDownloadDocumentsPromesa from './DownloadDocuments';
-import Alert from '../../../../components/Alert';
+import Alert from 'components/Alert';
 
 const SyncMassage = WithLoading();
 
 export function PhaseFirmaDocumentsPromesa({
   selector,
   entity,
+  isEntregaInmediata = false,
   onSubmit,
   onCancel,
   canUpload,
@@ -27,6 +28,7 @@ export function PhaseFirmaDocumentsPromesa({
     DocumentPromesaFirma: entity.DocumentPromesaFirma || '',
     DocumentPlantaFirma: entity.DocumentPlantaFirma || '',
   };
+
   return (
     <>
       <Box>
@@ -93,12 +95,22 @@ export function PhaseFirmaDocumentsPromesa({
               <BoxFooter>
                 <div className="d-flex justify-content-end">
                   {canUpload && (
-                    <Button
-                      disabled={selector.loading}
-                      onClick={() => form.submitForm()}
-                    >
-                      Aceptar
-                    </Button>
+                    <>
+                      {isEntregaInmediata && (
+                        <ExField
+                          type="checkbox"
+                          name="request_policy"
+                          label="Solicitar póliza"
+                          checked={false}
+                        />
+                      )}
+                      <Button
+                        disabled={selector.loading}
+                        onClick={() => form.submitForm()}
+                      >
+                        Aceptar
+                      </Button>
+                    </>
                   )}
                   <Button
                     disabled={selector.loading}
@@ -122,6 +134,7 @@ PhaseFirmaDocumentsPromesa.propTypes = {
   canUpload: PropTypes.bool,
   entity: PropTypes.object,
   selector: PropTypes.object,
+  isEntregaInmediata:PropTypes.bool,
   onSubmit: PropTypes.func,
   onCancel: PropTypes.func,
 };
