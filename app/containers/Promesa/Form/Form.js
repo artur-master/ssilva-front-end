@@ -126,7 +126,7 @@ export function Form({ selector, dispatch }) {
             }
           />
         );
-      if (!(entity.PromesaState === PROMESA_STATE[1] && UserProject.isVendor()))
+      if (!(entity.PromesaState === PROMESA_STATE[1] && (UserProject.isVendor() || UserProject.isInmobiliario())))
         return (
           <PhaseConfeccionPromesa
             entity={entity}
@@ -200,7 +200,7 @@ export function Form({ selector, dispatch }) {
     }
 
     // V firma or negociacion
-    if (entity.PromesaState === PROMESA_STATE[1] && UserProject.isVendor()) {
+    if (entity.PromesaState === PROMESA_STATE[1] && (UserProject.isVendor() || UserProject.isInmobiliario())) {
       return (
         <PhaseFirmaOrNegociacionPromesa
           entity={entity}
