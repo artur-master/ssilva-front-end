@@ -39,7 +39,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               <b>Ver Promesa</b>
             </a>
           </div>
-          <div className="d-flex align-items-center  mt-3">
+          <div className="d-flex align-items-center mt-3">
             <span className="font-14-rem mr-3">
               <b>Fecha o plazo para firma de escritura</b>
             </span>
@@ -47,7 +47,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               {moment(entity.FechaFirmaDeEscritura).format('DD MMM YYYY')}
             </span>
           </div>
-          <div className="d-flex align-items-center  mt-3">
+          <div className="d-flex align-items-center mt-3">
             <span className="font-14-rem mr-3">
               <b>echa entrega de inmueble</b>
             </span>
@@ -55,7 +55,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               {moment(entity.FechaEntregaDeInmueble).format('DD MMM YYYY')}
             </span>
           </div>
-          <div className="d-flex align-items-center  mt-3">
+          <div className="d-flex align-items-center mt-3">
             <span className="font-14-rem mr-3">
               <b>Cláusula de desistimiento especial (sin multa, etc)</b>
             </span>
@@ -63,7 +63,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               {entity.DesistimientoEspecial}
             </span>
           </div>
-          <div className="d-flex align-items-center  mt-3">
+          <div className="d-flex align-items-center mt-3">
             <span className="font-14-rem mr-3">
               <b>Modificación en la cláusula de multas (% de multas)</b>
             </span>
@@ -71,7 +71,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               {entity.ModificacionEnLaClausula}
             </span>
           </div>
-          <div className="d-flex align-items-center  mt-3">
+          <div className="d-flex align-items-center mt-3">
             <span className="font-14-rem mr-3">
               <b>
                 Método oficial de comunicación para comienzo de escrituración
