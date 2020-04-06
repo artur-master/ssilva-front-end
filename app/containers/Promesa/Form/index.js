@@ -21,7 +21,7 @@ import Form from './Form';
 import reducer from './reducer';
 import saga from './saga';
 import { getPromesa, resetContainer } from './actions';
-import InForm from './InForm';
+// import InForm from './InForm';
 const SyncMessage = WithLoading();
 export function PromesaForm({ selector, selectorProject, dispatch, location }) {
   useInjectReducer({ key: 'promesaform', reducer });
@@ -40,8 +40,8 @@ export function PromesaForm({ selector, selectorProject, dispatch, location }) {
   }
   if (!project || !selector.promesa) return <SyncMessage loading />;
 
-  if (UserProject.isInmobiliario())
-    return <InForm selector={selector} dispatch={dispatch} />;
+  // if (UserProject.isInmobiliario())
+  //   return <InForm selector={selector} dispatch={dispatch} />;
 
   return <Form selector={selector} dispatch={dispatch} />;
 }
