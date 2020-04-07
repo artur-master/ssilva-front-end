@@ -55,7 +55,7 @@ export function CarpetaDigitalUploadActions({
             form.values.Condition.push(...entity.Condition);
           }}
         >
-          Reservar
+          Guardar
         </Button>
         {Auth.isPM() && (
           <Button
