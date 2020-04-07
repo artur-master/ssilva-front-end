@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { Form as ExForm } from 'components/ExForm';
 import CheckboxGroup from 'components/ExForm/CheckboxGroup';
+import { documentDownload } from 'containers/Promesa/helper'
 
 export function PhaseDownloadDocumentsPromesa({ documents = {} }) {
   const initialValues = {
@@ -20,7 +21,7 @@ export function PhaseDownloadDocumentsPromesa({ documents = {} }) {
   return (
     <ExForm
       initialValues={initialValues}
-      onSubmit={values => console.log(values)}
+      onSubmit={values => documentDownload(values.SelectedDocuments)}
     >
       {() => (
         <>
