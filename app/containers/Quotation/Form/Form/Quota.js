@@ -13,7 +13,7 @@ import FormaDePageForm from 'containers/Phases/FormaDePago/Form';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
 
 // eslint-disable-next-line no-unused-vars
-function QuotaForm({ defaultPercent=20, goReserva, onCancel, form }) {
+function QuotaForm({ defaultPercent={}, goReserva, onCancel, form }) {
   const { values, submitForm } = form;
   const { total, discount, moneyErr } = calculates(values);
 

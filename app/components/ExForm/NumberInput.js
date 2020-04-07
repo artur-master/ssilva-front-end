@@ -27,7 +27,7 @@ const NumberInput = ({ className = '', label = '', ...props }) => (
               <input
                 type="number"
                 {...props}
-                value={field.value}
+                value={field.value || 0}
                 onChange={evt => {
                   let val = evt.currentTarget.value;
                   if (val > props.max) val = props.max;

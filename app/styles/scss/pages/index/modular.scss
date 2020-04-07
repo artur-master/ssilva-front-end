@@ -1786,14 +1786,6 @@
     font-size: 1.5rem;
     font-weight: bold;
     color: blue;
-    &:after {
-        font-family: "fontello";
-        content: '\e800';
-        font-size: 1rem;
-        position: absolute;
-        margin-left: .5rem;
-        margin-top: .2rem;
-    }
 }
 .pdf-tab{
     display: flex;

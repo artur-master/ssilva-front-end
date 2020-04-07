@@ -211,7 +211,6 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
     Constructora,
     CotizacionDuration,
     GuaranteeAmount,
-    GuaranteePercent,
     DiscountMaxPercent,
     // EntregaInmediata,
     InstitucionFinanciera,
@@ -320,16 +319,6 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       required: true,
     },
     {
-      label: 'Por ciento',
-      name: `GuaranteePercent`,
-      view: `${GuaranteePercent || 20}`,
-      maskOptions: { prefix: '%' },
-      type: 'number',
-      required: true,
-      min: 0,
-      max: 100,
-    },
-    {
       label: 'Descuento limite cotización',
       name: `DiscountMaxPercent`,
       view: `${DiscountMaxPercent || 100}`,
@@ -379,3 +368,30 @@ export const getPolizaFields = entity => [
     Component: ExAseguradoras,
   },
 ];
+
+export const getPaymentFields = (form, type) => {
+  const { values } = form;
+
+  return [   
+    {
+      label: 'PIE / Monto Firma Promesa',
+      name: `${type}MontoPromesa`,
+      view: `${values[`${type}MontoPromesa`] || 20}`,
+    },
+    {
+      label: 'PIE / Monto a Financiar en Cuotas',
+      name: `${type}MontoCuotas`,
+      view: `${values[`${type}MontoCuotas`] || 20}`,
+    },
+    {
+      label: 'Monto Firma Escritura / Contado',
+      name: `${type}MontoEscrituraContado`,
+      view: `${values[`${type}MontoEscrituraContado`] || 20}`,
+    },
+    {
+      label: 'Ahorro Plus',
+      name: `${type}AhorroPlus`,
+      view: `${values[`${type}AhorroPlus`] || 20}`,
+    },
+  ];
+};

@@ -24,13 +24,14 @@ import {
 import { Auth } from 'containers/App/helpers';
 
 // eslint-disable-next-line no-unused-vars
-function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
+function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
   const [openCuotas, setOpenCuotas] = useState(0);
   const { values, setValues } = form;
   const { paymentUtils } = window.preload;
-  const { cost, cuota, pay, balance, moneyErr, percent, convert } = calculates(
-    values,
-  );
+  const { cost, cuota, pay, balance, 
+          moneyErr, percent, convert 
+        } = calculates( values );
+
   const { dividend$, dividendUf } = simulateCalculation(values, values.tmpDate);
   const handleChangeUF = (payFor, val) => {
     const value = parseFloat(val || 0);
@@ -86,7 +87,30 @@ function PhaseFormaDePagoForm({ defaultPercent = 20, form }) {
         <div className="w-50 d-flex justify-content-end">
           <Button
             onClick={() => {
-              handleChangePercent('PaymentFirmaPromesa', defaultPercent);
+              let percentPromesa, percentAmount, percentAhorro, percentEscrituraContado;
+              if(isContadoType(values.PayType)) {
+                percentPromesa = defaultPercent.ContadoMontoPromesa;
+                percentAmount = defaultPercent.ContadoMontoCuotas;
+                percentEscrituraContado = defaultPercent.ContadoMontoEscrituraContado;
+                percentAhorro = defaultPercent.ContadoAhorroPlus;
+              }
+              else if(isCreditType(values.PayType)) {
+                percentPromesa = defaultPercent.CreditoMontoPromesa;
+                percentAmount = defaultPercent.CreditoMontoCuotas;
+                percentEscrituraContado = defaultPercent.CreditoMontoEscrituraContado;
+                percentAhorro = defaultPercent.CreditoAhorroPlus;
+              }
+              else {
+                percentPromesa = 20;
+                percentAmount = 20;
+                percentEscrituraContado = 20;
+                percentAhorro = 20;
+              }              
+              
+              handleChangePercent('PaymentFirmaPromesa', percentPromesa);
+              handleChangePercent('Cuotas.0.Amount', percentAmount);
+              handleChangePercent('AhorroPlus', percentAhorro);
+              // percent.PaymentFirmaEscritura / percent.PaymentInstitucionFinanciera
             }}
             className="m-btn m-btn-white shadow-sm"
           >
