@@ -114,8 +114,8 @@ export const isReadyData = ( project = {}) => {
     comments += ", Institución Financiera";
   if(!project.GuaranteeAmount)
     comments += ", Monto Reserva";
-  if(!project.GuaranteePercent)
-    comments += ", Por ciento";
+  // if(!project.GuaranteePercent)
+  //   comments += ", Por ciento";
   if(comments)
     return comments.slice(2);
   return false;

@@ -29,7 +29,17 @@ export function PhaseCreationForm({
   const [step, setStep] = useState(1);
 
   const initialValues = model({ project, entity: quotation });
-  const defaultPercent = project.GuaranteePercent || 20;
+
+  const defaultPercent = {
+    ContadoMontoPromesa: project.ContadoMontoPromesa || 20,
+    ContadoMontoCuotas: project.ContadoMontoCuotas || 20,
+    ContadoMontoEscrituraContado: project.ContadoMontoEscrituraContado || 20,
+    ContadoAhorroPlus: project.ContadoAhorroPlus || 20,
+    CreditoMontoPromesa: project.CreditoMontoPromesa || 20,
+    CreditoMontoCuotas: project.CreditoMontoCuotas || 20,
+    CreditoMontoEscrituraContado: project.CreditoMontoEscrituraContado || 20,
+    CreditoAhorroPlus: project.CreditoAhorroPlus || 20,
+  }
 
   let directAfterSubmitted = 'list';
 

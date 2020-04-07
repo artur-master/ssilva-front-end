@@ -276,7 +276,9 @@ export function Form({ selector, dispatch }) {
       <div className="row m-0">
         <h4 className="col p-0 font-21 mt-3">
         {`${project.Name} / ${entity.Folio}`}
-          <span className="general-phase">- Promesa</span>
+          <span className="general-phase">- Promesa
+            <i className="icon icon-z-info" title="This is Promesa."/>
+          </span>          
         </h4>
         <Button
           className="col-auto mt-3 m-btn-white m-btn-history"
