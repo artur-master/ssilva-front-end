@@ -1,25 +1,12 @@
 @font-face {
 	font-family: "fontello";
-	src: url('#{$tello_rute}fontello.eot');
-	src: url('#{$tello_rute}fontello.eot?#iefix') format('eot'),
-		url('#{$tello_rute}fontello.woff2') format('woff2'),
-		url('#{$tello_rute}fontello.woff') format('woff'),
-		url('#{$tello_rute}fontello.ttf') format('truetype'),
-		url('#{$tello_rute}fontello.svg#icon') format('svg');
-}
-
-.icon:before {
-	font-family: "fontello";
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: normal;
-	/* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
-	text-decoration: none;
-	text-transform: none;
+	src: url('#{$tello_rute}fontello.woff2') format('woff2');
 }
 
 .icon-z-info:before {
+	font-family: "fontello" !important;
 	content: "\E800";
+	position: absolute;
+	font-size: 1rem;
+	margin: .2rem 0 0 .5rem;
 }

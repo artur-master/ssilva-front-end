@@ -1,5 +1,7 @@
+import FileSaver from 'file-saver';
 import { PROMESA_STATE, PROMESA_REFUND_STATE } from 'containers/App/constants';
 import { UserProject } from 'containers/Project/helper';
+import { getFileName } from 'containers/App/helpers';
 
 export const initReports = () =>
   PROMESA_STATE.reduce(
@@ -114,9 +116,19 @@ export const isReadyData = ( project = {}) => {
     comments += ", Institución Financiera";
   if(!project.GuaranteeAmount)
     comments += ", Monto Reserva";
-  if(!project.GuaranteePercent)
-    comments += ", Por ciento";
+  // if(!project.GuaranteePercent)
+  //   comments += ", Por ciento";
   if(comments)
     return comments.slice(2);
   return false;
 };
+
+export const documentDownload = (documents) => {
+  if(!documents) return false;
+  for (let document of documents) {
+    const fileName = getFileName(document.value);
+    if(document.value !== '')
+      FileSaver.saveAs( document.value, fileName);
+  }
+  return true;
+}
