@@ -89,24 +89,24 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
             onClick={() => {
               let percentPromesa, percentAmount, percentAhorro, percentEscrituraContado;
               if(isContadoType(values.PayType)) {
-                percentPromesa = defaultPercent.ContadoMontoPromesa;
-                percentAmount = defaultPercent.ContadoMontoCuotas;
-                percentEscrituraContado = defaultPercent.ContadoMontoEscrituraContado;
-                percentAhorro = defaultPercent.ContadoAhorroPlus;
+                percentPromesa = defaultPercent.ContadoMontoPromesa || 20;
+                percentAmount = defaultPercent.ContadoMontoCuotas || 20;
+                percentEscrituraContado = defaultPercent.ContadoMontoEscrituraContado || 20;
+                percentAhorro = defaultPercent.ContadoAhorroPlus || 20;
               }
               else if(isCreditType(values.PayType)) {
-                percentPromesa = defaultPercent.CreditoMontoPromesa;
-                percentAmount = defaultPercent.CreditoMontoCuotas;
-                percentEscrituraContado = defaultPercent.CreditoMontoEscrituraContado;
-                percentAhorro = defaultPercent.CreditoAhorroPlus;
+                percentPromesa = defaultPercent.CreditoMontoPromesa || 20;
+                percentAmount = defaultPercent.CreditoMontoCuotas || 20;
+                percentEscrituraContado = defaultPercent.CreditoMontoEscrituraContado || 20;
+                percentAhorro = defaultPercent.CreditoAhorroPlus || 20;
               }
               else {
                 percentPromesa = 20;
                 percentAmount = 20;
                 percentEscrituraContado = 20;
                 percentAhorro = 20;
-              }              
-              
+              }
+
               handleChangePercent('PaymentFirmaPromesa', percentPromesa);
               handleChangePercent('Cuotas.0.Amount', percentAmount);
               handleChangePercent('AhorroPlus', percentAhorro);

@@ -28,6 +28,7 @@ export function PhaseDocument({
   onControlReview,
   onGarantia,
   onPrint,
+  promesa,
 }) {
   const documents = getDocuments(entity);
   const initialValues = documents.reduce(
@@ -61,6 +62,7 @@ export function PhaseDocument({
               canUpload={canUpload}
               onGarantia={onGarantia}
               onCancel={onCancel}
+              promesa={promesa}
             />
           )}
           <CarpetaDigital
@@ -114,6 +116,7 @@ PhaseDocument.propTypes = {
   onCancel: PropTypes.func, // cancel reservar
   onControlReview: PropTypes.func, // approve/reject
   onGarantia: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+  promesa: PropTypes.bool,
 };
 
 export default PhaseDocument;
