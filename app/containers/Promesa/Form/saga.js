@@ -214,12 +214,20 @@ function* sagaSignIn(action) {
 function* sagaLegalize(action) {
   try {
     const { values } = action;
+    const data = new FormData();
+    if(values['FileLegalizacionPromesa'].name)
+      data.append("FileLegalizacionPromesa", values['FileLegalizacionPromesa']);
+    data.append("DateLegalizacionPromesa", values['DateLegalizacionPromesa']);
+
     const requestURL = `${API_ROOT}/ventas/promesas-legalize/${
       values.PromesaID
     }/`;
     const response = yield call(request, requestURL, {
       method: 'PATCH',
-      body: JSON.stringify(values),
+      body: data,
+      headers: {
+        'content-type': null,
+      },
     });
     yield put(legalizeSuccess(response));
   } catch (error) {
