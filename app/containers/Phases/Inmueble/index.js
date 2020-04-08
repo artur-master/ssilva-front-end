@@ -12,10 +12,10 @@ import Button from 'components/Button';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
 import { inmuebleLabel } from 'containers/Common/Inmueble/helper';
-import PhaseInmuebleForm from './Form';
 
 import { Auth } from 'containers/App/helpers';
 import { UserProject } from 'containers/Project/helper';
+import PhaseInmuebleForm from './Form';
 
 export function PhaseInmueble({
   isCollapse = false,
@@ -24,6 +24,7 @@ export function PhaseInmueble({
   onConfirm,
   onUpdate,
   initialValues,
+  canVNEdit,
 }) {
   const [isOpen, setOpen] = useState(false);
   const { total, discount } = calculates(initialValues);
@@ -54,15 +55,17 @@ export function PhaseInmueble({
                 </span>
               </div>
             )}
-            {(canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
-              <Button
-                color="white"
-                className="m-btn-pen order-3"
-                onClick={() => setOpen(true)}
-              >
-                Editar
-              </Button>
-            )}
+            {!canVNEdit &&
+              ((canEdit ||
+                (UserProject.in(window.project) && Auth.isVendor())) && (
+                <Button
+                  color="white"
+                  className="m-btn-pen order-3"
+                  onClick={() => setOpen(true)}
+                >
+                  Editar
+                </Button>
+              ))}
           </BoxHeader>
           <BoxContent>
             <table className="table table-responsive-sm table-summary">
@@ -163,6 +166,7 @@ PhaseInmueble.propTypes = {
   initialValues: PropTypes.object,
   onConfirm: PropTypes.func,
   onUpdate: PropTypes.func,
+  canVNEdit: PropTypes.bool,
 };
 
 export default PhaseInmueble;

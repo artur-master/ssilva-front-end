@@ -95,6 +95,7 @@ export function PhaseConfeccionPromesa({
                       required
                       canUpload={canUpload}
                       name="DocumentPromesa"
+                      accept="pdf"
                     />
                   </FormGroup>
                 </div>
