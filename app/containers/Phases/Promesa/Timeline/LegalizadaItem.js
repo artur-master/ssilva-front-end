@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Field as FormikField, getIn } from 'formik';
 import { getFileName } from 'containers/App/helpers';
 
-function DocumentItem({ canUpload, name, required = false, className='' }) {
+function LegalizadaItem({ canUpload, name, required = false, className='' }) {
   return (
     <FormikField
       name={name}
@@ -89,10 +89,10 @@ function DocumentItem({ canUpload, name, required = false, className='' }) {
   );
 }
 
-DocumentItem.propTypes = {
+LegalizadaItem.propTypes = {
   canUpload: PropTypes.bool,
   name: PropTypes.string,
   required: PropTypes.bool,
 };
 
-export default DocumentItem;
+export default LegalizadaItem;
