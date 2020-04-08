@@ -9,6 +9,7 @@ import Button from 'components/Button';
 import { Field, Form, FormGroup, Label } from 'components/ExForm';
 import moment from 'components/moment';
 import { PROMESA_STATE } from 'containers/App/constants';
+import LegalizadaItem from './LegalizadaItem';
 
 export function PhaseTimelineLegalizePromesa({
   canEdit,
@@ -21,6 +22,7 @@ export function PhaseTimelineLegalizePromesa({
     <Form
       initialValues={{
         DateLegalizacionPromesa: entity.DateLegalizacionPromesa || '',
+        FileLegalizacionPromesa: entity.FileLegalizacionPromesa || null,
       }}
       onSubmit={onSubmit}
     >
@@ -33,32 +35,41 @@ export function PhaseTimelineLegalizePromesa({
               </span>
             </div>
           </div>
-          <FormGroup>
-            {!canEdit && isPending && PROMESA_STATE[5]}
-            {(canEdit || !isPending) && (
-              <>
-                <Label style={{ width: '15em' }} className="pt-1">
-                  Legalización de Promesa
-                </Label>
-                {canEdit && (
-                  <>
+          {!canEdit && isPending && PROMESA_STATE[5]}
+          {(canEdit || !isPending) && (
+            <div className="d-flex align-items-center">
+              <div style={{ width: '25em' }}>
+                <FormGroup className="align-items-center mt-3">
+                  <Label style={{ width: '15em' }} className="pt-1">
+                    Legalización de Promesa
+                  </Label>
+                  {canEdit ? (
                     <Field
                       type="datepicker"
                       required
                       name="DateLegalizacionPromesa"
                     />
-                    <div className="ml-3">
-                      <Button disabled={selector.loading} type="submit">
-                        Aceptar
-                      </Button>
-                    </div>
-                  </>
-                )}
-                {!canEdit &&
-                  moment(entity.DateLegalizacionPromesa).format('DD MMM YYYY')}
-              </>
-            )}
-          </FormGroup>
+                  ) : (
+                      moment(entity.DateLegalizacionPromesa).format('DD MMM YYYY')
+                    )
+                  }
+                </FormGroup>
+                <FormGroup className="align-items-center mt-3">
+                  <Label style={{ width: '23em' }} className="pt-1">
+                    Promesa Legalizada
+                  </Label>
+                  <LegalizadaItem canUpload={canEdit} required name="FileLegalizacionPromesa" />
+                </FormGroup>
+              </div>
+              {canEdit && (
+                <div className="ml-3">
+                  <Button disabled={selector.loading} type="submit">
+                    Aceptar
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </Form>
