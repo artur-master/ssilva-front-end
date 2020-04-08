@@ -117,8 +117,9 @@ const CreditForm = ({ selector,isPendienteAprobacion, onSubmit, onCancel, onSele
                                   type="select"
                                   style={{ width: '13em' }}
                                 >
-                                  {/* <option value="Aprobada">Aprobada</option> */}
+                                  <option value="Aprobada">Aprobada</option>
                                   <option value="Rechazada">Rechazada</option>
+                                  <option value="Pendiente">Pendiente</option>
                                 </ExField>
                               </FormGroup>
                             )}
