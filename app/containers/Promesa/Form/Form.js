@@ -126,7 +126,12 @@ export function Form({ selector, dispatch }) {
             }
           />
         );
-      if (!(entity.PromesaState === PROMESA_STATE[1] && (UserProject.isVendor() || UserProject.isInmobiliario())))
+      if (
+        !(
+          entity.PromesaState === PROMESA_STATE[1] &&
+          (UserProject.isVendor() || UserProject.isInmobiliario())
+        )
+      )
         return (
           <PhaseConfeccionPromesa
             entity={entity}
@@ -200,7 +205,10 @@ export function Form({ selector, dispatch }) {
     }
 
     // V firma or negociacion
-    if (entity.PromesaState === PROMESA_STATE[1] && (UserProject.isVendor() || UserProject.isInmobiliario())) {
+    if (
+      entity.PromesaState === PROMESA_STATE[1] &&
+      (UserProject.isVendor() || UserProject.isInmobiliario())
+    ) {
       return (
         <PhaseFirmaOrNegociacionPromesa
           entity={entity}
@@ -229,7 +237,7 @@ export function Form({ selector, dispatch }) {
       <PhaseFirmaDocumentsPromesa
         entity={entity}
         selector={selector}
-        isEntregaInmediata={project.EtapaState.Name==='Entrega Inmediata'}
+        isEntregaInmediata={project.EtapaState.Name === 'Entrega Inmediata'}
         onCancel={onCancel}
         onSubmit={values =>
           dispatch(uploadFirmaDocumentsPromesa(entity.PromesaID, values))
@@ -275,9 +283,10 @@ export function Form({ selector, dispatch }) {
       {stepsComponent}
       <div className="row m-0">
         <h4 className="col p-0 font-21 mt-3">
-        {`${project.Name} / ${entity.Folio}`}
-          <span className="general-phase">- Promesa
-            <i className="icon icon-z-info" title="This is Promesa."/>
+          {`${project.Name} / ${entity.Folio}`}
+          <span className="general-phase">
+            - Promesa
+            <i className="icon icon-z-info" title="This is Promesa." />
           </span>
         </h4>
         <Button
@@ -291,7 +300,7 @@ export function Form({ selector, dispatch }) {
             className="col-auto mt-3 m-btn m-btn-pen"
             onClick={() => setCanEdit(true)}
           >
-            Modificaci�n
+            Modificación
           </Button>
         )}
       </div>
@@ -325,20 +334,29 @@ export function Form({ selector, dispatch }) {
         selector={selector}
         onChange={Condition => dispatch(updatePromesa({ Condition }))}
       />
-      <PhaseGeneral initialValues={initialValues} canEdit={canEdit} />
+      <PhaseGeneral
+        initialValues={initialValues}
+        canEdit={canEdit}
+        canVNEdit={!!UserProject.isVendor()}
+      />
       <PhaseClient
         payType={entity.PayType}
         client={entity.Cliente}
         canEdit={canEdit}
+        canVNEdit={!!UserProject.isVendor()}
       />
-      <PhaseInmueble initialValues={initialValues} canEdit={canEdit} />
+      <PhaseInmueble
+        initialValues={initialValues}
+        canEdit={canEdit}
+        canVNEdit={!!UserProject.isVendor()}
+      />
       <PhaseFormaDePago initialValues={initialValues} canEdit={canEdit} />
       <PhasePreCredito
         isCollapse={false}
         initialValues={initialValues}
         canEdit={canEdit}
       />
-      <PhaseDocument entity={initialValues} />
+      <PhaseDocument entity={initialValues} promesa />
       {blockPromesa()}
       <Desistimiento promesa={entity} />
       <Log logs={entity.Logs} limit={10} />

@@ -10,11 +10,10 @@ import { compose } from 'redux';
 import Button from 'components/Button';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import { createStructuredSelector } from 'reselect';
-import PhaseGeneralView from './View';
-import PhaseGeneralForm from './Form';
-
 import { Auth } from 'containers/App/helpers';
 import { UserProject } from 'containers/Project/helper';
+import PhaseGeneralView from './View';
+import PhaseGeneralForm from './Form';
 
 export function PhaseGeneral({
   isCollapse = false,
@@ -23,6 +22,7 @@ export function PhaseGeneral({
   onConfirm,
   initialValues,
   onUpdate,
+  canVNEdit,
 }) {
   const [isOpen, setOpen] = useState(false);
   return (
@@ -47,15 +47,16 @@ export function PhaseGeneral({
             </span>
           </div>
         )}
-        {(canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
-          <Button
-            color="white"
-            className="m-btn-pen order-3"
-            onClick={() => setOpen(true)}
-          >
-            Editar
-          </Button>
-        )}
+        {!canVNEdit &&
+          ((canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
+            <Button
+              color="white"
+              className="m-btn-pen order-3"
+              onClick={() => setOpen(true)}
+            >
+              Editar
+            </Button>
+          ))}
       </BoxHeader>
       <BoxContent>
         <PhaseGeneralView values={initialValues} />
@@ -80,6 +81,7 @@ PhaseGeneral.propTypes = {
   initialValues: PropTypes.object,
   onConfirm: PropTypes.func,
   onUpdate: PropTypes.func,
+  canVNEdit: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({});
