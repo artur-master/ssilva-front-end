@@ -16,6 +16,7 @@ export function Garantia({
   canUpload,
   onCancel,
   onGarantia,
+  promesa,
 }) {
   return (
     <Box collapse isOpen={isCollapse}>
@@ -41,14 +42,24 @@ export function Garantia({
             ]}
           />
         </div>
-        <DocumentItem
-          documentoName="Transferencia/Cheque"
-          documentoType="DocumentPagoGarantia"
-          required
-          Documentos={entity.Documents || {}}
-          canUpload={canUpload}
-          description="Debes subir el comprobante de transferencia/cheque"
-        />
+        {promesa ?
+          <DocumentItem
+            documentoName="Transferencia/Cheque"
+            documentoType="DocumentPagoGarantia"
+            required
+            Documentos={entity.Documents || {}}
+            canUpload={canUpload}
+          />
+          :
+          <DocumentItem
+            documentoName="Transferencia/Cheque"
+            documentoType="DocumentPagoGarantia"
+            required
+            Documentos={entity.Documents || {}}
+            canUpload={canUpload}
+            description="Debes subir el comprobante de transferencia/cheque"
+          />
+        }
       </BoxContent>
     </Box>
   );
@@ -60,6 +71,7 @@ Garantia.propTypes = {
   entity: PropTypes.object,
   onGarantia: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   onCancel: PropTypes.func,
+  promesa: PropTypes.bool,
 };
 
 export default Garantia;
