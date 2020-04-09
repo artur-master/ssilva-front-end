@@ -3,9 +3,10 @@ import { stringToBoolean } from 'containers/App/helpers';
 export const getDocuments = entity => {
   const isCompany = stringToBoolean(entity.Cliente.IsCompany);
   const isIndependent = stringToBoolean(entity.Cliente.Extra.Independent);
-  const hasProfesion = stringToBoolean(entity.Cliente.Ocupation);
-  const hasTieneDeposito = !!entity.Patrimony.DownPayment;
-  const hasTieneCredito = !!entity.Patrimony.CreditoConsumo.PagosMensuales;
+  // const hasProfesion = stringToBoolean(entity.Cliente.Ocupation);
+  const hasProfesion = (entity.Cliente.Ocupation.trim() !== "");
+  const hasTieneDeposito = entity.Patrimony.DownPayment !== 0;
+  const hasTieneCredito = entity.Patrimony.CreditoConsumo.PagosMensuales !== 0;
   let baseDocuments = [
     {
       documentoName: 'Transferencia',
@@ -36,11 +37,12 @@ export const getDocuments = entity => {
       required: true,
     },
   ];
-  if (!isCompany && entity.Cliente.CivilStatus !== 'Soltero(a)') {
+  if (!isCompany && entity.Cliente.CivilStatus === 'Casado(a)') {
     baseDocuments.push({
       documentoName: 'Certificado Matrimonio',
       documentoType: 'DocumentCertificadoMatrimonio',
       firmado: true,
+      required: true,
     });
   }
   if (isCompany) {
@@ -53,7 +55,7 @@ export const getDocuments = entity => {
         firmado: true,
       },
       {
-        documentoName: 'Constitucion Sociedad',
+        documentoName: 'Constitucion de Sociedad',
         documentoType: 'DocumentConstitucionSociedad',
         firmado: true,
         required: true,
@@ -98,13 +100,12 @@ export const getDocuments = entity => {
         required: true,
       });
     }
-    if (hasTieneDeposito) {
+    if (hasTieneDeposito)
       baseDocuments.push({
         documentoName: 'Acreditación de Ahorros',
         documentoType: 'DocumentAcredittacionAhorros',
         required: true,
       });
-    }
     if (hasTieneCredito)
       baseDocuments.push({
         documentoName: 'Acreditación de pago Deudas',
