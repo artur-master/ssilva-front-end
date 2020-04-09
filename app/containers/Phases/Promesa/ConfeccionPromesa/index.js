@@ -28,10 +28,12 @@ export function PhaseConfeccionPromesa({
   onReject,
   onCancel,
 }) {
-  const { maquetaWord } = getPromesa(entity);
+  const { maquetaWord, maquetaPdf, maquetaName } = getPromesa(entity);
   const [withText, setWithText] = useState({ text: '', open: false });
   const [canSubmit, setCanSubmit] = useState(false);
   const [init, setInit] = useState(true);
+  const nameArray = maquetaWord.url.split("/");
+  const fileName = nameArray[nameArray.length - 1];
   return (
     <ExForm
       initialValues={{
@@ -74,15 +76,16 @@ export function PhaseConfeccionPromesa({
               <BoxContent>
                 {canUpload && (
                   <div className="row m-0 p-0">
-                    <div className="col-lg-6 border-bottom p-0 pb-3 d-flex align-items-center">
+                    <div className="col-lg-12 border-bottom p-0 pb-3 d-flex align-items-center">
                       <a
-                        className="m-btn m-btn-white m-btn-download"
+                        className="m-btn m-btn-white m-btn-download mr-3"
                         href={maquetaWord.url}
                         target="_blank"
                         download
                       >
-                        Descargar Maqueta
+                        Descargar {maquetaName}
                     </a>
+                    {fileName}
                     </div>
                   </div>
                 )}
