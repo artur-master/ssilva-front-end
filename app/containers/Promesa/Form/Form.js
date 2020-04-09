@@ -355,8 +355,9 @@ export function Form({ selector, dispatch }) {
         isCollapse={false}
         initialValues={initialValues}
         canEdit={canEdit}
+        promesa={true}
       />
-      <PhaseDocument entity={initialValues} promesa />
+      <PhaseDocument entity={initialValues} promesa={true} />
       {blockPromesa()}
       <Desistimiento promesa={entity} />
       <Log logs={entity.Logs} limit={10} />

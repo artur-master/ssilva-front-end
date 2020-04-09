@@ -27,6 +27,7 @@ const PhasePreCreditoView = ({
   isPendienteAprobacion,
   onSubmit,
   dispatch,
+  promesa,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const isContado = isContadoPayment(initialValues.PayType);
@@ -64,12 +65,14 @@ const PhasePreCreditoView = ({
                 Editar
               </Button>
             )}
-            <Button
-              onClick={() => dispatch(downloadPreApprobation(initialValues))}
-              className="m-btn-download order-3"
-            >
-              Exportar PDF
-            </Button>
+            {!promesa && (
+              <Button
+                onClick={() => dispatch(downloadPreApprobation(initialValues))}
+                className="m-btn-download order-3"
+              >
+                Exportar PDF
+              </Button>
+            )}
           </BoxHeader>
           <BoxContent className="p-0">
             {!isContado && (
@@ -111,5 +114,6 @@ PhasePreCreditoView.propTypes = {
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
   dispatch: PropTypes.func,
+  promesa: PropTypes.bool,
 };
 export default PhasePreCreditoView;
