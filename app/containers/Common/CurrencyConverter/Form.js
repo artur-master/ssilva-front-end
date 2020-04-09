@@ -58,9 +58,9 @@ export function Form({
                       </span>
                       <div className="d-flex align-items-center mt-2">
                         <ExField
-                          type="datePicker"
+                          type="text"
                           name="fecha"
-                          valueFormat="YYYY-MM-DD"
+                          readOnly="true"
                         />
                       </div>
                     </div>
