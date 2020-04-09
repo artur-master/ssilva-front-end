@@ -16,7 +16,7 @@ import { Codeudor } from './Codeudor';
 
 export function CarpetaDigital({
   isCollapse,
-  canEit,
+  canEdit,
   canReview,
   entity,
   isReview,
@@ -43,7 +43,7 @@ export function CarpetaDigital({
       label: 'CRÉDITO',
       content: (
         <Credit
-          canUpload={canEit}
+          canUpload={canEdit}
           canReview={canReview}
           entity={entity}
           onReview={onReview}
@@ -58,7 +58,7 @@ export function CarpetaDigital({
       label: 'OFERTA',
       content: (
         <Offer
-          canUpload={canEit}
+          canUpload={canEdit}
           canReview={canReview}
           entity={entity}
           onReview={onReview}
@@ -71,7 +71,7 @@ export function CarpetaDigital({
     label: 'Codeudor',
     content: (
       <Codeudor
-        canUpload={canEit}
+        canUpload={canEdit}
         canReview={canReview}
         entity={entity}
         onReview={onReview}
@@ -102,7 +102,7 @@ export function CarpetaDigital({
           </Button>
         </BoxHeader>
         <BoxContent>
-          {canEit && (
+          {canEdit && (
             <div className="p-3">
               <div className="row m-0">
                 <div className="col border-bottom p-0">
@@ -146,7 +146,7 @@ export function CarpetaDigital({
 CarpetaDigital.propTypes = {
   isCollapse: PropTypes.bool,
   isReview: PropTypes.bool,
-  canEit: PropTypes.bool,
+  canEdit: PropTypes.bool,
   canReview: PropTypes.bool,
   entity: PropTypes.object,
   onReview: PropTypes.func,
