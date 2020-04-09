@@ -8,6 +8,9 @@ import {
   IMPORT_FILE,
   IMPORT_FILE_ERROR,
   IMPORT_FILE_SUCCESS,
+  IMPORT_AUTH_FILE,
+  IMPORT_AUTH_FILE_ERROR,
+  IMPORT_AUTH_FILE_SUCCESS,
   RESET_CONTAINER,
   SAVE_ENTITIES,
   SAVE_ENTITIES_ERROR,
@@ -39,6 +42,28 @@ export function importFileError(error) {
 export function importFileSuccess(response) {
   return {
     type: IMPORT_FILE_SUCCESS,
+    response,
+  };
+}
+
+export function importAuthFile(project, data) {
+  return {
+    type: IMPORT_AUTH_FILE,
+    project,
+    data,
+  };
+}
+
+export function importAuthFileError(error) {
+  return {
+    type: IMPORT_AUTH_FILE_ERROR,
+    error,
+  };
+}
+
+export function importAuthFileSuccess(response) {
+  return {
+    type: IMPORT_AUTH_FILE_SUCCESS,
     response,
   };
 }

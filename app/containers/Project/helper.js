@@ -195,7 +195,7 @@ export const pending = project => {
     progress = 20;
   } else if (project.PlanMediosState === PROYECTO_DOCUMENT_STATE[0] ||
              project.BorradorPromesaState === PROYECTO_DOCUMENT_STATE[0] ||
-             project.IngresoComisionesState === PROYECTO_DOCUMENT_STATE[0] ) 
+             project.IngresoComisionesState === PROYECTO_DOCUMENT_STATE[0] )
   {
     progress = 30;
     if (project.PlanMediosState === PROYECTO_DOCUMENT_STATE[0]){
@@ -272,17 +272,21 @@ export const getPromesa = entity => {
   const { Documentos = {} } = window.project;
   let maquetaWord;
   let maquetaPdf;
+  let maquetaName;
   if (entity.Cliente.IsCompany) {
     maquetaWord = Documentos.company_word;
     maquetaPdf = Documentos.company_pdf;
+    maquetaName = "Maqueta Promesa Empresa WORD";
   } else if (entity.PayType === 'Contado') {
     maquetaWord = Documentos.counter_word;
     maquetaPdf = Documentos.counter_pdf;
+    maquetaName = "Maqueta Promesa Contado WORD";
   } else {
     maquetaWord = Documentos.credit_word;
     maquetaPdf = Documentos.credit_pdf;
+    maquetaName = "Maqueta Promesa Crédito WORD";
   }
-  return { maquetaWord, maquetaPdf };
+  return { maquetaWord, maquetaPdf, maquetaName };
 };
 
 export const countIN = () =>

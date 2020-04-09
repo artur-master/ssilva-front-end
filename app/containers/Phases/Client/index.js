@@ -13,11 +13,10 @@ import { Box, BoxContent, BoxHeader } from 'components/Box';
 import makeSelectClient from 'containers/Common/Client/selectors';
 import { toggleScreen, saveClient } from 'containers/Common/Client/actions';
 import ClienteForm from 'containers/Common/Client/Form';
-import PhaseClientView from './View';
-import { isValidClient } from './helper';
-
 import { Auth } from 'containers/App/helpers';
 import { UserProject } from 'containers/Project/helper';
+import PhaseClientView from './View';
+import { isValidClient } from './helper';
 
 export function PhaseClient({
   payType,
@@ -31,6 +30,7 @@ export function PhaseClient({
   onConfirm,
   onUpdate,
   isCollapse = false,
+  canVNEdit,
 }) {
   useEffect(() => {
     if (selectorClient.success) onUpdate(selectorClient.client);
@@ -67,16 +67,17 @@ export function PhaseClient({
             </span>
           </div>
         )}
-        {(canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
-          <Button
-            color="white"
-            disabled={selectorClient.loading}
-            className="m-btn-pen order-3"
-            onClick={() => onEdit(client)}
-          >
-            Editar
-          </Button>
-        )}
+        {!canVNEdit &&
+          ((canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
+            <Button
+              color="white"
+              disabled={selectorClient.loading}
+              className="m-btn-pen order-3"
+              onClick={() => onEdit(client)}
+            >
+              Editar
+            </Button>
+          ))}
       </BoxHeader>
       <BoxContent>
         <PhaseClientView client={client} payType={payType} />
@@ -104,6 +105,7 @@ PhaseClient.propTypes = {
   onHide: PropTypes.func,
   onConfirm: PropTypes.func,
   onUpdate: PropTypes.func,
+  canVNEdit: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
