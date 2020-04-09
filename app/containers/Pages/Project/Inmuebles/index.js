@@ -25,7 +25,7 @@ const SyncMessage = WithLoading();
 
 import ReplaceConfirm from 'containers/Common/Inmueble/ReplaceConfirm';
 import { canEditProject } from 'containers/Project/helper';
-import { importFile, saveEntities } from 'containers/Project/Inmueble/actions';
+import { importFile, importAuthFile, saveEntities } from 'containers/Project/Inmueble/actions';
 import reducer from 'containers/Project/Inmueble/reducer';
 import saga from 'containers/Project/Inmueble/saga';
 
@@ -44,12 +44,15 @@ export function InmueblesPage({
 
   const onImportFile = data =>
     dispatch(importFile(project, data));
+  const onAuthFile = data =>
+    dispatch(importAuthFile(project, data));
   // const onSave = () =>
   //   dispatch(saveEntities(project, reviewInmuebles))
 
   const fileUploader = useRef(null);
+  const pdfUploader = useRef(null);
   const [isReplaceOpen, setReplaceOpen] = useState(false);
-  const [replaceData, setReplaceData] = useState(null);  
+  const [replaceData, setReplaceData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [entities, setEntities] = useState(null);
 
@@ -64,6 +67,7 @@ export function InmueblesPage({
   }, []);
   
   useEffect(() => {
+    if(draftSelector.isAuth) return;
     setLoading(draftSelector.loading);
     setEntities(false);
     setSelector(draftSelector);
@@ -116,11 +120,33 @@ export function InmueblesPage({
           <div className="d-flex p-3 justify-content-end">
             {canEdit && (
               <>
-                <Button loading={loading} disabled={loading}
-                  onClick={() => { fileUploader.current.click() }}
-                >
-                  Nueva carga
-                </Button>
+                {!draftSelector.isAuth && (
+                  <Button loading={loading} disabled={loading}
+                    onClick={() => { pdfUploader.current.click() }}
+                  >
+                    Autorización
+                  </Button>
+                )}
+                <input
+                  name="AuthorizationDoc"
+                  accept=".pdf"
+                  style={{ display: 'none' }}
+                  type="file"
+                  ref={pdfUploader}
+                  onChange={event => {
+                    const data = new FormData();
+                    data.append('AuthFile', event.currentTarget.files[0]);
+                    event.currentTarget.value = '';
+                    onAuthFile(data);
+                  }}
+                />
+                {draftSelector.isAuth && (
+                  <Button loading={loading} disabled={loading}
+                    onClick={() => { fileUploader.current.click() }}
+                  >
+                    Nueva carga
+                  </Button>
+                )}
                 <input
                   name="File"
                   accept=".csv,.xls,.xlsx"

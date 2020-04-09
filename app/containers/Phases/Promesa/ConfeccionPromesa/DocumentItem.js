@@ -9,7 +9,25 @@ import PropTypes from 'prop-types';
 import { Field as FormikField, getIn } from 'formik';
 import { getFileName } from 'containers/App/helpers';
 
-function DocumentItem({ canUpload, name, required = false, className='' }) {
+function DocumentItem({ canUpload, name, required = false, accept,className='' }) {
+  let fileAccept;
+  switch (accept) {
+    case 'word':
+      fileAccept = '.doc,.docx';
+      break;
+    case 'excel':
+      fileAccept =
+        'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      break;
+    case 'pdf':
+      fileAccept = '.pdf,application/pdf';
+      break;
+    case 'image':
+      fileAccept = 'image/*';
+      break;
+    default:
+      fileAccept = '*';
+  }
   return (
     <FormikField
       name={name}
@@ -43,6 +61,7 @@ function DocumentItem({ canUpload, name, required = false, className='' }) {
                 }}
                 required
                 type="file"
+                accept={fileAccept}
               />
               <label
                 className="custom-file-label font-14-rem shadow-sm text-nowrap overflow-hidden"
@@ -93,6 +112,7 @@ DocumentItem.propTypes = {
   canUpload: PropTypes.bool,
   name: PropTypes.string,
   required: PropTypes.bool,
+  accept: PropTypes.string,
 };
 
 export default DocumentItem;

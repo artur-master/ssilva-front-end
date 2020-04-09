@@ -57,7 +57,7 @@ export function CarpetaDigitalUploadActions({
         >
           Guardar
         </Button>
-        {Auth.isPM() && (
+        {Auth.isPM() || Auth.isVendor() && (
           <Button
             onClick={() => {
               form.values.Condition.push(...entity.Condition);
