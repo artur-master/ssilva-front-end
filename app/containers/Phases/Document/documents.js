@@ -1,4 +1,4 @@
-import { stringToBoolean } from 'containers/App/helpers';
+import { stringToBoolean, isCreditPayment } from 'containers/App/helpers';
 
 export const getDocuments = entity => {
   const isCompany = stringToBoolean(entity.Cliente.IsCompany);
@@ -37,6 +37,25 @@ export const getDocuments = entity => {
       required: true,
     },
   ];
+
+  if(isCreditPayment(entity.PayType)) {
+    baseDocuments = [
+      ...baseDocuments,
+      {
+        documentoName: 'Ficha Pre-aprobacion',
+        documentoType: 'DocumentFirmadoFichaPreAprobacion',
+        accept: 'pdf',
+        firmado: true,
+      },
+      {
+        documentoName: 'Simulación de crédito',
+        documentoType: 'DocumentFirmadoSimulador',
+        accept: 'pdf',
+        firmado: true,
+      },
+    ];
+  }
+
   if (!isCompany && entity.Cliente.CivilStatus === 'Casado(a)') {
     baseDocuments.push({
       documentoName: 'Certificado Matrimonio',
@@ -45,15 +64,10 @@ export const getDocuments = entity => {
       required: true,
     });
   }
+
   if (isCompany) {
     baseDocuments = [
       ...baseDocuments,
-      {
-        documentoName: 'Simulación de crédito',
-        documentoType: 'DocumentFirmadoSimulador',
-        accept: 'pdf',
-        firmado: true,
-      },
       {
         documentoName: 'Constitucion de Sociedad',
         documentoType: 'DocumentConstitucionSociedad',

@@ -74,8 +74,12 @@ function Nav({ dispatch }) {
           </UncontrolledDropdown>
         </ul>
       </nav>
+    {isOpen &&
       <CurrencyConverter isOpen={isOpen} onHide={() => setIsOpen(false)} />
-      <SimulatorCredito isOpen={isOpenSimulator} onHide={() => setIsOpenSimulator(false)} />
+    }
+    {isOpenSimulator &&
+      <SimulatorCredito isOpen={isOpenSimulator} onHide={() => setIsOpenSimulator(false)}/>
+    }
     </>
   );
 }
