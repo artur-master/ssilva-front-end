@@ -15,6 +15,7 @@ const PhasePreCredito = ({
   onContinue,
   dispatch,
   showScreen,
+  promesa,
 }) => {
   if (showScreen === 'form')
     return (
@@ -36,6 +37,7 @@ const PhasePreCredito = ({
       isPendienteAprobacion={isPendienteAprobacion}
       onSubmit={onContinue}
       dispatch={dispatch}
+      promesa={promesa}
     />
   );
 };
@@ -50,5 +52,6 @@ PhasePreCredito.propTypes = {
   initialValues: PropTypes.object,
   onContinue: PropTypes.func,
   dispatch: PropTypes.func,
+  promesa: PropTypes.bool,
 };
 export default PhasePreCredito;
