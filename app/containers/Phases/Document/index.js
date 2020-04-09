@@ -40,7 +40,8 @@ export function PhaseDocument({
   );
   const [reviews, setReviews] = useState(
     documents.reduce((acc, document) => {
-      if (document.documentoType === 'DocumentPagoGarantia')
+      if (document.documentoType === 'DocumentPagoGarantia' ||
+          document.autoGenerate )
         acc[document.documentoType] = true;
       else acc[document.documentoType] = false;
       return acc;
@@ -70,7 +71,7 @@ export function PhaseDocument({
             entity={entity}
             form={form}
             isReview={isReview}
-            canEit={canUpload}
+            canEdit={canUpload}
             canReview={canReview}
             onReview={(documentoType, review) =>
               setReviews({ ...reviews, [documentoType]: review })

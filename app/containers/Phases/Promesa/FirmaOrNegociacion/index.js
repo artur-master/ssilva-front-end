@@ -6,12 +6,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
+import { UserProject } from 'containers/Project/helper';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import { getFileName } from 'containers/App/helpers';
 import { Form as ExForm, Field as ExField } from 'components/ExForm';
 import PromesaObservationForm from '../Observation/Form';
-import { UserProject } from 'containers/Project/helper';
 
 const SyncMassage = WithLoading();
 
@@ -23,7 +23,7 @@ export function PhaseFirmaOrNegociacionPromesa({
 }) {
   const initialValues = {
     Condition: entity.Condition || [],
-    currentAction: '',
+    currentAction: 'nego',
     Comment: '',
     Resolution: '',
     DateEnvioPromesaToCliente: entity.DateEnvioPromesaToCliente || '',
@@ -65,127 +65,135 @@ export function PhaseFirmaOrNegociacionPromesa({
                   </a>
                 </div>
               </BoxContent>
-              <BoxFooter>
-                <div className="d-flex justify-content-end">
-                  {form.values.currentAction === 'firma' && (
-                    <div className="p-0">
-                      <div className="d-flex text-right">
-                        <ExField
-                          type="datePicker"
-                          name="DateEnvioPromesaToCliente"
-                          required
-                        />
+            </Box>
+            {UserProject.isVendor() && (
+              <Box>
+                <BoxHeader>
+                  <b>Confección de maqueta</b>
+                </BoxHeader>
+                <BoxContent>
+                  <>
+                    <div className="d-flex justify-content-end">
+                      {form.values.currentAction === 'firma' && (
+                        <div className="p-0">
+                          <div className="d-flex text-right">
+                            <ExField
+                              type="datePicker"
+                              name="DateEnvioPromesaToCliente"
+                              required
+                            />
+                            <Button
+                              className="m-btn"
+                              type="submit"
+                              onClick={() => {
+                                form.setFieldValue('Resolution', true);
+                                form.submitForm();
+                              }}
+                              disabled={selector.loading}
+                            >
+                              Envia a Cliente
+                        </Button>
+                          </div>
+                        </div>
+                      )}
+                      {form.values.currentAction !== 'firma' && (
                         <Button
-                          className="m-btn"
-                          type="submit"
+                          disabled={selector.loading}
                           onClick={() => {
-                            form.setFieldValue('Resolution', true);
+                            form.setValues({
+                              ...form.values,
+                              currentAction: 'firma',
+                            });
+                          }}
+                        >
+                          Firmar
+                        </Button>
+                      )}
+                      <Button
+                        disabled={selector.loading}
+                        className="m-btn-white m-btn-plus"
+                        onClick={() => {
+                          form.setValues({ currentAction: 'nego' })
+                        }}
+                      >
+                        El cliente quiere negociar
+                     </Button>
+                      <Button
+                        disabled={selector.loading}
+                        color="white"
+                        onClick={() =>
+                          form.setValues({
+                            ...form.values,
+                            currentAction: 'rechazar',
+                          })
+                        }
+                      >
+                        Rechazar Promesa
+                  </Button>
+                    </div>
+                    {(form.values.currentAction === 'nego') && (
+                      <div className="p-0">
+                        <PromesaObservationForm form={form} />
+                        <div className="py-3 text-right">
+                          <Button
+                            className="m-btn"
+                            type="submit"
+                            onClick={() => {
+                              form.setFieldValue('Resolution', true);
+                              const newValue = NewCondition.trim();
+                              if (newValue !== '') {
+                                Condition.push({ Description: newValue });
+                              }
+                              form.setValues({
+                                Condition,
+                                NewCondition: '',
+                                currentAction: 'nego',
+                                Comment: '',
+                                DateEnvioPromesaToCliente: '',
+                              });
+                              form.submitForm();
+                            }}
+                            disabled={selector.loading}
+                          >
+                            Envia a JP
+                      </Button>
+                        </div>
+                      </div>
+                    )}
+                    {(form.values.currentAction === 'rechazar') && (
+                      <div className="py-3 ">
+                        <span className="d-block text-left font-14-rem">
+                          <b>Comentarios (En caso de Rechazo)</b>
+                        </span>
+                        <div className="py-3 ">
+                          <textarea
+                            className="w-100 d-block rounded-lg shadow-sm"
+                            rows="5"
+                            value={form.values.Comment}
+                            onChange={evt =>
+                              form.setFieldValue(
+                                'Comment',
+                                evt.currentTarget.value.trim(),
+                              )
+                            }
+                          />
+                        </div>
+                        <Button
+                          disabled={selector.loading}
+                          onClick={() => {
+                            form.setFieldValue('Resolution', false);
                             form.submitForm();
                           }}
-                          disabled={selector.loading}
                         >
-                          Envia a Cliente
-                        </Button>
+                          Rechazar Promesa
+                    </Button>
                       </div>
-                    </div>
-                  )}
-                  {form.values.currentAction !== 'firma' && (
-                    <Button
-                      disabled={selector.loading}
-                      onClick={() => {
-                        form.setValues({
-                          ...form.values,
-                          currentAction: 'firma',
-                        });
-                      }}
-                    >
-                      Firmar
-                    </Button>
-                  )}
-                  <Button
-                    disabled={selector.loading}
-                    className="m-btn-white m-btn-plus"
-                    onClick={() => {
-                      const newValue = NewCondition.trim();
-                      if (newValue !== '') {
-                        Condition.push({ Description: newValue });
-                      }
-                      form.setValues({
-                        Condition,
-                        NewCondition: '',
-                        currentAction: 'nego',
-                        Comment: '',
-                        DateEnvioPromesaToCliente: '',
-                      });
-                    }}
-                  >
-                    El cliente quiere negociar
-                  </Button>
-                  {!UserProject.isVendor() && (
-                    <Button
-                      disabled={selector.loading}
-                      color="white"
-                      onClick={() =>
-                        form.setValues({
-                          ...form.values,
-                          currentAction: 'rechazar',
-                        })
-                      }
-                    >
-                      Rechazar Promesa
-                    </Button>
-                  )}
-                </div>
+                    )}
+                  </>
 
-                {form.values.currentAction === 'nego' && (
-                  <div className="p-0">
-                    <PromesaObservationForm form={form} />
-                    <div className="py-3 text-right">
-                      <Button
-                        className="m-btn"
-                        type="submit"
-                        onClick={() => {
-                          form.setFieldValue('Resolution', true);
-                          form.submitForm();
-                        }}
-                        disabled={selector.loading}
-                      >
-                        Envia a JP
-                      </Button>
-                    </div>
-                  </div>
-                )}
-                {(form.values.currentAction === 'rechazar') && (
-                  <div className="py-3 ">
-                    <span className="d-block text-left font-14-rem">
-                      <b>Comentarios (En caso de Rechazo)</b>
-                    </span>
-                    <div className="py-3 ">
-                      <textarea
-                        className="w-100 d-block rounded-lg shadow-sm"
-                        rows="5"
-                        value={form.values.Comment}
-                        onChange={evt =>
-                          form.setFieldValue(
-                            'Comment',
-                            evt.currentTarget.value.trim(),
-                          )
-                        }
-                      />
-                    </div>
-                    <Button
-                      disabled={selector.loading}
-                      onClick={() => {
-                        form.setFieldValue('Resolution', false);
-                        form.submitForm();
-                      }}
-                    >
-                      Rechazar Promesa
-                    </Button>
-                  </div>
-                )}
-              </BoxFooter>
-            </Box>
+                </BoxContent>
+              </Box>
+            )}
             <div className="py-3">
               <SyncMassage {...selector} />
             </div>
