@@ -24,9 +24,9 @@ export function PhaseFirmaDocumentsPromesa({
   canUpload,
 }) {
   const initialValues = {
-    DocumentChequesFirma: entity.DocumentChequesFirma || '',
-    DocumentPromesaFirma: entity.DocumentPromesaFirma || '',
-    DocumentPlantaFirma: entity.DocumentPlantaFirma || '',
+    DocumentChequesFirma: entity.DocumentChequesFirma,
+    DocumentPromesaFirma: entity.DocumentPromesaFirma,
+    DocumentPlantaFirma: entity.DocumentPlantaFirma,
   };
 
   return (
