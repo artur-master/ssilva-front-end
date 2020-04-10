@@ -60,7 +60,7 @@ export function Form({
                         <ExField
                           type="text"
                           name="fecha"
-                          readOnly="true"
+                          readOnly={true}
                         />
                       </div>
                     </div>
