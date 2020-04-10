@@ -199,18 +199,17 @@ export function PhaseConfeccionPromesa({
                                   readOnly={!canUpload}
                                   style={{ width: '11.25em' }}
                                 />
-                                <div className="d-flex align-items-center">
+                                <div className="d-flex align-items-center mt-3">
                                   <DocumentItem
                                     name={`PaymentInstructions.${index}.Document`}
                                     canUpload={canUpload && form.values.PaymentInstructions[index].Date !== null}
-                                    className="mt-3"
                                     required={
                                       form.values.PaymentInstructions[index].Date !== null
                                     }
                                   />
                                 </div>
                               </div>
-                              {index > 0 && (
+                              {index > 0 && canUpload && (
                                 <div
                                   role="presentation"
                                   onClick={() => remove(index)}

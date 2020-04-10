@@ -78,7 +78,7 @@ export function Form({ selector, dispatch }) {
     ) {
       // AC & PM approve confeccion
       if (
-        (entity.PromesaState === PROMESA_STATE[9] && UserProject.isAC()) ||
+        ((entity.PromesaState === PROMESA_STATE[9] || entity.PromesaState === PROMESA_STATE[11]) && UserProject.isAC()) ||
         (entity.PromesaState === PROMESA_STATE[11] && UserProject.isPM())
       )
         return (
