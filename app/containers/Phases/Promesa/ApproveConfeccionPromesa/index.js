@@ -44,7 +44,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               <b>Fecha o plazo para firma de escritura</b>
             </span>
             <span className="font-14-rem mx-2">
-              {moment(entity.FechaFirmaDeEscritura).format('DD MMM YYYY')}
+              {entity.FechaFirmaDeEscritura && moment(entity.FechaFirmaDeEscritura).format('DD MMM YYYY')}
             </span>
           </div>
           <div className="d-flex align-items-center mt-3">
@@ -52,7 +52,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               <b>echa entrega de inmueble</b>
             </span>
             <span className="font-14-rem mx-2">
-              {moment(entity.FechaEntregaDeInmueble).format('DD MMM YYYY')}
+              {entity.FechaEntregaDeInmueble && moment(entity.FechaEntregaDeInmueble).format('DD MMM YYYY')}
             </span>
           </div>
           <div className="d-flex align-items-center mt-3">
@@ -81,30 +81,30 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
               {entity.MetodoComunicacionEscrituracion}
             </span>
           </div>
-          <div className="d-flex align-items-center mt-3">
-            <span className="font-14-rem mr-3">
+          <div className="d-flex mt-3">
+            <span className="d-flex font-14-rem mr-3">
               <b>Pago por instrucciones</b>
             </span>
-            {entity.DatePayment && (
-              <span className="font-14-rem mx-2">
-                Fecha: {moment(entity.DatePayment).format('DD MMM YYYY')}
-              </span>
-            )}
-            {entity.DocumentPromesa && (
-              <>
+            <div >
+            {(entity.PaymentInstructions || []).map((payment, index) => (
+              <div className="d-flex align-items-center" key={index}>
                 <span className="font-14-rem mx-2">
-                  {getFileName(entity.DocumentPromesa)}
+                  Fecha: {moment(payment.Date).format('DD MMM YYYY')}
+                </span>
+                <span className="font-14-rem mx-2">
+                  {getFileName(payment.Document)}
                 </span>
                 <a
-                  href={entity.DocumentPaymentForm}
+                  href={payment.Document}
                   target="_blank"
                   download
                   className="font-14-rem mx-2 btn-arrow"
                 >
                   <b>Ver</b>
                 </a>
-              </>
-            )}
+              </div>
+            ))}
+            </div>
           </div>
         </BoxContent>
         <BoxFooter>
