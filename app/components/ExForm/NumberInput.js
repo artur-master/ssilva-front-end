@@ -43,7 +43,7 @@ const NumberInput = ({ className = '', label = '', ...props }) => (
                 {...props}
                 value={field.value ? `${prefix || ''}${numberFormat(field.value)}` : ''}
                 placeholder={prefix || ''}
-                onFocus={() => { setIsEditing(true) }}
+                onFocus={() => { setIsEditing(!props.readOnly && true) }}
                 readOnly
                 className={`w-100 form-control form-control-sm ${className}`}
               />)}

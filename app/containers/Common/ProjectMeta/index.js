@@ -8,19 +8,23 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import { Auth } from 'containers/App/helpers';
-import { fetchAllReservations, fetchAllPromesas } from './helper';
+import { fetchProjectMeta } from './helper';
 
 export function ProjectMeta({ project = {}, active }) {
   if (Auth.isInmobiliario()) return null;
 
-  const { ProyectoID } = project;  
-  const [reserva, setReserva] = useState({total:0, cost:0, percent:0});
-  const [promesa, setPromesa] = useState({total:0, cost:0, percent:0});
+  const { ProyectoID } = project;
+
+  const [metas, setMetas] = useState({
+    promesas: 0,
+    firmadoPromesas: 0,
+    totalPrice: 0, 
+    firmadoPrice: 0
+  }); 
 
   useEffect(() => {
     if (!ProyectoID) return;
-    fetchAllReservations(ProyectoID).then(res => setReserva(res));
-    fetchAllPromesas(ProyectoID).then(res => setPromesa(res));
+    fetchProjectMeta(ProyectoID).then(res => setMetas(res));
   }, [ProyectoID]);
 
   return (
@@ -36,13 +40,15 @@ export function ProjectMeta({ project = {}, active }) {
               <div className="box">
                 <span className="sub-title">Llevamos</span>
                 <span className="title">
-                  UF <b>{reserva.cost}</b>
+                  UF <b>{metas.firmadoPrice}</b>
                 </span>
                 <figure className="progress-card green">
-                  <progress className="" value={reserva.percent} max="100" />
+                  <progress max="100" 
+                    value={metas.totalPrice ? 100*metas.firmadoPrice/metas.totalPrice : 0} 
+                  />
                   <span className="key">Meta</span>
                   <span className="value">
-                    UF <b>{reserva.total}</b>
+                    UF <b>{metas.totalPrice}</b>
                   </span>
                 </figure>
               </div>
@@ -51,13 +57,15 @@ export function ProjectMeta({ project = {}, active }) {
               <div className="box">
                 <span className="sub-title">Llevamos</span>
                 <span className="title">
-                  Promesas <b>{promesa.cost}</b>
+                  Promesas <b>{metas.firmadoPromesas}</b>
                 </span>
                 <figure className="progress-card yellow">
-                  <progress className="" value={promesa.percent} max="100" />
+                  <progress max="100"
+                    value={metas.promesas ? 100*metas.firmadoPromesas/metas.promesas : 0}
+                  />
                   <span className="key">Meta</span>
                   <span className="value">
-                    <b>{promesa.total}</b>
+                    <b>{metas.promesas}</b>
                   </span>
                 </figure>
               </div>
