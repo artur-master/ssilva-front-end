@@ -1,5 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
+import moment from 'components/moment';
+
 import { API_ROOT } from 'containers/App/constants';
 import {
   GET_PROMESA,
@@ -64,11 +66,18 @@ function* sagaGetPromesa(action) {
 function* sagaUploadConfeccionPromesa(action) {
   const data = new FormData();
   Object.keys(action.values).forEach(name => {
-    if (['DocumentPaymentForm', 'DocumentPromesa'].includes(name)) {
+    if (name === "DocumentPromesa"){
       if (action.values[name].name) data.append(name, action.values[name]);
+    } else if (name === "PaymentInstructions"){
+      action.values[name].forEach((payment, index) =>{
+        data.append(`PaymentInstructions.${index}.Date`, moment(payment.Date).format('YYYY-MM-DD'));
+        data.append(`PaymentInstructions.${index}.Document`, payment.Document);
+      });
+      data.append("PaymentNumber", action.values[name].length);
     } else if (action.values[name] !== null)
       data.append(name, action.values[name]);
   });
+
   try {
     const response = yield call(
       request,
