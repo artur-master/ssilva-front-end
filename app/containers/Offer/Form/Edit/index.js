@@ -97,7 +97,7 @@ export function OfferEditForm({ selector, dispatch }) {
             <PhasesDocumentGarantia isCollapse={false} entity={entity} />
             <CarpetaDigital
               isCollapse
-              canEit={canEdit}
+              canEdit={canEdit}
               selector={selector}
               entity={initialValues}
               dispatch={dispatch}

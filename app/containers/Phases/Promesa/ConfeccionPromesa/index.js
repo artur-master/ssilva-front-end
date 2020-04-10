@@ -5,6 +5,8 @@
  */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+// import moment from 'components/moment';
+import { FieldArray } from 'formik';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
@@ -64,9 +66,11 @@ export function PhaseConfeccionPromesa({
           if (init) setInit(false);
           else setCanSubmit(true);
         }, [values]);
+
         useEffect(() => {
           setInit(true)
-        }, [])
+        }, []);
+
         return (
           <>
             <Box>
@@ -106,35 +110,35 @@ export function PhaseConfeccionPromesa({
                   <FormGroup className="align-items-center">
                     <Label className="mr-3" style={{ width: '25em' }}>
                       Fecha o plazo para firma de escritura
-                  </Label>
+                    </Label>
                     <ExField
                       readOnly={!canUpload}
                       type="datePicker"
                       name="FechaFirmaDeEscritura"
-                      required={canUpload}
+                      // required={canUpload}
                     />
                   </FormGroup>
                   <FormGroup className="align-items-center mt-3">
                     <Label className="mr-3" style={{ width: '25em' }}>
                       Fecha entrega de inmueble
-                  </Label>
+                    </Label>
                     <ExField
                       readOnly={!canUpload}
                       type="datepicker"
                       name="FechaEntregaDeInmueble"
-                      required={canUpload}
+                    // required={canUpload}
                     />
                   </FormGroup>
                   <FormGroup className="align-items-center mt-3">
                     <Label className="mr-3" style={{ width: '25em' }}>
                       Cláusula de desistimiento especial (sin multa, etc)
-                  </Label>
+                    </Label>
                     {!!form.values.HasDesistimientoEspecial && (
                       <ExField
                         name="DesistimientoEspecial"
-                        required={canUpload}
                         readOnly={!canUpload}
                         className="mr-3"
+                        // required={canUpload}
                       />
                     )}
                     <Checkbox
@@ -148,19 +152,23 @@ export function PhaseConfeccionPromesa({
                   </Label>
                     <ExField
                       name="ModificacionEnLaClausula"
-                      required={canUpload}
+                      type="number"
+                      maskOptions={{ prefix: "%" }}
                       readOnly={!canUpload}
+                      value={form.values.ModificacionEnLaClausula || ""}
+                      max={100}
+                      // required={canUpload}
                     />
                   </FormGroup>
                   <FormGroup className="align-items-center mt-3">
                     <Label className="mr-3" style={{ width: '25em' }}>
                       Método oficial de comunicación para comienzo de
                       escrituración
-                  </Label>
+                    </Label>
                     {!!form.values.HasMetodoComunicacionEscrituracion && (
                       <ExField
                         name="MetodoComunicacionEscrituracion"
-                        required={canUpload}
+                        // required={canUpload}
                         readOnly={!canUpload}
                         className="mr-3"
                       />
@@ -170,24 +178,67 @@ export function PhaseConfeccionPromesa({
                       readOnly={!canUpload}
                     />
                   </FormGroup>
-                  <FormGroup className="align-items-center mt-3">
-                    <Label className="mr-3" style={{ width: '25em' }}>
-                      Pago por instrucciones
-                  </Label>
-                    <ExField
-                      type="datePicker"
-                      placeholder="Fecha"
-                      name="DatePayment"
-                      readOnly={!canUpload}
-                    />
-                  </FormGroup>
-                  <FormGroup className="align-items-center mt-3">
-                    <Label className="mr-3" style={{ width: '25em' }} />
-                    <DocumentItem
-                      name="DocumentPaymentForm"
-                      canUpload={canUpload}
-                    />
-                  </FormGroup>
+
+                  <FieldArray
+                    name="PaymentInstructions"
+                    render={({ remove, push, replace }) => (
+                      <FormGroup className="mt-3">
+                        <Label className="d-flex mr-3" style={{ width: '25em' }}>
+                          Pago por instrucciones
+                        </Label>
+                        <div>
+                          {(form.values.PaymentInstructions || []).map((value, index) =>
+                            <div className={`d-flex align-items-center ${index == 0 ? "" : "pt-3"}`}
+                              key={`payment${index}`}
+                            >
+                              <div className="fetcha-examina-group">
+                                <ExField
+                                  type="datePicker"
+                                  placeholder="Fecha"
+                                  name={`PaymentInstructions.${index}.Date`}
+                                  readOnly={!canUpload}
+                                  style={{ width: '11.25em' }}
+                                />
+                                <div className="d-flex align-items-center">
+                                  <DocumentItem
+                                    name={`PaymentInstructions.${index}.Document`}
+                                    canUpload={canUpload && form.values.PaymentInstructions[index].Date !== null}
+                                    className="mt-3"
+                                    required={
+                                      form.values.PaymentInstructions[index].Date !== null
+                                    }
+                                  />
+                                </div>
+                              </div>
+                              {index > 0 && (
+                                <div
+                                  role="presentation"
+                                  onClick={() => remove(index)}
+                                  className="font-21 color-main background-color-transparent ml-2 pl-2 pointer"
+                                >
+                                  <strong>-</strong>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          {canUpload && (
+                            <div className="mt-3">
+                              <Button
+                                color="white"
+                                onClick={() => push({ Date: null, Document: null })}
+                                className="btn-plus"
+                                disabled={
+                                  form.values.PaymentInstructions[form.values.PaymentInstructions.length - 1].Date === null
+                                }
+                              >
+                                <b>Agregar</b>
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      </FormGroup>
+                    )}
+                  />
                 </div>
               </BoxContent>
               <BoxFooter>
@@ -211,38 +262,38 @@ export function PhaseConfeccionPromesa({
                         onClick={() => onReject(withText.text.trim())}
                       >
                         Rechazar
-                    </Button>
+                      </Button>
                       <Button
                         disabled={selector.loading}
                         color="white"
                         onClick={() => setWithText({ text: '', open: false })}
                       >
                         Cancelar
-                    </Button>
+                      </Button>
                     </div>) : (
-                      <>
-                        <Button
-                          type="submit"
-                          disabled={!canSubmit}
-                        // onClick={() => form.submitForm()}
-                        >
-                          Aprobar
-                    </Button>
-                        <Button
-                          disabled={selector.loading}
-                          color="white"
-                          onClick={() => setWithText({ text: '', open: true })}
-                        >
-                          Rechazar
-                    </Button>
-                        <Button
-                          disabled={selector.loading}
-                          color="white"
-                          onClick={onCancel}
-                        >
-                          Cancelar
-                    </Button>
-                  </>)
+                    <>
+                      <Button
+                        disabled={!canSubmit || selector.loading}
+                        onClick={() => form.submitForm()}
+                      >
+                        Aprobar
+                      </Button>
+                      <Button
+                        disabled={selector.loading}
+                        color="white"
+                        onClick={() => setWithText({ text: '', open: true })}
+                      >
+                        Rechazar
+                      </Button>
+                      <Button
+                        disabled={selector.loading}
+                        color="white"
+                        onClick={onCancel}
+                      >
+                        Cancelar
+                      </Button>
+                    </>
+                  )
                 )}
               </BoxFooter>
             </Box>

@@ -92,7 +92,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                               disabled={selector.loading}
                             >
                               Envia a Cliente
-                        </Button>
+                            </Button>
                           </div>
                         </div>
                       )}
@@ -117,7 +117,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                         }}
                       >
                         El cliente quiere negociar
-                     </Button>
+                      </Button>
                       <Button
                         disabled={selector.loading}
                         color="white"
@@ -129,7 +129,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                         }
                       >
                         Rechazar Promesa
-                  </Button>
+                      </Button>
                     </div>
                     {(form.values.currentAction === 'nego') && (
                       <div className="p-0">
@@ -156,7 +156,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                             disabled={selector.loading}
                           >
                             Envia a JP
-                      </Button>
+                          </Button>
                         </div>
                       </div>
                     )}
@@ -186,11 +186,10 @@ export function PhaseFirmaOrNegociacionPromesa({
                           }}
                         >
                           Rechazar Promesa
-                    </Button>
+                        </Button>
                       </div>
                     )}
                   </>
-
                 </BoxContent>
               </Box>
             )}
