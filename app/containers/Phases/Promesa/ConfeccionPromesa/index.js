@@ -116,6 +116,7 @@ export function PhaseConfeccionPromesa({
                       type="datePicker"
                       name="FechaFirmaDeEscritura"
                       // required={canUpload}
+                      disabled={!canUpload}
                     />
                   </FormGroup>
                   <FormGroup className="align-items-center mt-3">
@@ -127,6 +128,7 @@ export function PhaseConfeccionPromesa({
                       type="datepicker"
                       name="FechaEntregaDeInmueble"
                     // required={canUpload}
+                      disabled={!canUpload}
                     />
                   </FormGroup>
                   <FormGroup className="align-items-center mt-3">
@@ -198,6 +200,7 @@ export function PhaseConfeccionPromesa({
                                   name={`PaymentInstructions.${index}.Date`}
                                   readOnly={!canUpload}
                                   style={{ width: '11.25em' }}
+                                  disabled={!canUpload}
                                 />
                                 <div className="d-flex align-items-center">
                                   <DocumentItem
