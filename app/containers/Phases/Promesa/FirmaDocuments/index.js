@@ -39,9 +39,9 @@ export function PhaseFirmaDocumentsPromesa({
           <BoxContent className="p-0 border-bottom">
             <PhaseDownloadDocumentsPromesa
               documents={{
-                Cheques: initialValues.DocumentChequesFirma,
-                Promesa: initialValues.DocumentPromesaFirma,
-                Planta: initialValues.DocumentPlantaFirma,
+                Cheques: entity.Documents.DocumentFirmadoCheques,
+                Promesa: entity.DocumentPromesa,
+                Planta: entity.Inmuebles,
               }}
             />
           </BoxContent>
