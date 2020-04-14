@@ -128,14 +128,16 @@ export const documentDownload = (documents) => {
   for (let document of documents) {
     if(document.label==="Planta Inmueble"){
       for (let bprint of document.value){
-        const fileName = getFileName(bprint.BluePrint);
-        if(bprint.BluePrint !== '')
+        if(bprint.BluePrint !== ''){
+          const fileName = getFileName(bprint.BluePrint);
           FileSaver.saveAs(bprint.BluePrint, fileName);
+        }
       }
     }else{
-      const fileName = getFileName(document.value);
-      if(document.value !== '')
+      if(document.value !== ''){
+        const fileName = getFileName(document.value);
         FileSaver.saveAs( document.value, fileName);
+      }
     }
   }
   return true;
