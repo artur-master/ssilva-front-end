@@ -126,9 +126,17 @@ export const isReadyData = ( project = {}) => {
 export const documentDownload = (documents) => {
   if(!documents) return false;
   for (let document of documents) {
-    const fileName = getFileName(document.value);
-    if(document.value !== '')
-      FileSaver.saveAs( document.value, fileName);
+    if(document.label==="Planta Inmueble"){
+      for (let bprint of document.value){
+        const fileName = getFileName(bprint.BluePrint);
+        if(bprint.BluePrint !== '')
+          FileSaver.saveAs(bprint.BluePrint, fileName);
+      }
+    }else{
+      const fileName = getFileName(document.value);
+      if(document.value !== '')
+        FileSaver.saveAs( document.value, fileName);
+    }
   }
   return true;
 }
