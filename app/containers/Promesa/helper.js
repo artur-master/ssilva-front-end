@@ -127,16 +127,16 @@ export const documentDownload = (documents) => {
   if(!documents) return false;
   for (let document of documents) {
     if(document.label==="Planta Inmueble"){
-      for (let bprint of document.value){
-        if(bprint.BluePrint !== ''){
+      for (let bprint of document.dvalue){
+        if(bprint.BluePrint !== ''){     
           const fileName = getFileName(bprint.BluePrint);
           FileSaver.saveAs(bprint.BluePrint, fileName);
         }
       }
     }else{
-      if(document.value !== ''){
-        const fileName = getFileName(document.value);
-        FileSaver.saveAs( document.value, fileName);
+      if(document.dvalue !== ''){
+        const fileName = getFileName(document.dvalue);
+        FileSaver.saveAs( document.dvalue, fileName);
       }
     }
   }
