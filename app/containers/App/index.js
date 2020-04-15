@@ -41,6 +41,7 @@ import EditProjectPage from 'containers/Pages/Project/Edit/Loadable';
 import InmueblesPage from 'containers/Pages/Project/Inmuebles/Loadable';
 import PromesasPage from 'containers/Pages/Promesa/List';
 import PromesaPage from 'containers/Pages/Promesa/View/Loadable';
+import DashboardPage from 'containers/Pages/Dashboard/Loadable';
 
 import { Auth } from './helpers';
 import AppRoute from './AppRoute';
@@ -220,6 +221,12 @@ function App() {
           exact
           path="/clientes"
           component={ClientesPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />
+        <AppRoute
+          exact
+          path="/dashboard"
+          component={DashboardPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
         <AppRoute
