@@ -25,6 +25,7 @@ function* sagaGetQuotation(action) {
     yield put(getQuotationError(error));
   }
 }
+
 function* sagaSaveQuotation(action) {
   const requestURL = action.values.CotizacionID
     ? `${API_ROOT}/ventas/cotizaciones/${action.values.CotizacionID}/`
@@ -37,6 +38,11 @@ function* sagaSaveQuotation(action) {
         Cuotas: action.values.Cuotas.filter(cuota => cuota.Amount),
       }),
     });
+
+    yield call(sagaDownloadQuotation, 
+      {Cotizacion:{CotizacionID:response.cotizacion.CotizacionID}, method:"open"}
+    );
+
     yield put(saveQuotationSuccess(response));
   } catch (error) {
     yield put(saveQuotationError(error));
@@ -53,7 +59,14 @@ function* sagaDownloadQuotation(action) {
         LetterSize: 80,
       }),
     });
-    FileSaver.saveAs(response, `Cotizacion_${action.Cotizacion.Folio}.pdf`);
+
+    if (action.method === "open"){
+      var blobURL = URL.createObjectURL(response);
+      window.open(blobURL);
+    }
+    else
+      FileSaver.saveAs(response, `Cotizacion_${action.Cotizacion.Folio}.pdf`);
+
     yield put(downloadQuotationSuccess(response));
   } catch (error) {
     yield put(downloadQuotationError(error));
