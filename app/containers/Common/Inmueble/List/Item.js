@@ -7,7 +7,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import { FormattedNumber } from 'react-intl';
-import { inmuebleSortDetail } from '../helper';
+import { inmuebleSortDetail, DownloadBlueprint } from '../helper';
 
 function ListItem({ entity = {}, focusChange, onSelect }) {
   return (
@@ -35,9 +35,9 @@ function ListItem({ entity = {}, focusChange, onSelect }) {
       </th>
       <td className="expand orientation">{inmuebleSortDetail(entity)}</td>
       <td className="mr-2">
-        {entity.Up_Print&& (
-          <li style={{color:'blue'}}>
-              <i className="icon icon-check" />
+        {entity.Up_Print && (
+          <li style={{ color: 'blue' }}>
+            <i className="icon icon-check" />
           </li>
         )}
       </td>
@@ -51,7 +51,7 @@ function ListItem({ entity = {}, focusChange, onSelect }) {
           <span className="badge badge-warning mr-2">Restricción</span>
         )}
       </td>
-      <td>{entity.IsNotUsoyGoce ? 'Tandem' : 'Uso Gose'}</td>
+      <td>{entity.IsNotUsoyGoce ? 'Uso y Goce' : ''}</td>
       <td>{entity.Tipologia}</td>
       <td>
         <b>Valor UF</b>
@@ -62,9 +62,16 @@ function ListItem({ entity = {}, focusChange, onSelect }) {
         </strong>
       </td>
       <td>
-        <span className="color-main icon icon-plant">
+        <a
+          onClick={e => (
+            !entity.Up_Print ? 
+            e.preventDefault() : 
+            DownloadBlueprint(entity.Up_Print, entity.BluePrint)
+          )}
+          className="color-main icon icon-plant pointer"
+        >
           <b>Ver plano</b>
-        </span>
+        </a>
       </td>
     </tr>
   );
