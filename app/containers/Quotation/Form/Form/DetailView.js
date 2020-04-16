@@ -161,7 +161,7 @@ function DetailView({ values }) {
                   <b>Interés del Cliente</b>
                 </span>
                 <span className="font-14-rem color-regular">
-                  {stringToBoolean(values.IsNotInvestment)
+                  {stringToBoolean(values.IsNot_Investment)
                     ? 'Vivienda'
                     : 'Inversión'}
                 </span>
@@ -171,7 +171,7 @@ function DetailView({ values }) {
                   className="font-14-rem color-regular mr-3"
                   style={{ width: '9em' }}
                 >
-                  <b>Medio de Contacto</b>
+                  <b>Medio de Llegada</b>
                 </span>
                 <span className="font-14-rem color-regular">
                   {values.ContactMethodTypeID &&

@@ -20,7 +20,7 @@ export default function model({ project = {}, entity = {} }) {
       entity.CotizacionTypeID ||
       quotationUtils.CotizacionTypes[0].Name ||
       '',
-    IsNotInvestment: entity.IsNotInvestment || false,
+    IsNot_Investment: entity.IsNot_Investment || false,
     CotizacionState: entity.CotizacionState || '',
     PayType: entity.PayType || paymentUtils[0].PayTypeID,
     Cuotas: entity.Cuotas || [],
