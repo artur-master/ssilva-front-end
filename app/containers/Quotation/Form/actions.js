@@ -90,10 +90,11 @@ export function updateQuotation(data) {
   };
 }
 
-export function downloadQuotation(Cotizacion) {
+export function downloadQuotation(Cotizacion, method="download") {  
   return {
     type: DOWNLOAD_QUOTATION,
     Cotizacion,
+    method,
   };
 }
 

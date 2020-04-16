@@ -11,7 +11,6 @@ export const calculate = ( datas ) => {
   datas.forEach(meta_data => {
     totalPromesas++;
     const { Inmuebles=[] } = meta_data;
-    console.log(Inmuebles);
     const price = Inmuebles.reduce((acc, item) => acc + item.Price, 0);
     totalPrice += price;
     if(meta_data.PromesaState==="Escritura"){
