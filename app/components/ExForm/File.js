@@ -19,7 +19,7 @@ const File = ({
   children,
   validate,
   label,
-  style,
+  style={height:'auto'},
   className = '',
   onChange,
   ...props
@@ -41,8 +41,8 @@ const File = ({
       if (onChange) onChange(value);
       return (
         <div
-          className={`custom-file custom-input-file order-3 ${className}`}
-          style={{ height: 'auto' }}
+          className={`custom-file custom-input-file text-left order-3 ${className}`}
+          style={style}
           title={props.placeholder}
         >
           <input
@@ -59,7 +59,7 @@ const File = ({
             type="file"
           />
           <label
-            className="custom-file-label font-14-rem shadow-sm text-nowrap overflow-hidden"
+            className="custom-file-label font-14-rem shadow-sm text-nowrap overflow-hidden m-0"
             style={{ textOverflow: 'ellipsis' }}
           >
             <b>

@@ -211,7 +211,20 @@ function App() {
           path="/proyectos/:id/promesa"
           component={PromesaPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />       
+        <AppRoute
+          exact
+          path="/proyectos/:id/escrituras"
+          component={EscriturasPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
+        <AppRoute
+          exact
+          path="/proyectos/:id/escritura"
+          component={EscrituraPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />
+
         <AppRoute
           path="/proyectos/:id"
           component={DetailProjectPage}
