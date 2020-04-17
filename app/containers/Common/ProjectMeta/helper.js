@@ -27,8 +27,12 @@ export const calculate = ( datas ) => {
   };
 };
 
-export const fetchProjectMeta = projectId => {
-  const requestURL = `${API_ROOT}/ventas/promesas/?q=${projectId}`;  
+export const fetchProjectMeta = (projectId='') => {
+  let requestURL = '';
+  if(projectId==="")
+    requestURL = `${API_ROOT}/ventas/promesas/`;
+  else
+    requestURL = `${API_ROOT}/ventas/promesas/?q=${projectId}`;
   return request(requestURL).then(res => 
     calculate(res.filter(promesas=> moment(promesas.Date).isSame(new Date(), 'month')))
   );

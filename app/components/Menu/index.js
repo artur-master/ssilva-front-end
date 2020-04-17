@@ -102,12 +102,14 @@ const Menu = ({ collapse, dispatch }) => (
           <Link to="/clientes" />
         </li>
       )}
-      <li>
-        {/* <i className="icon "></i> */}
-        <span style={{width: '2.2em'}}></span>
-        <span>Dashboard</span>
-        <Link to="/dashboard" />
-      </li>
+      {!Auth.isInmobiliario() && (
+        <li>
+          {/* <i className="icon "></i> */}
+          <span style={{ width: '2.2em' }}></span>
+          <span>Dashboard</span>
+          <Link to="/dashboard" />
+        </li>
+      )}
     </ul>
   </Collapse>
 );
