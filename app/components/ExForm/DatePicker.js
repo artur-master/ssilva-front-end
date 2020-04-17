@@ -9,6 +9,7 @@ export const DatePickerInput = ({
   value,
   values,
   name,
+  style,
   className = '',
   isInvalid = false,
   range = false,
@@ -40,7 +41,7 @@ export const DatePickerInput = ({
     className += ' caution';
   /* eslint-enable */
   return (
-    <div className={`btype shadow-sm ${className}`}>
+    <div className={`btype shadow-sm ${className}`} style={style}>
       <input
         readOnly
         className={`form-control form-control-sm  ${
@@ -66,7 +67,7 @@ DatePickerInput.propTypes = {
   placeholder: PropTypes.string,
 };
 
-const DatePicker = ({ name, style, valueFormat = null, ...props }) => (
+const DatePicker = ({ name, style={}, valueFormat = null, ...props }) => (
   <FormikField
     name={name}
     {...props}
@@ -78,7 +79,7 @@ const DatePicker = ({ name, style, valueFormat = null, ...props }) => (
     {({ field, form, meta }) => {
       const isInvalid = meta.touched && meta.error;
       return (
-        <div style={style}>
+        <div style={style} className={props.className}>
           <DatePickerInput
             name={name}
             {...props}
@@ -87,6 +88,7 @@ const DatePicker = ({ name, style, valueFormat = null, ...props }) => (
               form.setFieldValue(name, moment(date).format(valueFormat));
             }}
             value={field.value}
+            style={style}
           />
           {(isInvalid || (form.submitCount>0 && meta.error)) && (
             <div className="invalid-feedback d-block m-0">{meta.error}</div>

@@ -220,3 +220,33 @@ export const FACTURA_INMUEBLE_TYPE = [
 export const FACTURA_INMUEBLE_STATE = ['Pendiente factura', 'Facturado'];
 
 export const FACTURA_STATE = ['Pendiente pago', 'Pagada'];
+
+export const ESCRITURA_STATE = {
+  Recep_Mun: 0,
+  Fechas_Avisos: 1,
+  A_Comercial: 2,
+  Apr_Creditos_I: 2.1,
+  Apr_Creditos_II: 2.2,
+  Apr_Creditos_III: 2.3,
+  Apr_Creditos_IV: 2.4,
+  Apr_Creditos_V: 2.5,
+  ETitulo_Tasacion: 3,
+  ETitulo_Tasacion_I: 3.1,
+  ETitulo_Tasacion_II: 3.2,
+  Matrices_Escrit: 4,
+  Rev_Escrit: 5,
+  Rev_Escrit_I: 5.1,
+  Rev_Escrit_II: 5.2,
+  Rev_Escrit_III: 5.3,
+  Rev_Escrit_III: 5.5,
+  Notaria: 6,
+  Notaria_I: 6.1,
+  Notaria_II: 6.2,
+  Notaria_III: 6.3,
+  Notaria_IV: 6.4,
+  Notaria_V: 6.5,
+  Notaria_VI: 6.6,
+  Notaria_VII: 6.7,
+  Notaria_VIII: 6.8,
+  Success: 7
+}
