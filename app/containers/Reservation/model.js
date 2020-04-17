@@ -103,7 +103,7 @@ export default function model({ project = {}, entity = {} }) {
     CotizacionType:
       entity.CotizacionType ||
       window.preload.quotationUtils.CotizacionTypes[0].Name,
-    IsNot_Investment: (entity.IsNot_Investment ? '1' : '0') || false,
+    IsNotInvestment: (entity.IsNotInvestment ? '1' : '0') || "",
     CotizacionStateID: entity.CotizacionStateID || '',
     PayType: entity.PayType || window.preload.paymentUtils[0].PayTypeID,
     Cuotas,

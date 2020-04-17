@@ -202,7 +202,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
                     </Label>
                     <ExField
                       type="select"
-                      name="IsNot_Investment"
+                      name="IsNotInvestment"
                       style={{ width: '18em' }}
                       required
                     >
