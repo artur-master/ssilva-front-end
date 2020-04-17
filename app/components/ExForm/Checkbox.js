@@ -16,11 +16,11 @@ const Checkbox = ({ className = '', label, readOnly, ...props }) => (
       const getInTouched = getIn(form.touched, field.name);
       const getInErrors = getIn(form.errors, field.name);
       return (
-        <div className={`d-flex align-items-center mr-3 ${className}`}>
+        <div className={`d-flex align-items-center ${className}`}>
           <div
             className={`${
               getInTouched && getInErrors ? 'is-invalid' : ''
-            } checkbox-01`}
+            } checkbox-01 checkbox-medium`}
           >
             <span>
               <input

@@ -138,6 +138,7 @@ export const canUploadDocument = (docType, project) => {
 
 export const canAccessArea = (project, area = '') =>
   UserProject.in(project) || Auth.isGerenteComercial();
+  
 export const canEditProject = project => UserProject.isPM(project);
 
 export const hasCollectedFullData = ({
