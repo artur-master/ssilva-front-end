@@ -18,7 +18,7 @@ function PhaseGeneralView({ values }) {
     DateFirmaPromesa,
     CotizacionType,
     ContactMethodTypeID,
-    IsNotInvestment,
+    IsNot_Investment,
   } = values;
   return (
     <ul className="row m-0 p-0">
@@ -90,7 +90,7 @@ function PhaseGeneralView({ values }) {
               <b>Destino de la Compra</b>
             </span>
             <span className="font-14-rem color-regular">
-              {stringToBoolean(IsNotInvestment) ? 'Vivienda' : 'Inversión'}
+              {stringToBoolean(IsNot_Investment) ? 'Vivienda' : 'Inversión'}
             </span>
           </li>
           <li className="col-md-6 d-flex align-items-center my-2">
@@ -98,7 +98,7 @@ function PhaseGeneralView({ values }) {
               className="font-14-rem color-regular mr-3"
               style={{ width: '10em' }}
             >
-              <b>Medio de Contacto</b>
+              <b>Medio de Llegada</b>
             </span>
             <span className="font-14-rem color-regular">
               {ContactMethodTypeID &&

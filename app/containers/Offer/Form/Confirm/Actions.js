@@ -32,6 +32,8 @@ export function OfferConfirmActions({
                     //   // onConfirm('client', evt.currentTarget.checked);
                     // }}
                   />
+				  {/* eslint-disable-next-line */}
+				  <label />
                 </span>
               </div>
               <span>
@@ -48,6 +50,8 @@ export function OfferConfirmActions({
                     //   // onConfirm('client', evt.currentTarget.checked);
                     // }}
                   />
+				  {/* eslint-disable-next-line */}
+				  <label />
                 </span>
               </div>
               <span>

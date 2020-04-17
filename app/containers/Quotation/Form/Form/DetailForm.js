@@ -202,7 +202,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
                     </Label>
                     <ExField
                       type="select"
-                      name="IsNotInvestment"
+                      name="IsNot_Investment"
                       style={{ width: '18em' }}
                       required
                     >
@@ -212,7 +212,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
                     </ExField>
                   </FormGroup>
                   <FormGroup className="col-md-6 my-2">
-                    <Label style={{ width: '12em' }}>Medio de Contacto</Label>
+                    <Label style={{ width: '12em' }}>Medio de Llegada</Label>
                     <ExField
                       type="select"
                       name="ContactMethodTypeID"

@@ -137,19 +137,26 @@ export function ChequeForm({
                         <ExField
                           style={{ width: '50%' }}
                           name={`Cuotas[${ActiveIndex}].Serie`}
-                          onChange={evt =>
+                          onChange={evt => {
+                            if (! evt.currentTarget.value) return;
+                            let Cuotas = form.values.Cuotas;
+                            Cuotas[ActiveIndex].Serie = parseInt(evt.currentTarget.value, 10);
                             form.setValues({
                               ActiveIndex: form.values.ActiveIndex,
-                              Cuotas: form.values.Cuotas.map((item, index) => ({
-                                ...item,
-                                Serie: evt.currentTarget.value
-                                  ? parseInt(evt.currentTarget.value, 10) +
-                                    index -
-                                    ActiveIndex
-                                  : '',
-                              })),
+                              Cuotas: Cuotas,
                             })
-                          }
+                            // form.setValues({
+                            //   ActiveIndex: form.values.ActiveIndex,
+                            //   Cuotas: form.values.Cuotas.map((item, index) => ({
+                            //     ...item,
+                            //     Serie: evt.currentTarget.value
+                            //       ? parseInt(evt.currentTarget.value, 10) +
+                            //         index -
+                            //         ActiveIndex
+                            //       : '',
+                            //   })),
+                            // })
+                          }}
                           required
                         />
                       </FormGroup>
@@ -157,15 +164,15 @@ export function ChequeForm({
                         <Label className="w-50">Número</Label>
                         <ExField
                           name={`Cuotas[${ActiveIndex}].AccountNumber`}
-                          onChange={evt =>
-                            form.setValues({
-                              ActiveIndex: form.values.ActiveIndex,
-                              Cuotas: form.values.Cuotas.map(item => ({
-                                ...item,
-                                AccountNumber: evt.currentTarget.value,
-                              })),
-                            })
-                          }
+                          // onChange={evt =>
+                          //   form.setValues({
+                          //     ActiveIndex: form.values.ActiveIndex,
+                          //     Cuotas: form.values.Cuotas.map(item => ({
+                          //       ...item,
+                          //       AccountNumber: evt.currentTarget.value,
+                          //     })),
+                          //   })
+                          // }
                           required
                           style={{ width: '50%' }}
                         />
@@ -184,15 +191,15 @@ export function ChequeForm({
                         <ExField
                           style={{ width: '50%' }}
                           required
-                          onChange={evt =>
-                            form.setValues({
-                              ActiveIndex: form.values.ActiveIndex,
-                              Cuotas: form.values.Cuotas.map(item => ({
-                                ...item,
-                                Beneficiary: evt.currentTarget.value,
-                              })),
-                            })
-                          }
+                          // onChange={evt =>
+                          //   form.setValues({
+                          //     ActiveIndex: form.values.ActiveIndex,
+                          //     Cuotas: form.values.Cuotas.map(item => ({
+                          //       ...item,
+                          //       Beneficiary: evt.currentTarget.value,
+                          //     })),
+                          //   })
+                          // }
                           name={`Cuotas[${ActiveIndex}].Beneficiary`}
                           inputClass="text-uppercase"
                         />
