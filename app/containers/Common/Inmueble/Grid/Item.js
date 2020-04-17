@@ -60,7 +60,7 @@ function GridItem({ entity = {}, focusChange, onSelect }) {
       <div className="p-2 px-3">
         <ul className="m-0 p-0">
           <li className="font-14-rem w-100 d-flex justify-content-between align-items-center">
-            <span>{entity.IsNotUsoyGoce ? 'Tandem' : 'Uso Gose'}</span>
+            <span>{entity.IsNotUsoyGoce ? 'Uso y Goce' : ''}</span>
               {entity.Up_Print&& (
                 <span className="mr-2">
                     <li style={{color:'blue'}}>

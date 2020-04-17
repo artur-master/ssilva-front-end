@@ -1,3 +1,5 @@
+import FileSaver from 'file-saver';
+
 export const shortType = str =>
   str
     .replace(/Departamento/gi, 'Depto.')
@@ -26,7 +28,7 @@ export const inmuebleSortDetail = entity => {
 };
 
 export const inmuebleLabel = entity => {
-  const UsoyGoceLabel = entity.IsNotUsoyGoce ? 'Tandem' : 'Uso Gose';
+  const UsoyGoceLabel = entity.IsNotUsoyGoce ? 'Uso y Goce' : '';
   const Floor = entity.Floor > 0 ? entity.Floor : 'G';
   const Orientation = entity.Orientation
     ? entity.Orientation.map(ori => ori.Description).join('-')
@@ -95,3 +97,6 @@ export const matchRestrictionsFromAList = inmuebles => {
   }, []);
   return inmuebles.filter(item => !restrictions.includes(item.InmuebleID));
 };
+
+export const DownloadBlueprint = (path, bprint) =>
+  FileSaver.saveAs(path, bprint);

@@ -13,9 +13,9 @@ import { documentDownload } from 'containers/Promesa/helper'
 export function PhaseDownloadDocumentsPromesa({ documents = {} }) {
   const initialValues = {
     SelectedDocuments: [
-      { label: 'Cheques', value: documents.Cheques || 'a'},
-      { label: 'Promesa', value: documents.Promesa || 'b'},
-      { label: 'Planta Inmueble', value: documents.Planta || 'c'},
+      { label: 'Cheques', value: 'ChequesDocument', dvalue: documents.Cheques || 'a'},
+      { label: 'Promesa', value: 'PromesaDocument', dvalue: documents.Promesa || 'b'},
+      { label: 'Planta Inmueble', value: 'documentPlanta', dvalue: documents.Planta|| 'c'},
     ],
   };
   return (

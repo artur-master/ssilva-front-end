@@ -118,7 +118,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                       </Label>
                       <ExField
                         type="select"
-                        name="IsNotInvestment"
+                        name="IsNot_Investment"
                         style={{ width: '21em' }}
                         required
                       >
@@ -128,7 +128,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                       </ExField>
                     </FormGroup>
                     <FormGroup className="col-md-6 my-2">
-                      <Label style={{ width: '10em' }}>Medio de Contacto</Label>
+                      <Label style={{ width: '10em' }}>Medio de Llegada</Label>
                       <ExField
                         type="select"
                         name="ContactMethodTypeID"
