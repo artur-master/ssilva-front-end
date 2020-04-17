@@ -4,18 +4,13 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { fetchLogs } from '../actions';
 import moment from 'components/moment';
 import Empty from 'components/Empty';
 
-export function TimeLog({ selector, dispatch }) {
-  const { loading, Logs } = selector;
-  useEffect(() => {
-    if (!loading) dispatch(fetchLogs());
-  }, []);
-  // 
+export function TimeLog({ Logs }) {
+  //
   return (
 
     <div className="col-md-4">
@@ -26,7 +21,7 @@ export function TimeLog({ selector, dispatch }) {
             <ol style={{ maxHeight: 533, overflow: 'auto' }}>
 
             {(Logs.length < 1) && (<Empty tag="h2" />)}
-              {Logs && (
+              {Logs.length>0 && (
                 Logs.map(log => {
                   const dateAgo = moment.utc(log.Date).fromNow('day');
                   return (
@@ -38,7 +33,7 @@ export function TimeLog({ selector, dispatch }) {
                         <div className="d-flex align-items-center">
                           <span className="font-14-rem color-regular" style={{ fontWeight: '600' }}>{dateAgo}: {log.User.Name} {log.User.LastNames} / {log.User.Roles[0].Name}</span>
                         </div>
-                        <span className="d-block font-14-rem">{log.Folio}</span>
+                        <span className="d-block font-14-rem">{log.VentaLogType} Proyecto {log.Folio}</span>
                         <span className="d-block font-14-rem">{moment(log.Date).format('DD MMM YYYY')}</span>
                       </div>
                     </li>
@@ -54,8 +49,7 @@ export function TimeLog({ selector, dispatch }) {
 }
 
 TimeLog.propTypes = {
-  selector: PropTypes.object,
-  dispatch: PropTypes.func.isRequired,
+  Logs: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 export default TimeLog;
