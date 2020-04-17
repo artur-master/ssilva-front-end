@@ -161,7 +161,7 @@ function DetailView({ values }) {
                   <b>Interés del Cliente</b>
                 </span>
                 <span className="font-14-rem color-regular">
-                  {stringToBoolean(values.IsNot_Investment)
+                  {stringToBoolean(values.IsNotInvestment)
                     ? 'Vivienda'
                     : 'Inversión'}
                 </span>

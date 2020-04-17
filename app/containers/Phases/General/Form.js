@@ -118,7 +118,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                       </Label>
                       <ExField
                         type="select"
-                        name="IsNot_Investment"
+                        name="IsNotInvestment"
                         style={{ width: '21em' }}
                         required
                       >
