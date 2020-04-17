@@ -20,6 +20,7 @@ import PhaseTimelineFacturaPromesa from './Factura';
 const SyncMassage = WithLoading();
 
 export function PhaseTimeline({
+  isCollapse = true,
   selector,
   entity,
   onSendToIn,
@@ -31,7 +32,7 @@ export function PhaseTimeline({
 }) {
   const step = getStepTimeline(entity);
   return (
-    <Box collapse>
+    <Box collapse isOpen={isCollapse}>
       <BoxHeader>
         <b>FIRMA PROMESA</b>
       </BoxHeader>

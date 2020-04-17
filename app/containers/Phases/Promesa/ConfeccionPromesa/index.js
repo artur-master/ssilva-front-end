@@ -88,8 +88,8 @@ export function PhaseConfeccionPromesa({
                         download
                       >
                         Descargar {maquetaName}
-                    </a>
-                    {fileName}
+                      </a>
+                      {fileName}
                     </div>
                   </div>
                 )}
@@ -149,7 +149,7 @@ export function PhaseConfeccionPromesa({
                   <FormGroup className="align-items-center mt-3">
                     <Label className="mr-3" style={{ width: '25em' }}>
                       Modificación en la cláusula de multas (% de multas)
-                  </Label>
+                    </Label>
                     <ExField
                       name="ModificacionEnLaClausula"
                       type="number"

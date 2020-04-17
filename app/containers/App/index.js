@@ -41,6 +41,8 @@ import EditProjectPage from 'containers/Pages/Project/Edit/Loadable';
 import InmueblesPage from 'containers/Pages/Project/Inmuebles/Loadable';
 import PromesasPage from 'containers/Pages/Promesa/List';
 import PromesaPage from 'containers/Pages/Promesa/View/Loadable';
+import EscriturasPage from 'containers/Pages/Escritura/List/Loadable';
+import EscrituraPage from 'containers/Pages/Escritura/View/Loadable';
 
 import { Auth } from './helpers';
 import AppRoute from './AppRoute';
@@ -210,7 +212,20 @@ function App() {
           path="/proyectos/:id/promesa"
           component={PromesaPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />       
+        <AppRoute
+          exact
+          path="/proyectos/:id/escrituras"
+          component={EscriturasPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
+        <AppRoute
+          exact
+          path="/proyectos/:id/escritura"
+          component={EscrituraPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />
+
         <AppRoute
           path="/proyectos/:id"
           component={DetailProjectPage}

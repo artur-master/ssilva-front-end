@@ -53,9 +53,9 @@ const CollapseHeader = ({ children, toggle, isOpen, className = '' }) => (
   <div
     className={`${className} button-toggler-plus w-100 pointer p-3 d-flex align-items-center after-expands-2 collapsed`}
     aria-expanded={isOpen}
-    onClick={toggle}
+    onClick={(evt)=>{ if(evt.target.tagName === "A") return; toggle(evt);}}
   >
-    <span className="order-1 font-14-rem no-whitespace text-uppercase">
+    <span className="order-1 font-14-rem no-whitespace text-uppercase w-100">
       <b>{children}</b>
     </span>
   </div>
