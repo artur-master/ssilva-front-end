@@ -23,7 +23,6 @@ export function ProjectMeta({ project = {}, active }) {
   }); 
 
   useEffect(() => {
-    if (!ProyectoID) return;
     fetchProjectMeta(ProyectoID).then(res => setMetas(res));
   }, [ProyectoID]);
 
