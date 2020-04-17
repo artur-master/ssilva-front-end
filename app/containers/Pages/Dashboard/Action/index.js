@@ -14,7 +14,7 @@ import { UserProject } from 'containers/Project/helper';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import ActionItem from './ActionItem';
 
-export function ActionPending({ selector, dispatch }) {
+export function ActionPending({ selector }) {
   const { entities = [] } = selector;
   const [proyectoKey, setProyectoKey] = useState('none');
   const projects = entities ? entities.filter(entity => UserProject.in(entity)) : [];
@@ -67,7 +67,7 @@ export function ActionPending({ selector, dispatch }) {
                 disabled={(proyectoKey==='none')? true: false}
                 to={(
                   proyectoKey!=='none') ?
-                  `/proyectos/${projects[proyectoKey].ProyectoID}`:''}
+                  `/proyectos/${projects[proyectoKey].ProyectoID}/cotizaciones`:''}
                 onClick={e => ((proyectoKey==='none') ? e.preventDefault():'')}
                 className="font-14-rem m-btn d-block text-center" 
                 style={{ minWidth: '3em' }}

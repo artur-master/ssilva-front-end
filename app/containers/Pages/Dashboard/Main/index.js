@@ -10,9 +10,8 @@ import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'components/ProgressBar';
 import Empty from 'components/Empty';
-import { UserProject } from 'containers/Project/helper';
+import { ProjectMeta } from 'containers/Common/ProjectMeta';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
-import ProjectMeta from './ProjectMeta';
 import ControlUItem from './ControlUItem';
 import TimeLog from './TimeLog';
 import Thead from 'components/Table/Thead';
@@ -88,14 +87,14 @@ export function MainContent( {selector, dispatch }) {
           </div>
         </div>
       </div>
-      <TimeLog dispatch={dispatch} selector={selector} />
+      <TimeLog Logs={selector.Logs} />
     </div>
   );
 }
 
-// MainContent.propTypes = {
-//   selector: PropTypes.object,
-//   dispatch: PropTypes.func.isRequired,
-// };
+MainContent.propTypes = {
+  selector: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default MainContent;

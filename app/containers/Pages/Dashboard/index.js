@@ -19,7 +19,7 @@ import { UserProject } from 'containers/Project/helper';
 import makeSelectDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { fetchEntities } from './actions';
+import { fetchEntities, fetchLogs } from './actions';
 import MainContent from './Main';
 import ActionPending from './Action';
 
@@ -32,13 +32,16 @@ export function DashboardPage({ dispatch, selector }) {
   const { loading } = selector;
 
   useEffect(() => {
-    if (!loading) dispatch(fetchEntities());
+    if (!loading) {
+      dispatch(fetchLogs());
+      dispatch(fetchEntities());
+    }
   }, []);
  
   return (
     <div className="mt-4">
       <Helmet title="Dashboard" />
-      {/* <PageHeader actions={['aa']}>Dashboard</PageHeader> */}
+      <PageHeader actions={['aa']}>Dashboard</PageHeader>
       {/* {!entities && <SyncMessage {...selector} />} */}
       <ActionPending dispatch={dispatch} selector={selector} />
       <MainContent dispatch={dispatch} selector={selector} />

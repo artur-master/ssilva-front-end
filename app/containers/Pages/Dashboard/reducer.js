@@ -25,7 +25,7 @@ const dashboardReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case FETCH_ENTITIES:
-        draft.loading = true;
+        draft.loading = false;
         draft.error = false;
         draft.entities = false;
         break;
