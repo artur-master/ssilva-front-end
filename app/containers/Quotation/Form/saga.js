@@ -39,9 +39,13 @@ function* sagaSaveQuotation(action) {
       }),
     });
 
-    yield call(sagaDownloadQuotation, 
-      {Cotizacion:{CotizacionID:response.cotizacion.CotizacionID}, method:"open"}
-    );
+    if(action.redirect === 'list')
+      yield call(sagaDownloadQuotation, 
+        {
+          Cotizacion:{CotizacionID:response.cotizacion.CotizacionID},
+          method:"open"
+        }
+      );
 
     yield put(saveQuotationSuccess(response));
   } catch (error) {

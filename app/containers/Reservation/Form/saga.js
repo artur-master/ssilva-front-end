@@ -157,6 +157,22 @@ const downloadFile = async (url, fileName) => {
     FileSaver.saveAs( url,fileName );
 }
 
+function* sagaDownloadQuotation(CotizacionID) {
+  const requestURL = `${API_ROOT}/ventas/cotizaciones-download/`;
+  try {
+    const response = yield call(request, requestURL, {
+      method: 'post',
+      body: JSON.stringify({
+        CotizacionID: CotizacionID,
+        LetterSize: 80,
+      }),
+    });
+    FileSaver.saveAs(response, 'cotización.pdf');
+  } catch (error) {
+    return error
+  }
+}
+
 function* generateCheque(cheque) {
   const requestURL = `${API_ROOT}/ventas/generate-check/`;
   const response = yield call(request, requestURL, {
@@ -172,11 +188,13 @@ function* generateCheque(cheque) {
 
 function* printDocuments(action) {
   try {
-    const response = yield call(save, action);
-    downloadFile(response.reserva.Documents.DocumentCotizacion, 'cotización.pdf')
-    downloadFile(response.reserva.Documents.DocumentOferta, 'oferta.pdf')
-    downloadFile(response.reserva.Documents.DocumentFichaPreAprobacion, 'ficha pre aprobación.pdf')
-    downloadFile(response.reserva.Documents.DocumentSimulador, 'simulador de crédito.pdf')
+    yield call(sagaDownloadQuotation, action.values.CotizacionID);
+
+    // const response = yield call(save, action);
+    // downloadFile(response.reserva.Documents.DocumentCotizacion, 'cotización.pdf')
+    // downloadFile(response.reserva.Documents.DocumentOferta, 'oferta.pdf')
+    // downloadFile(response.reserva.Documents.DocumentFichaPreAprobacion, 'ficha pre aprobación.pdf')
+    // downloadFile(response.reserva.Documents.DocumentSimulador, 'simulador de crédito.pdf')
 
     const genCheques = [];
     const cheques = action.values.printCuotas;
@@ -185,7 +203,7 @@ function* printDocuments(action) {
     }
     const chequesFiles = yield all(genCheques);
 
-    yield put(printDocumentsSuccess({...response, ...chequesFiles}));
+    // yield put(printDocumentsSuccess({"success"}));
     
   } catch (error) {
     yield put(printDocumentsError(error));
