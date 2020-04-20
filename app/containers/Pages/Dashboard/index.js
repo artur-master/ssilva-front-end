@@ -41,7 +41,7 @@ export function DashboardPage({ dispatch, selector }) {
   return (
     <div className="mt-4">
       <Helmet title="Dashboard" />
-      <PageHeader actions={['aa']}>Dashboard</PageHeader>
+      {/* <PageHeader actions={['aa']}>Dashboard</PageHeader> */}
       {/* {!entities && <SyncMessage {...selector} />} */}
       <ActionPending dispatch={dispatch} selector={selector} />
       <MainContent dispatch={dispatch} selector={selector} />

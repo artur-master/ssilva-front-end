@@ -15,6 +15,7 @@ import { Box, BoxContent, BoxHeader } from 'components/Box';
 import ControlUItem from './ControlUItem';
 import TimeLog from './TimeLog';
 import Thead from 'components/Table/Thead';
+import DoGlobal from './DoGlobal';
 
 export function MainContent( {selector, dispatch }) {
   // const { entities = [] } = selector;
@@ -49,43 +50,7 @@ export function MainContent( {selector, dispatch }) {
           </div>
         </Box>
         <ProjectMeta />
-        <div className="mt-4">
-          <h3 className="font-21 color-regular">Documentos Globales</h3>
-          <div className="background-color-tab rounded-lg shadow-sm mt-3 p-3">
-            <div className="row no-gutters">
-              <div className="col d-flex flex-column justify-content-start font-14-rem">
-                <span className="font-16-rem" style={{ color: '#6c7074' }}>Cotizaciones</span>
-                <span className="d-block my-1 badge badge-secondary text-center px-2 font-14" style={{ maxWidth: '5.4em' }}>14.000</span>
-                <span className="color-warning">Pendientes: 10.000</span>
-                <span className="color-success">Completas: 4.000</span>
-              </div>
-              <div className="col d-flex flex-column justify-content-start font-14-rem">
-                <span className="font-16-rem" style={{ color: '#6c7074' }}>Reservas</span>
-                <span className="d-block my-1 badge badge-secondary text-center px-2 font-14" style={{ maxWidth: '5.4em' }}>14.000</span>
-                <span className="color-warning">Pendientes: 10.000</span>
-                <span className="color-success">Completas: 4.000</span>
-              </div>
-              <div className="col d-flex flex-column justify-content-start font-14-rem">
-                <span className="font-16-rem" style={{ color: '#6c7074' }}>Ofertas</span>
-                <span className="d-block my-1 badge badge-secondary text-center px-2 font-14" style={{ maxWidth: '5.4em' }}>14.000</span>
-                <span className="color-warning">Pendientes: 10.000</span>
-                <span className="color-success">Completas: 4.000</span>
-              </div>
-              <div className="col d-flex flex-column justify-content-start font-14-rem">
-                <span className="font-16-rem" style={{ color: '#6c7074' }}>Promesas</span>
-                <span className="d-block my-1 badge badge-secondary text-center px-2 font-14" style={{ maxWidth: '5.4em' }}>14.000</span>
-                <span className="color-warning">Pendientes: 10.000</span>
-                <span className="color-success">Completas: 4.000</span>
-              </div>
-              <div className="col d-flex flex-column justify-content-start font-14-rem">
-                <span className="font-16-rem" style={{ color: '#6c7074' }}>Escrituras</span>
-                <span className="d-block my-1 badge badge-secondary text-center px-2 font-14" style={{ maxWidth: '5.4em' }}>14.000</span>
-                <span className="color-warning">Pendientes: 10.000</span>
-                <span className="color-success">Completas: 4.000</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <DoGlobal counter={selector.Counter} />
       </div>
       <TimeLog Logs={selector.Logs} />
     </div>
