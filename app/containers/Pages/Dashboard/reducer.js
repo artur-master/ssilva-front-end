@@ -18,6 +18,7 @@ export const initialState = {
   error: false,
   entities: false,
   Logs: false,
+  Counter: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -41,7 +42,7 @@ const dashboardReducer = (state = initialState, action) =>
       case FETCH_LOGS:
         draft.loading = true;
         draft.error = false;
-        draft.entities = false;
+        draft.Logs = false;
         break;
       case FETCH_LOGS_ERROR:
         draft.loading = false;
@@ -51,6 +52,7 @@ const dashboardReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = false;
         draft.Logs = action.response.logs;
+        draft.Counter = action.response.count;
         break;
     }
   });
