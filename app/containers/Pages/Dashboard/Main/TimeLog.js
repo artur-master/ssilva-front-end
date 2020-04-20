@@ -31,7 +31,9 @@ export function TimeLog({ Logs }) {
                       </span>
                       <div className="content flex-grow-1 mr-2">
                         <div className="d-flex align-items-center">
-                          <span className="font-14-rem color-regular" style={{ fontWeight: '600' }}>{dateAgo}: {log.User.Name} {log.User.LastNames} / {log.User.Roles[0].Name}</span>
+                          <span className="font-14-rem color-regular" style={{ fontWeight: '600' }}>
+                            {dateAgo}: {log.User.Name} {log.User.LastNames} / {log.User.Roles[0].Name}
+                          </span>
                         </div>
                         <span className="d-block font-14-rem">{log.VentaLogType} Proyecto {log.Folio}</span>
                         <span className="d-block font-14-rem">{moment(log.Date).format('DD MMM YYYY')}</span>
