@@ -69,11 +69,15 @@ function* sagaUploadConfeccionPromesa(action) {
     if (name === "DocumentPromesa"){
       if (action.values[name].name) data.append(name, action.values[name]);
     } else if (name === "PaymentInstructions"){
+      let num = 0;
       action.values[name].forEach((payment, index) =>{
-        data.append(`PaymentInstructions.${index}.Date`, moment(payment.Date).format('YYYY-MM-DD'));
-        data.append(`PaymentInstructions.${index}.Document`, payment.Document);
+        if((payment.Date !== "") && (payment.Date !== null)){
+          num++;
+          data.append(`PaymentInstructions.${index}.Date`, moment(payment.Date).format('YYYY-MM-DD'));
+          data.append(`PaymentInstructions.${index}.Document`, payment.Document);
+        }
       });
-      data.append("PaymentNumber", action.values[name].length);
+      data.append("PaymentNumber", num);
     } else if (action.values[name] !== null)
       data.append(name, action.values[name]);
   });
