@@ -15,7 +15,7 @@ import model from '../model';
 
 const SyncMessage = WithLoading();
 
-function GeneralView({ canEdit, selectorProject, selector, onEdit }) {
+function GeneralView({ canEdit, selectorProject, selector, onEdit, isCollapse=true }) {
   const { project = {} } = selectorProject;
   const fields = getGeneralFields({ values: model(project) });
   if(project.EntregaInmediata){
@@ -24,7 +24,7 @@ function GeneralView({ canEdit, selectorProject, selector, onEdit }) {
   }
   
   return (
-    <Box collapse>
+    <Box collapse isOpen={isCollapse}>
       <BoxHeader>
         <b>DATOS GENERALES</b>
         {canEdit && (
@@ -60,6 +60,7 @@ GeneralView.propTypes = {
   selectorProject: PropTypes.object,
   selector: PropTypes.object,
   onEdit: PropTypes.func,
+  isCollapse: PropTypes.bool,
 };
 
 export default GeneralView;

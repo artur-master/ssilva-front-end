@@ -4,66 +4,40 @@
  * Escritura Form
  *
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import queryString from 'query-string';
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-const SyncMessage = WithLoading();
-import reducer from './reducer';
-import saga from './saga';
+// import queryString from 'query-string';
+// import { UserProject } from 'containers/Project/helper';
+import InitData from 'containers/Common/InitData';
+import ProjectPhases from 'containers/Common/ProjectPhases';
 import WithLoading from 'components/WithLoading';
-import { UserProject } from 'containers/Project/helper';
-import makeSelectInitProject from 'containers/Project/Init/selectors';
-import makeSelectPromesaForm from './selectors';
-import { getPromesa,resetContainer } from './actions';
+const SyncMessage = WithLoading();
 import Form from './Form';
 
-export function EscrituraForm({ selector, selectorProject, dispatch, location }) {
-  const { project = {} } = selectorProject;
-  const query = queryString.parse(location.search);
-  const { PromesaID } = query;
-  useInjectReducer({ key: 'promesaform', reducer });
-  useInjectSaga({ key: 'promesaform', saga });
+export function EscrituraForm({ match, location }) {
+  const { project = {} } = window;
+  // const query = queryString.parse(location.search);
 
-  useEffect(() => {
-    if (PromesaID) dispatch(getPromesa(PromesaID));
-    // return () => dispatch(resetContainer());
-  }, [location.search]);
+  const header = ['Proyectos'];
+  if (project.Name) header.push(project.Name);
 
-  // if (selector.redirect) {
-  //   return <Redirect to={`/proyectos/${project.ProyectoID}/escrituras`} />;
-  // }
-  if (!project || !selector.promesa) return <SyncMessage loading />;
+  if (!project) return <SyncMessage loading />;
 
-  return <Form selector={selector} dispatch={dispatch} />;
+  return (
+    <>  
+      <InitData
+        Project={{ ProyectoID: match.params.id }}
+        User
+      />
+      <ProjectPhases project={project} active="escritura" />
+      <Form project={project} />
+    </>
+  );
 }
 
 EscrituraForm.propTypes = {
+  match: PropTypes.object,
   location: PropTypes.object,
-  selector: PropTypes.object,
-  selectorProject: PropTypes.object,
-  dispatch: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-  selector: makeSelectPromesaForm(),
-  selectorProject: makeSelectInitProject(),
-});
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-export default compose(withConnect)(EscrituraForm);
+export default EscrituraForm;
