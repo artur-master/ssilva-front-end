@@ -25,6 +25,7 @@ export function General({
   action = 'view',
   selectorProject,
   selector,
+  isCollapse = true,
   dispatch,
 }) {
   useInjectReducer({ key: 'general', reducer });
@@ -47,6 +48,7 @@ export function General({
         selectorProject={selectorProject}
         selector={selector}
         onEdit={() => dispatch(toggleScreen('form'))}
+        isCollapse = {isCollapse}
       />
     );
   if (screen === 'form') {
