@@ -5,21 +5,21 @@ import { initialState } from './reducer';
  * Direct selector to the project state domain
  */
 
-const selectPromesaFormDomain = state => state.promesaform || initialState;
+const selectEscrituraFormDomain = state => state.escrituraform || initialState;
 
 /**
  * Other specific selectors
  */
 
 /**
- * Default selector used by Promesa
+ * Default selector used by Escritura
  */
 
-const makeSelectPromesaForm = () =>
+const makeSelectEscrituraForm = () =>
   createSelector(
-    selectPromesaFormDomain,
+    selectEscrituraFormDomain,
     substate => substate,
   );
 
-export default makeSelectPromesaForm;
-export { selectPromesaFormDomain };
+export default makeSelectEscrituraForm;
+export { selectEscrituraFormDomain };

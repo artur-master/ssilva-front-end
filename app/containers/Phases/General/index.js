@@ -25,6 +25,7 @@ export function PhaseGeneral({
   canVNEdit,
 }) {
   const [isOpen, setOpen] = useState(false);
+
   return (
     <Box collapse isOpen={isCollapse}>
       <BoxHeader>

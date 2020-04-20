@@ -8,6 +8,7 @@ const RadioGroup = ({
   map = { label: 'label', value: 'value' },
   itemClassName = 'col-auto',
   required,
+  readOnly,
   ...props
 }) => {
   const [error, setError] = useState(false);
@@ -41,7 +42,12 @@ const RadioGroup = ({
                       name={name}
                       {...field}
                       value={option[map.value]}
-                      onChange={props.onChange || field.onChange}
+                      onChange={(evt)=> {
+                        if (readOnly) return;
+                        if(props.onChange) props.onChange(evt);
+                        else if(field.onChange) field.onChange(evt);
+                      }
+                      }
                       /* eslint-disable-next-line */
                       checked={value == option[map.value]}
                     />

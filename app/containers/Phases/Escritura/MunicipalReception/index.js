@@ -6,23 +6,28 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import moment from 'components/moment';
 import { Box, BoxContent, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
+import { Auth } from 'containers/App/helpers';
 
-function MunicipalReception() {
+function MunicipalReception({onSubmit}) {
   const initialValues = {
-    Date: '2019-4-17',
+    SubmissionDate: Auth.isGerenteComercial() ? new Date() : "",
   };
+
   return (
     <Box>
       <ExForm
         initialValues={initialValues}
-        onSubmit={values => console.log(values)}
+        onSubmit={(values)=> onSubmit({
+          SubmissionDate:moment(values.SubmissionDate).format('YYYY-MM-DD')
+        })}
       >
-        {form => (
+        {() => (
           <>
             <BoxContent className="p-3">
               <Alert type="warning">
@@ -32,13 +37,14 @@ function MunicipalReception() {
                 <Label className="mr-5">Fecha de presentación de solicitud de recepción final Municipal</Label>
                 <ExField
                   type="datePicker"
-                  name="Date"
+                  name="SubmissionDate"
                   required
+                  disabled={!Auth.isGerenteComercial()}
                 />
               </div>
             </BoxContent>
             <BoxFooter>
-              <Button type="submit">
+              <Button type="submit" disabled={!Auth.isGerenteComercial()}>
                 Aceptar
               </Button>
               <Button type="reset" color="white">
@@ -53,7 +59,7 @@ function MunicipalReception() {
 }
 
 MunicipalReception.propTypes = {
-  // promesa: PropTypes.object,
+  onSubmit: PropTypes.func,
 };
 
 export default MunicipalReception;
