@@ -7,6 +7,8 @@ import { API_ROOT } from 'containers/App/constants';
 import {
   GET_ESCRITURA,
   CONFIRM_ESCRITURA,
+  APROBA_ESCRITURA,
+  CHECK_PROMESA,
 } from './constants';
 
 import {
@@ -14,6 +16,10 @@ import {
   getEscrituraSuccess,
   confirmEscrituraError,
   confirmEscrituraSuccess,
+  aproveDateEscrituraError,
+  aproveDateEscrituraSuccess,
+  checkPromesaError,
+  checkPromesaSuccess,
 } from './actions';
 
 function* sagaGetEscritura(action) {
@@ -47,7 +53,53 @@ function* sagaConfirmEscritura(action) {
   }
 }
 
+function* sagaAprobaEscritura(action) {
+  const requestURL = `${API_ROOT}/ventas/escritura/${action.EscrituraID}/`;
+  try {
+    const response = yield call(
+      request,
+      requestURL,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({
+          ...action.values,
+          EscrituraState: ESCRITURA_STATE.Fechas_Avisos,
+        }),
+      }
+    );
+
+    yield put(aproveDateEscrituraSuccess(response));
+  } catch (error) {
+    yield put(aproveDateEscrituraError(error));
+  }
+}
+
+function* sagaCheckPromesa(action) {
+  const data = action.values;
+  data.append('EscrituraState', ESCRITURA_STATE.A_Comercial);
+
+  try {
+    const response = yield call(
+      request,
+      `${API_ROOT}/ventas/escritura/${action.EscrituraID}/`,
+      {
+        method: 'PATCH',
+        body: data,
+        headers: {
+          'content-type': null,
+        },
+      }
+    );
+
+    yield put(checkPromesaSuccess(response));
+  } catch (error) {
+    yield put(checkPromesaError(error));
+  }
+}
+
 export default function* projectSaga() {
   yield takeLatest(GET_ESCRITURA, sagaGetEscritura);
   yield takeLatest(CONFIRM_ESCRITURA, sagaConfirmEscritura);
+  yield takeLatest(APROBA_ESCRITURA, sagaAprobaEscritura);
+  yield takeLatest(CHECK_PROMESA, sagaCheckPromesa);
 }
