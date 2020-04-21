@@ -6,9 +6,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { push } from 'connected-react-router';
-import { Link } from 'react-router-dom';
-import ProgressBar from 'components/ProgressBar';
 import Empty from 'components/Empty';
 import { ProjectMeta } from 'containers/Common/ProjectMeta';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
