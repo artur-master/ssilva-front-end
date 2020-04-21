@@ -6,16 +6,15 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-import ProgressBar from 'components/ProgressBar';
 import Empty from 'components/Empty';
 import { UserProject } from 'containers/Project/helper';
-import { Box, BoxContent, BoxHeader } from 'components/Box';
+import { Box } from 'components/Box';
 import ActionItem from './ActionItem';
 
 export function ActionPending({ selector }) {
   const { entities = [] } = selector;
+  const { PendingActions = [] } = selector;
   const [proyectoKey, setProyectoKey] = useState('none');
   const projects = entities ? entities.filter(entity => UserProject.in(entity)) : [];
   // if (projects.length < 1) return <Empty tag="h2" />;
@@ -24,9 +23,6 @@ export function ActionPending({ selector }) {
       <div className="col-sm-6 col-xl-4">
         <h3 className="font-21 color-regular">Acciones Pendientes Propias</h3>
         <Box>
-          <ActionItem />
-          <ActionItem />
-          <ActionItem />
           <div className="p-3 d-flex justify-content-end">
             <a href="#" className="font-14-rem m-btn m-btn-white d-block">Ver Todo</a>
           </div>
@@ -35,9 +31,11 @@ export function ActionPending({ selector }) {
       <div className="col-sm-6 col-xl-4">
         <h3 className="font-21 color-regular">Acciones Pendientes Globales</h3>
         <Box>
-          <ActionItem />
-          <ActionItem />
-          <ActionItem />
+          {PendingActions && (PendingActions.length > 0) &&(
+            PendingActions.slice(0, 3).map((values, key) => (
+              <ActionItem key={key} Action={values} />
+            ))
+          )}
           <div className="p-3 d-flex justify-content-end">
             <a href="#" className="font-14-rem m-btn m-btn-white d-block">Ver Todo</a>
           </div>
