@@ -11,6 +11,12 @@ import {
   CONFIRM_ESCRITURA,
   CONFIRM_ESCRITURA_ERROR,
   CONFIRM_ESCRITURA_SUCCESS,
+  APROBA_ESCRITURA,
+  APROBA_ESCRITURA_ERROR,
+  APROBA_ESCRITURA_SUCCESS,
+  CHECK_PROMESA,
+  CHECK_PROMESA_ERROR,
+  CHECK_PROMESA_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -28,6 +34,8 @@ const escrituraReducer = (state = initialState, action) =>
     switch (action.type) {
       case GET_ESCRITURA:
       case CONFIRM_ESCRITURA:
+      case APROBA_ESCRITURA:
+      case CHECK_PROMESA:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
@@ -36,6 +44,8 @@ const escrituraReducer = (state = initialState, action) =>
         break;
       case GET_ESCRITURA_ERROR:
       case CONFIRM_ESCRITURA_ERROR:
+      case APROBA_ESCRITURA_ERROR:
+      case CHECK_PROMESA_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -54,7 +64,15 @@ const escrituraReducer = (state = initialState, action) =>
         draft.success = true;        
         draft.escritura = action.response[0];
         draft.redirect = 'list';
-        break; 
+        break;      
+      case APROBA_ESCRITURA_SUCCESS:
+      case CHECK_PROMESA_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.success = true;        
+        draft.escritura = action.response.escritura;
+        draft.redirect = '';
+        break;
     }
   });
 
