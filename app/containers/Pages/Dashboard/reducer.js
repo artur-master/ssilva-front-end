@@ -4,6 +4,7 @@
  *
  */
 import produce from 'immer';
+import {SortPendingAction, SortUserPendingAction, doQuery} from './helper';
 import {
   FETCH_ENTITIES,
   FETCH_ENTITIES_ERROR,
@@ -53,6 +54,10 @@ const dashboardReducer = (state = initialState, action) =>
         draft.error = false;
         draft.Logs = action.response.logs;
         draft.Counter = action.response.count;
+        const Actions = action.response.PendingAction;
+        const arr_action = [...Actions.Cotizacion, ...Actions.Reserva, 
+                            ...Actions.Ofertas, ...Actions.Promesa];
+        draft.PendingActions = SortPendingAction(arr_action);
         break;
     }
   });
