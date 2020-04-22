@@ -23,6 +23,7 @@ import {
   getEscritura,
   aproveDateEscritura,
   checkPromesa,
+  notificarCompradores,
 } from './actions';
 import makeSelectEscrituraForm from './selectors';
 import Steps from './Steps';
@@ -134,23 +135,33 @@ export function Form({ project, selector, dispatch }) {
           />
         </>
       )}
-      { (EscrituraState == ESCRITURA_STATE.Recep_Mun) && 
+      { (EscrituraState !== ESCRITURA_STATE.Fechas_Avisos_GC) && 
         <MunicipalReception
+          canEdit={(EscrituraState == ESCRITURA_STATE.Recep_Mun)}
+          initialValues={entity}
           onSubmit={(value)=>dispatch(aproveDateEscritura(value, entity.EscrituraID))}
         /> 
       }
-      { EscrituraState > ESCRITURA_STATE.Recep_Mun && (
+      { EscrituraState > ESCRITURA_STATE.Recep_Mun && 
+        EscrituraState !== ESCRITURA_STATE.Apr_Creditos_I && ( 
         <RevisionPromesa 
-          isCollapse={(EscrituraState == ESCRITURA_STATE.Fechas_Avisos) &&
+          isCollapse={(EscrituraState == ESCRITURA_STATE.Fechas_Avisos_GC) &&
                        Auth.isGerenteComercial()}
           initialValues={entity}
           onSubmit={(values)=>dispatch(checkPromesa(values, entity.EscrituraID))}
         />
       )}
-      { EscrituraState > ESCRITURA_STATE.Fechas_Avisos && ( 
+      { EscrituraState == ESCRITURA_STATE.Fechas_Avisos_ES && ( 
+        <NotificacionComprado 
+          onSubmit={()=>dispatch(notificarCompradores(entity.EscrituraID))}
+        />
+      )}
+      { EscrituraState == ESCRITURA_STATE.Apr_Creditos_I && ( 
+        <DatesEscrituracion initialValues={entity}/>
+      )}
+      { parseInt(EscrituraState) > ESCRITURA_STATE.Fechas_Avisos && 
+        EscrituraState !== ESCRITURA_STATE.Apr_Creditos_I && ( 
         <>
-          <NotificacionComprado />
-          <DatesEscrituracion />
           <AprobaHipotecarios />
           <AprobaHipotecarios_1 />
           <AprobaHipotecarios_2 />

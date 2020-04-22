@@ -10,7 +10,7 @@ import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
 
-function NotificacionComprado() {
+function NotificacionComprado({onSubmit}) {
   return (
     <Box>
       <BoxHeader>
@@ -21,7 +21,7 @@ function NotificacionComprado() {
           Debes Notificar al Comprador.
         </Alert>
         <div className="d-block mt-3">
-          <Button>
+          <Button onClick={onSubmit}>
             Confirmo Notificación
           </Button>
           <Button color="white">
@@ -34,7 +34,7 @@ function NotificacionComprado() {
 }
 
 NotificacionComprado.propTypes = {
-  // promesa: PropTypes.object,
+  onSubmit: PropTypes.func,
 };
 
 export default NotificacionComprado;

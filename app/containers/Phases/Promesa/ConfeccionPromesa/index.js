@@ -45,7 +45,6 @@ export function PhaseConfeccionPromesa({
       }}
       onSubmit={values => {
         setInit(true);
-        setCanSubmit(true);
         onSubmit({
           ...values,
           DesistimientoEspecial: values.HasDesistimientoEspecial
@@ -67,6 +66,11 @@ export function PhaseConfeccionPromesa({
           if (init) setInit(false);
           else setCanSubmit(true);
         }, [values]);
+
+        useEffect(() => {
+          setInit(true)
+        }, []);
+
         return (
           <>
             <Box>
