@@ -87,7 +87,7 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
         <div className="w-50 d-flex justify-content-end">
           <Button
             onClick={() => {
-              let percentPromesa, percentAmount, percentAhorro, percentEscrituraContado;
+              let percentPromesa, percentAmount, percentAhorro, percentEscrituraContado, percentInstitucionFinanciera;
               if(isContadoType(values.PayType)) {
                 percentPromesa = defaultPercent.ContadoMontoPromesa || 20;
                 percentAmount = defaultPercent.ContadoMontoCuotas || 20;
@@ -99,17 +99,21 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                 percentAmount = defaultPercent.CreditoMontoCuotas || 20;
                 percentEscrituraContado = defaultPercent.CreditoMontoEscrituraContado || 20;
                 percentAhorro = defaultPercent.CreditoAhorroPlus || 20;
+                percentInstitucionFinanciera = defaultPercent.CreditoMontoInstitucionFinanciera || 20;
               }
               else {
                 percentPromesa = 20;
                 percentAmount = 20;
                 percentEscrituraContado = 20;
+                percentInstitucionFinanciera = 20;
                 percentAhorro = 20;
               }
 
               handleChangePercent('PaymentFirmaPromesa', percentPromesa);
               handleChangePercent('Cuotas.0.Amount', percentAmount);
               handleChangePercent('AhorroPlus', percentAhorro);
+              handleChangePercent('PaymentFirmaEscritura', percentEscrituraContado);
+              handleChangePercent('PaymentInstitucionFinanciera', percentInstitucionFinanciera);
               // percent.PaymentFirmaEscritura / percent.PaymentInstitucionFinanciera
             }}
             className="m-btn m-btn-white shadow-sm"
@@ -225,10 +229,10 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                   readOnly={values.Cuotas.length > 1}
                   value={
                     values.Cuotas[0] ?
-                    values.Cuotas[0].Amount
-                      ? formatNumber(values.Cuotas[0].Amount)
+                      values.Cuotas[0].Amount
+                        ? formatNumber(values.Cuotas[0].Amount)
+                        : ''
                       : ''
-                    : ''
                   }
                   onChange={evt => {
                     let value = evt.currentTarget.value;
@@ -312,62 +316,6 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
           </tfoot>
         </table>
       </div>
-      <div className="payment-block">
-        <table className="table">
-          <tbody>
-            <tr>
-              <td>Monto Firma Escritura {isContadoType(values.PayType) && ('/ Contado')}</td>
-              <td>
-                <div className="search-filter">
-                  <input
-                    className="form-control form-control-sm"
-                    type="number"
-                    readOnly
-                    value={
-                      (values.PaymentFirmaEscritura || values.PaymentInstitucionFinanciera)
-                        ? formatNumber(values.PaymentFirmaEscritura || values.PaymentInstitucionFinanciera)
-                        : ''
-                    }
-                    placeholder="0"
-                  />
-                </div>
-              </td>
-              <td>
-                <div className="search-filter">
-                  <span className="form-control form-control-sm" style={{ width: 120, height: 28 }}>
-                    {(percent.PaymentFirmaEscritura || percent.PaymentInstitucionFinanciera)
-                      ? `%${formatNumber(percent.PaymentFirmaEscritura || percent.PaymentInstitucionFinanciera)}`
-                      : ' '
-                    }
-                  </span>
-                </div>
-              </td>
-              <td>
-                <div className="search-filter">
-                  <IntlFormatCurrency
-                    className="form-control form-control-sm"
-                    style={{ width: 120 }}
-                    value={(convert.PaymentFirmaEscritura || convert.PaymentInstitucionFinanciera)}
-                  />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td />
-              <td />
-              <td className="border-top">Sub Total</td>
-              <td className="border-top text-right">
-                <strong>
-                  <FormattedNumber value={(values.PaymentFirmaEscritura || values.PaymentInstitucionFinanciera)} />
-                </strong>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
       {isCreditType(values.PayType) && (
         <div className="payment-block">
           <table className="table">
@@ -375,34 +323,39 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
               <tr>
                 <td>Monto Institución Financiera</td>
                 <td>
-                  <div className="search-filter">
-                    <input
-                      className="form-control form-control-sm"
-                      type="number"
-                      value={
-                        values.PaymentInstitucionFinanciera
-                          ? formatNumber(values.PaymentInstitucionFinanciera)
-                          : ''
-                      }
-                      placeholder="0"
-                      min={0}
-                      readOnly
-                    />
-                  </div>
+                  <Input
+                    className="form-control form-control-sm"
+                    type="number"
+                    value={
+                      values.PaymentInstitucionFinanciera
+                        ? formatNumber(values.PaymentInstitucionFinanciera)
+                        : ''
+                    }
+                    onChange={evt => {
+                      let value = evt.currentTarget.value
+                      if (value < 0) return;
+                      handleChangeUF('PaymentInstitucionFinanciera', value);
+                    }}
+                    min={0}
+                  />
                 </td>
                 <td>
-                  <div className="search-filter">
-                    <input
-                      className="form-control form-control-sm"
-                      value={
-                        percent.PaymentInstitucionFinanciera
-                          ? `%${formatNumber(percent.PaymentInstitucionFinanciera)}`
-                          : ' '
-                      }
-                      readOnly
-                      placeholder="0"
-                    />
-                  </div>
+                  <Input
+                    className="form-control form-control-sm"
+                    type="number"
+                    prefix="%"
+                    // readOnly={percent.PaymentInstitucionFinanciera > 1}
+                    value={
+                      percent.PaymentInstitucionFinanciera
+                        ? formatNumber(percent.PaymentInstitucionFinanciera)
+                        : ''
+                    }
+                    onChange={evt => {
+                      let value = evt.currentTarget.value;
+                      if (value > 100 || value < 0) return;
+                      handleChangePercent('PaymentInstitucionFinanciera', value);
+                    }}
+                  />
                 </td>
                 <td>
                   <div className="search-filter">
@@ -474,6 +427,70 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
           </table>
         </div>
       )}
+      <div className="payment-block">
+        <table className="table">
+          <tbody>
+            <tr>
+              <td>Monto Firma Escritura {isContadoType(values.PayType) && ('/ Contado')}</td>
+              <td>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  value={
+                    (values.PaymentFirmaEscritura)
+                      ? formatNumber(values.PaymentFirmaEscritura)
+                      : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value
+                    if (value < 0) return;
+                    handleChangeUF('PaymentFirmaEscritura', value);
+                  }}
+                />
+              </td>
+              <td>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  prefix="%"
+                  value={
+                    (percent.PaymentFirmaEscritura)
+                      ? formatNumber(percent.PaymentFirmaEscritura)
+                      : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if (value > 100 || value < 0) return;
+                    handleChangePercent('PaymentFirmaEscritura', value);
+                  }}
+                />
+              </td>
+              <td>
+                <div className="search-filter">
+                  <IntlFormatCurrency
+                    className="form-control form-control-sm"
+                    style={{ width: 120 }}
+                    value={(convert.PaymentFirmaEscritura)}
+                  />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td />
+              <td />
+              <td className="border-top">Sub Total</td>
+              <td className="border-top text-right">
+                <strong>
+                  <FormattedNumber value={(values.PaymentFirmaEscritura)} />
+                </strong>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
 
       <div className="payment-block">
         <table className="table">
