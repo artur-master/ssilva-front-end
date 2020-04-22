@@ -17,6 +17,9 @@ import {
   CHECK_PROMESA,
   CHECK_PROMESA_ERROR,
   CHECK_PROMESA_SUCCESS,
+  NOTIFICAR_COMPRADO,
+  NOTIFICAR_COMPRADO_ERROR,
+  NOTIFICAR_COMPRADO_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -36,6 +39,7 @@ const escrituraReducer = (state = initialState, action) =>
       case CONFIRM_ESCRITURA:
       case APROBA_ESCRITURA:
       case CHECK_PROMESA:
+      case NOTIFICAR_COMPRADO:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
@@ -46,6 +50,7 @@ const escrituraReducer = (state = initialState, action) =>
       case CONFIRM_ESCRITURA_ERROR:
       case APROBA_ESCRITURA_ERROR:
       case CHECK_PROMESA_ERROR:
+      case NOTIFICAR_COMPRADO_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -67,6 +72,7 @@ const escrituraReducer = (state = initialState, action) =>
         break;      
       case APROBA_ESCRITURA_SUCCESS:
       case CHECK_PROMESA_SUCCESS:
+      case NOTIFICAR_COMPRADO_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = true;        

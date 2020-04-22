@@ -312,62 +312,63 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
           </tfoot>
         </table>
       </div>
-      <div className="payment-block">
-        <table className="table">
-          <tbody>
-            <tr>
-              <td>Monto Firma Escritura {isContadoType(values.PayType) && ('/ Contado')}</td>
-              <td>
-                <div className="search-filter">
-                  <input
-                    className="form-control form-control-sm"
-                    type="number"
-                    readOnly
-                    value={
-                      (values.PaymentFirmaEscritura || values.PaymentInstitucionFinanciera)
-                        ? formatNumber(values.PaymentFirmaEscritura || values.PaymentInstitucionFinanciera)
-                        : ''
-                    }
-                    placeholder="0"
-                  />
-                </div>
-              </td>
-              <td>
-                <div className="search-filter">
-                  <span className="form-control form-control-sm" style={{ width: 120, height: 28 }}>
-                    {(percent.PaymentFirmaEscritura || percent.PaymentInstitucionFinanciera)
-                      ? `%${formatNumber(percent.PaymentFirmaEscritura || percent.PaymentInstitucionFinanciera)}`
-                      : ' '
-                    }
-                  </span>
-                </div>
-              </td>
-              <td>
-                <div className="search-filter">
-                  <IntlFormatCurrency
-                    className="form-control form-control-sm"
-                    style={{ width: 120 }}
-                    value={(convert.PaymentFirmaEscritura || convert.PaymentInstitucionFinanciera)}
-                  />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td />
-              <td />
-              <td className="border-top">Sub Total</td>
-              <td className="border-top text-right">
-                <strong>
-                  <FormattedNumber value={(values.PaymentFirmaEscritura || values.PaymentInstitucionFinanciera)} />
-                </strong>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
+      {isContadoType(values.PayType) && (
+        <div className="payment-block">
+          <table className="table">
+            <tbody>
+              <tr>
+                <td>Monto Firma Escritura / Contado</td>
+                <td>
+                  <div className="search-filter">
+                    <input
+                      className="form-control form-control-sm"
+                      type="number"
+                      readOnly
+                      value={
+                        values.PaymentFirmaEscritura
+                          ? formatNumber(values.PaymentFirmaEscritura)
+                          : ''
+                      }
+                      placeholder="0"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <div className="search-filter">
+                    <span className="form-control form-control-sm" style={{ width: 120, height: 28 }}>
+                      {percent.PaymentFirmaEscritura
+                        ? `%${formatNumber(percent.PaymentFirmaEscritura)}`
+                        : ' '
+                      }
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <div className="search-filter">
+                    <IntlFormatCurrency
+                      className="form-control form-control-sm"
+                      style={{ width: 120 }}
+                      value={convert.PaymentFirmaEscritura}
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td />
+                <td />
+                <td className="border-top">Sub Total</td>
+                <td className="border-top text-right">
+                  <strong>
+                    <FormattedNumber value={values.PaymentFirmaEscritura} />
+                  </strong>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      )}
       {isCreditType(values.PayType) && (
         <div className="payment-block">
           <table className="table">
@@ -394,10 +395,11 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                   <div className="search-filter">
                     <input
                       className="form-control form-control-sm"
+                      type="number"
                       value={
                         percent.PaymentInstitucionFinanciera
-                          ? `%${formatNumber(percent.PaymentInstitucionFinanciera)}`
-                          : ' '
+                          ? formatNumber(percent.PaymentInstitucionFinanciera)
+                          : ''
                       }
                       readOnly
                       placeholder="0"
