@@ -40,6 +40,17 @@ export function CarpetaDigital({
   }, [entity]);
   const tabs = [
     {
+      label: 'OFERTA',
+      content: (
+        <Offer
+          canUpload={canEdit}
+          canReview={canReview}
+          entity={entity}
+          onReview={onReview}
+        />
+      ),
+    },
+    {
       label: 'CRÉDITO',
       content: (
         <Credit
@@ -54,17 +65,6 @@ export function CarpetaDigital({
     //   label: 'PROMESA',
     //   content: <Promise entity={entity} />,
     // },
-    {
-      label: 'OFERTA',
-      content: (
-        <Offer
-          canUpload={canEdit}
-          canReview={canReview}
-          entity={entity}
-          onReview={onReview}
-        />
-      ),
-    },
   ];
   const codeudor_document = 
   {
