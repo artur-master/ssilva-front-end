@@ -17,6 +17,9 @@ import {
   CHECK_PROMESA,
   CHECK_PROMESA_ERROR,
   CHECK_PROMESA_SUCCESS,
+  NOTIFICAR_COMPRADO,
+  NOTIFICAR_COMPRADO_ERROR,
+  NOTIFICAR_COMPRADO_SUCCESS,
 } from './constants';
 
 export function getEscritura(ProyectoID) {
@@ -93,6 +96,25 @@ export function checkPromesaError(error) {
 export function checkPromesaSuccess(response) {
   return {
     type:CHECK_PROMESA_SUCCESS,
+    response,
+  };
+}
+
+export function notificarCompradores(EscrituraID) {
+  return {
+    type: NOTIFICAR_COMPRADO,
+    EscrituraID,
+  };
+}
+export function notificarCompradoresError(error) {
+  return {
+    type: NOTIFICAR_COMPRADO_ERROR,
+    error,
+  };
+}
+export function notificarCompradoresSuccess(response) {
+  return {
+    type:NOTIFICAR_COMPRADO_SUCCESS,
     response,
   };
 }

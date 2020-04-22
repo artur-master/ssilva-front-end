@@ -12,6 +12,7 @@ import Button from 'components/Button';
 import Alert from 'components/Alert';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
 import { getCheckPromesaModel } from '../models';
+import DocumentItem from './DocumentItem';
 
 function RevisionPromesa({
   isCollapse=true, 
@@ -92,14 +93,8 @@ function RevisionPromesa({
                                   readOnly={!isCollapse}
                                 />
                               }
-                              {type == "file" && 
-                                <ExField
-                                  type="file"
-                                  name={name}
-                                  placeholder = "Examinar..."
-                                  style={{width:"12em", height:"2.2em"}}
-                                  required
-                                />
+                              {type == "file" &&
+                                <DocumentItem name={name} canUpload={isCollapse} />
                               }
                             </div>
                           </td> </>)
@@ -110,6 +105,7 @@ function RevisionPromesa({
                 </Table>
               </div>
             </BoxContent>
+            {isCollapse && (
             <BoxFooter>
               <Button type="submit" disabled={!isCollapse}>
                 Guardar
@@ -121,6 +117,7 @@ function RevisionPromesa({
                 El resulrado de la revisión es distinto a la versión de Legal. Gerencia será notificada del caso.
               </Alert>
             </BoxFooter>
+            )}
           </>
         )}
       </ExForm>

@@ -49,8 +49,8 @@ function Steps({ state }) {
         </li>
 
         <li className={`item br-remove-left 
-                    ${(state == ESCRITURA_STATE.Fechas_Avisos) ?
-            "color-caution" : (state > ESCRITURA_STATE.Fechas_Avisos) ? "color-success" : ""}`}
+                    ${(parseInt(state) == ESCRITURA_STATE.Fechas_Avisos) ?
+            "color-caution" : (parseInt(state) > ESCRITURA_STATE.Fechas_Avisos) ? "color-success" : ""}`}
         >
           <div className="number">
             <span>2</span>
