@@ -26,3 +26,9 @@ export const CHECK_PROMESA_ERROR =
   'app/containers/Escritura/Form/CHECK_PROMESA_ERROR';
 export const CHECK_PROMESA_SUCCESS =
   'app/containers/Escritura/Form/CHECK_PROMESA_SUCCESS';
+
+export const NOTIFICAR_COMPRADO = 'app/containers/Escritura/Form/NOTIFICAR_COMPRADO';
+export const NOTIFICAR_COMPRADO_ERROR =
+  'app/containers/Escritura/Form/NOTIFICAR_COMPRADO_ERROR';
+export const NOTIFICAR_COMPRADO_SUCCESS =
+  'app/containers/Escritura/Form/NOTIFICAR_COMPRADO_SUCCESS';

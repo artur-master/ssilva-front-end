@@ -9,6 +9,7 @@ import {
   CONFIRM_ESCRITURA,
   APROBA_ESCRITURA,
   CHECK_PROMESA,
+  NOTIFICAR_COMPRADO,
 } from './constants';
 
 import {
@@ -20,6 +21,8 @@ import {
   aproveDateEscrituraSuccess,
   checkPromesaError,
   checkPromesaSuccess,
+  notificarCompradoresError,
+  notificarCompradoresSuccess,
 } from './actions';
 
 function* sagaGetEscritura(action) {
@@ -63,7 +66,7 @@ function* sagaAprobaEscritura(action) {
         method: 'PATCH',
         body: JSON.stringify({
           ...action.values,
-          EscrituraState: ESCRITURA_STATE.Fechas_Avisos,
+          EscrituraState: ESCRITURA_STATE.Fechas_Avisos_GC,
         }),
       }
     );
@@ -76,7 +79,7 @@ function* sagaAprobaEscritura(action) {
 
 function* sagaCheckPromesa(action) {
   const data = action.values;
-  data.append('EscrituraState', ESCRITURA_STATE.A_Comercial);
+  data.append('EscrituraState', ESCRITURA_STATE.Fechas_Avisos_ES);
 
   try {
     const response = yield call(
@@ -97,9 +100,31 @@ function* sagaCheckPromesa(action) {
   }
 }
 
+function* sagaNotificarCompradores(action) {
+  const requestURL = `${API_ROOT}/ventas/escritura/${action.EscrituraID}/`;
+  try {
+    const response = yield call(
+      request,
+      requestURL,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({
+          ProyectoID:action.ProyectoID,
+          EscrituraState: ESCRITURA_STATE.Apr_Creditos_I,
+        }),
+      }
+    );
+
+    yield put(notificarCompradoresSuccess(response));
+  } catch (error) {
+    yield put(notificarCompradoresError(error));
+  }
+}
+
 export default function* projectSaga() {
   yield takeLatest(GET_ESCRITURA, sagaGetEscritura);
   yield takeLatest(CONFIRM_ESCRITURA, sagaConfirmEscritura);
   yield takeLatest(APROBA_ESCRITURA, sagaAprobaEscritura);
   yield takeLatest(CHECK_PROMESA, sagaCheckPromesa);
+  yield takeLatest(NOTIFICAR_COMPRADO, sagaNotificarCompradores);
 }
