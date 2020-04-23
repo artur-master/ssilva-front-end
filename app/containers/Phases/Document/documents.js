@@ -13,11 +13,16 @@ export const getDocuments = entity => {
       documentoType: 'DocumentPagoGarantia',
       required: true,
     }, 
+    // {
+    //   documentoName: 'Cheques',
+    //   documentoType: 'DocumentFirmadoCheques',
+    //   accept: 'pdf',
+    //   firmado: true,
+    // },
     {
-      documentoName: 'Cheques',
-      documentoType: 'DocumentFirmadoCheques',
-      accept: 'pdf',
-      firmado: true,
+      documentoName: 'Cotizacion',
+      documentoType: 'DocumentCotizacion',
+      autoGenerate: true,
     },
     {
       documentoName: 'Ficha Pre-aprobacion',
@@ -32,7 +37,7 @@ export const getDocuments = entity => {
     {
       documentoName: 'Cotizacion',
       accept: 'pdf',
-      documentoType: 'DocumentCotizacion',
+      documentoType: 'DocumentFirmadoCotizacion',
       firmado: true,
       required: true,
     },
@@ -165,12 +170,12 @@ export const CodeudorDocuments = entity => {
   const hasTieneDeposito = !!entity.Patrimony.DownPayment;
   const hasTieneCredito = !!entity.Patrimony.CreditoConsumo.PagosMensuales;
   let baseDocuments = [
-    {
-      documentoName: 'Cheques',
-      documentoType: 'DocumentCodeudorFirmadoCheques',
-      accept: 'pdf',
-      firmado: true,
-    },
+    // {
+    //   documentoName: 'Cheques',
+    //   documentoType: 'DocumentCodeudorFirmadoCheques',
+    //   accept: 'pdf',
+    //   firmado: true,
+    // },
     {
       documentoName: 'Ficha Pre-aprobacion',
       documentoType: 'DocumentCodeudorFichaPreAprobacion',
