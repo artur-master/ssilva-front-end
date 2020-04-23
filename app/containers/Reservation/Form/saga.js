@@ -2,7 +2,7 @@ import { call, put, all, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { API_ROOT } from 'containers/App/constants';
 import FileSaver from 'file-saver';
-import moment from 'moment';
+// import moment from 'moment';
 import {
   SAVE_RESERVATION,
   GET_RESERVATION,
@@ -92,6 +92,7 @@ function* save(action) {
     const resDocuments = yield call(sagaUploadVentasDocument, documents);
     response.reserva.Documents = resDocuments.Documentos;
   }
+
   return response;
 }
 
@@ -152,58 +153,31 @@ function* controlReview(action) {
 }
 
 const downloadFile = async (url, fileName) => {
-  console.log(url)
   if(url !== '')
     FileSaver.saveAs( url,fileName );
 }
 
-function* sagaDownloadQuotation(CotizacionID) {
-  const requestURL = `${API_ROOT}/ventas/cotizaciones-download/`;
-  try {
-    const response = yield call(request, requestURL, {
-      method: 'post',
-      body: JSON.stringify({
-        CotizacionID: CotizacionID,
-        LetterSize: 80,
-      }),
-    });
-    FileSaver.saveAs(response, 'cotización.pdf');
-  } catch (error) {
-    return error
-  }
-}
-
-function* generateCheque(cheque) {
-  const requestURL = `${API_ROOT}/ventas/generate-check/`;
-  const response = yield call(request, requestURL, {
-    method: 'POST',
-    body: JSON.stringify(cheque),
-  });
-  FileSaver.saveAs(
-    response,
-    `cheque-${moment(cheque.Date).format('YYYY_MM_DD')}.pdf`,
-  );
-  return response;
-}
+// function* generateCheque(cheque) {
+//   const requestURL = `${API_ROOT}/ventas/generate-check/`;
+//   const response = yield call(request, requestURL, {
+//     method: 'POST',
+//     body: JSON.stringify(cheque),
+//   });
+//   FileSaver.saveAs(
+//     response,
+//     `cheque-${moment(cheque.Date).format('YYYY_MM_DD')}.pdf`,
+//   );
+//   return response;
+// }
 
 function* printDocuments(action) {
-  try {
-    yield call(sagaDownloadQuotation, action.values.CotizacionID);
+  try {    
+    downloadFile(action.values.Documents.DocumentCotizacion,'cotización.pdf');
+    downloadFile(action.values.Documents.DocumentFichaPreAprobacion,'ficha pre aprobación.pdf');
+    downloadFile(action.values.Documents.DocumentSimulador,'simulador de crédito.pdf');
+    downloadFile(action.values.Documents.DocumentOferta,'oferta.pdf');
 
-    // const response = yield call(save, action);
-    // downloadFile(response.reserva.Documents.DocumentCotizacion, 'cotización.pdf')
-    // downloadFile(response.reserva.Documents.DocumentOferta, 'oferta.pdf')
-    // downloadFile(response.reserva.Documents.DocumentFichaPreAprobacion, 'ficha pre aprobación.pdf')
-    // downloadFile(response.reserva.Documents.DocumentSimulador, 'simulador de crédito.pdf')
-
-    const genCheques = [];
-    const cheques = action.values.printCuotas;
-    for (let i = 0; i < cheques.length; i += 1) {
-      genCheques.push(yield call(generateCheque, cheques[i]));
-    }
-    const chequesFiles = yield all(genCheques);
-
-    // yield put(printDocumentsSuccess({"success"}));
+    yield put(printDocumentsSuccess("success"));
     
   } catch (error) {
     yield put(printDocumentsError(error));
