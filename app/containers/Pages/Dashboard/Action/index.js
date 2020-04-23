@@ -11,6 +11,7 @@ import Empty from 'components/Empty';
 import { UserProject } from 'containers/Project/helper';
 import { Box } from 'components/Box';
 import ActionItem from './ActionItem';
+import Button from 'components/Button';
 
 export function ActionPending({ selector }) {
   const { entities = [] } = selector;
@@ -31,7 +32,8 @@ export function ActionPending({ selector }) {
       <div className="col-sm-6 col-xl-4">
         <h3 className="font-21 color-regular">Acciones Pendientes Globales</h3>
         <Box>
-          {PendingActions && (PendingActions.length > 0) &&(
+          {(PendingActions && (PendingActions.length < 1)) && (<Empty tag="h2" />)}
+          {PendingActions && (PendingActions.length > 0) && (
             PendingActions.slice(0, 3).map((values, key) => (
               <ActionItem key={key} Action={values} />
             ))
@@ -62,12 +64,12 @@ export function ActionPending({ selector }) {
             </div>
             <div className="ml-3">
               <Link
-                disabled={(proyectoKey==='none')? true: false}
+                disabled={(proyectoKey === 'none') ? true : false}
                 to={(
-                  proyectoKey!=='none') ?
-                  `/proyectos/${projects[proyectoKey].ProyectoID}/cotizaciones`:''}
-                onClick={e => ((proyectoKey==='none') ? e.preventDefault():'')}
-                className="font-14-rem m-btn d-block text-center" 
+                  proyectoKey !== 'none') ?
+                  `/proyectos/${projects[proyectoKey].ProyectoID}/cotizaciones` : ''}
+                onClick={e => ((proyectoKey === 'none') ? e.preventDefault() : '')}
+                className="font-14-rem m-btn d-block text-center"
                 style={{ minWidth: '3em' }}
               >
                 Ir

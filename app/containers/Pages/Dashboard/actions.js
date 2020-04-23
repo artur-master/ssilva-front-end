@@ -46,9 +46,10 @@ export function fetchLogsError(error) {
   };
 }
 
-export function fetchLogsSuccess(response) {
+export function fetchLogsSuccess(pendingActions, logs) {
   return {
     type: FETCH_LOGS_SUCCESS,
-    response,
+    pendingActions, 
+    logs,
   };
 }
