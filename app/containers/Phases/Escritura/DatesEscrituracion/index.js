@@ -11,11 +11,10 @@ import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
-
-function DatesEscrituracion() {
+function DatesEscrituracion({initialValues}) {
   return (
     <ExForm
-      // initialValues={initialValues}
+      initialValues={initialValues}
       onSubmit={values => console.log(values)}
     >
     {form => (
@@ -154,7 +153,7 @@ function DatesEscrituracion() {
 }
 
 DatesEscrituracion.propTypes = {
-  // promesa: PropTypes.object,
+  initialValues: PropTypes.object,
 };
 
 export default DatesEscrituracion;
