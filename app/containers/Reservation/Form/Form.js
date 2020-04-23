@@ -53,6 +53,7 @@ export function Form({ project, selector, dispatch }) {
   const canUpload = canUploadReservation(entity);
   const canReview = canReviewReservation(entity);
   const initialValues = model({ project, entity });
+
   const handleConfirm = (data, confirm) => {
     setConfirmes({
       ...confirmes,
@@ -112,7 +113,11 @@ export function Form({ project, selector, dispatch }) {
         dispatch={dispatch}
         onContinue={values => {
           setStep(step + 1);
-          dispatch(updateReservation(values));
+          if (step === 2)
+            return dispatch(
+              saveReservation({ ...initialValues, ...entity }),
+            );
+          // dispatch(updateReservation(values));
         }}
       />
       {(step === 3 || entity.ReservaID) && (
@@ -147,11 +152,11 @@ export function Form({ project, selector, dispatch }) {
             dispatch(controlReview({ ...values, ReservaID: entity.ReservaID }))
           }
           onPrint={() => {
-            if (!entity.printCuotas || !entity.printCuotas.length) {
-              setCanPrint(false);
-              setOpenAlert(true);
-            }
-            else
+            // if (!entity.printCuotas || !entity.printCuotas.length) {
+            //   setCanPrint(false);
+            //   setOpenAlert(true);
+            // }
+            // else
               return dispatch(printDocuments({ ...initialValues, ...entity }))
           }}
         />
