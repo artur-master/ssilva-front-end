@@ -7,7 +7,12 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { API_ROOT } from 'containers/App/constants';
 import { FETCH_ENTITIES, FETCH_LOGS } from './constants';
-import { fetchEntitiesError, fetchEntitiesSuccess, fetchLogsSuccess, fetchLogsError } from './actions';
+import { 
+  fetchEntitiesError, 
+  fetchEntitiesSuccess, 
+  fetchLogsSuccess, 
+  fetchLogsError 
+} from './actions';
 
 function* fetchEntities() {
   const requestURL = `${API_ROOT}/empresas-proyectos/proyectos/`;
@@ -20,10 +25,10 @@ function* fetchEntities() {
 }
 
 function* fetchLogs() {
-  const requestURL = `${API_ROOT}/ventas/logs-dashboard/`;
   try {
-    const response = yield call(request, requestURL);
-    yield put(fetchLogsSuccess(response));
+    const pendingActions = yield call(request, `${API_ROOT}/ventas/dashboard-pending-actions/`);
+    const logs = yield call(request, `${API_ROOT}/ventas/all-logs-dashboard/`);
+    yield put(fetchLogsSuccess(pendingActions, logs));
   } catch (error) {
     yield put(fetchLogsError(error));
   }
