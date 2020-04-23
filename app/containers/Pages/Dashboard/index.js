@@ -15,7 +15,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { Helmet } from 'react-helmet';
 import PageHeader from 'containers/Common/PageHeader';
 import WithLoading from 'components/WithLoading';
-import { UserProject } from 'containers/Project/helper';
 import makeSelectDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -33,18 +32,22 @@ export function DashboardPage({ dispatch, selector }) {
 
   useEffect(() => {
     if (!loading) {
-      dispatch(fetchLogs());
       dispatch(fetchEntities());
+      dispatch(fetchLogs());
     }
   }, []);
  
   return (
     <div className="mt-4">
       <Helmet title="Dashboard" />
-      {/* <PageHeader actions={['aa']}>Dashboard</PageHeader> */}
-      {/* {!entities && <SyncMessage {...selector} />} */}
-      <ActionPending dispatch={dispatch} selector={selector} />
+      <PageHeader>Dashboard</PageHeader>
+      {loading &&(<SyncMessage {...selector} />)}
+      {!loading &&(
+        <>
+          <ActionPending dispatch={dispatch} selector={selector} />
       <MainContent dispatch={dispatch} selector={selector} />
+        </>
+      )}
     </div>
   );
 }
