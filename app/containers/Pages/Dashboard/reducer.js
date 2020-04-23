@@ -4,7 +4,7 @@
  *
  */
 import produce from 'immer';
-import {SortPendingAction, SortUserPendingAction, doQuery} from './helper';
+import { SortPendingAction, SortUserPendingAction, doQuery } from './helper';
 import {
   FETCH_ENTITIES,
   FETCH_ENTITIES_ERROR,
@@ -27,7 +27,7 @@ const dashboardReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case FETCH_ENTITIES:
-        draft.loading = false;
+        draft.loading = true;
         draft.error = false;
         draft.entities = false;
         break;
@@ -36,7 +36,7 @@ const dashboardReducer = (state = initialState, action) =>
         draft.error = action.error;
         break;
       case FETCH_ENTITIES_SUCCESS:
-        draft.loading = false;
+        draft.loading = true;
         draft.error = false;
         draft.entities = action.entities;
         break;
@@ -52,11 +52,11 @@ const dashboardReducer = (state = initialState, action) =>
       case FETCH_LOGS_SUCCESS:
         draft.loading = false;
         draft.error = false;
-        draft.Logs = action.response.logs;
-        draft.Counter = action.response.count;
-        const Actions = action.response.PendingAction;
-        const arr_action = [...Actions.Cotizacion, ...Actions.Reserva, 
-                            ...Actions.Ofertas, ...Actions.Promesa];
+        draft.Logs = action.logs;
+        draft.Counter = action.pendingActions.count;
+        const Actions = action.pendingActions.PendingAction;
+        const arr_action = [...Actions.Cotizacion, ...Actions.Reserva,
+        ...Actions.Ofertas, ...Actions.Promesa];
         draft.PendingActions = SortPendingAction(arr_action);
         break;
     }
