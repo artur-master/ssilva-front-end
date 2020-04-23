@@ -43,7 +43,7 @@ export function CarpetaReservation({
   let content1=[], content2=[], content3=[];
   if (documents) {
     content1 = [
-      {title:'copia del cheque o transferencia de la reserva', url: documents.DocumentFirmadoCheques},
+      // {title:'copia del cheque o transferencia de la reserva', url: documents.DocumentFirmadoCheques},
       {title:'Cédula de identidad del cliente', url: documents.DocumentCertificadoMatrimonio},
       {title:'Cotización', url: documents.DocumentCotizacion},
       {title:'Oferta', url: documents.DocumentOfertaFirmada}
