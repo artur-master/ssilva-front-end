@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Empty from 'components/Empty';
+import { Auth } from 'containers/App/helpers';
 import { UserProject } from 'containers/Project/helper';
 import { Box } from 'components/Box';
 import ActionItem from './ActionItem';
@@ -18,14 +19,35 @@ export function ActionPending({ selector }) {
   const { PendingActions = [] } = selector;
   const [proyectoKey, setProyectoKey] = useState('none');
   const projects = entities ? entities.filter(entity => UserProject.in(entity)) : [];
-  // if (projects.length < 1) return <Empty tag="h2" />;
+  const User_Actions = PendingActions ?
+    PendingActions.filter(
+      entity => entity.ApprovedUserInfo.UserID === Auth.get('user').UserID
+    ) : [];
   return (
     <div className="row">
       <div className="col-sm-6 col-xl-4">
         <h3 className="font-21 color-regular">Acciones Pendientes Propias</h3>
         <Box>
+          {(User_Actions && (User_Actions.length < 1)) && (<Empty tag="h2" />)}
+          {User_Actions && (User_Actions.length > 0) && (
+            User_Actions.slice(0, 3).map((values, key) => (
+              <ActionItem key={key} Action={values} />
+            ))
+          )}
           <div className="p-3 d-flex justify-content-end">
-            <a href="#" className="font-14-rem m-btn m-btn-white d-block">Ver Todo</a>
+            <Button
+              disabled = {!(User_Actions && (User_Actions.length > 0))}
+              onClick={() => {
+                setActionModal({
+                  header: 'Propias',
+                  actions: [...User_Actions],
+                  open: true
+                });
+              }}
+              className="font-14-rem m-btn m-btn-white d-block"
+            >
+              Ver Todo
+            </Button>
           </div>
         </Box>
       </div>
