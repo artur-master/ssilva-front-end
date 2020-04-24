@@ -10,7 +10,6 @@ import moment from 'components/moment';
 import Empty from 'components/Empty';
 
 export function TimeLog({ Logs }) {
-  //
   return (
 
     <div className="col-md-4">
@@ -20,8 +19,8 @@ export function TimeLog({ Logs }) {
           <div className="list-continue-line line-gray mt-2">
             <ol style={{ maxHeight: 533, overflow: 'auto' }}>
 
-            {(Logs.length < 1) && (<Empty tag="h2" />)}
-              {Logs.length>0 && (
+            {(Logs && Logs.length < 1) && (<Empty tag="h2" />)}
+              {Logs && Logs.length>0 && (
                 Logs.map(log => {
                   const dateAgo = moment.utc(log.Date).fromNow('day');
                   return (

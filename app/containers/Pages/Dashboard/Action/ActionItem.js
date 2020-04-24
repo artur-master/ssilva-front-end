@@ -10,6 +10,9 @@ import moment from 'components/moment';
 const ActionItem = (Item) => {
   const { Action } = Item;
   const dateAgo = moment().diff(Action.Date, 'days');
+  const phase_split = Action.SaleState.split(' ');
+  const phase = phase_split[phase_split.length - 1];
+  const phase_Uppercase = phase.charAt(0).toUpperCase() + phase.slice(1);
   const user = Action.ApprovedUserInfo;
   return (
     <div className="border-bottom">
@@ -24,7 +27,15 @@ const ActionItem = (Item) => {
           </dd>
         </dl>
         <div>
-          <a href="#" className="font-14-rem shadow-sm m-btn ml-2 m-btn m-btn-   btn btn-">Ver</a>
+          <a
+            href={(phase.toLowerCase() === "cotizacion") ?
+              `/proyectos/${Action.ProyectoID}/${phase_Uppercase}/${Action.VentaID}` :
+              `/proyectos/${Action.ProyectoID}/${phase_Uppercase}?${phase_Uppercase}ID=${Action.VentaID}`
+            }
+            className="font-14-rem shadow-sm m-btn ml-2 m-btn m-btn- btn btn-"
+          >
+            Ver
+          </a>
         </div>
       </div>
     </div>
