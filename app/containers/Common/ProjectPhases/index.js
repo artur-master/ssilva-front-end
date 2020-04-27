@@ -57,7 +57,7 @@ export function ProjectPhases({ project = {}, active }) {
         <li className={`col-12 col-md ${active === 'escritura' ? 'active' : ''}`}>
           <Link to={`/proyectos/${project.ProyectoID}/escrituras`}>
             <span className="key">Escrituras</span>
-            <span className="value badge badge-secondary">0</span>
+            <span className="value badge badge-secondary">{project.Metadata.Count.Escritura}</span>
           </Link>
         </li>
       </ul>

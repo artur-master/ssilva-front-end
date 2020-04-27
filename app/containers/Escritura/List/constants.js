@@ -1,15 +1,21 @@
 /*
  *
- * Promesa constants
+ * Escrituras constants
  *
  */
-/* Promesas */
-export const SEARCH_PROMESAS = 'app/containers/Promesa/List/SEARCH_PROMESAS';
+/* Escrituras */
+export const SEARCH_ESCRITURAS = 'app/containers/Escritura/List/SEARCH_ESCRITURAS';
 
-export const QUERY_PROMESAS = 'app/containers/Promesa/List/QUERY_PROMESAS';
+export const QUERY_ESCRITURAS = 'app/containers/Escritura/List/QUERY_ESCRITURAS';
 
-export const FETCH_PROMESAS = 'app/containers/Promesa/List/FETCH_PROMESAS';
-export const FETCH_PROMESAS_ERROR =
-  'app/containers/Promesa/List/FETCH_PROMESAS_ERROR';
-export const FETCH_PROMESAS_SUCCESS =
-  'app/containers/Promesa/List/FETCH_PROMESAS_SUCCESS';
+export const FETCH_ESCRITURAS = 'app/containers/Escritura/List/FETCH_ESCRITURAS';
+export const FETCH_ESCRITURAS_ERROR =
+  'app/containers/Escritura/List/FETCH_ESCRITURAS_ERROR';
+export const FETCH_ESCRITURAS_SUCCESS =
+  'app/containers/Escritura/List/FETCH_ESCRITURAS_SUCCESS';  
+
+export const CONFIRM_ESCRITURA = 'app/containers/Escritura/List/CONFIRM_ESCRITURA';
+export const CONFIRM_ESCRITURA_ERROR =
+  'app/containers/Escritura/List/CONFIRM_ESCRITURA_ERROR';
+export const CONFIRM_ESCRITURA_SUCCESS =
+  'app/containers/Escritura/List/CONFIRM_ESCRITURA_SUCCESS';

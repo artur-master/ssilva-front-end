@@ -2,24 +2,24 @@ import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
 /**
- * Direct selector to the promesa state domain
+ * Direct selector to the escritura state domain
  */
 
-const selectPromesasDomain = state => state.promesas || initialState;
+const selectEscriturasDomain = state => state.escrituras || initialState;
 
 /**
  * Other specific selectors
  */
 
 /**
- * Default selector used by Promesa
+ * Default selector used by Escritura
  */
 
-const makeSelectPromesa = () =>
+const makeSelectEscrituras = () =>
   createSelector(
-    selectPromesasDomain,
+    selectEscriturasDomain,
     substate => substate,
   );
 
-export default makeSelectPromesa;
-export { selectPromesasDomain };
+export default makeSelectEscrituras;
+export { selectEscriturasDomain };

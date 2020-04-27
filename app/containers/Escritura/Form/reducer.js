@@ -8,12 +8,9 @@ import {
   GET_ESCRITURA,
   GET_ESCRITURA_ERROR,
   GET_ESCRITURA_SUCCESS,
-  CONFIRM_ESCRITURA,
-  CONFIRM_ESCRITURA_ERROR,
-  CONFIRM_ESCRITURA_SUCCESS,
-  APROBA_ESCRITURA,
-  APROBA_ESCRITURA_ERROR,
-  APROBA_ESCRITURA_SUCCESS,
+  UPDATE_ESCRITURA,
+  UPDATE_ESCRITURA_ERROR,
+  UPDATE_ESCRITURA_SUCCESS,
   CHECK_PROMESA,
   CHECK_PROMESA_ERROR,
   CHECK_PROMESA_SUCCESS,
@@ -27,6 +24,7 @@ export const initialState = {
   error: false,
   success: false,
   escritura: false,
+  project: false,
   redirect: '',
 };
 
@@ -36,8 +34,7 @@ const escrituraReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case GET_ESCRITURA:
-      case CONFIRM_ESCRITURA:
-      case APROBA_ESCRITURA:
+      case UPDATE_ESCRITURA:
       case CHECK_PROMESA:
       case NOTIFICAR_COMPRADO:
         draft.loading = true;
@@ -47,8 +44,7 @@ const escrituraReducer = (state = initialState, action) =>
         draft.redirect = '';
         break;
       case GET_ESCRITURA_ERROR:
-      case CONFIRM_ESCRITURA_ERROR:
-      case APROBA_ESCRITURA_ERROR:
+      case UPDATE_ESCRITURA_ERROR:
       case CHECK_PROMESA_ERROR:
       case NOTIFICAR_COMPRADO_ERROR:
         draft.loading = false;
@@ -63,14 +59,12 @@ const escrituraReducer = (state = initialState, action) =>
         draft.redirect = '';      
         draft.escritura = action.response.length>0?action.response[0]:false;
         break;
-      case CONFIRM_ESCRITURA_SUCCESS:
+      case UPDATE_ESCRITURA_SUCCESS:
         draft.loading = false;
         draft.error = false;
-        draft.success = true;        
-        draft.escritura = action.response[0];
-        draft.redirect = 'list';
-        break;      
-      case APROBA_ESCRITURA_SUCCESS:
+        draft.success = action.response.detail;
+        draft.project = action.response.proyecto;
+        break;        
       case CHECK_PROMESA_SUCCESS:
       case NOTIFICAR_COMPRADO_SUCCESS:
         draft.loading = false;
