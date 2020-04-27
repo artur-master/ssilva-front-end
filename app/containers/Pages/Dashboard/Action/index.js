@@ -12,11 +12,13 @@ import { Auth } from 'containers/App/helpers';
 import { UserProject } from 'containers/Project/helper';
 import { Box } from 'components/Box';
 import ActionItem from './ActionItem';
+import { ActionModal } from './ActionModal';
 import Button from 'components/Button';
 
 export function ActionPending({ selector }) {
   const { entities = [] } = selector;
   const { PendingActions = [] } = selector;
+  const [actionModal, setActionModal] = useState({ header: '', open: false, actions: {} });
   const [proyectoKey, setProyectoKey] = useState('none');
   const projects = entities ? entities.filter(entity => UserProject.in(entity)) : [];
   const User_Actions = PendingActions ?
@@ -61,7 +63,19 @@ export function ActionPending({ selector }) {
             ))
           )}
           <div className="p-3 d-flex justify-content-end">
-            <a href="#" className="font-14-rem m-btn m-btn-white d-block">Ver Todo</a>
+            <Button
+              disabled = {!(PendingActions && (PendingActions.length > 0) )}
+              onClick={() => {
+                setActionModal({
+                  header: 'Globales',
+                  actions: [...PendingActions],
+                  open: true
+                });
+              }}
+              className="font-14-rem m-btn m-btn-white d-block"
+            >
+              Ver Todo
+            </Button>
           </div>
         </Box>
       </div>
@@ -123,6 +137,10 @@ export function ActionPending({ selector }) {
           </div>
         </Box>
       </div>
+      <ActionModal
+        actionModal={actionModal}
+        onHide={() => setActionModal({ open: false })}
+      />
     </div>
   );
 }
