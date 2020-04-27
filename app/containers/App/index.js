@@ -43,6 +43,7 @@ import PromesasPage from 'containers/Pages/Promesa/List';
 import PromesaPage from 'containers/Pages/Promesa/View/Loadable';
 import EscriturasPage from 'containers/Pages/Escritura/List/Loadable';
 import EscrituraPage from 'containers/Pages/Escritura/View/Loadable';
+import EscrituraProyectoPage from 'containers/Pages/Escritura/Project/Loadable';
 import DashboardPage from 'containers/Pages/Dashboard/Loadable';
 
 import { Auth } from './helpers';
@@ -224,6 +225,12 @@ function App() {
           exact
           path="/proyectos/:id/escritura"
           component={EscrituraPage}
+          redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
+        />
+        <AppRoute
+          exact
+          path="/proyectos/:id/escritura-proyecto"
+          component={EscrituraProyectoPage}
           redirect={() => (!Auth.isLoggedIn() ? '/login' : '')}
         />
 

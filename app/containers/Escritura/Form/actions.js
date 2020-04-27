@@ -8,12 +8,9 @@ import {
   GET_ESCRITURA,
   GET_ESCRITURA_ERROR,
   GET_ESCRITURA_SUCCESS,
-  CONFIRM_ESCRITURA,
-  CONFIRM_ESCRITURA_ERROR,
-  CONFIRM_ESCRITURA_SUCCESS,
-  APROBA_ESCRITURA,
-  APROBA_ESCRITURA_ERROR,
-  APROBA_ESCRITURA_SUCCESS,
+  UPDATE_ESCRITURA,
+  UPDATE_ESCRITURA_ERROR,
+  UPDATE_ESCRITURA_SUCCESS,
   CHECK_PROMESA,
   CHECK_PROMESA_ERROR,
   CHECK_PROMESA_SUCCESS,
@@ -41,41 +38,22 @@ export function getEscrituraSuccess(response) {
   };
 }
 
-export function confirmEscritura(ProyectoID) {
+export function updateEscritura(values, ProyectoID) {
   return {
-    type: CONFIRM_ESCRITURA,
+    type: UPDATE_ESCRITURA,
     ProyectoID,
-  };
-}
-export function confirmEscrituraError(error) {
-  return {
-    type: CONFIRM_ESCRITURA_ERROR,
-    error,
-  };
-}
-export function confirmEscrituraSuccess(response) {
-  return {
-    type:CONFIRM_ESCRITURA_SUCCESS,
-    response,
-  };
-}
-
-export function aproveDateEscritura(values, EscrituraID) {
-  return {
-    type: APROBA_ESCRITURA,
-    EscrituraID,
     values,
   };
 }
-export function aproveDateEscrituraError(error) {
+export function updateEscrituraError(error) {
   return {
-    type: APROBA_ESCRITURA_ERROR,
+    type: UPDATE_ESCRITURA_ERROR,
     error,
   };
 }
-export function aproveDateEscrituraSuccess(response) {
+export function updateEscrituraSuccess(response) {
   return {
-    type:APROBA_ESCRITURA_SUCCESS,
+    type:UPDATE_ESCRITURA_SUCCESS,
     response,
   };
 }

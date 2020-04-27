@@ -10,28 +10,27 @@ import Empty from 'components/Empty';
 import Item from './Item';
 import Thead from 'components/Table/Thead';
 
-const List = ({ project, promesas, query, onQuery, dispatch }) => (
+const List = ({ project, escrituras, query, onQuery, dispatch }) => (
   <Box className="mt-3 b-3">
-    {promesas && promesas.length < 1 && <Empty tag="h2" />}
-    {promesas && promesas.length > 0 && (
+    {escrituras && escrituras.length < 1 && <Empty tag="h2" />}
+    {escrituras && escrituras.length > 0 && (
       <table className="table table-responsive-sm table-fixed table-sm border-bottom">
         <Thead
           ths={[
-            { field: 'PromesaID', label: 'Promesa', sortable: true },
+            { field: 'EscrituraID', label: 'Escritura', sortable: true },
             { field: 'Inmuebles', label: 'Inmuebles', className: "pl-3" },
             { field: 'Cliente', label: 'Cliente', sortable: true },
-            { field: 'Date', label: 'Fecha', sortable: true },
-            { field: 'PromesaState', label: 'PromesaState', className: "text-right", sortable: true },
-            { field: '', label: '' },
+            { field: 'EscrituraState', label: 'EscrituraState', className: "text-right", sortable: true },
+            // { field: '', label: '' },
           ]}
           onQuery={onQuery}
           query={query}
         />
         <tbody>
-          {promesas.map(promesa => (
+          {escrituras.map(escritura => (
             <Item
-              key={promesa.PromesaID}
-              promesa={promesa}
+              key={escritura.EscrituraID}
+              escritura={escritura}
               project={project}
               dispatch={dispatch}
             />
@@ -43,7 +42,7 @@ const List = ({ project, promesas, query, onQuery, dispatch }) => (
 );
 
 List.propTypes = {
-  promesas: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  escrituras: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dispatch: PropTypes.func,
 };
