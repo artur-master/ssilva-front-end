@@ -19,18 +19,15 @@ import {
   matchRestrictionsFromAList,
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
-import RefundGrantiaButton from 'containers/Phases/Promesa/RefundGarantia/Buttons';
-import { UserProject, countIN } from 'containers/Project/helper';
-import FacturaButton from 'containers/Phases/Factura/Buttons';
 import { canEditPromesa, canRefund, isRefund } from '../helper';
 import { PROMESA_STATE } from '../../App/constants';
 
-const Item = ({ project, promesa, dispatch }) => {
+const Item = ({ project, escritura, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { Proyecto, Folio, PromesaState, Inmuebles, Cliente, Date } = promesa;
+  const { Proyecto, Folio, EscrituraState, Inmuebles, Cliente } = escritura;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   let ColorBadge = 'badge-caution';
-  switch (PromesaState) {
+  switch (EscrituraState) {
     case 'Reserva':
       ColorBadge = 'badge-success';
       break;
@@ -44,13 +41,13 @@ const Item = ({ project, promesa, dispatch }) => {
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        <Link
-          to={`/proyectos/${project.ProyectoID}/promesa?PromesaID=${
-            promesa.PromesaID
+        {/* <Link
+          to={`/proyectos/${project.ProyectoID}/escritura?EscrituraID=${
+            escritura.EscrituraID
           }`}
-        >
+        > */}
           <b>{`${Proyecto} / ${Folio}`}</b>
-        </Link>
+        {/* </Link> */}
       </td>
       <td className="px-3">
         {tmpInmuebles.map(Inmueble => (
@@ -60,36 +57,12 @@ const Item = ({ project, promesa, dispatch }) => {
         ))}
       </td>
       <td>Cliente: {clientFullname(Cliente)}</td>
-      <td>{Date}</td>
       <td>
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          <span className={`badge ${ColorBadge} px-2`}>{PromesaState}</span>
+          <span className={`badge ${ColorBadge} px-2`}>{EscrituraState}</span>
         </div>
       </td>
-      {/* <td>
-        {UserProject.isFinanza() && promesa.Factura && (
-          <div className="justify-content-end d-flex align-items-center ">
-            <FacturaButton promes={promesa} />
-          </div>
-        )}
-        {(canRefund(promesa) || isRefund(promesa)) && (
-          <div className="justify-content-end d-flex align-items-center">
-            <RefundGrantiaButton promesa={promesa} />
-          </div>
-        )}
-      </td>
-      <td className="no-whitespace">
-        {UserProject.isInmobiliario() &&
-          (promesa.PromesaState === PROMESA_STATE[14] && (
-            <span>
-              <b>FIRMAS</b>{' '}
-              {` | ${
-                Object.keys(promesa.AprobacionInmobiliaria || {}).length
-              } de ${countIN()}`}
-            </span>
-          ))}
-      </td> */}
-      <td className="font-21 px-3">
+      {/* <td className="font-21 px-3">
         <Dropdown
           isOpen={dropdownOpen}
           toggle={() => setDropdownOpen(!dropdownOpen)}
@@ -101,8 +74,8 @@ const Item = ({ project, promesa, dispatch }) => {
               onClick={() => {
                 dispatch(
                   push(
-                    `/proyectos/${project.ProyectoID}/promesa?PromesaID=${
-                      promesa.PromesaID
+                    `/proyectos/${project.ProyectoID}/escritura?EscrituraID=${
+                      escritura.EscrituraID
                     }`,
                   ),
                 );
@@ -128,13 +101,13 @@ const Item = ({ project, promesa, dispatch }) => {
             )}
           </DropdownMenu>
         </Dropdown>
-      </td>
+      </td> */}
     </tr>
   );
 };
 
 Item.propTypes = {
-  promesa: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  escritura: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dispatch: PropTypes.func,
 };

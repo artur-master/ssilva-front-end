@@ -13,6 +13,7 @@ const Collapse = ({
   className = '',
   collapse = true,
   isOpen = false,
+  onCollapsed,
 }) => {
   const [open, setOpen] = useState(isOpen);
   useEffect(() => {
@@ -21,6 +22,7 @@ const Collapse = ({
   if (Array.isArray(children) && collapse) {
     const toggle = () => {
       setOpen(!open);
+      if(onCollapsed) onCollapsed(open);
     };
     return (
       <div className={`accordion-01 border-top ${className}`}>
@@ -46,9 +48,10 @@ Collapse.propTypes = {
   isOpen: PropTypes.bool,
   collapse: PropTypes.bool,
   children: PropTypes.node,
+  onCollapsed: PropTypes.func
 };
 
-const CollapseHeader = ({ children, toggle, isOpen, className = '' }) => (
+const CollapseHeader = ({ children, toggle, isOpen = true, className = '' }) => (
   /* eslint-disable-next-line */
   <div
     className={`${className} button-toggler-plus w-100 pointer p-3 d-flex align-items-center after-expands-2 collapsed`}

@@ -6,69 +6,80 @@
 import Fuse from 'fuse.js';
 import produce from 'immer';
 import {
-  FETCH_PROMESAS,
-  FETCH_PROMESAS_ERROR,
-  FETCH_PROMESAS_SUCCESS,
-  SEARCH_PROMESAS,
-  QUERY_PROMESAS,
+  FETCH_ESCRITURAS,
+  FETCH_ESCRITURAS_ERROR,
+  FETCH_ESCRITURAS_SUCCESS,
+  SEARCH_ESCRITURAS,
+  QUERY_ESCRITURAS,
+  CONFIRM_ESCRITURA,
+  CONFIRM_ESCRITURA_ERROR,
+  CONFIRM_ESCRITURA_SUCCESS,
 } from './constants';
 import { getReports, initReports, doQuery } from '../helper';
 
 export const initialState = {
   loading: false,
   error: false,
-  promesas: false,
+  escrituras: false,
   reports: initReports(),
-  origin_promesas: false,
+  origin_escrituras: false,
   filter: { txtSearch: '' },
   query: { sort: { by: 'Date', asc: true } },
 };
 /* eslint-disable default-case, no-param-reassign */
-const promesaReducer = (state = initialState, action) =>
+const escrituraReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case SEARCH_PROMESAS:
+      case SEARCH_ESCRITURAS:
         draft.filter = { ...state.filter, ...action.filter };
-        draft.promesas = [...(state.origin_promesas || [])];
+        draft.escrituras = [...(state.origin_escrituras || [])];
 
         /* eslint-disable-next-line */
-        const fuse = new Fuse(draft.promesas, {
+        const fuse = new Fuse(draft.escrituras, {
           keys: ['Folio', 'ClienteName', 'ClienteLastNames', 'ClienteRut'],
         });
 
         if (draft.filter.textSearch)
-          draft.promesas = fuse.search(draft.filter.textSearch);
-        draft.reports = getReports(draft.promesas);
+          draft.escrituras = fuse.search(draft.filter.textSearch);
+        draft.reports = getReports(draft.escrituras);
 
         if (draft.filter.status && draft.filter.status !== 'All') {
-          draft.promesas = draft.promesas.filter(
+          draft.escrituras = draft.escrituras.filter(
             item => item.PromesaState === draft.filter.status,
           );
         }
 
         break;
-      case QUERY_PROMESAS:
+      case QUERY_ESCRITURAS:
         draft.query = !action.query
           ? initialState.query
           : { ...draft.query, ...action.query };
-        draft.promesas = doQuery(state.origin_promesas, draft.query);
+        draft.escrituras = doQuery(state.origin_escrituras, draft.query);
         break;
-      case FETCH_PROMESAS:
+      case FETCH_ESCRITURAS:
+      case CONFIRM_ESCRITURA:
         draft.loading = true;
         draft.error = false;
         break;
-      case FETCH_PROMESAS_ERROR:
+      case FETCH_ESCRITURAS_ERROR:
+      case CONFIRM_ESCRITURA_ERROR:
         draft.loading = false;
         draft.error = action.error;
         break;
-      case FETCH_PROMESAS_SUCCESS:
+      case FETCH_ESCRITURAS_SUCCESS:
         draft.loading = false;
         draft.error = false;
-        draft.origin_promesas = action.promesas;
-        draft.promesas = doQuery(draft.origin_promesas, draft.query);
-        draft.reports = getReports(draft.promesas);
+        draft.origin_escrituras = action.escrituras;
+        draft.escrituras = doQuery(draft.origin_escrituras, draft.query);
+        draft.reports = getReports(draft.escrituras);
+        break;
+      case CONFIRM_ESCRITURA_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.success=action.response.detail;
+        draft.proyecto=action.response.proyecto;
         break;
     }
   });
 
-export default promesaReducer;
+export default escrituraReducer;

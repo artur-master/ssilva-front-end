@@ -24,9 +24,11 @@ function MunicipalReception({ canEdit = false, initialValues, onSubmit }) {
     <Box>
       <ExForm
         initialValues={initialValues}
-        onSubmit={(values) => onSubmit({
-          SubmissionDate: moment(values.SubmissionDate).format('YYYY-MM-DD')
-        })}
+        onSubmit={(values) => {
+          const data = new FormData();
+          data.append("SubmissionDate",moment(values.SubmissionDate).format('YYYY-MM-DD'));          
+          onSubmit(data);
+        }}
       >
         {form => (
           <>
