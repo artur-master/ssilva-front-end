@@ -10,15 +10,33 @@ import { Table } from 'reactstrap';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
+import moment from 'components/moment';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
-function DatesEscrituracion({initialValues}) {
+function DatesEscrituracion({canEdit = false, initialValues, onSubmit}) {
   return (
     <ExForm
       initialValues={initialValues}
-      onSubmit={values => console.log(values)}
+      onSubmit={(values)=>{
+        const data = new FormData();
+        if(values["ReceptionDate"] != "") 
+          data.append("ReceptionDate", moment(values.ReceptionDate).format('YYYY-MM-DD'));
+        if(values["RealEstateLawDate"] != "")
+          data.append("RealEstateLawDate", moment(values["RealEstateLawDate"]).format('YYYY-MM-DD'));
+        if(values["RealEstateLawFile"].name)
+          data.append("RealEstateLawFile", values["RealEstateLawFile"]);
+        if(values["PlansConservatorDate"] != "") 
+          data.append("PlansConservatorDate", moment(values.PlansConservatorDate).format('YYYY-MM-DD'));
+        if(values["PlansConservatorFile"].name)
+          data.append("PlansConservatorFile", values["PlansConservatorFile"]);
+        if(values["DeedStartDate"] != "")
+          data.append("DeedStartDate", moment(values.DeedStartDate).format('YYYY-MM-DD'));
+        if(values["DeliverDay"])
+          data.append("DeliverDay", values["DeliverDay"]);
+        onSubmit(data);
+      }}
     >
-    {form => (
-      <Box>
+    {() => (
+      <Box collapse={!canEdit} isOpen={canEdit}>
         <BoxHeader>
           <b>FECHAS ESCRITURACIÓN</b>
         </BoxHeader>
@@ -39,7 +57,7 @@ function DatesEscrituracion({initialValues}) {
                     <div className="d-flex align-items-center justify-content-end pr-2">
                       <ExField
                         type="datePicker"
-                        name="PromesaInstructions"
+                        name="ReceptionDate"
                         style={{width:"8em", height: "2.2em"}}                                       
                         // required
                       />
@@ -56,15 +74,16 @@ function DatesEscrituracion({initialValues}) {
                     <div className="d-flex align-items-center justify-content-end pr-2">
                       <div className="mr-3">
                         <ExField
-                          type="file"
-                          name="PhysicalMask"
+                          type="file"                          
+                          accept=".pdf"
+                          name="RealEstateLawFile"
                           placeholder = "Examinar..."
                           style={{width: "9em", height: "2.2em"}}
                         />
                       </div>
                       <ExField
                         type="datePicker"
-                        name="PromesaInstructions"
+                        name="RealEstateLawDate"
                         style={{width:"8em", height: "2.2em"}}                                       
                         // required
                       />
@@ -82,14 +101,15 @@ function DatesEscrituracion({initialValues}) {
                       <div className="mr-3">
                         <ExField
                           type="file"
-                          name="PhysicalMask"
+                          accept=".pdf"
+                          name="PlansConservatorFile"
                           placeholder = "Examinar..."
                           style={{width: "9em", height: "2.2em"}}
                         />
                       </div>
                       <ExField
                         type="datePicker"
-                        name="PromesaInstructions"
+                        name="PlansConservatorDate"
                         style={{width:"8em", height: "2.2em"}}                                                    
                         // required
                       />
@@ -106,7 +126,7 @@ function DatesEscrituracion({initialValues}) {
                     <div className="d-flex align-items-center justify-content-end pr-2">
                       <ExField
                         type="datePicker"
-                        name="PromesaInstructions"
+                        name="DeedStartDate"
                         style={{width:"8em", height: "2.2em"}}                                       
                         // required
                       />
@@ -123,13 +143,13 @@ function DatesEscrituracion({initialValues}) {
                     <div className="d-flex align-items-center justify-content-end pr-2">
                       <ExField
                         type="select"
-                        name={`ContactInfoTypeID`}
+                        name="DeliverDay"
                         style={{width:"12em"}}
                         // required
                       >
-                        <option defaultValue hidden disabled>Cantidad de Días</option>
-                        <option>2 días</option>
-                        <option>3 días</option>
+                        <option defaultValue hidden>Cantidad de Días</option>
+                        <option value="2">2 días</option>
+                        <option value="3">3 días</option>
                       </ExField>
                     </div>
                   </td>
@@ -154,6 +174,7 @@ function DatesEscrituracion({initialValues}) {
 
 DatesEscrituracion.propTypes = {
   initialValues: PropTypes.object,
+  onSubmit: PropTypes.func,
 };
 
 export default DatesEscrituracion;

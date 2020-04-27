@@ -28,6 +28,7 @@ import { PROMESA_STATE } from '../../App/constants';
 const Item = ({ project, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { Proyecto, Folio, PromesaState, Inmuebles, Cliente, Date } = promesa;
+
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   let ColorBadge = 'badge-caution';
   switch (PromesaState) {

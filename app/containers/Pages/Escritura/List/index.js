@@ -5,7 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Escrituras from 'containers/Escritura';
+import Escrituras from 'containers/Escritura/List/Loadable';
 
 export function EscriturasPage({ match }) {
   return <Escrituras match={match} />;

@@ -5,9 +5,6 @@
  */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { Auth } from 'containers/App/helpers';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -17,15 +14,13 @@ import History from 'components/History';
 import WithLoading from 'components/WithLoading';
 const SyncMessage = WithLoading();
 
-import saga from './saga';
-import reducer from './reducer';
 import { 
   getEscritura,
   aproveDateEscritura,
   checkPromesa,
   notificarCompradores,
 } from './actions';
-import makeSelectEscrituraForm from './selectors';
+
 import Steps from './Steps';
 import { ESCRITURA_STATE } from 'containers/App/constants';
 
@@ -45,12 +40,14 @@ import AprobaHipotecarios from 'containers/Phases/Escritura/AprobaHipotecarios';
 import AprobaHipotecarios_1 from 'containers/Phases/Escritura/AprobaHipotecarios/AprobaHipotecarios_1';
 import AprobaHipotecarios_2 from 'containers/Phases/Escritura/AprobaHipotecarios/AprobaHipotecarios_2';
 import TitleReport from 'containers/Phases/Escritura/TitleReport';
-import TitleReport_1 from 'containers/Phases/Escritura/TitleReport/TitleReport_1';
 import Matriz from 'containers/Phases/Escritura/Matriz';
 import Matriz_1 from 'containers/Phases/Escritura/Matriz/Matriz_1';
 import Notary from 'containers/Phases/Escritura/Notary';
 
-export function Form({ project, selector, dispatch }) {
+export function Form({ project, location, selector, dispatch }) 
+{  
+  const query = queryString.parse(location.search);
+  const { EscrituraID } = query;
   
   useInjectReducer({ key: 'escrituraform', reducer });
   useInjectSaga({ key: 'escrituraform', saga });
@@ -166,7 +163,6 @@ export function Form({ project, selector, dispatch }) {
           <AprobaHipotecarios_1 />
           <AprobaHipotecarios_2 />
           <TitleReport />
-          <TitleReport_1 />
           <Matriz />
           <Matriz_1 />
           <Notary />
@@ -188,23 +184,7 @@ export function Form({ project, selector, dispatch }) {
 
 Form.propTypes = {
   project: PropTypes.object,
-  selector: PropTypes.object,
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes,
 };
 
-const mapStateToProps = createStructuredSelector({
-  selector: makeSelectEscrituraForm(),
-});
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-export default compose(withConnect)(Form);
+export default Form;
