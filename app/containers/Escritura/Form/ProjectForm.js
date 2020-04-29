@@ -12,7 +12,6 @@ import Button from 'components/Button';
 import History from 'components/History';
 import WithLoading from 'components/WithLoading';
 import { Auth } from 'containers/App/helpers';
-import { ESCRITURA_STATE } from 'containers/App/constants';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import InitData from 'containers/Common/InitData';
 const SyncMessage = WithLoading();
@@ -74,36 +73,34 @@ export function ProjectForm({ project, dispatch }) {
       </h5>
       
       {/* { (EscrituraProyectoState !== ESCRITURA_STATE.Fechas_Avisos_GC) && */}
-        <MunicipalReception
-          canEdit={(EscrituraProyectoState == ESCRITURA_STATE.Recep_Mun)}
+        <MunicipalReception          
+          state={EscrituraProyectoState}
           initialValues={project}
           onSubmit={(value)=>{
-            value.append("EscrituraProyectoState", ESCRITURA_STATE.Fechas_Avisos);
             dispatch(updateEscritura(value, project.ProyectoID));
           }}
         /> 
       {/* } */}
 
-      { (EscrituraProyectoState > ESCRITURA_STATE.Recep_Mun) &&
+      {/* { (EscrituraProyectoState > ESCRITURA_STATE.A_Comercial) && */}
         <DatesEscrituracion
-          canEdit={(EscrituraProyectoState == ESCRITURA_STATE.Fechas_Avisos)}
+          state={EscrituraProyectoState}
           initialValues={project}
           onSubmit={(value)=>{
-            value.append("EscrituraProyectoState", ESCRITURA_STATE.A_Comercial);
             dispatch(updateEscritura(value, project.ProyectoID));
           }}
         />
-      }
+      {/* } */}
 
-      { (EscrituraProyectoState > ESCRITURA_STATE.Fechas_Avisos) &&
-        <TitleReport 
-          canEdit={(EscrituraProyectoState == ESCRITURA_STATE.A_Comercial)}
+      {/* { (EscrituraProyectoState > ESCRITURA_STATE.Matrices_Escrit) && */}
+        <TitleReport
+          state={EscrituraProyectoState}
           initialValues={project}
           onSubmit={(value)=>{
             dispatch(updateEscritura(value, project.ProyectoID));
           }}
         />
-      }
+      {/* } */}
 
       {/* <Log logs={entity.Logs} limit={10} /> */}
 

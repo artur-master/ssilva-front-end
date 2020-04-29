@@ -23,7 +23,7 @@ import {
 } from './actions';
 
 function* sagaGetEscritura(action) {
-  const requestURL = `${API_ROOT}/ventas/escritura/?q=${action.ProyectoID}`;
+  const requestURL = `${API_ROOT}/ventas/escrituras/${action.EscrituraID}/`;
   try {
     const response = yield call(request, requestURL);
     yield put(getEscrituraSuccess(response));
@@ -60,7 +60,7 @@ function* sagaCheckPromesa(action) {
   try {
     const response = yield call(
       request,
-      `${API_ROOT}/ventas/escritura/${action.EscrituraID}/`,
+      `${API_ROOT}/ventas/escrituras/${action.EscrituraID}/`,
       {
         method: 'PATCH',
         body: data,
@@ -77,7 +77,7 @@ function* sagaCheckPromesa(action) {
 }
 
 function* sagaNotificarCompradores(action) {
-  const requestURL = `${API_ROOT}/ventas/escritura/${action.EscrituraID}/`;
+  const requestURL = `${API_ROOT}/ventas/escrituras/${action.EscrituraID}/notificar/`;
   try {
     const response = yield call(
       request,

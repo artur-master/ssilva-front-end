@@ -7,12 +7,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'reactstrap';
+import { ESCRITURA_STATE } from 'containers/App/constants';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
 import moment from 'components/moment';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
-function DatesEscrituracion({canEdit = false, initialValues, onSubmit}) {
+function DatesEscrituracion({state, initialValues, onSubmit}) {  
+  if (state < ESCRITURA_STATE.A_Comercial)
+    return null;
+    
+  const canEdit= (state == ESCRITURA_STATE.Apr_Creditos_I);
+
   return (
     <ExForm
       initialValues={initialValues}
@@ -32,11 +38,12 @@ function DatesEscrituracion({canEdit = false, initialValues, onSubmit}) {
           data.append("DeedStartDate", moment(values.DeedStartDate).format('YYYY-MM-DD'));
         if(values["DeliverDay"])
           data.append("DeliverDay", values["DeliverDay"]);
+        data.append("EscrituraProyectoState", ESCRITURA_STATE.Apr_Creditos_II);
         onSubmit(data);
       }}
     >
     {() => (
-      <Box collapse={!canEdit} isOpen={canEdit}>
+      <Box collapse={state>ESCRITURA_STATE.Matrices_Escrit} isOpen={state<ESCRITURA_STATE.Matrices_Escrit}>
         <BoxHeader>
           <b>FECHAS ESCRITURACIÓN</b>
         </BoxHeader>
@@ -158,21 +165,24 @@ function DatesEscrituracion({canEdit = false, initialValues, onSubmit}) {
             </Table>            
           </div>
         </BoxContent>
-        <BoxFooter>
-          <Button type="submit">
-            Guardar Datos Proyecto
-          </Button>
-          <Button type="reset" color="white">
-            Cancelar
-          </Button>
-        </BoxFooter>
+        {canEdit &&
+          <BoxFooter>
+            <Button type="submit">
+              Guardar Datos Proyecto
+            </Button>
+            <Button type="reset" color="white">
+              Cancelar
+            </Button>
+          </BoxFooter>
+        }
       </Box>
     )}
     </ExForm>
-  );
+  )
 }
 
-DatesEscrituracion.propTypes = {
+DatesEscrituracion.propTypes = {  
+  state: PropTypes.number,
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
 };
