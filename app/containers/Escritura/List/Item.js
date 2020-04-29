@@ -19,11 +19,9 @@ import {
   matchRestrictionsFromAList,
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
-import { canEditPromesa, canRefund, isRefund } from '../helper';
-import { PROMESA_STATE } from '../../App/constants';
 
 const Item = ({ project, escritura, dispatch }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
   const { Proyecto, Folio, EscrituraState, Inmuebles, Cliente } = escritura;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   let ColorBadge = 'badge-caution';
@@ -41,13 +39,13 @@ const Item = ({ project, escritura, dispatch }) => {
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
-        {/* <Link
+        <Link
           to={`/proyectos/${project.ProyectoID}/escritura?EscrituraID=${
             escritura.EscrituraID
           }`}
-        > */}
+        >
           <b>{`${Proyecto} / ${Folio}`}</b>
-        {/* </Link> */}
+        </Link>
       </td>
       <td className="px-3">
         {tmpInmuebles.map(Inmueble => (

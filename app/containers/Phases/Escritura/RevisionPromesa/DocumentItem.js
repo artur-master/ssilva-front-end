@@ -27,7 +27,7 @@ function DocumentItem({ name, label, canUpload }) {
           return (
               <div
                 className="custom-file custom-input-file order-3"
-                style={{ height: 'auto' }}
+                style={{ height: 'auto', width:'15em' }}
                 title="Examinar..."
               >
                 <input

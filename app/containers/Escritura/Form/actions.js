@@ -19,10 +19,10 @@ import {
   NOTIFICAR_COMPRADO_SUCCESS,
 } from './constants';
 
-export function getEscritura(ProyectoID) {
+export function getEscritura(EscrituraID) {
   return {
     type: GET_ESCRITURA,
-    ProyectoID,
+    EscrituraID,
   };
 }
 export function getEscrituraError(error) {

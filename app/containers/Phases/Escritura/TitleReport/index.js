@@ -11,13 +11,19 @@ import {
   DropdownMenu,
   DropdownToggle,
 } from 'reactstrap';
+import { ESCRITURA_STATE } from 'containers/App/constants';
 import Alert from 'components/Alert';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import { Collapse, CollapseHeader, CollapseContent } from 'components/Collapse';
 import { Label } from 'components/ExForm';
 import ContentItem from './ContentItem';
 
-function TitleReport({ canEdit = false, initialValues, onSubmit }) {
+function TitleReport({ state, initialValues, onSubmit }) 
+{
+  if (state < ESCRITURA_STATE.Matrices_Escrit)
+    return null;
+  const canEdit=(state == ESCRITURA_STATE.A_Comercial);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [collapsed, setCollapsed] = useState([true, true, true]);
   return (
@@ -143,8 +149,8 @@ function TitleReport({ canEdit = false, initialValues, onSubmit }) {
   );
 }
 
-TitleReport.propTypes = {
-  canEdit: PropTypes.bool,
+TitleReport.propTypes = {  
+  state: PropTypes.number,
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
 };
