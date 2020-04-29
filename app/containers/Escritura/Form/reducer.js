@@ -24,6 +24,7 @@ export const initialState = {
   error: false,
   success: false,
   escritura: false,
+  promesa: false,
   project: false,
   redirect: '',
 };
@@ -41,6 +42,7 @@ const escrituraReducer = (state = initialState, action) =>
         draft.error = false;
         draft.success = false;
         draft.escritura = false;
+        draft.promesa = false;
         draft.redirect = '';
         break;
       case GET_ESCRITURA_ERROR:
@@ -57,7 +59,8 @@ const escrituraReducer = (state = initialState, action) =>
         draft.error = false;
         draft.success = true;
         draft.redirect = '';      
-        draft.escritura = action.response.length>0?action.response[0]:false;
+        draft.escritura = action.response.escritura;
+        draft.promesa = action.response.promesa;
         break;
       case UPDATE_ESCRITURA_SUCCESS:
         draft.loading = false;
@@ -71,6 +74,7 @@ const escrituraReducer = (state = initialState, action) =>
         draft.error = false;
         draft.success = true;        
         draft.escritura = action.response.escritura;
+        draft.promesa = action.response.promesa;
         draft.redirect = '';
         break;
     }
