@@ -37,26 +37,26 @@ export function EscrituraForm({
   const header = ['Proyectos'];
   if (project.Name) header.push(project.Name);
 
+  if(action === "escritura"){
+    const query = queryString.parse(location.search);
+    const { EscrituraID } = query;
+
+    useEffect(() => {
+      if (EscrituraID) dispatch(getEscritura(EscrituraID));
+    }, [location.search]);
+  }
+
   if (!project) return <SyncMessage loading />;
 
   if (action === "project")
     return <>
       <SyncMessage {...selector} />
-      <ProjectForm project={selector.project || project} dispatch={dispatch}/>;
-    </>;
-    
-  // if(action === "escritura"){
-    const query = queryString.parse(location.search);
-    const { EscrituraID } = query;
-
-    useEffect(() => {
-      if (PromesaID) dispatch(getEscritura(EscrituraID));
-    }, [location.search]);
-  // }
+      <ProjectForm project={selector.project || project} dispatch={dispatch}/>
+    </>
 
   return (
     <>
-      {(action == "escritura") && <Form selector={selector} location={location}/>}
+      {(action == "escritura") && <Form selector={selector} project={project} dispatch={dispatch}/>}
       {/* {(action == "project") && <ProjectForm project={project} /> } */}
     </>
   );

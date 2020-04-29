@@ -13,20 +13,18 @@ import Button from 'components/Button';
 import Alert from 'components/Alert';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
 import { Auth } from 'containers/App/helpers';
+import { ESCRITURA_STATE } from 'containers/App/constants';
 
-function MunicipalReception({ canEdit = false, initialValues, onSubmit }) {
-  // if (entity == false)
-  //   entity = {
-  //     SubmissionDate: Auth.isGerenteComercial() ? new Date() : "",
-  //   };
-
+function MunicipalReception({ state, initialValues, onSubmit }) {
+  const canEdit = (state == ESCRITURA_STATE.Recep_Mun);
   return (
     <Box>
       <ExForm
         initialValues={initialValues}
         onSubmit={(values) => {
           const data = new FormData();
-          data.append("SubmissionDate",moment(values.SubmissionDate).format('YYYY-MM-DD'));          
+          data.append("SubmissionDate",moment(values.SubmissionDate).format('YYYY-MM-DD'));
+          data.append("EscrituraProyectoState", ESCRITURA_STATE.Fechas_Avisos_GC);
           onSubmit(data);
         }}
       >
@@ -71,7 +69,7 @@ function MunicipalReception({ canEdit = false, initialValues, onSubmit }) {
 }
 
 MunicipalReception.propTypes = {
-  canEdit: PropTypes.bool,
+  state: PropTypes.number,
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
 };

@@ -3,20 +3,20 @@
  * Escritura Form
  *
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { push } from 'connected-react-router';
+
 import { Auth } from 'containers/App/helpers';
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
+import InitData from 'containers/Common/InitData';
+import ProjectPhases from 'containers/Common/ProjectPhases';
 import Log from 'components/Log';
-import Button from 'components/Button';
 import History from 'components/History';
+import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 const SyncMessage = WithLoading();
 
 import { 
-  getEscritura,
-  aproveDateEscritura,
   checkPromesa,
   notificarCompradores,
 } from './actions';
@@ -25,17 +25,14 @@ import Steps from './Steps';
 import { ESCRITURA_STATE } from 'containers/App/constants';
 
 import PhaseGeneral from 'containers/Phases/General';
-import General from 'containers/Project/General';
 import PhaseClient from 'containers/Phases/Client';
 import PhaseInmueble from 'containers/Phases/Inmueble';
 import PhaseFormaDePago from 'containers/Phases/FormaDePago';
 import PhasePreCredito from 'containers/Phases/PreCredito';
 import PhaseDocument from 'containers/Phases/Document';
 import PhaseTimeline from 'containers/Phases/Promesa/Timeline';
-import MunicipalReception from 'containers/Phases/Escritura/MunicipalReception';
 import RevisionPromesa from 'containers/Phases/Escritura/RevisionPromesa';
 import NotificacionComprado from 'containers/Phases/Escritura/NotificacionComprado';
-import DatesEscrituracion from 'containers/Phases/Escritura/DatesEscrituracion';
 import AprobaHipotecarios from 'containers/Phases/Escritura/AprobaHipotecarios';
 import AprobaHipotecarios_1 from 'containers/Phases/Escritura/AprobaHipotecarios/AprobaHipotecarios_1';
 import AprobaHipotecarios_2 from 'containers/Phases/Escritura/AprobaHipotecarios/AprobaHipotecarios_2';
@@ -44,34 +41,30 @@ import Matriz from 'containers/Phases/Escritura/Matriz';
 import Matriz_1 from 'containers/Phases/Escritura/Matriz/Matriz_1';
 import Notary from 'containers/Phases/Escritura/Notary';
 
-export function Form({ project, location, selector, dispatch }) 
+export function Form({ selector, project, dispatch }) 
 {  
-  const query = queryString.parse(location.search);
-  const { EscrituraID } = query;
+  // const [isHistoryOpen, setHistoryOpen] = useState(false);
   
-  useInjectReducer({ key: 'escrituraform', reducer });
-  useInjectSaga({ key: 'escrituraform', saga });
+  const entity_escritura = selector.escritura;
+  const entity_promesa = selector.promesa;
   
-  const [isHistoryOpen, setHistoryOpen] = useState(false);
-
-  useEffect(() => {
-    if (project.ProyectoID) dispatch(getEscritura(project.ProyectoID));
-  }, []);
-  
-  const entity = selector.escritura;
-  
-  if (!entity) return <SyncMessage loading />;
+  if (!entity_escritura || !entity_promesa) return <SyncMessage loading />;
   // const onCancel = () =>
   //   dispatch(push(`/proyectos/${project.ProyectoID}/escrituras`));
-  const { EscrituraState } = entity;
+  
+  const { EscrituraState } = entity_escritura;
   
   return (
     <>
+      <InitData User Client />
+      <ProjectPhases project={project} active="escritura" />
       <Steps state={EscrituraState} />
       <div className="row m-0">
         <Button
           className="col-auto mt-3 m-btn"
-          onClick={() => { }}
+          onClick={() => dispatch(
+            push(`/proyectos/${project.ProyectoID}/escrituras`)
+          )}
         >
           Ver listado inmueble
         </Button>
@@ -88,73 +81,61 @@ export function Form({ project, location, selector, dispatch })
         >
           Historial
         </Button>
-      </div>
-      {/* <!-- Title --> */}
+      </div>      
       <div className="mt-2 d-flex align-items-end justify-content-between after-expands-2">
-        <h4 className="font-21 color-regular mt-3 order-1">Go San Pablo</h4>
-      </div>
-      {/* <!-- Subtitle --> */}
+        <h4 className="font-21 color-regular mt-3 order-1">{project.Name}</h4>
+      </div>      
       <h5 className="mb-3 font-18 d-flex align-items-center justify-content-between">
         <span className="line-height-1 color-success">Ingreso Fechas de Presentación de Recepción Municipal</span>
       </h5>
-      { isHistoryOpen && (
+      {/* { isHistoryOpen && ( */}
         <>
           <PhaseGeneral
-            initialValues={entity}
+            initialValues={entity_promesa}
             canEdit={false}
           />
           <PhaseClient
-            payType={entity.PayType}
-            client={entity.Cliente}
+            payType={entity_promesa.PayType}
+            client={entity_promesa.Cliente}
             canEdit={false}
           />
           <PhaseInmueble
-            initialValues={entity}
+            initialValues={entity_promesa}
             canEdit={false}
           />
           <PhaseFormaDePago
-            initialValues={entity}
+            initialValues={entity_promesa}
             canEdit={false}
           />
           <PhasePreCredito
             isCollapse={false}
-            initialValues={entity}
+            initialValues={entity_promesa}
           />
           <PhaseDocument
             isCollapse={false}
-            entity={entity}
+            entity={entity_promesa}
             promesa={true}
           />
           <PhaseTimeline
             isCollapse={false}
-            entity={entity}
+            entity={entity_promesa}
             selector={selector}
           />
         </>
-      )}
-      { (EscrituraState !== ESCRITURA_STATE.Fechas_Avisos_GC) && 
-        <MunicipalReception
-          canEdit={(EscrituraState == ESCRITURA_STATE.Recep_Mun)}
-          initialValues={entity}
-          onSubmit={(value)=>dispatch(aproveDateEscritura(value, entity.EscrituraID))}
-        /> 
-      }
-      { EscrituraState > ESCRITURA_STATE.Recep_Mun && 
-        EscrituraState !== ESCRITURA_STATE.Apr_Creditos_I && ( 
+      {/* )} */}
+
+      { EscrituraState > ESCRITURA_STATE.Recep_Mun && ( 
         <RevisionPromesa 
           isCollapse={(EscrituraState == ESCRITURA_STATE.Fechas_Avisos_GC) &&
                        Auth.isGerenteComercial()}
-          initialValues={entity}
-          onSubmit={(values)=>dispatch(checkPromesa(values, entity.EscrituraID))}
+          initialValues={entity_escritura}
+          onSubmit={(values)=>dispatch(checkPromesa(values, entity_escritura.EscrituraID))}
         />
       )}
       { EscrituraState == ESCRITURA_STATE.Fechas_Avisos_ES && ( 
         <NotificacionComprado 
-          onSubmit={()=>dispatch(notificarCompradores(entity.EscrituraID))}
+          onSubmit={()=>dispatch(notificarCompradores(entity_escritura.EscrituraID))}
         />
-      )}
-      { EscrituraState == ESCRITURA_STATE.Apr_Creditos_I && ( 
-        <DatesEscrituracion initialValues={entity}/>
       )}
       { parseInt(EscrituraState) > ESCRITURA_STATE.Fechas_Avisos && 
         EscrituraState !== ESCRITURA_STATE.Apr_Creditos_I && ( 
@@ -170,21 +151,22 @@ export function Form({ project, location, selector, dispatch })
       )}
       {/* <Log logs={entity.Logs} limit={10} /> */}
 
-      {entity.Logs && (
+      {/* {entity.Logs && (
         <History
           logs={entity.Logs}
           onHide={()=>setHistoryOpen(false)}
           isOpen={isHistoryOpen}
           title={`${project.Name}`}
         />
-      )}
+      )} */}
     </>
   );
 }
 
 Form.propTypes = {
+  selector: PropTypes.object,
   project: PropTypes.object,
-  dispatch: PropTypes,
+  dispatch: PropTypes.func,
 };
 
 export default Form;
