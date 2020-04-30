@@ -18,34 +18,31 @@ import WithLoading from 'components/WithLoading';
 import makeSelectDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { fetchEntities, fetchLogs } from './actions';
+import { fetchEntities, fetchLogs, queryUserPending } from './actions';
 import MainContent from './Main';
 import ActionPending from './Action';
 
 const SyncMessage = WithLoading();
 
-export function DashboardPage({ dispatch, selector }) {
+export function DashboardPage({ dispatch, selector, onQuery }) {
   useInjectReducer({ key: 'dashboard', reducer });
   useInjectSaga({ key: 'dashboard', saga });
 
   const { loading } = selector;
 
   useEffect(() => {
-    if (!loading) {
-      dispatch(fetchEntities());
-      dispatch(fetchLogs());
-    }
+    dispatch(fetchEntities());
+    dispatch(fetchLogs());
   }, []);
- 
   return (
     <div className="mt-4">
       <Helmet title="Dashboard" />
       <PageHeader>Dashboard</PageHeader>
-      {loading &&(<SyncMessage {...selector} />)}
-      {!loading &&(
+      {loading && (<SyncMessage {...selector} />)}
+      {!loading && (
         <>
           <ActionPending dispatch={dispatch} selector={selector} />
-      <MainContent dispatch={dispatch} selector={selector} />
+          <MainContent onQuery={onQuery} dispatch={dispatch} selector={selector} />
         </>
       )}
     </div>
@@ -55,6 +52,7 @@ export function DashboardPage({ dispatch, selector }) {
 DashboardPage.propTypes = {
   selector: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
+  onQuery: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -64,6 +62,9 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    onQuery: query => {
+      dispatch(queryUserPending(query))
+    },
   };
 }
 

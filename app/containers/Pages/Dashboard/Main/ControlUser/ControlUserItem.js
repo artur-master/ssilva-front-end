@@ -2,28 +2,28 @@
  *
  * Dashboard Control User Item
  *
- */
+ **/
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export function ControlUItem() {
-
+export function ControlUItem({ userAction }) {
   return (
     <tr className="align-middle-group no-whitespace">
       <td className="pl-3">
-        <span className="font-14-rem color-regular">Boyd Hicks</span>
+        <span className="font-14-rem color-regular">{userAction.UserName}</span>
       </td>
       <td className="pl-3">
-        <span className="font-14-rem color-regular">Jefe de Proyectos</span>
+        <span className="font-14-rem color-regular">{userAction.Role}</span>
       </td>
       <td className="pl-3">
-        <span className="font-14-rem color-regular">7</span>
+        <span className="font-14-rem color-regular">{userAction.Pendientes}</span>
       </td>
       <td className="pl-3">
-        <span className="font-14-rem color-regular">8</span>
+        <span className="font-14-rem color-regular">{userAction.Dias}</span>
       </td>
       <td className="pl-3">
-        <span className="font-14-rem color-regular">1.1</span>
+        <span className="font-14-rem color-regular">{userAction.Average}</span>
       </td>
       <td className="px-3">
         <div className="dropdown dropleft text-right">
@@ -37,9 +37,8 @@ export function ControlUItem() {
   );
 }
 
-// MainContent.propTypes = {
-//   selector: PropTypes.object,
-//   dispatch: PropTypes.func.isRequired,
-// };
+ControlUItem.propTypes = {
+  userAction: PropTypes.object
+};
 
 export default ControlUItem;
