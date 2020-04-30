@@ -1,7 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 // import moment from 'components/moment';
-import { ESCRITURA_STATE } from 'containers/App/constants';
 
 import { API_ROOT } from 'containers/App/constants';
 import {
@@ -9,6 +8,8 @@ import {
   UPDATE_ESCRITURA,
   CHECK_PROMESA,
   NOTIFICAR_COMPRADO,
+  APROVA_HIPOTECARIOS,
+  CHECK_HIPOTECARIOS,
 } from './constants';
 
 import {
@@ -20,6 +21,10 @@ import {
   checkPromesaSuccess,
   notificarCompradoresError,
   notificarCompradoresSuccess,
+  aprobaHipotecariosError,
+  aprobaHipotecariosSuccess,
+  checkHipotecariosError,
+  checkHipotecariosSuccess
 } from './actions';
 
 function* sagaGetEscritura(action) {
@@ -54,16 +59,13 @@ function* sagaUpdateEscritura(action) {
 }
 
 function* sagaCheckPromesa(action) {
-  const data = action.values;
-  data.append('EscrituraState', ESCRITURA_STATE.Fechas_Avisos_ES);
-
   try {
     const response = yield call(
       request,
       `${API_ROOT}/ventas/escrituras/${action.EscrituraID}/`,
       {
         method: 'PATCH',
-        body: data,
+        body: action.values,
         headers: {
           'content-type': null,
         },
@@ -84,10 +86,7 @@ function* sagaNotificarCompradores(action) {
       requestURL,
       {
         method: 'PATCH',
-        body: JSON.stringify({
-          ProyectoID:action.ProyectoID,
-          EscrituraState: ESCRITURA_STATE.Apr_Creditos_I,
-        }),
+        body: JSON.stringify(action.values),
       }
     );
 
@@ -97,9 +96,53 @@ function* sagaNotificarCompradores(action) {
   }
 }
 
+function* sagaAprobaHipotecarios(action) {
+  const requestURL = `${API_ROOT}/ventas/escrituras/${action.EscrituraID}/aprova_credit/`;
+  try {
+    const response = yield call(
+      request,
+      requestURL,
+      {
+        method: 'PATCH',
+        body: action.values,
+        headers: {
+          'content-type': null,
+        },
+      }
+    );
+
+    yield put(aprobaHipotecariosSuccess(response));
+  } catch (error) {
+    yield put(aprobaHipotecariosError(error));
+  }
+}
+
+function* sagaCheckHipotecarios(action) {
+  const requestURL = `${API_ROOT}/ventas/escrituras/${action.EscrituraID}/check_credit/`;
+  try {
+    const response = yield call(
+      request,
+      requestURL,
+      {
+        method: 'PATCH',
+        body: action.values,
+        headers: {
+          'content-type': null,
+        },
+      }
+    );
+
+    yield put(checkHipotecariosSuccess(response));
+  } catch (error) {
+    yield put(checkHipotecariosError(error));
+  }
+}
+
 export default function* projectSaga() {
   yield takeLatest(GET_ESCRITURA, sagaGetEscritura);
   yield takeLatest(UPDATE_ESCRITURA, sagaUpdateEscritura);
   yield takeLatest(CHECK_PROMESA, sagaCheckPromesa);
   yield takeLatest(NOTIFICAR_COMPRADO, sagaNotificarCompradores);
+  yield takeLatest(APROVA_HIPOTECARIOS, sagaAprobaHipotecarios);
+  yield takeLatest(CHECK_HIPOTECARIOS, sagaCheckHipotecarios);
 }

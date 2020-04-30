@@ -17,6 +17,12 @@ import {
   NOTIFICAR_COMPRADO,
   NOTIFICAR_COMPRADO_ERROR,
   NOTIFICAR_COMPRADO_SUCCESS,
+  APROVA_HIPOTECARIOS,
+  APROVA_HIPOTECARIOS_ERROR,
+  APROVA_HIPOTECARIOS_SUCCESS,
+  CHECK_HIPOTECARIOS,
+  CHECK_HIPOTECARIOS_ERROR,
+  CHECK_HIPOTECARIOS_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -38,6 +44,8 @@ const escrituraReducer = (state = initialState, action) =>
       case UPDATE_ESCRITURA:
       case CHECK_PROMESA:
       case NOTIFICAR_COMPRADO:
+      case APROVA_HIPOTECARIOS:
+      case CHECK_HIPOTECARIOS:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
@@ -49,6 +57,8 @@ const escrituraReducer = (state = initialState, action) =>
       case UPDATE_ESCRITURA_ERROR:
       case CHECK_PROMESA_ERROR:
       case NOTIFICAR_COMPRADO_ERROR:
+      case APROVA_HIPOTECARIOS_ERROR:
+      case CHECK_HIPOTECARIOS_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -70,6 +80,8 @@ const escrituraReducer = (state = initialState, action) =>
         break;        
       case CHECK_PROMESA_SUCCESS:
       case NOTIFICAR_COMPRADO_SUCCESS:
+      case APROVA_HIPOTECARIOS_SUCCESS:
+      case CHECK_HIPOTECARIOS_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = true;        
