@@ -11,18 +11,25 @@ import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
+import { ESCRITURA_STATE } from 'containers/App/constants';
 import { getCheckPromesaModel } from '../models';
-import DocumentItem from './DocumentItem';
+import DocumentItem from '../DocumentItem';
 
 function RevisionPromesa({
-  isCollapse=true, 
+  proyectoState,
+  canEdit=false, 
   initialValues,
   onSubmit
 }) {
+  if(proyectoState === null)
+    return null;
+  
   const model = getCheckPromesaModel(initialValues);
+  const isCollapse = (initialValues.EscrituraState > ESCRITURA_STATE.Fechas_Avisos_I);
+  const isOpen = (initialValues.EscrituraState == ESCRITURA_STATE.Fechas_Avisos_I);
 
   return (
-    <Box collapse={!isCollapse} isOpen={isCollapse}>
+    <Box collapse={isCollapse} isOpen={isOpen}>
       <BoxHeader>
         <b>REVISIÓN PROMESA A ESCRITURAR</b>
       </BoxHeader>
@@ -37,6 +44,7 @@ function RevisionPromesa({
               data.append(name, values[name]);
           });
           data.append("CarepetaFisicaState", values['CarepetaFisicaState']);
+          data.append("EscrituraState", ESCRITURA_STATE.Fechas_Avisos_II);
           onSubmit(data);
         }}
       >
@@ -51,7 +59,7 @@ function RevisionPromesa({
                   type="checkbox"
                   name="CarepetaFisicaState"
                   className="m-0"
-                  readOnly={!isCollapse}
+                  readOnly={!(canEdit && isOpen)}
                 />                
                 <Label className="pr-3">Recibí Carepeta Física</Label>
                 <Button
@@ -90,11 +98,11 @@ function RevisionPromesa({
                                     { label: 'No', value: '0' },
                                   ]}
                                   itemClassName="col-auto px-1"
-                                  readOnly={!isCollapse}
+                                  readOnly={!(canEdit && isOpen)}
                                 />
                               }
                               {type == "file" &&
-                                <DocumentItem name={name} canUpload={isCollapse} />
+                                <DocumentItem name={name} canUpload={(canEdit && isOpen)} />
                               }
                             </div>
                           </td> </>)
@@ -105,9 +113,9 @@ function RevisionPromesa({
                 </Table>
               </div>
             </BoxContent>
-            {isCollapse && (
+            {canEdit && isOpen && (
             <BoxFooter>
-              <Button type="submit" disabled={!isCollapse}>
+              <Button type="submit">
                 Guardar
               </Button>
               <Button type="reset" color="white">
@@ -126,7 +134,8 @@ function RevisionPromesa({
 }
 
 RevisionPromesa.propTypes = {
-  isCollapse: PropTypes.bool,
+  proyectoState: PropTypes.number,
+  canEdit: PropTypes.bool,
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func
 };

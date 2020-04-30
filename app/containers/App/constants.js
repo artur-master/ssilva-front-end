@@ -224,8 +224,8 @@ export const FACTURA_STATE = ['Pendiente pago', 'Pagada'];
 export const ESCRITURA_STATE = {
   Recep_Mun: 0,
   Fechas_Avisos: 1,
-  Fechas_Avisos_GC: 1.1,
-  Fechas_Avisos_ES: 1.2,
+  Fechas_Avisos_I: 1.1,
+  Fechas_Avisos_II: 1.2,
   A_Comercial: 2,
   Apr_Creditos_I: 2.1,
   Apr_Creditos_II: 2.2,
