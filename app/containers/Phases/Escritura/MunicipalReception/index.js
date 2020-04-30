@@ -24,7 +24,7 @@ function MunicipalReception({ state, initialValues, onSubmit }) {
         onSubmit={(values) => {
           const data = new FormData();
           data.append("SubmissionDate",moment(values.SubmissionDate).format('YYYY-MM-DD'));
-          data.append("EscrituraProyectoState", ESCRITURA_STATE.Fechas_Avisos_GC);
+          data.append("EscrituraProyectoState", ESCRITURA_STATE.Fechas_Avisos_I);
           onSubmit(data);
         }}
       >

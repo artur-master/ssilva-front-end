@@ -72,7 +72,7 @@ export function ProjectForm({ project, dispatch }) {
         <span className="line-height-1 color-success">Ingreso Fechas de Presentación de Recepción Municipal</span>
       </h5>
       
-      {/* { (EscrituraProyectoState !== ESCRITURA_STATE.Fechas_Avisos_GC) && */}
+      {/* { (EscrituraProyectoState !== ESCRITURA_STATE.Fechas_Avisos_I) && */}
         <MunicipalReception          
           state={EscrituraProyectoState}
           initialValues={project}

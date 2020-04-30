@@ -12,12 +12,14 @@ import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
 import moment from 'components/moment';
-import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
+import { Form as ExForm, Field as ExField } from 'components/ExForm';
+import DocumentItem from '../DocumentItem';
+
 function DatesEscrituracion({state, initialValues, onSubmit}) {  
   if (state < ESCRITURA_STATE.A_Comercial)
     return null;
     
-  const canEdit= (state == ESCRITURA_STATE.Apr_Creditos_I);
+  const canEdit= (state == ESCRITURA_STATE.A_Comercial);
 
   return (
     <ExForm
@@ -38,7 +40,7 @@ function DatesEscrituracion({state, initialValues, onSubmit}) {
           data.append("DeedStartDate", moment(values.DeedStartDate).format('YYYY-MM-DD'));
         if(values["DeliverDay"])
           data.append("DeliverDay", values["DeliverDay"]);
-        data.append("EscrituraProyectoState", ESCRITURA_STATE.Apr_Creditos_II);
+        data.append("EscrituraProyectoState", ESCRITURA_STATE.Apr_Creditos_I);
         onSubmit(data);
       }}
     >
@@ -79,15 +81,7 @@ function DatesEscrituracion({state, initialValues, onSubmit}) {
                   </td>
                   <td className="text-right">
                     <div className="d-flex align-items-center justify-content-end pr-2">
-                      <div className="mr-3">
-                        <ExField
-                          type="file"                          
-                          accept=".pdf"
-                          name="RealEstateLawFile"
-                          placeholder = "Examinar..."
-                          style={{width: "9em", height: "2.2em"}}
-                        />
-                      </div>
+                      <DocumentItem name="RealEstateLawFile" canUpload={canEdit} />
                       <ExField
                         type="datePicker"
                         name="RealEstateLawDate"
@@ -105,15 +99,7 @@ function DatesEscrituracion({state, initialValues, onSubmit}) {
                   </td>
                   <td className="text-right">
                     <div className="d-flex align-items-center justify-content-end pr-2">
-                      <div className="mr-3">
-                        <ExField
-                          type="file"
-                          accept=".pdf"
-                          name="PlansConservatorFile"
-                          placeholder = "Examinar..."
-                          style={{width: "9em", height: "2.2em"}}
-                        />
-                      </div>
+                      <DocumentItem name="PlansConservatorFile" canUpload={canEdit} />
                       <ExField
                         type="datePicker"
                         name="PlansConservatorDate"
