@@ -10,6 +10,7 @@ import { push } from 'connected-react-router';
 import { Auth } from 'containers/App/helpers';
 import InitData from 'containers/Common/InitData';
 import ProjectPhases from 'containers/Common/ProjectPhases';
+import { isCreditPayment } from 'containers/App/helpers';
 import Log from 'components/Log';
 import History from 'components/History';
 import Button from 'components/Button';
@@ -19,10 +20,11 @@ const SyncMessage = WithLoading();
 import { 
   checkPromesa,
   notificarCompradores,
+  aprobaHipotecarios,
+  checkHipotecarios
 } from './actions';
 
 import Steps from './Steps';
-import { ESCRITURA_STATE } from 'containers/App/constants';
 
 import PhaseGeneral from 'containers/Phases/General';
 import PhaseClient from 'containers/Phases/Client';
@@ -34,8 +36,6 @@ import PhaseTimeline from 'containers/Phases/Promesa/Timeline';
 import RevisionPromesa from 'containers/Phases/Escritura/RevisionPromesa';
 import NotificacionComprado from 'containers/Phases/Escritura/NotificacionComprado';
 import AprobaHipotecarios from 'containers/Phases/Escritura/AprobaHipotecarios';
-import AprobaHipotecarios_1 from 'containers/Phases/Escritura/AprobaHipotecarios/AprobaHipotecarios_1';
-import AprobaHipotecarios_2 from 'containers/Phases/Escritura/AprobaHipotecarios/AprobaHipotecarios_2';
 import TitleReport from 'containers/Phases/Escritura/TitleReport';
 import Matriz from 'containers/Phases/Escritura/Matriz';
 import Matriz_1 from 'containers/Phases/Escritura/Matriz/Matriz_1';
@@ -52,13 +52,13 @@ export function Form({ selector, project, dispatch })
   // const onCancel = () =>
   //   dispatch(push(`/proyectos/${project.ProyectoID}/escrituras`));
   
-  const { EscrituraState } = entity_escritura;
-  
+  const { EscrituraProyectoState } = project;
+
   return (
     <>
-      <InitData User Client />
+      <InitData User />
       <ProjectPhases project={project} active="escritura" />
-      <Steps state={EscrituraState} />
+      <Steps state={entity_escritura.EscrituraState} />
       <div className="row m-0">
         <Button
           className="col-auto mt-3 m-btn"
@@ -124,31 +124,41 @@ export function Form({ selector, project, dispatch })
         </>
       {/* )} */}
 
-      { EscrituraState > ESCRITURA_STATE.Recep_Mun && ( 
-        <RevisionPromesa 
-          isCollapse={(EscrituraState == ESCRITURA_STATE.Fechas_Avisos_GC) &&
-                       Auth.isGerenteComercial()}
+      {/* { EscrituraState > ESCRITURA_STATE.Recep_Mun && (  */}
+        <RevisionPromesa
+          proyectoState={EscrituraProyectoState}
+          canEdit={ Auth.isGerenteComercial() }
           initialValues={entity_escritura}
           onSubmit={(values)=>dispatch(checkPromesa(values, entity_escritura.EscrituraID))}
         />
-      )}
-      { EscrituraState == ESCRITURA_STATE.Fechas_Avisos_ES && ( 
-        <NotificacionComprado 
-          onSubmit={()=>dispatch(notificarCompradores(entity_escritura.EscrituraID))}
+      {/* )} */}
+      {/* { EscrituraState == ESCRITURA_STATE.Fechas_Avisos_ES && (  */}
+        <NotificacionComprado
+          proyectoState={EscrituraProyectoState}
+          initialValues={entity_escritura}
+          onSubmit={(values)=>dispatch(notificarCompradores(
+              {...values, ProyectoID: project.ProyectoID},
+              entity_escritura.EscrituraID)
+          )}
         />
-      )}
-      { parseInt(EscrituraState) > ESCRITURA_STATE.Fechas_Avisos && 
-        EscrituraState !== ESCRITURA_STATE.Apr_Creditos_I && ( 
+      {/* { isCreditPayment(entity_promesa.PayType) &&  */}
+        <AprobaHipotecarios 
+          initialValues={entity_escritura}
+          onSubmit={(values, index)=>{
+            if (index == 0)dispatch(aprobaHipotecarios(values, entity_escritura.EscrituraID));
+            else dispatch(checkHipotecarios(values, entity_escritura.EscrituraID));
+          }}
+        />
+      {/* } */}
+      {/* )} */}
+      {/* { parseInt(EscrituraState) > ESCRITURA_STATE.Fechas_Avisos &&
         <>
-          <AprobaHipotecarios />
-          <AprobaHipotecarios_1 />
-          <AprobaHipotecarios_2 />
           <TitleReport />
           <Matriz />
           <Matriz_1 />
           <Notary />
         </>
-      )}
+       )} */}
       {/* <Log logs={entity.Logs} limit={10} /> */}
 
       {/* {entity.Logs && (
