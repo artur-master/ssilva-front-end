@@ -11,7 +11,15 @@ import {
   FETCH_LOGS,
   FETCH_LOGS_ERROR,
   FETCH_LOGS_SUCCESS,
+  QUERY_CONTROL_USER,
 } from './constants';
+
+export function queryUserPending(query) {
+  return {
+    type: QUERY_CONTROL_USER,
+    query,
+  };
+}
 
 export function fetchEntities() {
   return {
@@ -46,10 +54,11 @@ export function fetchLogsError(error) {
   };
 }
 
-export function fetchLogsSuccess(pendingActions, logs) {
+export function fetchLogsSuccess(pendingActions, allUsers, logs) {
   return {
     type: FETCH_LOGS_SUCCESS,
     pendingActions, 
+    allUsers, 
     logs,
   };
 }

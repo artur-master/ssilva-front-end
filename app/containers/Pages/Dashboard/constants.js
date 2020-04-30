@@ -4,6 +4,8 @@
  *
  */
 
+export const QUERY_CONTROL_USER =
+  'app/containers/Pages/Project/Dashboard/QUERY_CONTROL_USER';
 export const FETCH_ENTITIES =
   'app/containers/Pages/Project/Dashboard/FETCH_ENTITIES';
 export const FETCH_ENTITIES_ERROR =
