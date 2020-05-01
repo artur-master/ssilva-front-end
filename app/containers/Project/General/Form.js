@@ -12,7 +12,7 @@ import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import model from '../model';
 import { Is_EntregaInmediata } from '../helper'
-import { getGeneralFields, getPolizaFields } from '../fields';
+import { getGeneralFields, getPolizaFields, getMetasFields } from '../fields';
 import Aseguradora from 'containers/Common/Aseguradora';
 
 const SyncMessage = WithLoading();
@@ -24,56 +24,81 @@ export function GeneralForm({ selector, selectorProject, onSubmit, onReset }) {
     <ExForm initialValues={initialValues} onSubmit={values => onSubmit(values)}>
       {form => {
         const fields = getGeneralFields(form);
-        if(Is_EntregaInmediata()){
+        if (Is_EntregaInmediata()) {
           const polizafields = getPolizaFields(form.values);
           fields.push(...polizafields);
         }
+        const metaFields = getMetasFields(project);
 
         return (
-          <Box>
-            <BoxHeader>
-              <b>DATOS GENERALES</b>
-            </BoxHeader>
-            <BoxContent>
-              <SyncMessage {...restSelector} />
-              <div className="row p-0 m-0 color-regular">
-                {fields.map(
-                  ({ label, name, view, Component = Field, ...attributes }) => (
-                    <FormGroup key={name} className="col-md-6 my-2">
-                      <Label style={{ width: '13.5em' }}>{label}</Label>
-                      <Component
-                        name={name}
-                        style={{ width: '13.5em' }}
-                        {...attributes}
-                      />
-                    </FormGroup>
-                  ),
-                )}
-              </div>
-            </BoxContent>
-            <BoxFooter>
-              <Button
-                loading={loading}
-                disabled={loading}
-                onClick={evt => {
-                  evt.preventDefault();
-                  form.submitForm();
-                }}
-              >
-                {project.ProyectoID ? 'Aceptar' : 'Guardar y Continuar'}
-              </Button>
-              {project.ProyectoID && (
+          <>
+            <Box>
+              <BoxHeader>
+                <b>DATOS GENERALES</b>
+              </BoxHeader>
+              <BoxContent>
+                {/* <SyncMessage {...restSelector} /> */}
+                <div className="row p-0 m-0 color-regular">
+                  {fields.map(
+                    ({ label, name, view, Component = Field, ...attributes }) => (
+                      <FormGroup key={name} className="col-md-6 my-2">
+                        <Label style={{ width: '13.5em' }}>{label}</Label>
+                        <Component
+                          name={name}
+                          style={{ width: '13.5em' }}
+                          {...attributes}
+                        />
+                      </FormGroup>
+                    ),
+                  )}
+                </div>
+              </BoxContent>
+            </Box>
+            <Box>
+              <BoxHeader>
+                <b>METAS GENERALS</b>
+              </BoxHeader>
+              <BoxContent>
+                <SyncMessage {...restSelector} />
+                <div className="row p-0 m-0 color-regular">
+                  {metaFields.map(
+                    ({ label, name, view, Component = Field, ...attributes }) => (
+                      <FormGroup key={name} className="col-md-6 my-2">
+                        <Label style={{ width: '13.5em' }}>{label}</Label>
+                        <Component
+                          name={name}
+                          style={{ width: '13.5em' }}
+                          {...attributes}
+                        />
+                      </FormGroup>
+                    ),
+                  )}
+                </div>
+              </BoxContent>
+              <BoxFooter>
                 <Button
+                  loading={loading}
                   disabled={loading}
-                  onClick={onReset}
-                  type="reset"
-                  className="font-14-rem shadow-sm m-btn m-btn-white ml-2"
+                  onClick={evt => {
+                    evt.preventDefault();
+                    form.submitForm();
+                  }}
                 >
-                  Cancelar
+                  {project.ProyectoID ? 'Aceptar' : 'Guardar y Continuar'}
                 </Button>
-              )}
-            </BoxFooter>
-          </Box>
+                {project.ProyectoID && (
+                  <Button
+                    disabled={loading}
+                    onClick={onReset}
+                    type="reset"
+                    className="font-14-rem shadow-sm m-btn m-btn-white ml-2"
+                  >
+                    Cancelar
+                  </Button>
+                )}
+              </BoxFooter>
+            </Box>
+          </>
         );
       }}
     </ExForm>
