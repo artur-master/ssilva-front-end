@@ -39,15 +39,15 @@ export function ProjectMeta({ project = {}, active }) {
               <div className="box">
                 <span className="sub-title">Llevamos</span>
                 <span className="title">
-                  UF <b>{metas.firmadoPrice}</b>
+                  UF <b>{metas.totalPrice}</b>
                 </span>
                 <figure className="progress-card green">
                   <progress max="100" 
-                    value={metas.totalPrice ? 100*metas.firmadoPrice/metas.totalPrice : 0} 
+                    value={metas.totalPrice ? 100*metas.totalPrice/project.MetasUf : 0} 
                   />
                   <span className="key">Meta</span>
                   <span className="value">
-                    UF <b>{metas.totalPrice}</b>
+                    UF <b>{project.MetasUf}</b>
                   </span>
                 </figure>
               </div>
@@ -56,15 +56,15 @@ export function ProjectMeta({ project = {}, active }) {
               <div className="box">
                 <span className="sub-title">Llevamos</span>
                 <span className="title">
-                  Promesas <b>{metas.firmadoPromesas}</b>
+                  Promesas <b>{metas.promesas}</b>
                 </span>
                 <figure className="progress-card yellow">
                   <progress max="100"
-                    value={metas.promesas ? 100*metas.firmadoPromesas/metas.promesas : 0}
+                    value={metas.promesas ? 100*metas.promesas/project.MetasPromesas : 0}
                   />
                   <span className="key">Meta</span>
                   <span className="value">
-                    <b>{metas.promesas}</b>
+                    <b>{project.MetasPromesas}</b>
                   </span>
                 </figure>
               </div>
