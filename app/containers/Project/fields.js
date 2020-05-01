@@ -9,6 +9,7 @@ import moment from 'components/moment';
 import ExAseguradoras from 'components/ExForm/ExAseguradoras';
 import ExInstitucionFinancieras from 'components/ExForm/ExInstitucionFinancieras';
 import IntlFormatNumber from 'components/IntlFormat/Number';
+import { numberFormat } from 'containers/App/helpers';
 import { userFullname } from '../Common/User/helper';
 
 const buildUsersField = (form, options = {}) => {
@@ -395,3 +396,21 @@ export const getPaymentFields = (form, type) => {
     },
   ];
 };
+export const getMetasFields = entity => [
+  /* Metas Data */
+  {
+    label: 'Metas UF',
+    name: 'MetasUf',
+    view: `${numberFormat(entity.MetasUf) || 0}`,
+    value: `${numberFormat(entity.MetasUf) || 0}`,
+    type: 'number',
+    min: 0,
+  },
+  {
+    label: 'Metas Promesas',
+    name: 'MetasPromesas',
+    view: `${numberFormat(entity.MetasPromesas) || 0}`,
+    type: 'number',
+    min: 0,
+  },
+];

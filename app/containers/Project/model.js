@@ -55,6 +55,8 @@ export default function model(project = {}) {
     GuaranteeAmount,
     GuaranteePercent = 20,
     Aseguradora = {},
+    MetasUf = 0,
+    MetasPromesas = 0,
   } = project;
   return {
     ...project,
@@ -75,6 +77,8 @@ export default function model(project = {}) {
     GuaranteeAmount,
     GuaranteePercent,
     Aseguradora,
+    MetasUf,
+    MetasPromesas,
     tmp: {
       UsersProyecto: UsersProyecto.reduce((acc, user) => {
         if (
