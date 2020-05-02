@@ -57,7 +57,8 @@ const Item = ({ project, escritura, dispatch }) => {
       <td>Cliente: {clientFullname(Cliente)}</td>
       <td>
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          <span className={`badge ${ColorBadge} px-2`}>{EscrituraState}</span>
+          {/* <span className={`badge ${ColorBadge} px-2`}>{EscrituraState}</span> */}
+          <span className={`badge ${ColorBadge} px-2`}>{""}</span>
         </div>
       </td>
       {/* <td className="font-21 px-3">

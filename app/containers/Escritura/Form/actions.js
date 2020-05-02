@@ -23,6 +23,12 @@ import {
   CHECK_HIPOTECARIOS,
   CHECK_HIPOTECARIOS_ERROR,
   CHECK_HIPOTECARIOS_SUCCESS,
+  APROVA_BANK,
+  APROVA_BANK_ERROR,
+  APROVA_BANK_SUCCESS,
+  UPDATE_SALE,
+  UPDATE_SALE_ERROR,
+  UPDATE_SALE_SUCCESS,
 } from './constants';
 
 export function getEscritura(EscrituraID) {
@@ -140,6 +146,46 @@ export function checkHipotecariosError(error) {
 export function checkHipotecariosSuccess(response) {
   return {
     type:CHECK_HIPOTECARIOS_SUCCESS,
+    response,
+  };
+}
+
+export function aprovaBank(values, EscrituraID) {
+  return {
+    type: APROVA_BANK,
+    EscrituraID,
+    values,
+  };
+}
+export function aprovaBankError(error) {
+  return {
+    type: APROVA_BANK_ERROR,
+    error,
+  };
+}
+export function aprovaBankSuccess(response) {
+  return {
+    type:APROVA_BANK_SUCCESS,
+    response,
+  };
+}
+
+export function updateSale(values, EscrituraID) {
+  return {
+    type: UPDATE_SALE,
+    EscrituraID,
+    values,
+  };
+}
+export function updateSaleError(error) {
+  return {
+    type: UPDATE_SALE_ERROR,
+    error,
+  };
+}
+export function updateSaleSuccess(response) {
+  return {
+    type:UPDATE_SALE_SUCCESS,
     response,
   };
 }

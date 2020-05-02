@@ -10,6 +10,8 @@ import {
   NOTIFICAR_COMPRADO,
   APROVA_HIPOTECARIOS,
   CHECK_HIPOTECARIOS,
+  APROVA_BANK,
+  UPDATE_SALE
 } from './constants';
 
 import {
@@ -24,7 +26,11 @@ import {
   aprobaHipotecariosError,
   aprobaHipotecariosSuccess,
   checkHipotecariosError,
-  checkHipotecariosSuccess
+  checkHipotecariosSuccess,
+  aprovaBankError,
+  aprovaBankSuccess,
+  updateSaleSuccess,
+  updateSaleError
 } from './actions';
 
 function* sagaGetEscritura(action) {
@@ -138,6 +144,44 @@ function* sagaCheckHipotecarios(action) {
   }
 }
 
+function* sagaAprovaBank(action) {
+  try {
+    const response = yield call(
+      request,
+      `${API_ROOT}/ventas/escrituras/${action.EscrituraID}/`,
+      {
+        method: 'PATCH',
+        body: action.values,
+        headers: {
+          'content-type': null,
+        },
+      }
+    );
+
+    yield put(aprovaBankSuccess(response));
+  } catch (error) {
+    yield put(aprovaBankError(error));
+  }
+}
+
+function* sagaUpdateSale(action) {
+  const requestURL = `${API_ROOT}/ventas/escrituras/${action.EscrituraID}/`;
+  try {
+    const response = yield call(
+      request,
+      requestURL,
+      {
+        method: 'PATCH',
+        body: JSON.stringify(action.values),
+      }
+    );
+
+    yield put(updateSaleSuccess(response));
+  } catch (error) {
+    yield put(updateSaleError(error));
+  }
+}
+
 export default function* projectSaga() {
   yield takeLatest(GET_ESCRITURA, sagaGetEscritura);
   yield takeLatest(UPDATE_ESCRITURA, sagaUpdateEscritura);
@@ -145,4 +189,6 @@ export default function* projectSaga() {
   yield takeLatest(NOTIFICAR_COMPRADO, sagaNotificarCompradores);
   yield takeLatest(APROVA_HIPOTECARIOS, sagaAprobaHipotecarios);
   yield takeLatest(CHECK_HIPOTECARIOS, sagaCheckHipotecarios);
+  yield takeLatest(APROVA_BANK, sagaAprovaBank);
+  yield takeLatest(UPDATE_SALE, sagaUpdateSale);
 }
