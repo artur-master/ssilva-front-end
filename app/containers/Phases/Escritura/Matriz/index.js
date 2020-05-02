@@ -61,7 +61,7 @@ function Matriz({ initialValues, promesaDoc, onSubmit }) {
                 data.append('EscrituraState', ESCRITURA_STATE.Rev_Escrit_II);
               }
               else {
-                if (values['ModificaPromesa'].name)
+                if (values['ModificaPromesa'] && values['ModificaPromesa'].name)
                   data.append('ModificaPromesa', values['ModificaPromesa']);
 
                 data.append('PromesaCoinciden', values['PromesaCoinciden']);
@@ -231,6 +231,7 @@ function Matriz({ initialValues, promesaDoc, onSubmit }) {
                               className="m-btn-download"
                               onClick={() => {
                                 form.submitForm();
+
                               }}
                             >
                               Guardar y Descargar Escritura

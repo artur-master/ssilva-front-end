@@ -20,9 +20,11 @@ function ContentItem({ initialValues, name, onSubmit }) {
       initialValues={initialValues}
       onSubmit={values => {
         const data = new FormData();
-        if(values[name].name)
+        console.log(name, values[name].name);
+        if(values[name].name){
           data.append(name, values[name]);
-        onSubmit(data);
+          onSubmit(data);
+        }
       }}
     >
       {(form) => (

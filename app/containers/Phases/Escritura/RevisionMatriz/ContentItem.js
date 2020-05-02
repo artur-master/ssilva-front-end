@@ -20,9 +20,10 @@ function ContentItem({ initialValues, name, onSubmit }) {
       initialValues={initialValues}
       onSubmit={values => {
         const data = new FormData();
-        if(values[`Revision${name}`].name)
+        if(values[`Revision${name}`].name){
           data.append(`Revision${name}`, values[`Revision${name}`]);
-        onSubmit(data);
+          onSubmit(data);
+        }
       }}
     >
       {(form) => (
@@ -46,7 +47,7 @@ function ContentItem({ initialValues, name, onSubmit }) {
               <span className="font-14-rem mr-2">Matriz {title[name]}.pdf</span>
               <ExField
                 type="file"
-                name={name}
+                name={`Revision${name}`}
                 placeholder="Examinar..."
                 style={{ width: "9em", height: "2.2em" }}
                 required
