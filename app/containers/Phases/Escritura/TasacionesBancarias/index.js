@@ -151,15 +151,22 @@ function TasacionesBancarias({ initialValues, onSubmit })
           </CollapseContent>
         </Collapse>
       </BoxContent>
-      <BoxFooter>
-        <div className="d-flex justify-content-end mr-5">
-          <Button onClick={()=>{
-            const data = new FormData();
-            data.append("EscrituraState", ESCRITURA_STATE.Matrices_Escrit_I);
-            onSubmit(data);
-          }}>Aprova</Button>
-        </div>
-      </BoxFooter>
+      { EscrituraState < ESCRITURA_STATE.Matrices_Escrit_I &&
+        <BoxFooter>
+          <div className="d-flex justify-content-end mr-5">
+            <Button 
+              disabled={EscrituraState === ESCRITURA_STATE.Matrices_Escrit_I}
+              onClick={()=>{
+                const data = new FormData();
+                data.append("EscrituraState", ESCRITURA_STATE.Matrices_Escrit_I);
+                onSubmit(data);
+              }}
+            >
+              Aprova
+            </Button>
+          </div>
+        </BoxFooter>
+      }
     </Box>
   );
 }
