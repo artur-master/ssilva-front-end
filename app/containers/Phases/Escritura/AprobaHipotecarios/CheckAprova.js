@@ -17,9 +17,16 @@ import Alert from 'components/Alert';
 
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
 
-function CheckAprova({ initialValues, onSubmit }) {
-  const { AprobacionCreditos } = initialValues;
+function CheckAprova({ initialValues, onSubmit }) 
+{
+  const { project } = window;
+
+  const { AprobacionCreditos, EscrituraState } = initialValues;  
+  const canEdit = (EscrituraState < ESCRITURA_STATE.ETitulo_Tasacion);
+  const isCollapsed = !canEdit;// && project.EscrituraProyectoState > ESCRITURA_STATE.ETitulo_Tasacion_I;
+
   const [observacion, setObservacion] = useState("");
+
   return (
     <ExForm
       initialValues={initialValues}
@@ -35,13 +42,13 @@ function CheckAprova({ initialValues, onSubmit }) {
 
         data.append("CreditosNumber", values.AprobacionCreditos.length);
         data.append("DeclarePhysicalFolderState", values.DeclarePhysicalFolderState);
-        data.append("EscrituraState", ESCRITURA_STATE.Apr_Creditos_III);
+        data.append("EscrituraState", ESCRITURA_STATE.ETitulo_Tasacion);
 
         onSubmit(data, 1);
       }}
     >
       {form => (
-        <Box>
+        <Box collapse={isCollapsed} isOpen={!isCollapsed}>
           <BoxHeader>
             <b>APROBACIÓN CRÉDITOS HIPOTECARIOS</b>
           </BoxHeader>
@@ -107,6 +114,7 @@ function CheckAprova({ initialValues, onSubmit }) {
                             ]}
                             itemClassName="pr-4"
                             required
+                            readOnly={!canEdit}
                           />
 
                           { form.values.AprobacionCreditos[index].AprobacionCreditoState == 1 &&
@@ -143,6 +151,7 @@ function CheckAprova({ initialValues, onSubmit }) {
                           </tbody>
                         </table>
                       </div>
+                      {canEdit && 
                       <div className="mt-3">
                         <Label>Nueva Observación</Label>
                         <div className="pt-2">
@@ -164,6 +173,7 @@ function CheckAprova({ initialValues, onSubmit }) {
                           </Button>
                         </div>
                       </div>
+                      }
                     </>
                   }
                 </div>
@@ -182,8 +192,9 @@ function CheckAprova({ initialValues, onSubmit }) {
                 label="Declaro haber entregado la carpeta física a Escrituración"
                 type="checkbox"
                 name="DeclarePhysicalFolderState"
+                readOnly={!canEdit}
               />
-              <Button type="submit">
+              <Button type="submit" disabled={!canEdit}>
                 Guardar
               </Button>
               <Button color="white" type="reset">

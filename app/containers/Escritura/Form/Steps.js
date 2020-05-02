@@ -116,8 +116,8 @@ function Steps({ state }) {
         </div>
 
         <li className={`item ml-1 br-remove-right
-                      ${(state == ESCRITURA_STATE.Matrices_Escrit) ?
-                      "color-caution" : (state > ESCRITURA_STATE.Matrices_Escrit) ? "color-success" : ""}`}
+                      ${(parseInt(state) == ESCRITURA_STATE.Matrices_Escrit) ?
+                      "color-caution" : (parseInt(state) > ESCRITURA_STATE.Matrices_Escrit) ? "color-success" : ""}`}
         >
           <div className="number">
             <span>5</span>
