@@ -20,6 +20,7 @@ function DatesEscrituracion({state, initialValues, onSubmit}) {
     return null;
     
   const canEdit= (state == ESCRITURA_STATE.A_Comercial);
+  const isCollapsed = (state>ESCRITURA_STATE.ETitulo_Tasacion);
 
   return (
     <ExForm
@@ -45,7 +46,7 @@ function DatesEscrituracion({state, initialValues, onSubmit}) {
       }}
     >
     {() => (
-      <Box collapse={state>ESCRITURA_STATE.Matrices_Escrit} isOpen={state<ESCRITURA_STATE.Matrices_Escrit}>
+      <Box collapse={isCollapsed} isOpen={!isCollapsed}>
         <BoxHeader>
           <b>FECHAS ESCRITURACIÓN</b>
         </BoxHeader>

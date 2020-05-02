@@ -21,7 +21,9 @@ import {
   checkPromesa,
   notificarCompradores,
   aprobaHipotecarios,
-  checkHipotecarios
+  checkHipotecarios,
+  aprovaBank,
+  updateSale,
 } from './actions';
 
 import Steps from './Steps';
@@ -36,9 +38,9 @@ import PhaseTimeline from 'containers/Phases/Promesa/Timeline';
 import RevisionPromesa from 'containers/Phases/Escritura/RevisionPromesa';
 import NotificacionComprado from 'containers/Phases/Escritura/NotificacionComprado';
 import AprobaHipotecarios from 'containers/Phases/Escritura/AprobaHipotecarios';
-import TitleReport from 'containers/Phases/Escritura/TitleReport';
+import TasacionesBancarias from 'containers/Phases/Escritura/TasacionesBancarias';
+import RevisionMatriz from 'containers/Phases/Escritura/RevisionMatriz';
 import Matriz from 'containers/Phases/Escritura/Matriz';
-import Matriz_1 from 'containers/Phases/Escritura/Matriz/Matriz_1';
 import Notary from 'containers/Phases/Escritura/Notary';
 
 export function Form({ selector, project, dispatch }) 
@@ -53,6 +55,7 @@ export function Form({ selector, project, dispatch })
   //   dispatch(push(`/proyectos/${project.ProyectoID}/escrituras`));
   
   const { EscrituraProyectoState } = project;
+  const { EscrituraID } = entity_escritura;
 
   return (
     <>
@@ -88,77 +91,88 @@ export function Form({ selector, project, dispatch })
       <h5 className="mb-3 font-18 d-flex align-items-center justify-content-between">
         <span className="line-height-1 color-success">Ingreso Fechas de Presentación de Recepción Municipal</span>
       </h5>
-      {/* { isHistoryOpen && ( */}
-        <>
-          <PhaseGeneral
-            initialValues={entity_promesa}
-            canEdit={false}
-          />
-          <PhaseClient
-            payType={entity_promesa.PayType}
-            client={entity_promesa.Cliente}
-            canEdit={false}
-          />
-          <PhaseInmueble
-            initialValues={entity_promesa}
-            canEdit={false}
-          />
-          <PhaseFormaDePago
-            initialValues={entity_promesa}
-            canEdit={false}
-          />
-          <PhasePreCredito
-            isCollapse={false}
-            initialValues={entity_promesa}
-          />
-          <PhaseDocument
-            isCollapse={false}
-            entity={entity_promesa}
-            promesa={true}
-          />
-          <PhaseTimeline
-            isCollapse={false}
-            entity={entity_promesa}
-            selector={selector}
-          />
-        </>
-      {/* )} */}
+        <PhaseGeneral
+          initialValues={entity_promesa}
+          canEdit={false}
+        />
+        <PhaseClient
+          payType={entity_promesa.PayType}
+          client={entity_promesa.Cliente}
+          canEdit={false}
+        />
+        <PhaseInmueble
+          initialValues={entity_promesa}
+          canEdit={false}
+        />
+        <PhaseFormaDePago
+          initialValues={entity_promesa}
+          canEdit={false}
+        />
+        <PhasePreCredito
+          isCollapse={false}
+          initialValues={entity_promesa}
+        />
+        <PhaseDocument
+          isCollapse={false}
+          entity={entity_promesa}
+          promesa={true}
+        />
+        <PhaseTimeline
+          isCollapse={false}
+          entity={entity_promesa}
+          selector={selector}
+        />
 
-      {/* { EscrituraState > ESCRITURA_STATE.Recep_Mun && (  */}
         <RevisionPromesa
           proyectoState={EscrituraProyectoState}
-          canEdit={ Auth.isGerenteComercial() }
+          canEdit={ Auth.isES() }
           initialValues={entity_escritura}
-          onSubmit={(values)=>dispatch(checkPromesa(values, entity_escritura.EscrituraID))}
+          onSubmit={(values)=>dispatch(checkPromesa(values, EscrituraID))}
         />
-      {/* )} */}
-      {/* { EscrituraState == ESCRITURA_STATE.Fechas_Avisos_ES && (  */}
         <NotificacionComprado
           proyectoState={EscrituraProyectoState}
           initialValues={entity_escritura}
           onSubmit={(values)=>dispatch(notificarCompradores(
               {...values, ProyectoID: project.ProyectoID},
-              entity_escritura.EscrituraID)
+              EscrituraID)
           )}
         />
       {/* { isCreditPayment(entity_promesa.PayType) &&  */}
         <AprobaHipotecarios 
           initialValues={entity_escritura}
           onSubmit={(values, index)=>{
-            if (index == 0)dispatch(aprobaHipotecarios(values, entity_escritura.EscrituraID));
-            else dispatch(checkHipotecarios(values, entity_escritura.EscrituraID));
+            if (index == 0)dispatch(aprobaHipotecarios(values, EscrituraID));
+            else dispatch(checkHipotecarios(values, EscrituraID));
           }}
         />
-      {/* } */}
-      {/* )} */}
-      {/* { parseInt(EscrituraState) > ESCRITURA_STATE.Fechas_Avisos &&
-        <>
-          <TitleReport />
-          <Matriz />
-          <Matriz_1 />
-          <Notary />
-        </>
-       )} */}
+      <TasacionesBancarias 
+        initialValues={entity_escritura}
+        onSubmit={(values)=>{
+          dispatch(aprovaBank(values, EscrituraID))
+        }}
+      />
+      <RevisionMatriz 
+        initialValues={entity_escritura}
+        onSubmit={(values)=>{
+          dispatch(aprovaBank(values, EscrituraID))
+        }}
+      />
+
+      <Matriz 
+        initialValues={entity_escritura}
+        promesaDoc={entity_promesa.DocumentPromesa}
+        onSubmit={(values)=>{
+          dispatch(aprovaBank(values, EscrituraID))
+        }}
+      />
+      <Notary 
+        initialValues={entity_escritura}
+        onSubmit={(values, index)=>{
+          if(index == 1) dispatch(updateSale(values, EscrituraID));
+          else dispatch(aprovaBank(values, EscrituraID));
+        }}
+      />
+      
       {/* <Log logs={entity.Logs} limit={10} /> */}
 
       {/* {entity.Logs && (

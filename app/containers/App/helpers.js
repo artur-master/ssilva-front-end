@@ -54,6 +54,7 @@ export const Auth = {
   isVendor: () => Auth.hasOneOfRoles(['Vendedor']),
   isAC: () => Auth.hasOneOfRoles(['Asistente Comercial']),
   isInmobiliario: () => Auth.hasOneOfRoles(['Inmobiliario']),
+  isES: () => Auth.hasOneOfRoles(['Escritura']),
   canManageProject: () =>
     Auth.hasOneOfPermissions([PERMISSIONS[12], PERMISSIONS[14]]),
 
