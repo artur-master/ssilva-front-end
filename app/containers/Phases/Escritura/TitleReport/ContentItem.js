@@ -68,29 +68,31 @@ function ContentItem({ initialValues, name, onSubmit }) {
                 </tbody>
               </Table>
             </div>
-            <div className="mt-3">
-              <Label>Nueva Observación</Label>
-              <div className="pt-2">
-                <textarea className="w-100 d-block rounded-lg shadow-sm" 
-                  rows="5" onChange={(e)=>setObservacion(e.target.value)}
-                  value={observacion}
-                />
+            {initialValues[`${name}State`] !== "Aprobado" &&
+              <div className="mt-3">
+                <Label>Nueva Observación</Label>
+                <div className="pt-2">
+                  <textarea className="w-100 d-block rounded-lg shadow-sm" 
+                    rows="5" onChange={(e)=>setObservacion(e.target.value)}
+                    value={observacion}
+                  />
+                </div>
+                <div className="mt-3 text-right">
+                  <Button
+                    disabled={observacion===""}
+                    onClick={()=>{
+                      form.setFieldValue(`${name}Observations`,
+                        [...form.values[`${name}Observations`], 
+                          {"date": new Date, "comment": observacion}
+                        ]);
+                      setObservacion("");
+                    }}
+                  >
+                    Guardar Observación
+                  </Button>
+                </div>
               </div>
-              <div className="mt-3 text-right">
-                <Button
-                  disabled={observacion===""}
-                  onClick={()=>{
-                    form.setFieldValue(`${name}Observations`,
-                      [...form.values[`${name}Observations`], 
-                        {"date": new Date, "comment": observacion}
-                      ]);
-                    setObservacion("");
-                  }}
-                >
-                  Guardar Observación
-                </Button>
-              </div>
-            </div>
+            }
             <div className="row">
               <div className="col-md-6">
                 <div className="d-flex justify-content-start align-items-center py-3 border-bottom">
@@ -121,17 +123,18 @@ function ContentItem({ initialValues, name, onSubmit }) {
               </Table>
             </div>
           </>}
-
-          <div className="row mt-4">
-            <div className="col-md-6 offset-md-6">
-              <div className="d-flex justify-content-end py-3 border-top">
-                <Button type="submit">
-                  {initialValues[`${name}State`] == null ? "Guardar" : "Guardar aprovación"}
-                </Button>
-                <Button type="reset" className="m-btn-white">Cancelar</Button>
+          {initialValues[`${name}State`] !== "Aprobado" &&
+            <div className="row mt-4">
+              <div className="col-md-6 offset-md-6">
+                <div className="d-flex justify-content-end py-3 border-top">
+                  <Button type="submit">
+                    {initialValues[`${name}State`] == null ? "Guardar" : "Guardar aprovación"}
+                  </Button>
+                  <Button type="reset" className="m-btn-white">Cancelar</Button>
+                </div>
               </div>
             </div>
-          </div>
+          }
         </>
       )}
     </ExForm>

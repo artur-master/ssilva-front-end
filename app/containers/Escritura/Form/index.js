@@ -54,12 +54,7 @@ export function EscrituraForm({
       <ProjectForm project={selector.project || project} dispatch={dispatch}/>
     </>
 
-  return (
-    <>
-      {(action == "escritura") && <Form selector={selector} project={project} dispatch={dispatch}/>}
-      {/* {(action == "project") && <ProjectForm project={project} /> } */}
-    </>
-  );
+  return <Form selector={selector} project={project} dispatch={dispatch}/>
 }
 
 EscrituraForm.propTypes = {

@@ -38,3 +38,15 @@ export const CHECK_HIPOTECARIOS_ERROR =
   'app/containers/Escritura/Form/CHECK_HIPOTECARIOS_ERROR';
 export const CHECK_HIPOTECARIOS_SUCCESS =
   'app/containers/Escritura/Form/CHECK_HIPOTECARIOS_SUCCESS';
+
+export const APROVA_BANK = 'app/containers/Escritura/Form/APROVA_BANK';
+export const APROVA_BANK_ERROR =
+  'app/containers/Escritura/Form/APROVA_BANK_ERROR';
+export const APROVA_BANK_SUCCESS =
+  'app/containers/Escritura/Form/APROVA_BANK_SUCCESS';
+  
+export const UPDATE_SALE = 'app/containers/Escritura/Form/UPDATE_SALE';
+export const UPDATE_SALE_ERROR =
+  'app/containers/Escritura/Form/UPDATE_SALE_ERROR';
+export const UPDATE_SALE_SUCCESS =
+  'app/containers/Escritura/Form/UPDATE_SALE_SUCCESS';

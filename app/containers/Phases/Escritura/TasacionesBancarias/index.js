@@ -13,36 +13,41 @@ import {
 } from 'reactstrap';
 import { ESCRITURA_STATE } from 'containers/App/constants';
 import Alert from 'components/Alert';
-import { Box, BoxContent, BoxHeader } from 'components/Box';
+import Button from 'components/Button';
+import { Box, BoxContent, BoxHeader,BoxFooter } from 'components/Box';
 import { Collapse, CollapseHeader, CollapseContent } from 'components/Collapse';
 import { Label } from 'components/ExForm';
 import ContentItem from './ContentItem';
 
-function TitleReport({ state, initialValues, onSubmit }) 
+function TasacionesBancarias({ initialValues, onSubmit }) 
 {
-  if (state < ESCRITURA_STATE.ETitulo_Tasacion)
+  const { TasacionStateBank, TasacionSantander, TasacionChileBank,
+    EscrituraState } = initialValues;
+
+  if (EscrituraState < ESCRITURA_STATE.ETitulo_Tasacion)
     return null;
-    
-  const canEdit=(state == ESCRITURA_STATE.ETitulo_Tasacion);
+
+  const canEdit=(EscrituraState == ESCRITURA_STATE.ETitulo_Tasacion);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [collapsed, setCollapsed] = useState([true, true, true]);
   return (
     <Box collapse={!canEdit} isOpen={canEdit}>
       <BoxHeader>
-        <b>INFORMES DE TÍTULO</b>
+        <b>TASACIÓNES BANCARIAS</b>
       </BoxHeader>
       <BoxContent className="p-3">
         <Alert type="warning">
-          Debes ingresar las fechas en que enviaste el Informe de Títulos a cada Institución Financiera
+          Debes ingresar las Tasaciónes Bancarias.
         </Alert>
+        
         <Collapse isOpen={!collapsed[0]} onCollapsed={() => setCollapsed([false, true, true])}>
           <CollapseHeader>
             <div className="d-flex align-items-center">
               <Label className="order-1 color-main">Banco Estado</Label>
               <div className="order-2 d-flex align-items-center justify-content-end flex-grow-1">
                 <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-                  {initialValues.StateBankState === "Aprobado"
+                  {TasacionStateBank
                     ? <span className="badge badge-success px-2">Aprobado</span>
                     : <span className="badge badge-caution px-2">Pendiente</span>
                   }
@@ -66,7 +71,7 @@ function TitleReport({ state, initialValues, onSubmit })
           <CollapseContent>
             <ContentItem
               initialValues={initialValues}
-              name="StateBank"
+              name="TasacionStateBank"
               onSubmit={onSubmit}
             />
           </CollapseContent>
@@ -78,7 +83,7 @@ function TitleReport({ state, initialValues, onSubmit })
               <Label className="order-1 color-main">Santander</Label>
               <div className="order-2 d-flex align-items-center justify-content-end flex-grow-1">
                 <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-                  {initialValues.SantanderState === "Aprobado"
+                  {TasacionSantander
                     ? <span className="badge badge-success px-2">Aprobado</span>
                     : <span className="badge badge-caution px-2">Pendiente</span>
                   }
@@ -103,7 +108,7 @@ function TitleReport({ state, initialValues, onSubmit })
           <CollapseContent>
             <ContentItem
               initialValues={initialValues}
-              name="Santander"
+              name="TasacionSantander"
               onSubmit={onSubmit}
             />
           </CollapseContent>
@@ -115,7 +120,7 @@ function TitleReport({ state, initialValues, onSubmit })
               <Label className="order-1 color-main">Banco de Chile</Label>
               <div className="order-2 d-flex align-items-center justify-content-end flex-grow-1">
                 <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-                  {initialValues.ChileBankState === "Aprobado"
+                  {TasacionChileBank
                     ? <span className="badge badge-success px-2">Aprobado</span>
                     : <span className="badge badge-caution px-2">Pendiente</span>
                   }
@@ -140,20 +145,28 @@ function TitleReport({ state, initialValues, onSubmit })
           <CollapseContent>
             <ContentItem
               initialValues={initialValues}
-              name="ChileBank"
+              name="TasacionChileBank"
               onSubmit={onSubmit}
             />
           </CollapseContent>
         </Collapse>
       </BoxContent>
+      <BoxFooter>
+        <div className="d-flex justify-content-end mr-5">
+          <Button onClick={()=>{
+            const data = new FormData();
+            data.append("EscrituraState", ESCRITURA_STATE.Matrices_Escrit_I);
+            onSubmit(data);
+          }}>Aprova</Button>
+        </div>
+      </BoxFooter>
     </Box>
   );
 }
 
-TitleReport.propTypes = {  
-  state: PropTypes.number,
+TasacionesBancarias.propTypes = {
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
 };
 
-export default TitleReport;
+export default TasacionesBancarias;
