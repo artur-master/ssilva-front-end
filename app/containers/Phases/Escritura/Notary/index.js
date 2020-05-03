@@ -124,7 +124,7 @@ function Notary({ initialValues, onSubmit })
 													disabled={!form.values['StepOne'] || form.values['NoticeToClientSignDate']==""}
 													onClick={()=>onSubmit({
 														EscrituraState: ESCRITURA_STATE.Notaria_III,
-														NoticeToClientSignDate: form.values['NoticeToClientSignDate']
+														NoticeToClientSignDate: moment(form.values['NoticeToClientSignDate']).format('YYYY-MM-DD')
 													}, 1)}
 												>Guardar</Button>
 												<Button className="m-btn-white" type="reset">Cancelar</Button>
@@ -450,7 +450,7 @@ function Notary({ initialValues, onSubmit })
 																		name="InvoiceFile"
 																		placeholder="Examinar..."																	
 																		required
-																		disabled={EscrituraState !== ESCRITURA_STATE.Notaria_VIII_I}
+																		disabled={EscrituraState !== ESCRITURA_STATE.Notaria_VII_I}
 																	/>
 																}
 															</div>
@@ -489,7 +489,7 @@ function Notary({ initialValues, onSubmit })
 															<div className="d-flex align-items-center">
 																<ExField
 																	type="checkbox"
-																	name="RealEstateSign"
+																	name="SendRealEstateSign"
 																	readOnly={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_II)}
 																/>
 																<span className={`font-14-rem ${EscrituraState<ESCRITURA_STATE.Notaria_VII_II?"color-white-gray":""}`}
@@ -501,7 +501,7 @@ function Notary({ initialValues, onSubmit })
 																</span>
 																<ExField
 																	type="datepicker"
-																	name="SendRealEstateSign"
+																	name="SendRealEstateSignDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_II)}
 																/>
 															</div>
@@ -533,7 +533,7 @@ function Notary({ initialValues, onSubmit })
 																	const data = {
 																		RealEstateSign: form.values['RealEstateSign'],
 																		SendRealEstateSign: form.values['SendRealEstateSign'],
-																		EscrituraState: ESCRITURA_STATE.Notaria_VI_III
+																		EscrituraState: ESCRITURA_STATE.Notaria_VII_III
 																	}
 																	if(form.values['RealEstateSignDate']!=="")
 																		data['RealEstateSignDate'] = form.values['RealEstateSignDate'];
@@ -969,7 +969,7 @@ function Notary({ initialValues, onSubmit })
 																<ExField
 																	type="datepicker"
 																	name="CompensationSettlementDate"
-																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII)}
+																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_I)}
 																/>
 															</div>
 														</div>														
