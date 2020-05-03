@@ -1299,7 +1299,7 @@ function Notary({ initialValues, onSubmit })
 																<span className="font-14-rem color-white-gray mr-3">
 																	<em>Ingresa el Comprobante.</em>
 																</span>
-																{(EscrituraState == ESCRITURA_STATE.Notaria_VIII_V)
+																{(EscrituraState > ESCRITURA_STATE.Notaria_VIII_V)
 																? <Label>{getFileName(initialValues['PaymentSubsidyFile'])}</Label>
 																:	<ExField
 																		type="file"
