@@ -17,20 +17,24 @@ import {
   DropdownToggle,
 } from 'reactstrap';
 
-import { fetchProjectMeta } from 'containers/Common/ProjectMeta/helper';
+import { fetchProjectExist, fetchProjectMeta } from 'containers/Common/ProjectMeta/helper';
 
 const Item = ({ project, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { ProyectoID } = project;
-  const [metas, setMetas] = useState({
-    promesas: 0,
-    firmadoPromesas: 0,
-    totalPrice: 0, 
-    firmadoPrice: 0
-  });  
 
+  const [result, setResult] = useState({
+    promesas: 0,
+    totalPrice: 0, 
+  }); 
+
+  const [metas, setMetas] = useState({
+    metaPromesas: 0,
+    metaPrice: 0,
+  });
   useEffect(() => {
-    fetchProjectMeta(ProyectoID).then(res => setMetas(res));
+    fetchProjectExist(ProyectoID).then(res => setResult(res));
+    setMetas(fetchProjectMeta(project));
   }, []);
 
   return (
@@ -79,15 +83,15 @@ const Item = ({ project, dispatch }) => {
           <div className="graphics">
             <div className="row">
               <span className="title col-5">
-                UF <b>{metas.firmadoPrice}</b>
+                UF <b>{result.totalPrice}</b>
               </span>
               <div className="col-7">
                 <ProgressBar
                   title="de"
-                  percent={metas.totalPrice ? 100*metas.firmadoPrice/metas.totalPrice : 0}
+                  percent={result.totalPrice ? 100*result.totalPrice/metas.metaPrice : 0}
                   label={
                     <>
-                      UF <b>{metas.totalPrice}</b>
+                      UF <b>{metas.metaPrice}</b>
                     </>
                   }
                 />
@@ -95,17 +99,18 @@ const Item = ({ project, dispatch }) => {
             </div>
             <div className="row">
               <span className="title col-5">
-                Promesas <b>{metas.firmadoPromesas}</b>
+                Promesas <b>{result.promesas}</b>
               </span>
               <div className="col-7">
                 <ProgressBar
                   title="de"
-                  percent={metas.promesas ? 100*metas.firmadoPromesas/metas.promesas : 0}
+                  percent={result.promesas ? 100*result.promesas/metas.metaPromesas : 0}
                   label={
                     <>
-                      <b>{metas.promesas}</b>
+                      <b>{metas.metaPromesas}</b>
                     </>
                   }
+                  barColor='yellow'
                 />
               </div>
             </div>
