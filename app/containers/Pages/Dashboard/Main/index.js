@@ -12,7 +12,7 @@ import TimeLog from './TimeLog';
 import DoGlobal from './DocumentGlobal';
 
 export function MainContent({ selector, onQuery }) {
-  const { ControlUser, Counter, Logs, origin_ControlModalUser, query = {} } = selector;
+  const { ControlUser, Counter, Logs, origin_ControlModalUser, query = {}, entities = [] } = selector;
   return (
     <div className="row">
       <div className="mt-4 col-md-8">
@@ -23,7 +23,7 @@ export function MainContent({ selector, onQuery }) {
           onQuery={onQuery} 
         />
         <div className="mt-3">
-          <ProjectMeta />
+          {entities && (<ProjectMeta entities={entities} />)}
         </div>
         <DoGlobal counter={Counter} />
       </div>
