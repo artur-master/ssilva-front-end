@@ -131,7 +131,7 @@ export const PROMESA_STATE = [
   'Pendiente AC aprobación de maqueta', // #9 -> #11
   'Promesa modificada', // #10 -> #0
   'Pendiente JP aprobación de maqueta', // #11 -> #1
-  'Pendiente aprobación AC', // #12 -> #2
+  'Pendiente Aprobación Firma', // #12 -> #2
   'Pendiente revisión negociación', // #13 -> #14     send condition to JP review
   'Pendiente negociación inmobiliaria', // # 14 -> 15 or 1     wait IN approve condition. If reject -> #15, if approve -> #1
   'Rechazada Inmobiliaria', // #15

@@ -27,7 +27,7 @@ const List = ({ quotations, query, filter, reports, project, reservations, dispa
     )}
     {requiredData(project) && (
       <Alert type="danger" className="mb-0">
-        {`Para seguir debes completar los datos del proyecto: `+requiredData(project)}
+        {`Faltan datos del proyecto. Para poder Cotizar deben completar los datos del proyecto: ${requiredData(project)}`}
       </Alert>
     )}
     <Box className="mt-3 pb-3">
@@ -40,7 +40,7 @@ const List = ({ quotations, query, filter, reports, project, reservations, dispa
               { field: 'Inmuebles', label: 'Inmuebles', className: "pl-3" },
               { field: 'Cliente', label: 'Cliente', sortable: true },
               { field: 'Date', label: 'Fecha', sortable: true },
-              { field: 'CotizacionState', label: 'CotizacionState', colSpan: 2, className: "pl-6", sortable: true },
+              { field: 'CotizacionState', label: 'Estado', colSpan: 2, className: "pl-6", sortable: true },
               { field: '', label: '' },
             ]}
             onQuery={query => dispatch(queryQuotations(query))}

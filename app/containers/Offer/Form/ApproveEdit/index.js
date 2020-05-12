@@ -46,7 +46,7 @@ export function OfferApproveEditForm({ selector, dispatch }) {
       <ProjectPhases project={project} active="offer" />
       <Steps offer={selector.offer} />
       <Alert type="danger">
-        Los documentos modificados están marcados en rojo.
+        La información modificada está en rojo.
       </Alert>
       <h4 className="font-21 mt-3">{`${project.Name} / ${entity.Folio}`}</h4>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">

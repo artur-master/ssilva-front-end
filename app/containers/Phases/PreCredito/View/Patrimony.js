@@ -93,7 +93,7 @@ const Patrimony = ({ values }) => {
                 </span>
                 <FormGroup className="col-12 col-md-6 mt-2">
                   <Label style={{ minWidth: '12em' }} className="pt-1">
-                    Rent
+                  Monto Arriendo
                   </Label>
                   <IntlFormatCurrency value={values.Patrimony.Rent} />
                 </FormGroup>

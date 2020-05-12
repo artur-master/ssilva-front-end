@@ -124,7 +124,7 @@ const Patrimony = ({ form }) => {
                 <b className="text-uppercase">¿Cuánto paga de arriendo?</b>
               </span>
               <FormGroup className="col-12 col-md-6 mt-2">
-                <Label style={{ minWidth: '12em' }}>Rent</Label>
+                <Label style={{ minWidth: '12em' }}>Monto Arriendo</Label>
                 <ExField
                   className="ml-3 caution"
                   name="Patrimony.Rent"

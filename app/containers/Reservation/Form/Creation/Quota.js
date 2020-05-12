@@ -19,7 +19,7 @@ function Quota({ form }) {
   return (
     <Box className="financing-form">
       <BoxHeader>
-        <span className="title">Forma de pago valor final UF </span>
+        <span className="title">Forma de pago final UF X</span>
         <span
           style={{
             fontSize: '1.3em',

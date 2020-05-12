@@ -27,7 +27,7 @@ function Histroy({ logs, onHide, isOpen=false, title='' }) {
   const showLogs = logs? logs.slice(0, (showIndex+1)): [];
   return (
     <Modal isOpen={isOpen} size="xl" scrollable>
-      <ModalHeader> HISTORIALS </ModalHeader>
+      <ModalHeader> HISTORIAL </ModalHeader>
       <ModalBody className="p-3 bg-light">
         {showLogs && (
           <Box>
@@ -44,7 +44,7 @@ function Histroy({ logs, onHide, isOpen=false, title='' }) {
                       </span>{' '}
                       <b>{logLabel(log.VentaLogType)}</b>
                     </div>
-                    <span className="font-12-rem">Creado por </span>{' '}
+                    <span className="font-12-rem">Realizado por </span>{' '}
                     <span className="badge badge-light">
                       {userFullname(log.User)}
                     </span>{' '}

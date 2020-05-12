@@ -76,7 +76,7 @@ export const getDocuments = entity => {
       {
         documentoName: 'Constitucion de Sociedad',
         documentoType: 'DocumentConstitucionSociedad',
-        firmado: true,
+        // firmado: true,
         required: true,
       },
       {
