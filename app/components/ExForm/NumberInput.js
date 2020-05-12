@@ -19,7 +19,7 @@ const NumberInput = ({ className = '', label = '', ...props }) => (
       const getInErrors = getIn(form.errors, field.name);
       
       const prefix = props.maskOptions && props.maskOptions['prefix'];
-      
+
       return (
         <div style={props.style}>
           <div className={`btype shadow-sm ${className.includes('caution') ? 'caution' : ''}`}>
@@ -27,9 +27,10 @@ const NumberInput = ({ className = '', label = '', ...props }) => (
               <input
                 type="number"
                 {...props}
-                value={field.value || 0}
+                value={parseFloat(field.value)}
                 onChange={evt => {
                   let val = evt.currentTarget.value;
+                  
                   if (val > props.max) val = props.max;
                   if (val < props.min) val = props.min;
                   form.setFieldValue(props.name, val);
