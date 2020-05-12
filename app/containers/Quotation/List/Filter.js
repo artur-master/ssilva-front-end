@@ -103,7 +103,7 @@ const Filter = ({ project, filter, reports, searchQuotations }) => {
         <Input
           className="form-control form-control-sm"
           type="text"
-          onChange={evt => searchQuotations(evt.target.value)}
+          onChange={evt => searchQuotations({textSearch: evt.target.value})}
           placeholder="Escribe lo que deseas buscar..."
         />
       </div>

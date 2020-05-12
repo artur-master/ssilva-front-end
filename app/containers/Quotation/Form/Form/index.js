@@ -47,7 +47,15 @@ export function PhaseCreationForm({
     <ExForm
       initialValues={initialValues}
       onSubmit={values => {
-        if (step === 2) onSubmit(values, directAfterSubmitted);
+        if (step === 2) {
+          const Inmuebles = values.Inmuebles.map(inmueble=>({
+            ...inmueble,
+            Discount: inmueble.Discount === "" ? 0 : inmueble.Discount,
+          }));
+          values.Inmuebles = Inmuebles;
+
+          onSubmit(values, directAfterSubmitted);
+        }
         else {
           dispatch(updateQuotation(values));
           setStep(2);

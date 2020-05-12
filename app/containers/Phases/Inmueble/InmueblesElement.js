@@ -3,6 +3,7 @@ import { FormattedNumber } from 'react-intl';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'formik';
 import ExField from 'components/ExForm/ExField';
+import {Field} from 'components/ExForm';
 import { inmuebleLabel } from 'containers/Common/Inmueble/helper';
 
 const InmueblesElement = ({ values, onSelect }) => {
@@ -39,31 +40,26 @@ const InmueblesElement = ({ values, onSelect }) => {
                         <b>Descuentos</b>
                       </span>
                       <div className="search-filter shadow-sm mx-2">
-                        <ExField
+                        <Field
                           className="flex-fill"
                           name={`Inmuebles.${index}.Discount`}
                           type="number"
                           min={0}
                           max={values.DiscountMaxPercent || 100}
                           style={{ width: '11.5em' }}
-                          onChange={evt => {
-                            const maxDiscount = values.DiscountMaxPercent || 100;
-                            let percent = evt.currentTarget.value;
-                            if (
-                              parseFloat(evt.currentTarget.value) > maxDiscount
-                            )
-                              percent = maxDiscount;
-                            if (
-                              parseFloat(evt.currentTarget.value) < 0 ||
-                              Number.isNaN(evt.currentTarget.value)
-                            )
-                              percent = 0;
+                          // onChange={evt => {
+                          //   // const maxDiscount = values.DiscountMaxPercent || 100;
+                          //   // if(evt.currentTarget.value == "") return;
+                          //   let percent = (evt.currentTarget.value == "")? 0: parseFloat(evt.currentTarget.value);
+                          //   console.log(evt.currentTarget.value, percent);
+                          //   // if ( percent > maxDiscount) percent = maxDiscount;
+                          //   // if ( percent < 0) percent = 0;
 
-                            replace(index, {
-                              ...inmueble,
-                              Discount: percent,
-                            });
-                          }}
+                          //   replace(index, {
+                          //     ...inmueble,
+                          //     Discount: percent,
+                          //   });
+                          // }}
                         />
                       </div>
                       <span className="italic-gray">
