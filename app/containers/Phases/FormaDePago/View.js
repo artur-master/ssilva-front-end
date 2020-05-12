@@ -32,7 +32,7 @@ export function PhaseFormaDePagoView({ values }) {
         <table className="table">
           <thead>
             <tr>
-              <td>Opciones de Pago Contado</td>
+              <td>Crédito</td>
               <td>UF</td>
             </tr>
           </thead>

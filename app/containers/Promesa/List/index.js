@@ -77,7 +77,7 @@ export function Promesas({ match, selectorProject, selector, dispatch }) {
           )}
           {isReadyData(project) && (
             <Alert type="danger" className="mb-0">
-              {`Para seguir debes completar los datos del proyecto: `+isReadyData(project)}
+              {`Faltan datos del proyecto. Para poder Promesar deben completar los datos del proyecto: ${isReadyData(project)}`}
             </Alert>
           )}
         </>

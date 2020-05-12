@@ -25,7 +25,7 @@ export function PhaseReviewNegociacionPromesa({
     <>
       <Box>
         <BoxHeader>
-          <b>Revisión de Fase de Negociación Promesa</b>
+          <b>Negociación de la Promesa</b>
         </BoxHeader>
         <BoxContent>
           <div className="d-flex align-items-center">
@@ -49,7 +49,7 @@ export function PhaseReviewNegociacionPromesa({
             disabled={selector.loading}
             onClick={() => setWithText({ text: '', open: true })}
           >
-            Continuar
+            Devolver
           </Button>
           <Button disabled={selector.loading} onClick={onSubmit}>
             Enviar Observaciones a Inmobiliaria

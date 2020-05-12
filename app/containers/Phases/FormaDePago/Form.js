@@ -127,7 +127,7 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
         <table className="table">
           <thead>
             <tr>
-              <td>Opciones de Pago Contado</td>
+              <td>Crédito</td>
               <td>UF</td>
               <td>%</td>
               <td>$</td>

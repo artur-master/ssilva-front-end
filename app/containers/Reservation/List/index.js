@@ -58,7 +58,7 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
           )}
           {requiredData(project) && (
             <Alert type="danger" className="mb-0">
-              {`Para seguir debes completar los datos del proyecto: `+requiredData(project)}
+              {`Faltan datos del proyecto. Para poder Reservar deben completar los datos del proyecto: ${requiredData(project)}`}
             </Alert>
           )}
           <List {...selector} project={project}
