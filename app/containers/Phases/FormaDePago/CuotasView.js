@@ -47,7 +47,8 @@ function CuotasView({ values, onSetCuotas, onHide, onEdit }) {
                         <span className="mr-2 no-whitespace">
                           <b>Valor</b>
                         </span>
-                        <div className="w-100">{cuotas.Amount}</div>
+                        {/* <div className="w-100">{cuotas.Amount}</div> */}
+                        <FormattedNumber value={cuotas.Amount} minimumFractionDigits={2} maximumFractionDigits={2}/>
                       </div>
                     </td>
                     <td className="w-auto">

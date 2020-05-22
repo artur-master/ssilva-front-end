@@ -12,7 +12,7 @@ import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import model from '../model';
 import { Is_EntregaInmediata } from '../helper'
-import { getGeneralFields, getPolizaFields, getMetasFields } from '../fields';
+import { getGeneralFields, getPolizaFields, getMetasFields, getCuotasFields } from '../fields';
 import Aseguradora from 'containers/Common/Aseguradora';
 
 const SyncMessage = WithLoading();
@@ -29,6 +29,7 @@ export function GeneralForm({ selector, selectorProject, onSubmit, onReset }) {
           fields.push(...polizafields);
         }
         const metaFields = getMetasFields(project);
+        const cuotaFields = getCuotasFields(project);
 
         return (
           <>
@@ -61,18 +62,34 @@ export function GeneralForm({ selector, selectorProject, onSubmit, onReset }) {
               <BoxContent>
                 <SyncMessage {...restSelector} />
                 <div className="row p-0 m-0 color-regular">
-                  {metaFields.map(
-                    ({ label, name, view, Component = Field, ...attributes }) => (
-                      <FormGroup key={name} className="col-md-6 my-2">
-                        <Label style={{ width: '13.5em' }}>{label}</Label>
-                        <Component
-                          name={name}
-                          style={{ width: '13.5em' }}
-                          {...attributes}
-                        />
-                      </FormGroup>
-                    ),
-                  )}
+                  <div className="col-md-6">
+                    {cuotaFields.map(
+                      ({ label, name, view, Component = Field, ...attributes }) => (
+                        <FormGroup key={name} className="my-2">
+                          <Label style={{ width: '13.5em' }}>{label}</Label>
+                          <Component
+                            name={name}
+                            style={{ width: '13.5em' }}
+                            {...attributes}
+                          />
+                        </FormGroup>
+                      ),
+                    )}
+                  </div>
+                  <div className="col-md-6">
+                    {metaFields.map(
+                      ({ label, name, view, Component = Field, ...attributes }) => (
+                        <FormGroup key={name} className="my-2">
+                          <Label style={{ width: '13.5em' }}>{label}</Label>
+                          <Component
+                            name={name}
+                            style={{ width: '13.5em' }}
+                            {...attributes}
+                          />
+                        </FormGroup>
+                      ),
+                    )}
+                  </div>
                 </div>
               </BoxContent>
               <BoxFooter>

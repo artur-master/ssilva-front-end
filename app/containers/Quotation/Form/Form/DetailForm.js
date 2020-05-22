@@ -32,6 +32,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
     label: Name,
     value: Name,
   }));
+
   return (
     <>
       <Box>
@@ -153,7 +154,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
                   focusHide={
                     values.CotizacionType ===
                     quotationUtils.CotizacionTypes[1].Name
-                      ? ['ComunaID']
+                      ? ['ComunaID', 'Ocupation']
                       : false
                   }
                   required

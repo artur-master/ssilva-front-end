@@ -394,8 +394,26 @@ export const getPaymentFields = (form, type) => {
       name: `${type}AhorroPlus`,
       view: `${values[`${type}AhorroPlus`] || 20}`,
     },
+    {
+      label: 'Ahorro Plus Máximos Descuentos',
+      name: `${type}AhorroPlusMaxDiscounts`,
+      view: `${values[`${type}AhorroPlusMaxDiscounts`] || 20}`,
+    }
   ];
 };
+
+export const getCuotasFields = entity => [
+  /* Cuotas Data */
+  {
+    label: 'Maximo Cuotas',
+    name: 'MaxQuotation',
+    view: numberFormat(entity.MaxQuotation) || 0,
+    value: numberFormat(entity.MaxQuotation) || 0,
+    type: 'number',
+    min: 0,
+  },
+];
+
 export const getMetasFields = entity => [
   /* Metas Data */
   {

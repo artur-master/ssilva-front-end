@@ -49,6 +49,7 @@ function DocumentItem({
       fileAccept = '*';
   }
   if (autoGenerate && !Documentos[documentoType]) return null;
+  
   return (
     <Item className={className}>
       <div className="color-regular order-1" style={{ width: '22em' }}>

@@ -9,7 +9,7 @@ import { Box, BoxContent, BoxHeader } from 'components/Box';
 import { FormGroup, Label } from 'components/ExForm';
 import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
-import { getGeneralFields, getPolizaFields, getMetasFields } from '../fields';
+import { getGeneralFields, getPolizaFields, getMetasFields, getCuotasFields } from '../fields';
 import GeneralReview from '../GeneralApprove/GeneralReview';
 import model from '../model';
 
@@ -18,7 +18,9 @@ const SyncMessage = WithLoading();
 function GeneralView({ canEdit, selectorProject, selector, onEdit, isCollapse = true }) {
   const { project = {} } = selectorProject;
   const fields = getGeneralFields({ values: model(project) });
-  const Metasfields = getMetasFields(project);
+  const metasfields = getMetasFields(project);
+  const cuotasfields = getCuotasFields(project);
+
   if (project.EntregaInmediata) {
     const polizafields = getPolizaFields(project);
     fields.push(...polizafields);
@@ -63,16 +65,30 @@ function GeneralView({ canEdit, selectorProject, selector, onEdit, isCollapse = 
           <SyncMessage {...selector} />
           {project && (
             <div className="row p-0 m-0 color-regular">
-              {Metasfields.map(({ label, name, view }) => (
-                <FormGroup key={name} className="col-md-6 my-2">
-                  <Label className="pt-0" style={{ width: '13.5em' }}>
-                    {label}
-                  </Label>
-                  <span className="font-14-rem ml-2">
-                    {view || project[name]}
-                  </span>
-                </FormGroup>
-              ))}
+              <div className="col-md-6">
+                {cuotasfields.map(({ label, name, view }) => (
+                  <FormGroup key={name} className="my-2">
+                    <Label className="pt-0" style={{ width: '13.5em' }}>
+                      {label}
+                    </Label>
+                    <span className="font-14-rem ml-2">
+                      {view || project[name]}
+                    </span>
+                  </FormGroup>
+                ))}
+              </div>
+              <div className="col-md-6">
+                {metasfields.map(({ label, name, view }) => (
+                  <FormGroup key={name} className="my-2">
+                    <Label className="pt-0" style={{ width: '13.5em' }}>
+                      {label}
+                    </Label>
+                    <span className="font-14-rem ml-2">
+                      {view || project[name]}
+                    </span>
+                  </FormGroup>
+                ))}
+              </div>
             </div>
           )}
         </BoxContent>

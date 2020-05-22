@@ -60,7 +60,8 @@ function ClienteForm({ info, focusHide, selector, onHide, onSubmit }) {
       <ExForm initialValues={initialValues} onSubmit={onSubmit}>
         {form => {
           const isCompany = stringToBoolean(form.values.IsCompany);
-          let Form = isCompany ? CompanyBasic : PersonBasic;
+          let Form;
+
           switch (info) {
             case 'advance':
               Form = isCompany ? CompanyBasic : PersonAdvance;
@@ -68,6 +69,7 @@ function ClienteForm({ info, focusHide, selector, onHide, onSubmit }) {
             default:
               Form = isCompany ? CompanyBasic : PersonBasic;
           }
+          
           if (form.values.UserID && form.values.Name === undefined)
             return <SyncMessage {...restSelector} loading={loading} />;
 

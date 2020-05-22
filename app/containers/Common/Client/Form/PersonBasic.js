@@ -8,9 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field as ExField, FormGroup, Label } from 'components/ExForm';
 import ContactsElement from './ContactsElement';
-import { shouldShowField } from '../helper';
+import { shouldShowField, professions } from '../helper';
 function PersonBasic({ form, focusHide }) {
   const { values } = form;
+
   return (
     <>
       <div className="row justify-content-between">
@@ -27,14 +28,33 @@ function PersonBasic({ form, focusHide }) {
             <Label style={{ width: '11em' }}>Apellidos</Label>
             <ExField className="flex-fill" name="LastNames" required />
           </FormGroup>
-          <FormGroup className="mt-3">
-            <Label style={{ width: '11em' }}>Profesión</Label>
-            <ExField name="Ocupation" className="flex-fill" />
-          </FormGroup>
+          {shouldShowField('Ocupation', focusHide) && (
+            <FormGroup className="mt-3">
+              <Label style={{ width: '11em' }}>Profesión</Label>
+              {/* <ExField name="Ocupation" className="flex-fill" required/> */}
+              <ExField
+                className="flex-fill"
+                name="Ocupation"
+                required
+                type="select"
+              >
+                <option value="">Selecciona...</option>
+                {professions.map(({label, values}) => 
+                  <optgroup label={label}>
+                    {values.map(value=>
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    )}
+                  </optgroup>                  
+                )}
+              </ExField>
+            </FormGroup>
+          )}
         </div>
 
         <div className="col-md-6">
-          <FormGroup className="mt-3">
+          {/* <FormGroup className="mt-3">
             <Label style={{ width: '11em' }}>Fecha de Nacimiento</Label>
             <div className="flex-fill">
               <ExField
@@ -43,7 +63,7 @@ function PersonBasic({ form, focusHide }) {
                 name="BirthDate"
               />
             </div>
-          </FormGroup>
+          </FormGroup> */}
           {shouldShowField('ComunaID', focusHide) && (
             <>
               <FormGroup className="mt-3">
@@ -55,10 +75,10 @@ function PersonBasic({ form, focusHide }) {
                   required
                 />
               </FormGroup>
-              <FormGroup className="mt-3">
+              {/* <FormGroup className="mt-3">
                 <Label style={{ width: '11em' }}>Dirección</Label>
                 <ExField className="flex-fill" name="Address" required />
-              </FormGroup>
+              </FormGroup> */}
             </>
           )}
           <div className="row justify-content-between" />

@@ -26,6 +26,7 @@ function Nav({ dispatch }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSimulator, setIsOpenSimulator] = useState(false);
 
+  const authName = Auth.get('user').Roles[0].Name;
   return (
     <>
       <nav className="top-nav row mb-3">
@@ -37,7 +38,7 @@ function Nav({ dispatch }) {
             onClick={evt => evt.preventDefault()}
             className="font-14-rem color-main"
           >
-            <b className="text-uppercase">{Auth.get('user').Roles[0].Name}</b>
+            <b className="text-uppercase">{authName === "Escritura"? "Escrituración": authName}</b>
           </Link>
         </div>
         <ul className="col-auto row">
