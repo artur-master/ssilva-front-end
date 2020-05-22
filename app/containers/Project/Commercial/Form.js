@@ -136,14 +136,22 @@ export function CommercialForm({
                         <Label style={{ width: '17.5em' }}>
                           {label}
                         </Label>
-                        <Field
-                          type="number"
-                          name={name}
-                          maskOptions={{ prefix: '%' }}
-                          required="true"
-                          max={100}
-                          style={{ width: '10em' }}
-                        />
+                        { name == "ContadoAhorroPlusMaxDiscounts"
+                         ? <Field
+                            type="number"
+                            name={name}
+                            required="true"
+                            style={{ width: '10em' }}
+                           />
+                         : <Field
+                            type="number"
+                            name={name}
+                            maskOptions={{ prefix: '%' }}
+                            required="true"
+                            max={100}
+                            style={{ width: '10em' }}
+                           />
+                        }
                       </FormGroup>
                     ))}
                   </div>
@@ -154,14 +162,22 @@ export function CommercialForm({
                         <Label style={{ width: '17.5em' }}>
                           {label}
                         </Label>
-                        <Field
-                          type="number"
-                          name={name}
-                          maskOptions={{ prefix: '%' }}
-                          required="true"
-                          max={100}
-                          style={{ width: '10em' }}
-                        />
+                        { name == "CreditoAhorroPlusMaxDiscounts"
+                         ? <Field
+                            type="number"
+                            name={name}
+                            required="true"
+                            style={{ width: '10em' }}
+                           />
+                         : <Field
+                            type="number"
+                            name={name}
+                            maskOptions={{ prefix: '%' }}
+                            required="true"
+                            max={100}
+                            style={{ width: '10em' }}
+                           />
+                        }
                       </FormGroup>
                     ))}
                   </div>

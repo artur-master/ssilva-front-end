@@ -37,8 +37,8 @@ export const inmuebleLabel = entity => {
   const Type = `${entity.InmuebleType} ${entity.Number}`;
   switch (entity.InmuebleType) {
     case 'Departamento':
-      return `${Type} / Piso ${Floor}, ${Orientation} ,
-        ${Room} / ${UsoyGoceLabel}`;
+      return `${Type} / Piso ${Floor}, ${Orientation} , ${Room}`;
+        // ${Room} / ${UsoyGoceLabel}`;
     default:
       return `${Type} / Piso ${Floor} , ${Orientation}/ ${UsoyGoceLabel}`;
   }

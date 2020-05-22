@@ -65,7 +65,7 @@ function CommercialView({ canEdit, selectorProject, selector, onEdit }) {
                       { label }
                     </Label>
                     <span className="font-14-rem ml-2">
-                      % { view }
+                    { name == "ContadoAhorroPlusMaxDiscounts"? view : `% ${view}` }
                     </span>
                   </FormGroup>
                 ))}
@@ -78,7 +78,7 @@ function CommercialView({ canEdit, selectorProject, selector, onEdit }) {
                       { label }
                     </Label>
                     <span className="font-14-rem ml-2">
-                      % { view }
+                    { name == "CreditoAhorroPlusMaxDiscounts"? view : `% ${view}` }
                     </span>
                   </FormGroup>
                 ))}

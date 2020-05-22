@@ -40,7 +40,7 @@ const InmuebleList = ({
           ),
         })),
         );
-      }, [selector.selected]);
+  }, [selector.selected]);
       
   const [showType, setShowType] = useState(defaultShowType);
   const handleChangeQuery = query => {

@@ -14,6 +14,13 @@ import ContactsElement from './ContactsElement';
 function ClienteFormFull({ form }) {
   const { clientUtils } = window.preload;
   const { values } = form;
+  const Carags = [];
+  for(let i=0;i<11; i++)
+    Carags.push(`
+      <option key="key_${i}" value="${i}" >
+        ${i}
+      </option>`);
+  
   return (
     <div className="p-3 px-4 border-top">
       <div className="row justify-content-between">
@@ -50,32 +57,30 @@ function ClienteFormFull({ form }) {
               name="ComunaID"
               required
             />
+          </FormGroup>          
+          {/* <FormGroup className="mt-3">
+            <Label style={{ width: '10em' }}>Edad</Label>
+            <ExField
+              type="select"
+              name="Extra.AgeRank"
+              className="flex-fill"
+              required
+            >
+              <option value="">Selecciona...</option>
+              {clientUtils.Ages.map(age => (
+                <option key={age} value={age}>
+                  {age}
+                </option>
+              ))}
+            </ExField>
+            <div className="font-21 color-main opacity-0 ml-2">
+              <strong>+</strong>
+            </div>
           </FormGroup>
-          {/*
-                      <FormGroup className="mt-3">
-                        <Label style={{ width: '10em' }}>Edad</Label>
-                        <ExField
-                          type="select"
-                          name="Extra.AgeRank"
-                          className="flex-fill"
-                          required
-                        >
-                          <option value="">Selecciona...</option>
-                          {clientUtils.Ages.map(age => (
-                            <option key={age} value={age}>
-                              {age}
-                            </option>
-                          ))}
-                        </ExField>
-                        <div className="font-21 color-main opacity-0 ml-2">
-                          <strong>+</strong>
-                        </div>
-                      </FormGroup>
-                      */}
           <FormGroup className="mt-3">
             <Label style={{ width: '10em' }}>Dirección</Label>
             <ExField className="flex-fill" name="Address" required />
-          </FormGroup>
+          </FormGroup> */}
         </div>
       </div>
       <ContactsElement values={values} required />
@@ -180,9 +185,10 @@ function ClienteFormFull({ form }) {
               className="flex-fill"
               name="Carga"
               required
-              max={32767}
-              type="number"
-            />
+              type="select"
+            >
+              {Carags}
+            </ExField>
           </FormGroup>
 
           <FormGroup className="mt-3">

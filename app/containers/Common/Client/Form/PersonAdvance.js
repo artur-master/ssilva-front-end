@@ -13,6 +13,10 @@ import PersonBasic from './PersonBasic';
 function PersonAdvance({ form, focusHide = [] }) {
   const { clientUtils } = window.preload;
   const { values } = form;
+  const Carags = [];
+  for(let i=0;i<11; i++)
+    Carags.push(i);
+
   return (
     <>
       <PersonBasic form={form} />
@@ -100,9 +104,15 @@ function PersonAdvance({ form, focusHide = [] }) {
               className="flex-fill"
               name="Carga"
               required
-              max={32767}
-              type="number"
-            />
+              type="select"
+            >
+              <option value="">Selecciona...</option>
+              {Carags.map(carga => 
+                <option key={`key_${carga}`} value={carga}>
+                  {carga}
+                </option>
+              )}
+            </ExField>
           </FormGroup>
         </div>
         <div className="col-md-6" />
