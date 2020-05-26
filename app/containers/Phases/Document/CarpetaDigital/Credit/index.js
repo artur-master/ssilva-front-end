@@ -16,7 +16,7 @@ export function Credit({ entity, canUpload, canReview, onReview }) {
   return (
     <List>
       {documents
-        .filter((item, index) => (index > 0 && !item.autoGenerate))
+        .filter((item, index) => (index > 0 && !item.autoGenerate && !item.offerta))
         .map((document, index) => (
           <DocumentItem
             key={document.documentoType}

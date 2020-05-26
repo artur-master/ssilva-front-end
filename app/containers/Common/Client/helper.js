@@ -9,10 +9,10 @@ export const doQuery = (entities, query = {}) => {
       item => !query.notIn.includes(item.UserID),
     );
   }
-
+  
   if (query.textSearch) {
     const fuse = new Fuse(queriedEntities, {
-      keys: ['Name', 'Rut', 'Comuna.Name'],
+      keys: ['Name', 'LastNames', 'Rut', 'Comuna.Name'],
       threshold: 0,
       location: 0,
       distance: 100,

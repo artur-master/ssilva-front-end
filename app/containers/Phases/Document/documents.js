@@ -12,7 +12,29 @@ export const getDocuments = entity => {
       documentoName: 'Transferencia',
       documentoType: 'DocumentPagoGarantia',
       required: true,
-    }, 
+    },
+    //offerta
+    {
+      documentoName: 'Oferta',
+      documentoType: 'DocumentOferta',
+      autoGenerate: true,
+      offerta: true,
+    },
+    {
+      documentoName: 'Oferta Firmada',
+      documentoType: 'DocumentOfertaFirmada',
+      firmado: true,
+      required: true,
+      offerta: true,
+    },
+    {
+      documentoName: 'Plano',
+      documentoType: 'DocumentPlanoFirmada',
+      firmado: true,
+      required: true,
+      offerta: true,
+    },
+    //offerta
     // {
     //   documentoName: 'Cheques',
     //   documentoType: 'DocumentFirmadoCheques',
@@ -66,7 +88,7 @@ export const getDocuments = entity => {
       documentoName: 'Certificado Matrimonio',
       documentoType: 'DocumentCertificadoMatrimonio',
       firmado: true,
-      required: true,
+      // required: true,
     });
   }
 
@@ -153,11 +175,11 @@ export const getDocuments = entity => {
       //   firmado: true,
       //   required: true,
       // },
-      {
-        documentoName: 'Últimos 3 liquidaciones',
-        documentoType: 'DocumentLiquidacion1',
-        required: true,
-      },
+      // {
+      //   documentoName: 'Últimos 3 liquidaciones',
+      //   documentoType: 'DocumentLiquidacion1',
+      //   required: true,
+      // },
     ];
   }
   return baseDocuments;

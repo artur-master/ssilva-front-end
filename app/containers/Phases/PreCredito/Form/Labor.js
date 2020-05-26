@@ -75,11 +75,11 @@ const Labor = ({ group = 'Cliente', values }) => {
       </span>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0">Nombre Empleador</Label>
-        <ExField className="w-50" name={`${Empleador}.RazonSocial`} required />
+        <ExField className="w-50" name={`${Empleador}.RazonSocial`} />
       </FormGroup>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0">RUT Empleador</Label>
-        <ExField className="w-50" name={`${Empleador}.Rut`} required />
+        <ExField className="w-50" name={`${Empleador}.Rut`} />
       </FormGroup>
       {!IsCompany && (
         <FormGroup className="col-12 col-md-6 d-flex mt-3">

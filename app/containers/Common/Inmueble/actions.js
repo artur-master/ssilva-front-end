@@ -8,6 +8,9 @@ import {
   FETCH_ENTITIES,
   FETCH_ENTITIES_ERROR,
   FETCH_ENTITIES_SUCCESS,
+  UPDATE_ENTITIES,
+  UPDATE_ENTITIES_ERROR,
+  UPDATE_ENTITIES_SUCCESS,
   MATCH_RESTRICTION,
   RESET_SELECT,
   SELECT_ENTITY,
@@ -61,8 +64,7 @@ export function matchRestriction(restrictions) {
   };
 }
 
-export function uploadblueFiles(values, entities) {
-  
+export function uploadblueFiles(values, entities) {  
   return {
     type: UPLOAD_BLUEPRINT,
     values,
@@ -80,6 +82,27 @@ export function sucessUpload(response) {
 export function errorUpload(response) {
   return {
     type: ERROR_UPLOAD,
+    response,
+  };
+}
+
+export function updateEntities(values) {
+  return {
+    type: UPDATE_ENTITIES,
+    values,
+  };
+}
+
+export function updateEntitiesError(error) {
+  return {
+    type: UPDATE_ENTITIES_ERROR,
+    error,
+  };
+}
+
+export function updateEntitiesSuccess(response) {
+  return {
+    type: UPDATE_ENTITIES_SUCCESS,
     response,
   };
 }

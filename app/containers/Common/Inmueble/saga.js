@@ -1,8 +1,22 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { API_ROOT } from 'containers/App/constants';
-import { FETCH_ENTITIES, UPLOAD_BLUEPRINT, SELECT_ENTITY } from './constants';
-import { fetchEntitiesSuccess, fetchEntitiesError, sucessUpload, errorUpload } from './actions';
+import { 
+  FETCH_ENTITIES,
+  UPDATE_ENTITIES,
+  UPLOAD_BLUEPRINT,
+  SELECT_ENTITY,
+} from './constants';
+
+import { 
+  fetchEntitiesSuccess, 
+  fetchEntitiesError, 
+  sucessUpload, 
+  errorUpload,
+  updateEntitiesSuccess,
+  updateEntitiesError
+} from './actions';
+
 import { routerActions } from 'connected-react-router';
 
 export function* sagaFetchInmuebles(action) {
@@ -24,6 +38,20 @@ export function* sagaFetchInmuebles(action) {
     yield put(fetchEntitiesSuccess({ restrictions, inmuebles }));
   } catch (error) {
     yield put(fetchEntitiesError(error));
+  }
+}
+
+export function* sagaUpdateInmueble(action) {
+  const requestURL = `${API_ROOT}/empresas-proyectos/inmuebles/${action.values.InmuebleID}/`;
+  try {
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(action.values)
+    });
+    
+    yield put(updateEntitiesSuccess(response));
+  } catch (error) {
+    yield put(updateEntitiesError(error));
   }
 }
 
@@ -58,5 +86,6 @@ export function* uploadblueFiles(action) {
 
 export default function* inmuebleSaga() {
   yield takeLatest(FETCH_ENTITIES, sagaFetchInmuebles);
+  yield takeLatest(UPDATE_ENTITIES, sagaUpdateInmueble);
   yield takeLatest(UPLOAD_BLUEPRINT, uploadblueFiles);
 }

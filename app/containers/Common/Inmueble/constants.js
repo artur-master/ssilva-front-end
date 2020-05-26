@@ -24,3 +24,9 @@ export const SUCESS_UPLOAD =
 
   export const ERROR_UPLOAD =
   'app/containers/Common/Inmueble/ERROR_UPLOAD';
+
+export const UPDATE_ENTITIES = 'app/containers/Common/Inmueble/UPDATE_ENTITIES';
+export const UPDATE_ENTITIES_ERROR =
+  'app/containers/Common/Inmueble/UPDATE_ENTITIES_ERROR';
+export const UPDATE_ENTITIES_SUCCESS =
+  'app/containers/Common/Inmueble/UPDATE_ENTITIES_SUCCESS';
