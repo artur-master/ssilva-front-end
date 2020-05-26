@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { FormattedNumber } from 'react-intl';
 import { inmuebleSortDetail, DownloadBlueprint } from '../helper';
 
-function ListItem({ entity = {}, focusChange, onSelect }) {
+function ListItem({ entity = {}, focusChange, onSelect, onModifyItem }) {
   return (
     <tr>
       <th scope="row" className="checkbox">
@@ -29,7 +29,10 @@ function ListItem({ entity = {}, focusChange, onSelect }) {
           </span>
         )}
 
-        <p className="m-0 p-0 color-main">
+        <p className="m-0 p-0 color-main"
+          style={{cursor: "pointer"}}
+          onClick={()=>onModifyItem(entity)}
+        >
           {entity.InmuebleType} {entity.Number}
         </p>
       </th>
@@ -81,6 +84,7 @@ ListItem.propTypes = {
   focusChange: PropTypes.bool,
   entity: PropTypes.object,
   onSelect: PropTypes.func,
+  onModifyItem: PropTypes.func,
 };
 
 export default ListItem;

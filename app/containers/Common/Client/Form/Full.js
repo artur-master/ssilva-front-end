@@ -233,7 +233,7 @@ function ClienteFormFull({ form }) {
             </ExField>
           </FormGroup>
 
-          <FormGroup className="mt-3">
+          {/* <FormGroup className="mt-3">
             <Label style={{ width: '10em' }}>Patrimonio</Label>
             <ExField
               type="number"
@@ -242,7 +242,7 @@ function ClienteFormFull({ form }) {
               required
               max={2147483647}
             />
-          </FormGroup>
+          </FormGroup> */}
         </div>
       </div>
     </div>

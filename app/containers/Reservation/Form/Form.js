@@ -115,7 +115,7 @@ export function Form({ project, selector, dispatch }) {
           setStep(step + 1);
           if (step === 2)
             return dispatch(
-              saveReservation({ ...initialValues, ...entity }),
+              saveReservation({ ...initialValues, ...values }),
             );
           // dispatch(updateReservation(values));
         }}

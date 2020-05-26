@@ -10,7 +10,7 @@ import Table from 'reactstrap/es/Table';
 import GroupItems from './Group';
 import ListItem from './Item';
 
-function List({ entities = {}, focusChange, onSelectItem }) {
+function List({ entities = {}, focusChange, onSelectItem, onModifyItem }) {
   const showEntities = entities.reduce((acc, entity) => {
     const { InmuebleType, BedroomsQuantity, BathroomQuantity } = entity;
 
@@ -24,6 +24,7 @@ function List({ entities = {}, focusChange, onSelectItem }) {
     acc[key].push(entity);
     return acc;
   }, {});
+
   return (
     <div className="accordion">
       {Object.keys(showEntities).map(key => (
@@ -36,6 +37,7 @@ function List({ entities = {}, focusChange, onSelectItem }) {
                   key={entity.InmuebleID}
                   onSelect={onSelectItem}
                   entity={entity}
+                  onModifyItem={onModifyItem}
                 />
               ))}
             </tbody>
@@ -50,6 +52,7 @@ List.propTypes = {
   focusChange: PropTypes.bool,
   entities: PropTypes.array,
   onSelectItem: PropTypes.func,
+  onModifyItem: PropTypes.func,
 };
 
 export default List;

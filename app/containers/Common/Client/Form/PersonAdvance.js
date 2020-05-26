@@ -215,7 +215,7 @@ function PersonAdvance({ form, focusHide = [] }) {
                 </ExField>
               </FormGroup>
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <FormGroup className="mt-3">
                 <Label style={{ width: '11em' }}>Patrimonio</Label>
                 <ExField
@@ -226,7 +226,7 @@ function PersonAdvance({ form, focusHide = [] }) {
                   max={2147483647}
                 />
               </FormGroup>
-            </div>
+            </div> */}
           </>
         )}
       </div>

@@ -38,6 +38,7 @@ export function CarpetaDigital({
   useEffect(() => {
     if(entity.ReservaID)  setCanPrint( false );
   }, [entity]);
+
   const tabs = [
     {
       label: 'OFERTA',

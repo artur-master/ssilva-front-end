@@ -12,13 +12,14 @@ import InmuebleFilter from './InmuebleFilter';
 import BluePrint from './BluePrint';
 import Grid from './Grid/index';
 import List from './List/index';
-import {uploadblueFiles} from './actions'
+import {uploadblueFiles, updateEntities} from './actions'
 import {
   Form as ExForm,
   FormGroup,
   Label,
   Field as ExField,
 } from 'components/ExForm';
+import ModifyModal from './ModifyModal';
 
 const InmuebleList = ({
   defaultShowType = 'list',
@@ -30,6 +31,8 @@ const InmuebleList = ({
 }) => {
   const { entities, selected } = selector;
   const [showEntities, setState] = useState(entities);
+  const [isModify, setModify] = useState(false);
+  const [modifySelector, setModifySelector] = useState(false);
 
   useEffect(() => {
     setState(
@@ -75,9 +78,14 @@ const InmuebleList = ({
       }),
     );
   };
+  const onModifyItem = entity => {
+    setModifySelector(entity);
+    setModify(true);
+  }
 
   let Child = List;
   if (showType === 'grid') Child = Grid;
+
   return (
     <>
       <InmuebleFilter entities={entities} onQuery={handleChangeQuery} />
@@ -112,7 +120,18 @@ const InmuebleList = ({
         entities={showEntities}
         selected={selected}
         onSelectItem={onSelectItem}
+        onModifyItem={onModifyItem}
       />
+      {isModify &&
+        <ModifyModal
+          initialValues={modifySelector}
+          onSave={(values)=>{
+            dispatch(updateEntities(values));
+            setModify(false);
+          }}
+          onHide={()=>setModify(false)}
+        />
+      }
     </>
   );
 };

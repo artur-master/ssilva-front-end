@@ -45,7 +45,7 @@ const InmueblesElement = ({ values, onSelect }) => {
                           name={`Inmuebles.${index}.Discount`}
                           type="number"
                           min={0}
-                          max={values.DiscountMaxPercent || 100}
+                          max={inmueble.MaximumDiscount || 100}
                           style={{ width: '11.5em' }}
                           // onChange={evt => {
                           //   // const maxDiscount = values.DiscountMaxPercent || 100;
@@ -63,7 +63,7 @@ const InmueblesElement = ({ values, onSelect }) => {
                         />
                       </div>
                       <span className="italic-gray">
-                        Límite {values.DiscountMaxPercent || 100}%
+                        Límite {inmueble.MaximumDiscount || 100}%
                       </span>
                     </div>
                     {!inmueble.isRequiredRestriction && (

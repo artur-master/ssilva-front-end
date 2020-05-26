@@ -8,6 +8,9 @@ import {
   FETCH_ENTITIES,
   FETCH_ENTITIES_ERROR,
   FETCH_ENTITIES_SUCCESS,
+  UPDATE_ENTITIES,
+  UPDATE_ENTITIES_ERROR,
+  UPDATE_ENTITIES_SUCCESS,
   MATCH_RESTRICTION,
   RESET_SELECT,
   SELECT_ENTITY,
@@ -72,11 +75,15 @@ const inmuebleReducer = (state = initialState, action) =>
         draft.success = false;
         break;
       case FETCH_ENTITIES:
+      case UPDATE_ENTITIES:
+      case UPLOAD_BLUEPRINT:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
         break;
       case FETCH_ENTITIES_ERROR:
+      case UPDATE_ENTITIES_ERROR:
+      case ERROR_UPLOAD:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -97,28 +104,20 @@ const inmuebleReducer = (state = initialState, action) =>
           if (findSelected) acc.push(findSelected);
           return acc;
         }, []);
+        draft.success = true;
         break;
-      case MATCH_RESTRICTION:
-        draft.entities = matchRestrictions({
-          inmuebles: state.entities,
-          restrictions: action.restrictions,
-        });
-        break;
-    case UPLOAD_BLUEPRINT:
-      draft.loading = true;
-      draft.error = false;
-      draft.success = false;
+    case MATCH_RESTRICTION:
+      draft.entities = matchRestrictions({
+        inmuebles: state.entities,
+        restrictions: action.restrictions,
+      });
       break;
     case SUCESS_UPLOAD:
-        draft.loading = true;
-        draft.error = false;
-        draft.entities = action.response.entities;
-        draft.success = true;
-      break;
-    case ERROR_UPLOAD:
-        draft.loading = false;
-        draft.error = true;
-        draft.success = false;
+    case UPDATE_ENTITIES_SUCCESS:
+      draft.loading = false;
+      draft.error = false;
+      draft.entities = action.response.entities;
+      draft.success = true;
       break;
     }
   });

@@ -32,7 +32,6 @@ function DocumentItem({
   onReview,
 }) {
   const [fileName, setFileName] = useState('');
-
   let fileAccept;
   switch (accept) {
     case 'word':
