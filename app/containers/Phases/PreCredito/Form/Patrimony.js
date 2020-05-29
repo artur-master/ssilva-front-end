@@ -135,48 +135,7 @@ const Patrimony = ({ form }) => {
             </>
           )}
         </div>
-        {stringToBoolean(values.IsOwner) && (
-          <div className="mt-4 row">
-            <span className="font-14-rem color-main d-block col-12">
-              <b>¿TIENE CRÉDITO HIPOTECARIO?</b>
-            </span>
-            <div className="mt-2 col-12">
-              <PureRadioGroup
-                options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="CreditoHipotecario"
-                value={hasCredits.CreditoHipotecario}
-                onChange={handleChangeHasCredits}
-              />
-            </div>
-            {hasCredits.CreditoHipotecario && (
-              <>
-                <span className="mt-3 font-14-rem color-main d-block col-12">
-                  <b>¿CUANTO PAGA DE CUOTA DE CRÉDITO?</b>
-                </span>
-                <FormGroup className="col-12 col-md-6 mt-2 ">
-                  <Label style={{ minWidth: '12em' }}>
-                    Crédito Hipotecario
-                  </Label>
-                  <ExField
-                    className="ml-3"
-                    name="Patrimony.CreditoHipotecario.PagosMensuales"
-                    type="currency"
-                    required
-                  />
-                </FormGroup>
-                <FormGroup className="col-12 col-md-6 mt-2">
-                  <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
-                  <ExField
-                    className="ml-3"
-                    name="Patrimony.CreditoHipotecario.Pasivos"
-                    type="currency"
-                    required
-                  />
-                </FormGroup>
-              </>
-            )}
-          </div>
-        )}
+        
         <div className="mt-4">
           <span className="font-14-rem color-main d-block">
             <b>¿TIENE VEHÍCULO?</b>
@@ -289,6 +248,48 @@ const Patrimony = ({ form }) => {
         <span className="w-50 border-bottom py-3 d-block">
           <b>Patrimonio Pasivos</b>
         </span>
+        {stringToBoolean(values.IsOwner) && (
+          <div className="mt-4 row">
+            <span className="font-14-rem color-main d-block col-12">
+              <b>¿TIENE CRÉDITO HIPOTECARIO?</b>
+            </span>
+            <div className="mt-2 col-12">
+              <PureRadioGroup
+                options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
+                name="CreditoHipotecario"
+                value={hasCredits.CreditoHipotecario}
+                onChange={handleChangeHasCredits}
+              />
+            </div>
+            {hasCredits.CreditoHipotecario && (
+              <>
+                <span className="mt-3 font-14-rem color-main d-block col-12">
+                  <b>¿CUANTO PAGA DE CUOTA DE CRÉDITO?</b>
+                </span>
+                <FormGroup className="col-12 col-md-6 mt-2 ">
+                  <Label style={{ minWidth: '12em' }}>
+                    Crédito Hipotecario
+                  </Label>
+                  <ExField
+                    className="ml-3"
+                    name="Patrimony.CreditoHipotecario.PagosMensuales"
+                    type="currency"
+                    required
+                  />
+                </FormGroup>
+                <FormGroup className="col-12 col-md-6 mt-2">
+                  <Label style={{ minWidth: '12em' }}>Deuda Total</Label>
+                  <ExField
+                    className="ml-3"
+                    name="Patrimony.CreditoHipotecario.Pasivos"
+                    type="currency"
+                    required
+                  />
+                </FormGroup>
+              </>
+            )}
+          </div>
+        )}
         <div className="mt-4 row">
           <span className="font-14-rem color-main d-block col-12">
             <b>¿TIENE TARJETA DE CRÉDITO?</b>

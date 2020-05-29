@@ -406,10 +406,11 @@ export const getCuotasFields = entity => [
   /* Cuotas Data */
   {
     label: 'Maximo Cuotas',
-    name: 'MaxQuotation',
-    view: numberFormat(entity.MaxQuotation) || 0,
-    value: numberFormat(entity.MaxQuotation) || 0,
+    name: 'MaxCuotas',
+    view: numberFormat(entity.MaxCuotas) || 0,
+    value: numberFormat(entity.MaxCuotas) || 0,
     type: 'number',
+    max: 24,
     min: 0,
   },
 ];

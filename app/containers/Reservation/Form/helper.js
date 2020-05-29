@@ -5,7 +5,8 @@ import { Auth } from 'containers/App/helpers';
 import { UserProject } from 'containers/Project/helper';
 import { isValidClient } from 'containers/Phases/Client/helper';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
-import { isValidLabor } from '../../Phases/PreCredito/helper';
+import { isValidLabor } from 'containers/Phases/PreCredito/helper';
+import { requiredSaveDocuments } from 'containers/Phases/Document/documents';
 
 export const currentResevationStep = (reservation = {}) => {
   const { ReservaID, ReservaState } = reservation;
@@ -30,9 +31,10 @@ export const currentResevationStep = (reservation = {}) => {
 
   return 1;
 };
+
 export const isValidData = reservation => {
   const { moneyErr } = calculates(reservation);
-  return isValidClient(reservation) && !moneyErr && isValidLabor(reservation);
+  return isValidClient(reservation) && !moneyErr && isValidLabor(reservation, reservation.PayType);
 };
 
 export const canReviewReservation = reservation =>
@@ -82,4 +84,10 @@ export const getActionTitle = (reservation = {}) => {
     }
   }
   return 'Crear reserva';
+};
+
+export const canSendToControl = documents => {
+  if(!documents)  return false;
+
+  return !requiredSaveDocuments.find((value)=>documents[value]==="");
 };

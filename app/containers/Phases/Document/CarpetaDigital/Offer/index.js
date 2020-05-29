@@ -12,6 +12,7 @@ import { getDocuments } from '../../documents';
 
 export function Offer({ entity, canUpload, canReview, onReview }) {
   const documents = getDocuments(entity);
+
   return (
     <List>
       {documents
@@ -25,7 +26,8 @@ export function Offer({ entity, canUpload, canReview, onReview }) {
             className={index > 0 ? 'border-top' : ''}
             canUpload={canUpload}
             canReview={canReview}
-            onReview={onReview}
+            onReview={onReview}            
+            entity={entity}
           />
       ))}
     </List>

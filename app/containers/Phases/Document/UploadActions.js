@@ -8,11 +8,13 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { Auth } from 'containers/App/helpers';
 import DocumentCondition from '../Conditions';
+import { canSendToControl } from 'containers/Reservation/Form/helper';
 
 export function CarpetaDigitalUploadActions({
   entity,
   selector,
   form,
+  onSave,
   onCancel,
   onSendControl,
 }) {
@@ -20,26 +22,16 @@ export function CarpetaDigitalUploadActions({
   const [withText, setWithText] = useState({ text: '', open: false });
   const { values } = form;
   const [canUpload, setCanUpload] = useState(false);
-  const [subReserva, setSubReserva] = useState(false);
+
+  const canStC = canSendToControl(entity.Documents);
 
   useEffect(() => {
-    setCanUpload(
-      entity.ReservaID
-        ? true
-        : !!values.DocumentPagoGarantia ||
-            !!values.DocumentCotizacion ||
-            !!values.DocumentFotocopiaCarnet,
-    );
-    setSubReserva(!!entity.ReservaID);
+    setCanUpload(true);
   }, [values]);
 
   useEffect(() => {
     setCanUpload(false);
   }, []);
-
-  useEffect(() => {
-    setCanUpload(false);
-  }, [entity]);
 
   return (
     <>
@@ -50,12 +42,13 @@ export function CarpetaDigitalUploadActions({
         <Button
           disabled={!canUpload ? true : loading}
           className="order-3 m-btn mr-2"
-          type="submit"
           onClick={() => {
             form.values.Condition.push(...entity.Condition);
+            onSave(form.values);
+            setCanUpload(false);
           }}
         >
-          Guardar
+          { canStC ? 'Guardar': 'Crear Reserva' }
         </Button>
         {(Auth.isPM() || Auth.isVendor()) && (
           <Button
@@ -64,7 +57,7 @@ export function CarpetaDigitalUploadActions({
               onSendControl(form.values);
             }}
             className="order-3 m-btn mr-2"
-            disabled={!subReserva ? true : loading}
+            disabled={!canStC ? true : loading}
           >
             Enviar a Control
           </Button>
@@ -145,6 +138,7 @@ CarpetaDigitalUploadActions.propTypes = {
   form: PropTypes.object,
   entity: PropTypes.object,
   selector: PropTypes.object,
+  onSave: PropTypes.func,
   onCancel: PropTypes.func,
   onSendControl: PropTypes.func,
 };

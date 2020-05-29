@@ -4,7 +4,7 @@
  *
  */
 
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from 'components/Box';
 import Thead from 'components/Table/Thead';
@@ -15,19 +15,7 @@ import Alert from 'components/Alert';
 import { searchQuotations, queryQuotations } from './actions';
 import Filter from './Filter';
 
-const List = ({ quotations, query, filter, reports, project, reservations, dispatch }) => {
-  const [canCreate, setCanCreate] = useState(true);
-
-  const onNewCreate = () => {
-    if(project.MaxQuotation > quotations.length){
-      window.open(`/proyectos/${project.ProyectoID}/cotizacion/crear`, '_self');
-      return;
-    }
-    else
-      setCanCreate(false);
-  }
-
-return (
+const List = ({ quotations, query, filter, reports, project, reservations, dispatch }) => (
   <div>
     {!requiredData(project) && (
       <Filter
@@ -35,17 +23,11 @@ return (
         project={project}
         filter={filter}
         searchQuotations={txtSearch => dispatch(searchQuotations(txtSearch))}
-        onNewClick={onNewCreate}
       />
     )}
     {requiredData(project) && (
       <Alert type="danger" className="mb-0">
         {`Faltan datos del proyecto. Para poder Cotizar deben completar los datos del proyecto: ${requiredData(project)}`}
-      </Alert>
-    )}
-    {!canCreate && (
-      <Alert type="danger" className="mb-0">
-        {`you can't create any more`}
       </Alert>
     )}
     <Box className="mt-3 pb-3">
@@ -78,7 +60,7 @@ return (
       )}
     </Box>
   </div>
-)};
+);
 
 List.propTypes = {
   filter: PropTypes.object,

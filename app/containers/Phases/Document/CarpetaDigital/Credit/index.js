@@ -16,7 +16,10 @@ export function Credit({ entity, canUpload, canReview, onReview }) {
   return (
     <List>
       {documents
-        .filter((item, index) => (index > 0 && !item.autoGenerate && !item.offerta))
+        .filter((item, index) => (
+          index > 0 &&
+          (item.documentoType === "DocumentSimulador" || !item.autoGenerate) &&
+          !item.offerta))
         .map((document, index) => (
           <DocumentItem
             key={document.documentoType}
@@ -31,6 +34,7 @@ export function Credit({ entity, canUpload, canReview, onReview }) {
             canUpload={canUpload}
             canReview={canReview}
             onReview={onReview}
+            entity={entity}
           />
         ))}
     </List>

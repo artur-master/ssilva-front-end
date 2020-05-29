@@ -19,7 +19,7 @@ import {
   canEditReservation,
   canReviewReservation,
   canUploadReservation,
-  isValidData,
+  isValidData
 } from './helper';
 import {
   cancelReservation,
@@ -117,7 +117,8 @@ export function Form({ project, selector, dispatch }) {
             return dispatch(
               saveReservation({ ...initialValues, ...values }),
             );
-          // dispatch(updateReservation(values));
+          if (step > 2)
+            return dispatch(updateReservation(values));
         }}
       />
       {(step === 3 || entity.ReservaID) && (
@@ -135,28 +136,33 @@ export function Form({ project, selector, dispatch }) {
               );
             else dispatch(push(`/proyectos/${project.ProyectoID}/reservas`));
           }}
-          onSave={documents => {
-            if (!isValid) return setOpenAlert(true);
-            return dispatch(
-              saveReservation({ ...initialValues, ...entity }, documents),
-            );
+          onSave={(documents) => {
+            if (initialValues.sendControl){
+              console.log("send To Control");
+              if (!isValid) return setOpenAlert(true);
+              return dispatch(
+                sendToControl({ ...initialValues, ...entity }, documents),
+              );
+            }
+            else{
+              console.log("save");
+              // if (!isValid) return setOpenAlert(true);            
+              return dispatch(
+                saveReservation({ ...initialValues, ...entity }, documents),
+              );
+            }
           }}
-          onSendControl={documents => {
-            if (!isValid) return setOpenAlert(true);
-            // entity.Condition = documents.Condition;
-            return dispatch(
-              sendToControl({ ...initialValues, ...entity }, documents),
-            );
-          }}
+          // onSendControl={documents => {
+          //   if (!isValid) return setOpenAlert(true);
+          //   // entity.Condition = documents.Condition;
+          //   return dispatch(
+          //     sendToControl({ ...initialValues, ...entity }, documents),
+          //   );
+          // }}
           onControlReview={values =>
             dispatch(controlReview({ ...values, ReservaID: entity.ReservaID }))
           }
           onPrint={() => {
-            // if (!entity.printCuotas || !entity.printCuotas.length) {
-            //   setCanPrint(false);
-            //   setOpenAlert(true);
-            // }
-            // else
               return dispatch(printDocuments({ ...initialValues, ...entity }))
           }}
         />

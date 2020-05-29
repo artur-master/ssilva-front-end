@@ -6,7 +6,7 @@ import {
 } from 'containers/App/helpers';
 import { calculates } from '../FormaDePago/helper';
 
-export const isValidLabor = ({ Cliente, PayType }) => {
+export const isValidLabor = ( Cliente, PayType ) => {
   const isCompany = stringToBoolean(Cliente.IsCompany);
   const isCredit = isCreditPayment(PayType);
 
@@ -23,6 +23,7 @@ export const isValidLabor = ({ Cliente, PayType }) => {
   }
   return true;
 };
+
 export const calculateRenta = (reserva = {}) => {
   const Cliente = reserva.Cliente || {};
   const Codeudor = reserva.Codeudor || {};

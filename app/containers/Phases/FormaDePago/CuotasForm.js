@@ -110,7 +110,7 @@ function CuotasForm({ form, onHide, onView }) {
                       onChange={changeNumberCuotas}
                     >
                       <option value="1">Selecciona una Cantidad</option>
-                      {[...Array(30).keys()].map(item => (
+                      {[...Array(values.MaxCuotas).keys()].map(item => (
                         <option key={item} value={item + 1}>
                           {item + 1}
                         </option>
