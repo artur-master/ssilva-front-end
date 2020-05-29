@@ -9,6 +9,7 @@ export default function model({ project = {}, entity = {} }) {
       Date: new Date(),
       Observacion: '',
     });
+
   return {
     ReservaID: entity.ReservaID || null,
     ValueProductoFinanciero: entity.ValueProductoFinanciero || 0,
@@ -80,9 +81,7 @@ export default function model({ project = {}, entity = {} }) {
       ...(entity.Cliente || {}),
       Extra: {
         Values: {
-          Honoraries:
-            (((entity.Cliente || {}).Extra || {}).Values || {}).Honoraries ||
-            '',
+          Honoraries:(((entity.Cliente || {}).Extra || {}).Values || {}).Honoraries || '',
         },
         Independent: ((entity.Cliente || {}).Extra || {}).Independent || 0,
         ...((entity.Cliente || {}).Extra || {}),
@@ -123,5 +122,7 @@ export default function model({ project = {}, entity = {} }) {
       inmueble: false,
       forma: false,
     },
+    MaxCuotas: entity.MaxCuotas,
+    sendControl: false,
   };
 }

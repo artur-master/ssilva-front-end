@@ -23,11 +23,12 @@ const Patrimony = ({ values }) => {
   };
   const totalActivos =
     values.Patrimony.RealState +
-    values.Patrimony.CreditoHipotecario.PagosMensuales +
+    // values.Patrimony.CreditoHipotecario.PagosMensuales +
     values.Patrimony.Vehicle +
     values.Patrimony.DownPayment +
     values.Patrimony.Other;
   const totalPasivos =
+    values.Patrimony.CreditoHipotecario.Pasivos +
     values.Patrimony.CreditCard.Pasivos +
     values.Patrimony.CreditoConsumo.Pasivos +
     values.Patrimony.PrestamoEmpleador.Pasivos +
@@ -96,43 +97,6 @@ const Patrimony = ({ values }) => {
                   Monto Arriendo
                   </Label>
                   <IntlFormatCurrency value={values.Patrimony.Rent} />
-                </FormGroup>
-              </>
-            )}
-          </div>
-
-          <div className="mt-4 row">
-            <span className="font-14-rem color-main d-block col-12">
-              <b>¿TIENE CRÉDITO HIPOTECARIO?</b>
-            </span>
-            <div className="mt-2 col-12">
-              <PureRadioGroup
-                readOnly
-                options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="CreditoHipotecario_v"
-                value={hasCredits.CreditoHipotecario}
-              />
-            </div>
-            {hasCredits.CreditoHipotecario && (
-              <>
-                <span className="mt-3 font-14-rem color-main d-block col-12">
-                  <b>¿CUANTO PAGA DE CUOTA DE CRÉDITO?</b>
-                </span>
-                <FormGroup className="col-12 col-md-6 mt-2 ">
-                  <Label style={{ minWidth: '12em' }} className="pt-1">
-                    Crédito Hipotecario
-                  </Label>
-                  <IntlFormatCurrency
-                    value={values.Patrimony.CreditoHipotecario.PagosMensuales}
-                  />
-                </FormGroup>
-                <FormGroup className="col-12 col-md-6 mt-2">
-                  <Label style={{ minWidth: '12em' }} className="pt-1">
-                    Deuda Total
-                  </Label>
-                  <IntlFormatCurrency
-                    value={values.Patrimony.CreditoHipotecario.Pasivos}
-                  />
                 </FormGroup>
               </>
             )}
@@ -242,6 +206,43 @@ const Patrimony = ({ values }) => {
         <CollapseHeader>Patrimonio Pasivol</CollapseHeader>
         <CollapseContent>
           <div className="row">
+            <span className="font-14-rem color-main d-block col-12">
+              <b>¿TIENE CRÉDITO HIPOTECARIO?</b>
+            </span>
+            <div className="mt-2 col-12">
+              <PureRadioGroup
+                readOnly
+                options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
+                name="CreditoHipotecario_v"
+                value={hasCredits.CreditoHipotecario}
+              />
+            </div>
+            {hasCredits.CreditoHipotecario && (
+              <>
+                <span className="mt-3 font-14-rem color-main d-block col-12">
+                  <b>¿CUANTO PAGA DE CUOTA DE CRÉDITO?</b>
+                </span>
+                <FormGroup className="col-12 col-md-6 mt-2 ">
+                  <Label style={{ minWidth: '12em' }} className="pt-1">
+                    Crédito Hipotecario
+                  </Label>
+                  <IntlFormatCurrency
+                    value={values.Patrimony.CreditoHipotecario.PagosMensuales}
+                  />
+                </FormGroup>
+                <FormGroup className="col-12 col-md-6 mt-2">
+                  <Label style={{ minWidth: '12em' }} className="pt-1">
+                    Deuda Total
+                  </Label>
+                  <IntlFormatCurrency
+                    value={values.Patrimony.CreditoHipotecario.Pasivos}
+                  />
+                </FormGroup>
+              </>
+            )}
+          </div>
+
+          <div className="mt-4 row">
             <span className="font-14-rem color-main d-block col-12">
               <b>¿TIENE TARJETA DE CRÉDITO?</b>
             </span>

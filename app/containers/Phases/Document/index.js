@@ -82,10 +82,17 @@ export function PhaseDocument({
             <CarpetaDigitalUploadActions
               entity={entity}
               onCancel={onCancel}
-              // onSave={() => onSave(form.values)}
+              onSave={(values) => {
+                entity.sendControl=false;
+                form.submitForm(false);
+              }}
               selector={selector}
               form={form}
-              onSendControl={() => onSendControl(form.values)}
+              onSendControl={(values) => {
+                entity.sendControl=true;
+                form.submitForm();
+                // onSendControl(values)
+              }}
             />
           )}
           {canReview && (

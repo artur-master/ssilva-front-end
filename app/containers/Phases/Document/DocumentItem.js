@@ -16,6 +16,7 @@ import {
   DropdownToggle,
 } from 'reactstrap';
 import { getFileName } from 'containers/App/helpers';
+import { requiredSaveDocuments, requiredSendToControl } from './documents';
 
 function DocumentItem({
   canUpload,
@@ -30,6 +31,7 @@ function DocumentItem({
   description,
   className = '',
   onReview,
+  entity,
 }) {
   const [fileName, setFileName] = useState('');
   let fileAccept;
@@ -47,8 +49,9 @@ function DocumentItem({
     default:
       fileAccept = '*';
   }
-  if (autoGenerate && !Documentos[documentoType]) return null;
   
+  if (autoGenerate && !Documentos[documentoType]) return null;
+
   return (
     <Item className={className}>
       <div className="color-regular order-1" style={{ width: '22em' }}>
@@ -62,8 +65,12 @@ function DocumentItem({
         <FormikField
           name={documentoType}
           validate={value => {
-            if (required && !Documentos[documentoType] && !value)
-              return 'Este campo es requerido';
+            const state = entity ? entity.sendControl : false;            
+            const requiredTypes = state ? requiredSendToControl : requiredSaveDocuments;
+
+            if (required && requiredTypes.includes(documentoType) &&
+               !Documentos[documentoType] && !value
+              ) return 'Este campo es requerido';
             return null;
           }}
         >
@@ -187,6 +194,7 @@ DocumentItem.propTypes = {
   description: PropTypes.string,
   className: PropTypes.string,
   onReview: PropTypes.func,
+  entity: PropTypes.object,
 };
 
 export default DocumentItem;

@@ -32,10 +32,11 @@ const PhasePreCreditoView = ({
   const [isOpen, setOpen] = useState(false);
   const isContado = isContadoPayment(initialValues.PayType);
   const isCredit = isCreditPayment(initialValues.PayType);
-  const isValid = isValidLabor(initialValues);
+  const isValid = isValidLabor(initialValues, initialValues.PayType);
   const { moneyErr } = calculateRenta(initialValues);
   useInjectReducer({ key: 'credit', reducer });
   useInjectSaga({ key: 'credit', saga });
+
   return (
     <>
       {isCredit && (

@@ -13,12 +13,11 @@ import {
   Input,
   UncontrolledButtonDropdown,
   Badge,
-  Button,
 } from 'reactstrap';
 import ExInput from 'components/ExForm/Input';
 import { DatePickerInput } from 'components/ExForm/DatePicker';
 
-const Filter = ({ project, filter, reports, searchQuotations, onNewClick }) => {
+const Filter = ({ project, filter, reports, searchQuotations }) => {
   let statusLable = '';
   switch (filter.status) {
     case '':
@@ -30,18 +29,12 @@ const Filter = ({ project, filter, reports, searchQuotations, onNewClick }) => {
   return (
     <nav className="search-bar-02 d-flex align-items-center justify-content-end after-expands-1">
       <div className="button-filter icon icon-plus">
-        <Button
-          className="btn btn-sm"
-          onClick={onNewClick}
-        >
-          Crear Nueva Cotización
-        </Button>
-        {/* <Link
+        <Link
           to={`/proyectos/${project.ProyectoID}/cotizacion/crear`}
           className="btn btn-sm"
         >
           Crear Nueva Cotización
-        </Link> */}
+        </Link>
       </div>
       <div className="order-2 mr-2">
         <ExInput
@@ -123,6 +116,5 @@ Filter.propTypes = {
   filter: PropTypes.object,
   reports: PropTypes.object,
   searchQuotations: PropTypes.func,
-  onNewClick: PropTypes.func,
 };
 export default Filter;
