@@ -85,6 +85,7 @@ export function Form({ project, selector, dispatch }) {
         onConfirm={handleConfirm}
         onUpdate={Cliente => dispatch(updateReservation({ Cliente }))}
         client={entity.Cliente}
+        codeudor={entity.Codeudor}
       />
       <PhaseInmueble
         canEdit={canEdit}

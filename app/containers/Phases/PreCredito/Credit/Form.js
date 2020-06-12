@@ -136,6 +136,17 @@ const CreditForm = ({ selector,isPendienteAprobacion, onSubmit, onCancel, onSele
                                 />
                               </FormGroup>
                             )}
+                            <FormGroup className="col-12 col-md-6  mt-3">
+                              <Label style={{ minWidth: '12em' }}>
+                                Pre Aprobación
+                              </Label>
+                              <ExField
+                                name={`Credits.${index}.DocumentPreApprobal`}
+                                type="file"
+                                required
+                                placeholder="Examinar ..."
+                              />
+                            </FormGroup>
                           </div>
                           <div className="mt-4 mb-3">
                             <Label className="d-flex pb-2">Observaciones</Label>

@@ -102,11 +102,12 @@ export function Form({ selector, dispatch }) {
           <PhaseReviewNegociacionPromesa
             entity={entity}
             selector={selector}
-            onSubmit={() =>
+            onSubmit={(comment = '') =>
               dispatch(
                 reviewNegociacion({
                   PromesaID: entity.PromesaID,
                   Condition: entity.Condition,
+                  Comment: comment,
                 }),
               )
             }

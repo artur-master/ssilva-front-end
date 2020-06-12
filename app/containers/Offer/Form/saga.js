@@ -98,6 +98,7 @@ function* sagaDeleteOffer(action) {
 function* sagaSaveOffer(action) {
   try {
     const { values, documents = false } = action;
+
     const requestURL = `${API_ROOT}/ventas/ofertas/${values.OfertaID}/`;
     const response = yield call(request, requestURL, {
       method: 'PATCH',

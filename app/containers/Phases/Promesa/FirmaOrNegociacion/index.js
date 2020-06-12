@@ -110,10 +110,29 @@ export function PhaseFirmaOrNegociacionPromesa({
                         </Button>
                       )}
                       <Button
-                        disabled={selector.loading}
+                        disabled={
+                          form.values.currentAction === 'nego' 
+                          ? NewCondition.trim() === '' 
+                          : selector.loading
+                        }
                         className="m-btn-white m-btn-plus"
                         onClick={() => {
-                          form.setValues({ currentAction: 'nego' })
+                          if(form.values.currentAction === 'nego' ){
+                            form.setFieldValue('Resolution', true);
+                              const newValue = NewCondition.trim();
+                              if (newValue !== '') {
+                                Condition.push({ Description: newValue });
+                              }
+                              form.setValues({
+                                Condition,
+                                NewCondition: '',
+                                currentAction: 'nego',
+                                Comment: '',
+                                DateEnvioPromesaToCliente: '',
+                              });
+                              form.submitForm();
+                          }
+                          else form.setValues({ currentAction: 'nego' })
                         }}
                       >
                         El cliente quiere negociar
@@ -134,7 +153,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                     {(form.values.currentAction === 'nego') && (
                       <div className="p-0">
                         <PromesaObservationForm form={form} />
-                        <div className="py-3 text-right">
+                        {/* <div className="py-3 text-right">
                           <Button
                             className="m-btn"
                             type="submit"
@@ -157,7 +176,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                           >
                             Envia a JP
                           </Button>
-                        </div>
+                        </div> */}
                       </div>
                     )}
                     {(form.values.currentAction === 'rechazar') && (

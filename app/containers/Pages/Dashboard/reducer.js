@@ -70,11 +70,9 @@ const dashboardReducer = (state = initialState, action) =>
         draft.Logs = action.logs;
         draft.Counter = action.pendingActions.count;
         const Actions = action.pendingActions.PendingAction;
-        const arr_action = [...Actions.Cotizacion, ...Actions.Reserva,
-        ...Actions.Ofertas, ...Actions.Promesa];
+        const arr_action = [...Actions.Reserva, ...Actions.Ofertas, ...Actions.Promesa];
         draft.PendingActions = SortPendingAction(arr_action);
-        draft.origin_ControlUser = SortUserPendingAction(action.allUsers,
-          draft.PendingActions);
+        draft.origin_ControlUser = SortUserPendingAction(action.allUsers, draft.PendingActions);
         draft.ControlUser = doQuery(draft.origin_ControlUser, draft.query);
         draft.origin_ControlUser = draft.ControlUser;
         draft.origin_ControlModalUser = draft.ControlUser;

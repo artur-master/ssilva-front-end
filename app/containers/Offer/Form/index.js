@@ -49,7 +49,9 @@ export function OfferForm({
   }, [location.search]);
 
   if (selector.redirect) {
-    return <Redirect to={`/proyectos/${project.ProyectoID}/ofertas`} />;
+    // return <Redirect to={`/proyectos/${project.ProyectoID}/ofertas`} />;
+    console.log(selector.reserva_id);
+    return <Redirect to={`/proyectos/${project.ProyectoID}/reservas`} />;
   }
   if (!project || !selector.offer) return <SyncMessage loading />;
 

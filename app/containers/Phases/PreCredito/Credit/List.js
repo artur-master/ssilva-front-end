@@ -54,6 +54,14 @@ const CreditList = ({ selector, onSelect }) =>
               </a>
             </FormGroup>
           )}
+          <FormGroup className="col-12 col-md-6  mt-3">
+            <Label style={{ minWidth: '12em' }} className="pt-0">
+              Pre Aprobación
+            </Label>
+            <a href={entity.DocumentPreApprobal} target="_blank">
+              Ver archivo
+            </a>
+          </FormGroup>
         </div>
         <div className="mt-4 mb-3">
           <Label className="d-flex pb-2">Observaciones</Label>

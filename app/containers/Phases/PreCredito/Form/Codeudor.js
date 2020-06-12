@@ -29,6 +29,7 @@ const Codeudor = ({ form, removeCodeudor }) => (
         </span>
         <ExClients
           canEdit={false}
+          canAdd={!form.values.CodeudorID}
           name="Codeudor.UserID"
           onSelect={val => {
             form.setFieldValue('Codeudor', val);

@@ -379,8 +379,6 @@ export const requiredSaveDocuments=[
   "DocumentPagoGarantia",
   "DocumentOfertaFirmada",
   "DocumentFirmadoCotizacion",
-  "DocumentFirmadoFichaPreAprobacion",
-  "DocumentFirmadoCotizacion"
 ];
 
 export const requiredSendToControl=[

@@ -36,6 +36,7 @@ export const initialState = {
   error: false,
   success: false,
   offer: false,
+  reserva_id: null,
   redirect: '',
 };
 
@@ -69,6 +70,7 @@ const offerReducer = (state = initialState, action) =>
         draft.error = action.error;
         draft.success = false;
         draft.redirect = '';
+        draft.reserva_id = null;
         break;
       case CONFIRM_SUCCESS:
       case APPROVE_IN_SUCCESS:
@@ -80,6 +82,7 @@ const offerReducer = (state = initialState, action) =>
         draft.error = false;
         draft.success = action.response.detail;
         draft.redirect = 'list';
+        draft.reserva_id = action.response.reserva;
         break;
       case GET_OFFER_SUCCESS:
         draft.loading = false;

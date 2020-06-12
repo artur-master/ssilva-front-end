@@ -25,6 +25,7 @@ export function ActionPending({ selector }) {
     PendingActions.filter(
       entity => entity.ApprovedUserInfo.UserID === Auth.get('user').UserID
     ) : [];
+  
   return (
     <div className="row">
       <div className="col-sm-6 col-xl-4">

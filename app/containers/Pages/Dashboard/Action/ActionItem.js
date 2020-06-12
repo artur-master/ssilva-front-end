@@ -20,7 +20,7 @@ const ActionItem = (Item) => {
         <dl className="font-14-rem m-0">
           <dt className="color-main" style={{ fontWeight: '600' }}>{Action.SaleState}</dt>
           <dd className="m-0">
-            {user.Roles[0].Name} {user.Rut}/ {user.Name} {user.LastNames}
+            {user.Roles[0].Name} / {user.Name} {user.LastNames}
           </dd>
           <dd className="m-0">
             En espera: <span className={(dateAgo > 3) ? 'color-warning' : ''}>{dateAgo}/3 días</span>

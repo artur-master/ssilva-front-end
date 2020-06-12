@@ -88,6 +88,6 @@ export const getActionTitle = (reservation = {}) => {
 
 export const canSendToControl = documents => {
   if(!documents)  return false;
-
+ 
   return !requiredSaveDocuments.find((value)=>documents[value]==="");
 };

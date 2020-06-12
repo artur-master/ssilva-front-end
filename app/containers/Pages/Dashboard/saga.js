@@ -29,6 +29,7 @@ function* fetchLogs() {
     const pendingActions = yield call(request, `${API_ROOT}/ventas/dashboard-pending-actions/`);
     const allUsers = yield call(request, `${API_ROOT}/ventas/all-users/`);
     const logs = yield call(request, `${API_ROOT}/ventas/all-logs-dashboard/`);
+
     yield put(fetchLogsSuccess(pendingActions, allUsers, logs));
   } catch (error) {
     yield put(fetchLogsError(error));
