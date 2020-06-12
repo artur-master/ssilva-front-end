@@ -22,8 +22,9 @@ const Log = ({ logs, logTypes = [], limit = 0 }) => {
   let showLogs =
     logTypes.length > 0
       ? logs.filter(log => logTypes.includes(log.VentaLogType) && log.Comment !=="")
-      : logs.filter(log => log.Comment !=="");
+      : logs.filter(log => !log.CommentBySystem && log.Comment !=="");
   if (limit) showLogs = showLogs.slice(0, limit);
+
   if (showLogs.length > 0) {
     return (
       <Box collapse isOpen={false}>
@@ -39,7 +40,7 @@ const Log = ({ logs, logTypes = [], limit = 0 }) => {
                    {log.User.Roles[0].Name}
                 </span>{' '}
                 <span className="badge badge-light">
-                  {moment(log.Date).format('DD MMM YYYY HH:mm:ss')}
+                  {moment(log.Date).local().format('DD MMM YYYY HH:mm:ss')}
                 </span>
               </div>
               <div style={{ whiteSpace: 'pre-line' }}>{log.Comment}</div>
@@ -51,6 +52,7 @@ const Log = ({ logs, logTypes = [], limit = 0 }) => {
   }
   return null;
 };
+
 Log.propTypes = {
   logs: PropTypes.array,
   logTypes: PropTypes.array,

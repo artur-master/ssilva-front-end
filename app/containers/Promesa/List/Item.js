@@ -23,7 +23,7 @@ import RefundGrantiaButton from 'containers/Phases/Promesa/RefundGarantia/Button
 import { UserProject, countIN } from 'containers/Project/helper';
 import FacturaButton from 'containers/Phases/Factura/Buttons';
 import { canEditPromesa, canRefund, isRefund } from '../helper';
-import { PROMESA_STATE } from '../../App/constants';
+import { PROMESA_STATE } from 'containers/App/constants';
 
 const Item = ({ project, promesa, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -42,6 +42,11 @@ const Item = ({ project, promesa, dispatch }) => {
       ColorBadge = 'badge-caution';
       break;
   }
+
+  const index = PROMESA_STATE.findIndex(state => PromesaState===state);  
+  const backColor = index==-1 ? "": `rgb(255,${255-50*index},${20*index})`;
+  const color = index > 3 ? "white" : "#6a7175";
+
   return (
     <tr className="font-14 align-middle-group">
       <td className="px-3 main_color">
@@ -64,7 +69,7 @@ const Item = ({ project, promesa, dispatch }) => {
       <td>{Date}</td>
       <td>
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          <span className={`badge ${ColorBadge} px-2`}>{PromesaState}</span>
+          <span className={`badge ${ColorBadge} px-2`} style={{backgroundColor:backColor,color: color}}>{PromesaState}</span>
         </div>
       </td>
       <td>

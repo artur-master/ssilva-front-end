@@ -20,6 +20,10 @@ const logLabel = logType => {
   }
 };
 
+const isMadeBySystem = (type,user) => {
+  return type ? "Acciones que hizo en el Sistema" : `${user.Name} ${user.LastNames} escribió`
+}
+
 function Histroy({ logs, onHide, isOpen=false, title='' }) {
   const showIndex = 
     (logs&&logs.length) ? 
@@ -42,7 +46,7 @@ function Histroy({ logs, onHide, isOpen=false, title='' }) {
                       <span className="badge badge-info">
                         {log.User.Roles[0].Name}
                       </span>{' '}
-                      <b>{logLabel(log.VentaLogType)}</b>
+                      <b>{logLabel(log.VentaLogType)} - {isMadeBySystem(log.CommentBySystem, log.User)}</b>
                     </div>
                     <span className="font-12-rem">Realizado por </span>{' '}
                     <span className="badge badge-light">

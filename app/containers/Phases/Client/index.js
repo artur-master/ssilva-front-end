@@ -31,6 +31,7 @@ export function PhaseClient({
   onUpdate,
   isCollapse = false,
   canVNEdit,
+  codeudor=null,
 }) {
   useEffect(() => {
     if (selectorClient.success) onUpdate(selectorClient.client);
@@ -82,6 +83,12 @@ export function PhaseClient({
       <BoxContent>
         <PhaseClientView client={client} payType={payType} />
       </BoxContent>
+      { codeudor && codeudor.UserID &&
+        <BoxContent className="border-top m-3">
+          <p>Codeudor</p>
+          <PhaseClientView client={codeudor} />
+        </BoxContent>
+      }
       <ClienteForm
         focusHide={isContado ? ['Cargo', 'Other'] : []}
         info="advance"
@@ -106,6 +113,7 @@ PhaseClient.propTypes = {
   onConfirm: PropTypes.func,
   onUpdate: PropTypes.func,
   canVNEdit: PropTypes.bool,
+  codeudor: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({

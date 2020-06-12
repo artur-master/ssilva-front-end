@@ -46,7 +46,7 @@ export function PhaseTimelineLegalizePromesa({
                   {canEdit ? (
                     <Field
                       type="datepicker"
-                      required
+                      // required
                       name="DateLegalizacionPromesa"
                     />
                   ) : (
@@ -58,7 +58,7 @@ export function PhaseTimelineLegalizePromesa({
                   <Label style={{ width: '23em' }} className="pt-1">
                     Promesa Legalizada
                   </Label>
-                  <LegalizadaItem canUpload={canEdit} required name="FileLegalizacionPromesa" />
+                  <LegalizadaItem canUpload={canEdit} name="FileLegalizacionPromesa" />
                 </FormGroup>
               </div>
               {canEdit && (

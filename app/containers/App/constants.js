@@ -119,7 +119,7 @@ export const RECEPCION_GARANTIA_STATE = [
 ];
 
 export const PROMESA_STATE = [
-  'Pendiente confección', // #0 -> #9
+  'Rechazada', // #0 -> #9
   'Pendiente firma comprador', // #1 -> #20 or #1->#13
   'Pendiente envío a inmobiliaria', // # 2 -> #3
   'Pendiente factura', // #3 -> 4
@@ -133,7 +133,7 @@ export const PROMESA_STATE = [
   'Pendiente JP aprobación de maqueta', // #11 -> #1
   'Pendiente Aprobación Firma', // #12 -> #2
   'Pendiente revisión negociación', // #13 -> #14     send condition to JP review
-  'Pendiente negociación inmobiliaria', // # 14 -> 15 or 1     wait IN approve condition. If reject -> #15, if approve -> #1
+  'Pendiente aprobación negociación', // # 14 -> 15 or 1     wait IN approve condition. If reject -> #15, if approve -> #1
   'Rechazada Inmobiliaria', // #15
   'Desistimiento', // # 16 -> PROMESA_DESISTIMIENTO_STATE + PROMESA_REFUND_STATE
   'Resciliación', // # 17 -> PROMESA_RESCILIACION_STATE + PROMESA_REFUND_STATE

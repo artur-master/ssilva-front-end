@@ -12,7 +12,7 @@ import { isValidData } from '../../helper';
 
 const SyncMessage = WithLoading();
 
-export function OfferEditActions({ selector, onCancel, onDelete }) {
+export function OfferEditActions({ selector, onSave, onCancel, onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -24,7 +24,10 @@ export function OfferEditActions({ selector, onCancel, onDelete }) {
         >
           Dar de Baja la Oferta
         </Button>
-        <Button disabled={selector.loading}>Guardar Cambios</Button>
+        <Button
+          disabled={selector.loading}
+          onClick={onSave}
+        >Guardar Cambios</Button>
         <Button onClick={onCancel} color="white">
           Cancelar
         </Button>

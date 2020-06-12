@@ -19,7 +19,7 @@ export function PhaseReviewNegociacionPromesa({
   onCancel,
   onContinue,
 }) {
-  const [withText, setWithText] = useState({ text: '', open: false });
+  const [withText, setWithText] = useState({ text: '', open: false, state: -1 });
 
   return (
     <>
@@ -47,11 +47,13 @@ export function PhaseReviewNegociacionPromesa({
           <Button
             color="white"
             disabled={selector.loading}
-            onClick={() => setWithText({ text: '', open: true })}
+            onClick={() => setWithText({ text: '', open: true, state:0 })}
           >
             Devolver
           </Button>
-          <Button disabled={selector.loading} onClick={onSubmit}>
+          <Button disabled={selector.loading} 
+            onClick={() => setWithText({ text: '', open: true, state:1 })}
+          >
             Enviar Observaciones a Inmobiliaria
           </Button>
           <Button disabled={selector.loading} color="white" onClick={onCancel}>
@@ -73,7 +75,11 @@ export function PhaseReviewNegociacionPromesa({
               </div>
               <Button
                 disabled={selector.loading}
-                onClick={() => onContinue(withText.text.trim())}
+                onClick={() => {
+                  if (withText.state == 0) onContinue(withText.text.trim());
+                  else if (withText.state == 1) onSubmit(withText.text.trim());
+                  else return;
+                }}
               >
                 Continuar
               </Button>
