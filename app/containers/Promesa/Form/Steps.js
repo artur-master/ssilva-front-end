@@ -51,8 +51,8 @@ function Steps({ promesa }) {
       Graph.Node[3].Color = 'white';
       break;
     case PROMESA_STATE[2]:
-    case PROMESA_STATE[5]:
-    case PROMESA_STATE[6]:
+    // case PROMESA_STATE[5]:
+    // case PROMESA_STATE[6]:
       Graph.Node[0].Color = 'green';
       Graph.Node[1].Color = 'green';
       Graph.Node[2].Color = 'green';
@@ -61,6 +61,8 @@ function Steps({ promesa }) {
       break;
     case PROMESA_STATE[3]:
     case PROMESA_STATE[4]:
+    case PROMESA_STATE[5]:
+    case PROMESA_STATE[6]:
     case PROMESA_STATE[7]:
       Graph.Node[0].Color = 'green';
       Graph.Node[1].Color = 'green';
