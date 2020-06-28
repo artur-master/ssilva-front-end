@@ -1,11 +1,5 @@
 # SSilva Frontend Development
 
-## Admin Account
-```
-user: 189806973
-pass: SSilva001
-```
-
 ## Requirements
 
 - Nodejs
@@ -45,7 +39,3 @@ Allows you to auto-generate boilerplate code for common parts of your applicatio
 Preps your app for deployment (does not run tests). Optimizes and minifies all files, piping them to the build folder.
 
 Upload the contents of build to your web server to see your work live!
-
-## Reference Documentation 
-
-https://github.com/react-boilerplate/react-boilerplate/blob/master/README.md
