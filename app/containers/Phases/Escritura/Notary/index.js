@@ -14,6 +14,7 @@ import Alert from 'components/Alert';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import { ESCRITURA_STATE } from 'containers/App/constants';
 import { Form as ExForm, Field as ExField, Label, FormGroup } from 'components/ExForm';
+import { FormattedNumberParts } from 'react-intl';
 
 
 function Notary({ initialValues, onSubmit })
@@ -24,6 +25,8 @@ function Notary({ initialValues, onSubmit })
 	const PaymentMethodBalanceLabel = [
 		'Cheque', 'Vale Vista', 'Instrucciones', 'Depósito a Plazo'
 	];
+
+  const current_data = moment(new Date()).format('DD MMM YYYY')
 
 	return (
 		<ExForm
@@ -59,9 +62,9 @@ function Notary({ initialValues, onSubmit })
 												/>
 											)}
 											<span className="font-14-rem">
-												<span className="color-warning">(text contado)</span>
+												{/* <span className="color-warning">(text contado)</span> */}
 												<b>Borrador de Escritura entregada Escrituración</b>
-												<span className="color-warning">(text crédito)</span>
+												{/* <span className="color-warning">(text crédito)</span> */}
 												<b>Borrador de Escritura entregada a Notaría por Banco</b>
 											</span>
 										</div>
@@ -76,7 +79,7 @@ function Notary({ initialValues, onSubmit })
 										)}
 									</div>
 								</li>
-
+								
 								<li className={(EscrituraState == ESCRITURA_STATE.Notaria_II) ? "active" : ""}>
 									<span className={`number ${EscrituraState > ESCRITURA_STATE.Notaria_II ? "success" : "mt-2"}`}>
 										{(EscrituraState > ESCRITURA_STATE.Notaria_II) ? <i className="icon icon-check" /> : "02"}
@@ -195,7 +198,7 @@ function Notary({ initialValues, onSubmit })
 												<Button
 													disabled={!form.values['StepOne']}
 													onClick={()=>onSubmit({
-														EscrituraState: ESCRITURA_STATE.Notaria_IV,
+														EscrituraState: ESCRITURA_STATE.Notaria_IV_I,
 														BalanceFeeUF: form.values['BalanceFeeUF'],
 														BalanceFund: form.values['BalanceFund']
 													}, 1)}
@@ -212,128 +215,214 @@ function Notary({ initialValues, onSubmit })
 								<Alert type="warning">
 									Debes ingresar la forma de pago de los saldos y la fecha en que se firmó la Escritura.
 								</Alert>
-								<div className="mt-4 pb-3 border-bottom">
-									<span className="font-14-rem color-regular d-block">
-										<b>FIRMA DE ESCRITURA</b>
-									</span>
-									<div className="mt-4 d-flex align-items-center">
-										<span className="font-14-rem color-regular mr-3">
-											<b>Forma de Pago Saldos</b>
-										</span>
-										{ EscrituraState > ESCRITURA_STATE.Notaria_IV
-										? <span className="font-14-rem color-regular mr-3">
-												{ PaymentMethodBalanceLabel[initialValues.PaymentMethodBalance] }
-											</span>
-										:	<ExField
-												type="radioGroup"
-												required
-												name="PaymentMethodBalance"
-												options={[
-													{ label: 'Cheque', value: '0' },
-													{ label: 'Vale Vista', value: '1' },
-													{ label: 'Instrucciones', value: '2' },
-													{ label: 'Depósito a Plazo', value: '3' },
-													// { label: 'Tarjeta de Crédito', value: '4' },
-													// { label: 'Transferencia', value: '5' },
-												]}
-												itemClassName="pr-3"
-											/>
-										}
-									</div>
-									{(form.values['PaymentMethodBalance'] == 2) ?
-										<div className="row mt-4">
-											<span className="d-block font-14-rem col-md-12">
-												<b>Observación</b>
-											</span>
-											<ExField
-												type="textarea"
-												rows={5}
-												className="my-3 col-md-12"
-												name="InstructionObservacion"
-												readOnly={EscrituraState > ESCRITURA_STATE.Notaria_IV}
-											/>
-										</div> :
-										<div className="row mt-4">
-											<div className="col-md-6 d-flex align-items-center mb-3">
-												<span className="font-14-rem color-regular mr-3 no-whitespace">
-													<b>Número de Cheque</b>
-												</span>
-												{initialValues['ChequeNumber']
-												? <Label className="no-whitespace mr-3">{initialValues['ChequeNumber']}</Label>
-												: <ExField name="ChequeNumber" className="w-100" />
-												}												
-											</div>
-											<div className="col-md-6 d-flex mb-3">
-												<div className="row d-flex align-items-center">
-													<div className="d-flex align-items-center justify-content-end">
-														<span className="font-14-rem color-regular mr-3">
-															<b>Valor</b>
-														</span>
-														{initialValues['Valor']
-														? <span className="font-14-rem color-regular no-whitespace mr-3">
-																$ {initialValues['Valor']}
-															</span>
-														: <ExField
-																type="number"
-																name="Valor"
-																maskOptions={{ prefix: '$' }}
-																style={{ width: "7.5em" }}
-															/>
-														}														
-													</div>
-													<div className="d-flex align-items-center">
-														<span className="font-14-rem color-regular no-whitespace mr-3">
-															<b>Fecha de Pago</b>
-														</span>
-														{initialValues['FetchaPago']
-														? <span className="font-14-rem color-regular">
-																{moment(initialValues['FetchaPago']).format("DD MMM YYYY")}
-															</span>
-														: <ExField
-																type="datePicker"
-																name="FetchaPago"
-															/>
-														}
-													</div>
-												</div>
-											</div>
-										</div>
-									}
-								</div>
+                <span className="font-14-rem color-regular d-block mt-4">
+                  <b>FIRMA DE ESCRITURA</b>
+                </span>
+
+                {initialValues['SignDateEscritura'] &&
+                  <div className="mt-4 pb-3 border-bottom">
+                    <div className="mt-4 d-flex align-items-center">
+                      <span className="font-14-rem color-regular mr-3">
+                        <b>Forma de Pago Saldos</b>
+                      </span>
+                      { EscrituraState > ESCRITURA_STATE.Notaria_IV_II
+                      ? <span className="font-14-rem color-regular mr-3">
+                          { PaymentMethodBalanceLabel[initialValues.PaymentMethodBalance] }
+                        </span>
+                      :	<ExField
+                          type="radioGroup"
+                          required
+                          name="PaymentMethodBalance"
+                          options={[
+                            { label: 'Cheque', value: '0' },
+                            { label: 'Vale Vista', value: '1' },
+                            { label: 'Instrucciones', value: '2' },
+                            { label: 'Depósito a Plazo', value: '3' },
+                            // { label: 'Tarjeta de Crédito', value: '4' },
+                            // { label: 'Transferencia', value: '5' },
+                          ]}
+                          itemClassName="pr-3"
+                        />
+                      }
+                    </div>
+                    {(form.values['PaymentMethodBalance'] == 2) ?
+                      <div className="row mt-4">
+                        <span className="d-block font-14-rem col-md-12">
+                          <b>Observación</b>
+                        </span>
+                        <ExField
+                          type="textarea"
+                          rows={5}
+                          className="my-3 col-md-12"
+                          name="InstructionObservacion"
+                          readOnly={EscrituraState > ESCRITURA_STATE.Notaria_IV_II}
+                        />
+                      </div> :
+                      <div className="row mt-4">
+                        <div className="col-md-6 d-flex align-items-center mb-3">
+                          <span className="font-14-rem color-regular mr-3 no-whitespace">
+                            <b>Número de Cheque</b>
+                          </span>
+                          {initialValues['ChequeNumber']
+                          ? <Label className="no-whitespace mr-3">{initialValues['ChequeNumber']}</Label>
+                          : <ExField type="number" name="ChequeNumber" className="w-50" required/>
+                          }
+                          <span className="font-14-rem color-regular ml-3 no-whitespace">
+                            <b></b>
+                          </span>
+                          {initialValues['ChequeFile']
+                            ? <Label>
+                                <a href={initialValues['ChequeFile']} target='_blank'>
+                                  {getFileName(initialValues['ChequeFile'])}
+                                </a>
+                              </Label>
+                            :	<ExField
+                                type="file"
+                                accept="image/*"
+                                name="ChequeFile"
+                                placeholder="Examinar..."																	
+                                required
+                              />
+                            }												
+                        </div>
+                        <div className="col-md-6 d-flex mb-3">
+                          <div className="row d-flex align-items-center">
+                            <div className="d-flex align-items-center justify-content-end">
+                              <span className="font-14-rem color-regular mr-3 ml-3">
+                                <b>Valor</b>
+                              </span>
+                              {initialValues['Valor']
+                              ? <span className="font-14-rem color-regular no-whitespace mr-3">
+                                  $ {initialValues['Valor']}
+                                </span>
+                              : <ExField
+                                  type="number"
+                                  name="Valor"
+                                  maskOptions={{ prefix: '$' }}
+                                  style={{ width: "7.5em" }}
+                                  required
+                                />
+                              }														
+                            </div>
+                            <div className="d-flex align-items-center">
+                              <span className="font-14-rem color-regular no-whitespace ml-3">
+                                <b>Fecha de Pago</b>
+                              </span>
+                              {initialValues['FetchaPago']
+                              ? <span className="font-14-rem color-regular">
+                                  {moment(initialValues['FetchaPago']).format("DD MMM YYYY")}
+                                </span>
+                              : <ExField
+                                  type="datePicker"
+                                  name="FetchaPago"
+                                  required
+                                />
+                              }
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                }
+
 								<div className="mt-3">
 									<div className="mt-3 d-flex align-items-center">
-										<span className="font-14-rem color-regular mr-3">
-											<b>Fecha de la Firma</b>
-										</span>
-										{initialValues['SignDate']
-										 ? <span className="font-14-rem color-regular">
-											 		{moment(initialValues['SignDate']).format("DD MMM YYYY")}
-											 </span>
-										 : <ExField
-												type="datePicker"
-												name="SignDate"
-												required
-											 />
-										}								
-									</div>								
+                    <table>
+                      <tr>
+                        <td>
+                          <span className="font-14-rem color-regular mr-3">
+                            <b>Fecha de Firma Escritura</b>
+                          </span>
+                        </td>
+                        <td>
+                          {initialValues['SignDateEscritura']
+                          ? <span className="font-14-rem color-regular">
+                                {moment(initialValues['SignDateEscritura']).format("DD MMM YYYY")}
+                            </span>
+                          : <ExField
+                              type="datePicker"
+                              name="SignDateEscritura"
+                              required
+                            />
+                          }
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span className="font-14-rem color-regular mr-3">
+                            <b>Fecha de Firma Pagaré (Si es necesario)</b>
+                          </span>
+                        </td>
+                        <td>
+                          {initialValues['SignDatePagare']
+                          ? <span className="font-14-rem color-regular">
+                                {moment(initialValues['SignDatePagare']).format("DD MMM YYYY")}
+                            </span>
+                          : <ExField
+                              type="datePicker"
+                              name="SignDatePagare"
+                              required
+                            />
+                          }
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span className="font-14-rem color-regular mr-3">
+											      <b>Fecha de Firma Escritura de Compensacion (Si es necesario)</b>
+                          </span>
+                        </td>
+                        <td>
+                          {initialValues['SignDateCompensacion']
+                          ? <span className="font-14-rem color-regular">
+                                {moment(initialValues['SignDateCompensacion']).format("DD MMM YYYY")}
+                            </span>
+                          : <ExField
+                              type="datePicker"
+                              name="SignDateCompensacion"
+                              required
+                            />
+                          }
+                        </td>
+                      </tr>
+                    </table>															
+									</div>
 									
-									{EscrituraState === ESCRITURA_STATE.Notaria_IV && (
+                  {(EscrituraState === ESCRITURA_STATE.Notaria_IV_I ||
+                    EscrituraState === ESCRITURA_STATE.Notaria_IV_II) && (
 										<div className="mt-3 d-flex justify-content-end">
 											<Button onClick={()=>{
-												const data = 
-												{
-													EscrituraState: ESCRITURA_STATE.Notaria_V,
-													SignDate: form.values['SignDate'],
-													PaymentMethodBalance: form.values['PaymentMethodBalance']
-												};
-												if(form.values['PaymentMethodBalance'] == 2)
-													onSubmit({...data, InstructionObservacion: form.values['InstructionObservacion']}, 1);
-												else
-													onSubmit({...data, 
-														ChequeNumber: form.values['ChequeNumber'],
-														Valor: form.values['Valor'],
-														FetchaPago: form.values['FetchaPago']
-													}, 1);
+                        if(EscrituraState === ESCRITURA_STATE.Notaria_IV_I){
+                          onSubmit( 
+                            {
+                              EscrituraState: ESCRITURA_STATE.Notaria_IV_II,
+                              SignDateEscritura: form.values['SignDateEscritura'],
+                              SignDatePagare: form.values['SignDatePagare'],
+                              SignDateCompensacion: form.values['SignDateCompensacion'],
+                            }, 
+                          1);
+                        }
+                        else{
+                          if(form.values['PaymentMethodBalance'] == 2)
+                            onSubmit({
+                              EscrituraState: ESCRITURA_STATE.Notaria_V,
+                              PaymentMethodBalance: form.values['PaymentMethodBalance'],
+                              InstructionObservacion: form.values['InstructionObservacion']
+                            }, 1);
+                          else{
+                            const data = new FormData();
+                            data.append("EscrituraState", ESCRITURA_STATE.Notaria_V);
+                            data.append("PaymentMethodBalance", form.values['PaymentMethodBalance']);
+                            data.append("ChequeNumber", form.values['ChequeNumber']);
+                            if( form.values['ChequeFile'].name)
+                              data.append("ChequeFile", form.values['ChequeFile']);
+                            data.append("Valor", form.values['Valor']);
+                            data.append("FetchaPago", moment(form.values['FetchaPago']).format('YYYY-MM-DD HH:mm:SS'));
+
+                            onSubmit(data, 2);
+                          }
+                        }
 											}}>
 												Guardar
 											</Button>
@@ -345,7 +434,7 @@ function Notary({ initialValues, onSubmit })
 											<Button onClick={()=>{
 												onSubmit({EscrituraState: ESCRITURA_STATE.Notaria_VI}, 1);
 											}}>
-												Ya Se encentra Facturado
+												Se solicitó a inmobiliaria que Facture inmueble
 											</Button>
 											<Button className="m-btn-white" type="reset">Cancelar</Button>
 										</div>
@@ -426,7 +515,13 @@ function Notary({ initialValues, onSubmit })
 													</span>
 													<div className="content ml-3 flex-grow-1">
 														<div className="d-flex align-items-center mr-2">
-															<span className="font-14-rem">Tiempo Restante: 59d : 13h : 21m</span>
+															<span className="font-14-rem" style={{height: '1rem'}}>
+                                {/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VII_I 
+                                ? current_data
+                                : initialValues['Notaria_VII_I_Date'] ? moment(initialValues['Notaria_VII_I_Date']).format('DD MMM YYYY'): ''
+                                }
+                              </span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-md-between">
 															<div className="d-flex align-items-center">
@@ -436,15 +531,19 @@ function Notary({ initialValues, onSubmit })
 																	readOnly={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_I)}
 																/>
 																<span className="font-14-rem color-regular">
-																	<b>Facturación Inmobiliaria</b>
+																	<b>Solicitada Factura a Inmobiliaria</b>
 																</span>
 															</div>
 															<div>
 																<span className="font-14-rem color-white-gray mr-3">
-																	<em>Ingresa la Factura.</em>
+																	<em>Envío Factura a Notaria.</em>
 																</span>
 																{(EscrituraState > ESCRITURA_STATE.Notaria_VII_I)
-																? <Label>{getFileName(initialValues['InvoiceFile'])}</Label>
+																? <Label>
+                                    <a href={initialValues['InvoiceFile']} target='_blank'>
+                                      {getFileName(initialValues['InvoiceFile'])}
+                                    </a>
+                                  </Label>
 																:	<ExField
 																		type="file"
 																		name="InvoiceFile"
@@ -463,6 +562,7 @@ function Notary({ initialValues, onSubmit })
 																if( form.values['InvoiceFile'].name)
 																	data.append("InvoiceFile", form.values['InvoiceFile']);
 																data.append("EscrituraState", ESCRITURA_STATE.Notaria_VII_II);
+																data.append("Notaria_VII_I_Date", moment(new Date()).format('YYYY-MM-DD HH:mm:SS'));
 																onSubmit(data, 2);
 															}}>Guardar</Button>
 															<Button className="m-btn-white">Cancelar</Button>
@@ -480,9 +580,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VII_II?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VII_II 
+                                ? current_data
+                                : initialValues['Notaria_VII_II_Date'] ? moment(initialValues['Notaria_VII_II_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -535,11 +640,11 @@ function Notary({ initialValues, onSubmit })
 																		SendRealEstateSign: form.values['SendRealEstateSign'],
 																		EscrituraState: ESCRITURA_STATE.Notaria_VII_III
 																	}
-																	if(form.values['RealEstateSignDate']!=="")
+																	if(form.values['RealEstateSignDate'] !== "")
 																		data['RealEstateSignDate'] = form.values['RealEstateSignDate'];
-																	if(form.values['SendRealEstateSignDate']!=="")
+																	if(form.values['SendRealEstateSignDate'] !== "")
 																		data['SendRealEstateSignDate'] = form.values['SendRealEstateSignDate'];
-
+                                  data["Notaria_VII_II_Date"] = moment(new Date()).format('YYYY-MM-DD HH:mm:SS');
 																	onSubmit(data, 1);
 																}}
 																>Guardar</Button>
@@ -558,9 +663,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VII_III?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VII_III 
+                                ? current_data
+                                : initialValues['Notaria_VII_III_Date'] ? moment(initialValues['Notaria_VII_III_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -575,7 +685,7 @@ function Notary({ initialValues, onSubmit })
 																		${EscrituraState<ESCRITURA_STATE.Notaria_VII_III?"color-white-gray":""}`
 																	}
 																>
-																	OK Firma Notaría
+																	OK Devolución Notaría
 																</span>
 															</div>
 															<div className="d-flex align-items-center">
@@ -600,7 +710,7 @@ function Notary({ initialValues, onSubmit })
 																	className={`font-14-rem
 																		${EscrituraState<ESCRITURA_STATE.Notaria_VII_III?"color-white-gray":""}`
 																	}
-																>OK Firma Escritura de Compensación</span>
+																>Salida Alzamiento</span>
 																<span className="font-14-rem color-white-gray ml-2">
 																	<em>Si es Necesario.</em>
 																</span>
@@ -688,7 +798,7 @@ function Notary({ initialValues, onSubmit })
 																		data['SignSettelmentDate']=form.values['SignSettelmentDate'];
 																	if(form.values['SignNotaryDate'] !== "")
 																		data['SignPayDate'] = form.values['SignPayDate'];
-
+                                  data["Notaria_VII_III_Date"] = moment(new Date()).format('YYYY-MM-DD HH:mm:SS');
 																	onSubmit(data, 1);
 																}}
 																>Guardar</Button>
@@ -707,9 +817,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VII_IV?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VII_IV 
+                                ? current_data
+                                : initialValues['Notaria_VII_IV_Date'] ? moment(initialValues['Notaria_VII_IV_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -749,7 +864,7 @@ function Notary({ initialValues, onSubmit })
 																	className={`font-14-rem
 																		${EscrituraState<ESCRITURA_STATE.Notaria_VII_IV?"color-white-gray":""}`
 																	}
-																>OK Firma Escritura de Compensación</span>
+																>OK Firma Escritura de Compraventa</span>
 																<span className="font-14-rem color-white-gray ml-2">
 																	<em>Si es Necesario.</em>
 																</span>
@@ -777,7 +892,7 @@ function Notary({ initialValues, onSubmit })
 																		data['IngresoAlzamientoDate']=form.values['IngresoAlzamientoDate'];
 																	if(form.values['SalidaAlzamientoDate'] !== "")
 																		data['SalidaAlzamientoDate']=form.values['SalidaAlzamientoDate'];
-
+                                  data["Notaria_VII_IV_Date"] = moment(new Date()).format('YYYY-MM-DD HH:mm:SS');
 																	onSubmit(data, 1);
 																}}
 																>Guardar</Button>
@@ -796,9 +911,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VII_V?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VII_V 
+                                ? current_data
+                                : initialValues['Notaria_VII_V_Date'] ? moment(initialValues['Notaria_VII_V_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -920,7 +1040,7 @@ function Notary({ initialValues, onSubmit })
 																		data['IngresoCierreCopiasDate']=form.values['IngresoCierreCopiasDate'];
 																	if(form.values['ExitFISignDate'] !== "")
 																		data['SalidaCierreCopiasDate']=form.values['SalidaCierreCopiasDate'];
-
+                                  data["Notaria_VII_V_Date"] = moment(new Date()).format('YYYY-MM-DD HH:mm:SS');
 																	onSubmit(data, 1);
 																}}>Guardar</Button>
 																<Button className="m-btn-white">Cancelar</Button>
@@ -945,9 +1065,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_I?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_I 
+                                ? current_data
+                                : initialValues['Notaria_VIII_I_Date'] ? moment(initialValues['Notaria_VIII_I_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-md-between">
@@ -959,7 +1084,7 @@ function Notary({ initialValues, onSubmit })
 																/>
 																<span className={`font-14-rem ${EscrituraState<ESCRITURA_STATE.Notaria_VIII_I?"color-white-gray":""}`}
 																>
-																	<b>Se envía compensación, finiquito y pagaré al cliente</b>
+																	<b>Se envía compensación a Inmobiliaria</b>
 																</span>
 															</div>
 															<div className="d-flex align-items-center">
@@ -1007,7 +1132,8 @@ function Notary({ initialValues, onSubmit })
 																if(form.values['CompensationSettlementDate'] !== "")
 																	data['CompensationSettlementDate']=form.values['CompensationSettlementDate'];
 																if(form.values['CompensationRealEstateDate'] !== "")
-																	data['CompensationRealEstateDate']=form.values['CompensationRealEstateDate'];
+                                  data['CompensationRealEstateDate']=form.values['CompensationRealEstateDate'];
+                                data["Notaria_VIII_I_Date"] = moment(new Date()).format('YYYY-MM-DD HH:mm:SS');
 																onSubmit(data, 1);
 															}}>Guardar</Button>
 															<Button className="m-btn-white">Cancelar</Button>
@@ -1024,9 +1150,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_II?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_II 
+                                ? current_data
+                                : initialValues['Notaria_VIII_II_Date'] ? moment(initialValues['Notaria_VIII_II_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -1084,7 +1215,7 @@ function Notary({ initialValues, onSubmit })
 																		data['RealEstateConservatorDate']=form.values['RealEstateConservatorDate'];
 																	if(form.values['CoverDate'] !== "")
 																		data['CoverDate']=form.values['CoverDate'];
-
+                                  data["Notaria_VIII_II_Date"] = moment(new Date()).format('YYYY-MM-DD HH:mm:SS');
 																	onSubmit(data, 1);
 																}}>Guardar</Button>
 																<Button className="m-btn-white">Cancelar</Button>
@@ -1101,9 +1232,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_III?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_III 
+                                ? current_data
+                                : initialValues['Notaria_VIII_III_Date'] ? moment(initialValues['Notaria_VIII_III_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -1144,14 +1280,18 @@ function Notary({ initialValues, onSubmit })
 																	className={`font-14-rem
 																		${EscrituraState<ESCRITURA_STATE.Notaria_VIII_III?"color-white-gray":""}`
 																	}
-																><b>OK envío de copias Ecrituras, Dominios, Cert. de Hipotecas a Inmobiliaria.</b></span>
+																><b>Ok envío copia de escritura a inmobiliaria.</b></span>
 															</div>
 															<div className="d-flex align-items-center">
 																<span className="font-14-rem color-white-gray mr-3">
 																	<em>Ingresa la Escritura.</em>
 																</span>
 																{(EscrituraState > ESCRITURA_STATE.Notaria_VIII_III)
-																? <Label>{getFileName(initialValues['SendCopiesToINFile'])}</Label>
+																? <Label>                                    
+                                    <a href={initialValues['SendCopiesToINFile']} target='_blank'>
+                                      {getFileName(initialValues['SendCopiesToINFile'])}
+                                    </a>
+                                  </Label>
 																:	<ExField
 																		type="file"
 																		name="SendCopiesToINFile"
@@ -1175,7 +1315,8 @@ function Notary({ initialValues, onSubmit })
 																	if(form.values['SendCopiesToINFile'].name)
 																		data.append('SendCopiesToINFile', form.values['SendCopiesToINFile']);
 
-																	data.append('EscrituraState', ESCRITURA_STATE.Notaria_VIII_IV);																
+                                  data.append('EscrituraState', ESCRITURA_STATE.Notaria_VIII_IV);	
+                                  data.append("Notaria_VIII_III_Date", moment(new Date()).format('YYYY-MM-DD HH:mm:SS'));															
 																	onSubmit(data, 2);
 																}}
 																>Guardar</Button>
@@ -1193,9 +1334,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_IV?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_IV 
+                                ? current_data
+                                : initialValues['Notaria_VIII_IV_Date'] ? moment(initialValues['Notaria_VIII_IV_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -1218,7 +1364,11 @@ function Notary({ initialValues, onSubmit })
 																	<em>Ingresa el Comprobante.</em>
 																</span>
 																{(EscrituraState > ESCRITURA_STATE.Notaria_VIII_IV)
-																? <Label>{getFileName(initialValues['ProofPaymentSettlementFile'])}</Label>
+																? <Label>                                    
+                                    <a href={initialValues['ProofPaymentSettlementFile']} target='_blank'>
+                                      {getFileName(initialValues['ProofPaymentSettlementFile'])}
+                                    </a>
+                                  </Label>
 																:	<ExField
 																		type="file"
 																		name="ProofPaymentSettlementFile"
@@ -1237,7 +1387,8 @@ function Notary({ initialValues, onSubmit })
 																	if(form.values['ProofPaymentSettlementFile'].name)
 																		data.append('ProofPaymentSettlementFile',form.values['ProofPaymentSettlementFile']);
 																	
-																	data.append('EscrituraState', ESCRITURA_STATE.Notaria_VIII_V);
+                                  data.append('EscrituraState', ESCRITURA_STATE.Notaria_VIII_V);
+                                  data.append("Notaria_VIII_IV_Date", moment(new Date()).format('YYYY-MM-DD HH:mm:SS'));
 																	onSubmit(data, 2);
 																}}
 																>Guardar</Button>
@@ -1255,9 +1406,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_V?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_V 
+                                ? current_data
+                                : initialValues['Notaria_VIII_V_Date'] ? moment(initialValues['Notaria_VIII_V_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center">
@@ -1300,7 +1456,11 @@ function Notary({ initialValues, onSubmit })
 																	<em>Ingresa el Comprobante.</em>
 																</span>
 																{(EscrituraState > ESCRITURA_STATE.Notaria_VIII_V)
-																? <Label>{getFileName(initialValues['PaymentSubsidyFile'])}</Label>
+																? <Label>
+                                    <a href={initialValues['PaymentSubsidyFile']} target='_blank'>
+                                      {getFileName(initialValues['PaymentSubsidyFile'])}
+                                    </a>
+                                  </Label>
 																:	<ExField
 																		type="file"
 																		name="PaymentSubsidyFile"
@@ -1331,7 +1491,11 @@ function Notary({ initialValues, onSubmit })
 																	<em>Ingresa el Comprobante.</em>
 																</span>
 																{(EscrituraState > ESCRITURA_STATE.Notaria_VIII_V)
-																? <Label>{getFileName(initialValues['PaymentSavingINFile'])}</Label>
+																? <Label>
+                                    <a href={initialValues['PaymentSavingINFile']}  target='_blank'>
+                                      {getFileName(initialValues['PaymentSavingINFile'])}
+                                    </a>
+                                  </Label>
 																:	<ExField
 																		type="file"
 																		name="PaymentSavingINFile"
@@ -1357,7 +1521,8 @@ function Notary({ initialValues, onSubmit })
 																	if(form.values['PaymentSavingINFile'].name)
 																		data.append('PaymentSavingINFile',form.values['PaymentSavingINFile']);
 																	
-																	data.append('EscrituraState', ESCRITURA_STATE.Notaria_VIII_VI);
+                                  data.append('EscrituraState', ESCRITURA_STATE.Notaria_VIII_VI);
+                                  data.append("Notaria_VIII_V_Date", moment(new Date()).format('YYYY-MM-DD HH:mm:SS'));
 																	onSubmit(data, 2);
 																}}
 																>Guardar</Button>
@@ -1375,9 +1540,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_VI?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_VI 
+                                ? current_data
+                                : initialValues['Notaria_VIII_VI_Date'] ? moment(initialValues['Notaria_VIII_VI_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -1400,7 +1570,11 @@ function Notary({ initialValues, onSubmit })
 																	<em>Ingresa el Comprobante.</em>
 																</span>
 																{(EscrituraState > ESCRITURA_STATE.Notaria_VIII_VI)
-																? <Label>{getFileName(initialValues['INPaymentPendingFile'])}</Label>
+																? <Label>
+                                    <a href={initialValues['INPaymentPendingFile']} target='_blank'>
+                                      {getFileName(initialValues['INPaymentPendingFile'])}
+                                    </a>
+                                  </Label>
 																:	<ExField
 																		type="file"
 																		name="INPaymentPendingFile"
@@ -1470,7 +1644,8 @@ function Notary({ initialValues, onSubmit })
 																	if(form.values['SubscriptionDate']!=="")
 																		data.append('SubscriptionDate',form.values['SubscriptionDate']);
 																	
-																	data.append('EscrituraState', ESCRITURA_STATE.Notaria_VIII_VII);
+                                  data.append('EscrituraState', ESCRITURA_STATE.Notaria_VIII_VII);
+                                  data.append("Notaria_VIII_VI_Date", moment(new Date()).format('YYYY-MM-DD HH:mm:SS'));
 																	onSubmit(data, 2);
 																}}
 																>Guardar</Button>
@@ -1488,9 +1663,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_VII?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_VII 
+                                ? current_data
+                                : initialValues['Notaria_VIII_VII_Date'] ? moment(initialValues['Notaria_VIII_VII_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -1523,7 +1703,7 @@ function Notary({ initialValues, onSubmit })
 																	}
 																	if(form.values['GuaranteeToClientDate'] !== "")
 																		data['GuaranteeToClientDate']=form.values['GuaranteeToClientDate'];
-
+                                  data["Notaria_VIII_VII_Date"] = moment(new Date()).format('YYYY-MM-DD HH:mm:SS');
 																	onSubmit(data, 1);
 																}}>Guardar</Button>
 																<Button className="m-btn-white">Cancelar</Button>
@@ -1540,9 +1720,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_VIII?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_VIII 
+                                ? current_data
+                                : initialValues['Notaria_VIII_VIII_Date'] ? moment(initialValues['Notaria_VIII_VIII_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -1575,6 +1760,7 @@ function Notary({ initialValues, onSubmit })
 																	}
 																	if(form.values['DeliveryPropertyDate'] !== "")
 																		data['DeliveryPropertyDate']=form.values['DeliveryPropertyDate'];
+                                  data["Notaria_VIII_VIII_Date"] = moment(new Date()).format('YYYY-MM-DD HH:mm:SS');
 
 																	onSubmit(data, 1);
 																}}>Guardar</Button>
@@ -1592,9 +1778,14 @@ function Notary({ initialValues, onSubmit })
 															<span
 																className={`font-14-rem
 																	${EscrituraState<ESCRITURA_STATE.Notaria_VIII_IX?"color-white-gray":""}`
-																}
+                                }
+                                style={{height: '1rem'}}
 															>
-																Tiempo Restante:
+																{/* Tiempo Restante:*/}
+                                {EscrituraState === ESCRITURA_STATE.Notaria_VIII_IX 
+                                ? current_data
+                                : initialValues['Notaria_VIII_IX_Date'] ? moment(initialValues['Notaria_VIII_IX_Date']).format('DD MMM YYYY'): ''
+                                }
 															</span>
 														</div>
 														<div className="mt-2 d-flex align-items-center justify-content-between">
@@ -1617,7 +1808,11 @@ function Notary({ initialValues, onSubmit })
 																	<em>Ingresa el Comprobante.</em>
 																</span>
 																{(EscrituraState > ESCRITURA_STATE.Notaria_VIII_IX)
-																? <Label>{getFileName(initialValues['GPLoginRegistrationFile'])}</Label>
+																? <Label>
+                                    <a href={initialValues['GPLoginRegistrationFile']} target='_blank'>
+                                      {getFileName(initialValues['GPLoginRegistrationFile'])}
+                                    </a>
+                                  </Label>
 																:	<ExField
 																		type="file"
 																		name="GPLoginRegistrationFile"
@@ -1636,7 +1831,8 @@ function Notary({ initialValues, onSubmit })
 																	if(form.values['GPLoginRegistrationFile'].name)
 																		data.append('GPLoginRegistrationFile',form.values['GPLoginRegistrationFile']);
 																	
-																	data.append('EscrituraState', ESCRITURA_STATE.Success);
+                                  data.append('EscrituraState', ESCRITURA_STATE.Success);
+                                  data.append("Notaria_VIII_IX_Date", moment(new Date()).format('YYYY-MM-DD HH:mm:SS'));
 																	onSubmit(data, 2);
 																}}
 																>Guardar</Button>

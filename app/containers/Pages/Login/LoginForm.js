@@ -24,8 +24,8 @@ const LoginSchema = Yup.object().shape({
 const LoginForm = ({ onSubmitForm, loading, error }) => (
   <Formik
     initialValues={{
-      username: '189806973',
-      password: 'SSilva001',
+      username: '',
+      password: '',
       remember: false,
     }}
     validationSchema={LoginSchema}

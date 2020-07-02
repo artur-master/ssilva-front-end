@@ -12,6 +12,8 @@ import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
 import { ESCRITURA_STATE } from 'containers/App/constants';
+import { UserProject } from 'containers/Project/helper';
+import { Auth } from 'containers/App/helpers';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
 
 function Matriz({ initialValues, promesaDoc, onSubmit }) {
@@ -31,17 +33,17 @@ function Matriz({ initialValues, promesaDoc, onSubmit }) {
       <BoxContent className="p-3">
         <Alert type="warning">
           {isStepOne
-            ? "Debes confirmar el envío de la Matriz de Escritura."
+            ? "Debes confirmar el envío de la Matriz de Escritura al banco."
             : "Debes revisar que la Matriz tenga los mismos datos que la promesa."
           }
         </Alert>
-        {isStepOne &&
+        {isStepOne && 
           <div className="mt-4">
             <Button onClick={() => {
               const data = new FormData();
               data.append("EscrituraState", ESCRITURA_STATE.Rev_Escrit_I);
               onSubmit(data);
-            }}>
+            }} disabled={!Auth.isES()}>
               Matriz de Escritura Enviada
             </Button>
           </div>
@@ -145,7 +147,7 @@ function Matriz({ initialValues, promesaDoc, onSubmit }) {
                         <div className="d-flex align-items-center justify-content-between">
                           <span className="font-14-rem">{getFileName(promesaDoc)}</span>
                           <a href={promesaDoc} target="_blank" className="font-14-rem main_color btn-arrow mr-3">
-                            <b>Ver Matriz de Escritura</b>
+                            <b>Ver Promesa</b>
                           </a>
                         </div>
                       </div>

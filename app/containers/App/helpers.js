@@ -16,6 +16,7 @@ export const Storage = {
 };
 
 export const Auth = {
+
   get: (field = null) => {
     let user = Storage.get('auth');
     user = user ? JSON.parse(user) : null;
@@ -37,9 +38,10 @@ export const Auth = {
     });
     return hasPermission;
   },
-
+  
   hasOneOfRoles: roles => {
     const userRoles = Auth.get('user').Roles.map(role => role.Name);
+    
     let hasRole = false;
     userRoles.forEach(role => {
       if (roles.includes(role)) hasRole = true;
@@ -89,8 +91,7 @@ export const isUserProjectType = (
 export const getContactType = (type = 'email') => {
   const { contactTypes = [] } = window.preload;
   const ContactInfoType =
-    contactTypes.find(item => item.Name.toLowerCase() === type.toLowerCase()) ||
-    {};
+    contactTypes.find(item => item.Name.toLowerCase() === type.toLowerCase()) || {};
 
   return {
     ...ContactInfoType,

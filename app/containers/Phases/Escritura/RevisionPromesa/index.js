@@ -14,16 +14,18 @@ import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
 import { ESCRITURA_STATE } from 'containers/App/constants';
 import { getCheckPromesaModel } from '../models';
 import DocumentItem from '../DocumentItem';
+import { stringToBoolean } from 'containers/App/helpers';
 
 function RevisionPromesa({
   proyectoState,
   canEdit=false, 
   initialValues,
+  onDownloadPromesa,
   onSubmit
 }) {
   if(proyectoState === null)
     return null;
-  
+ 
   const model = getCheckPromesaModel(initialValues);
   const isCollapse = (initialValues.EscrituraState > ESCRITURA_STATE.Fechas_Avisos_I);
   const isOpen = (initialValues.EscrituraState == ESCRITURA_STATE.Fechas_Avisos_I);
@@ -52,7 +54,7 @@ function RevisionPromesa({
           <>
             <BoxContent className="p-3">
               <Alert type="warning">
-                Debes revisar si la promesa tiene condiciones especiales, y verificar que sea igual que las vesión de Legal.
+                Debes revisar si la promesa tiene condiciones especiales, y verificar que sea igual que las condiciones que puso Legal.
               </Alert>
               <div className="d-flex align-items-center mr-4">
                 <ExField
@@ -61,10 +63,10 @@ function RevisionPromesa({
                   className="m-0"
                   readOnly={!(canEdit && isOpen)}
                 />                
-                <Label className="pr-3">Recibí Carepeta Física</Label>
+                <Label className="pr-3">Recibí Carpeta Física</Label>
                 <Button
                   className="m-btn-download m-btn-white order-3"
-                  onClick={()=>console.log("download")}
+                  onClick={onDownloadPromesa}
                 >
                   Descargar promesa
                 </Button>                
@@ -102,7 +104,7 @@ function RevisionPromesa({
                                 />
                               }
                               {type == "file" &&
-                                <DocumentItem name={name} canUpload={(canEdit && isOpen)} />
+                                <DocumentItem name={name} canUpload={(canEdit && isOpen)} isCompany={stringToBoolean(initialValues.Cliente.IsCompany)}/>
                               }
                             </div>
                           </td> </>)
@@ -137,7 +139,8 @@ RevisionPromesa.propTypes = {
   proyectoState: PropTypes.number,
   canEdit: PropTypes.bool,
   initialValues: PropTypes.object,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  onDownloadPromesa: PropTypes.func
 };
 
 export default RevisionPromesa;

@@ -69,7 +69,7 @@ export function PhaseFirmaOrNegociacionPromesa({
             {UserProject.isVendor() && (
               <Box>
                 <BoxHeader>
-                  <b>Confección de maqueta</b>
+                  <b>Confeccion de maqueta</b>
                 </BoxHeader>
                 <BoxContent>
                   <>

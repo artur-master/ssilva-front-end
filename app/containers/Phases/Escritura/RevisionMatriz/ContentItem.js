@@ -9,12 +9,13 @@ import { Table } from 'reactstrap';
 import Button from 'components/Button';
 import { Form as ExForm, Field as ExField, Label } from 'components/ExForm';
 
-function ContentItem({ initialValues, name, onSubmit }) {
+function ContentItem({ initialValues, name, canEdit, onSubmit }) {
   const title={
     'StateBank': 'Banco Estado',
     'Santander': 'Santander',
     'ChileBank': 'Banco de Chile'
   }
+
   return (
     <ExForm
       initialValues={initialValues}
@@ -54,7 +55,7 @@ function ContentItem({ initialValues, name, onSubmit }) {
               />
             </div>
           </div>
-          { initialValues[`RevisionConfirmo${name}`] == false &&
+          { initialValues[`RevisionConfirmo${name}`] == false && canEdit && 
             <div className="row mt-4">
               <div className="col-md-6 offset-md-6">
                 <div className="d-flex justify-content-end py-3">
@@ -73,6 +74,7 @@ function ContentItem({ initialValues, name, onSubmit }) {
 ContentItem.propTypes = {
   name: PropTypes.string,
   initialValues: PropTypes.object,
+  canEdit: PropTypes.bool,
   onSubmit: PropTypes.func,
 };
 

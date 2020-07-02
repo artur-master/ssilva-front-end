@@ -6,7 +6,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
-import { Field, Form, FormGroup, Label } from 'components/ExForm';
+// import { Field, Form, FormGroup, Label } from 'components/ExForm';
+import { Form as ExForm, Field as ExField, Label, FormGroup } from 'components/ExForm';
 import moment from 'components/moment';
 import { PROMESA_STATE } from 'containers/App/constants';
 
@@ -18,7 +19,7 @@ export function PhaseTimelineSignIn({
   onSubmit,
 }) {
   return (
-    <Form
+    <ExForm
       initialValues={{ DateRegresoPromesa: entity.DateRegresoPromesa || '' }}
       onSubmit={onSubmit}
     >
@@ -40,7 +41,7 @@ export function PhaseTimelineSignIn({
                 </Label>
                 {canEdit && (
                   <>
-                    <Field
+                    <ExField
                       type="datepicker"
                       required
                       name="DateRegresoPromesa"
@@ -59,7 +60,7 @@ export function PhaseTimelineSignIn({
           </FormGroup>
         </div>
       )}
-    </Form>
+    </ExForm>
   );
 }
 

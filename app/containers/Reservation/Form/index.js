@@ -58,9 +58,6 @@ export function ReservationForm({
 
   //Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
-  const onHide = () => {
-    setHistoryOpen(false);
-  }
   //Added by Artur
 
   if (selector.success && selector.redirect) {
@@ -117,7 +114,8 @@ export function ReservationForm({
           {/* Added by Artur */}
           {selector.reservation && (
             <History logs={selector.reservation.Logs} 
-                     onHide={onHide} isOpen={isHistoryOpen}
+                     onHide={()=>setHistoryOpen(false)}
+                     isOpen={isHistoryOpen}
                      title={ project.Name + (Folio ? ` / ${Folio}`:'') }
             />
           )}

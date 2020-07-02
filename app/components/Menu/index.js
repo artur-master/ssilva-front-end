@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Auth } from '../../containers/App/helpers';
+import { Auth } from 'containers/App/helpers';
 
 const Menu = ({ collapse, dispatch }) => (
   <Collapse isOpen={window.innerWidth > 991 || collapse}>

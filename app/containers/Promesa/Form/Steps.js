@@ -31,10 +31,13 @@ SubSteps.propTypes = {
 };
 
 function Steps({ promesa }) {
+  const reject_approve = [PROMESA_STATE[13], PROMESA_STATE[14]];
+
   const Graph = {
     Node: [
       { Label: 'LG', Description: 'Confección', Color: 'white' },
-      { Label: 'AC, JP', Description: 'Aprobaciónes', Color: 'white' },
+      { Label: reject_approve.includes(promesa.PromesaState) ?'JP, IN':'AC, JP',
+        Description: 'Aprobaciónes', Color: 'white' },
       { Label: 'V', Description: 'Firma Comprador', Color: 'white' },
       { Label: 'AC', Description: 'Aprobación Firmas', Color: 'white' },
       { Label: 'JP', Description: 'Firmas', Color: 'white' },
@@ -63,7 +66,6 @@ function Steps({ promesa }) {
     case PROMESA_STATE[4]:
     case PROMESA_STATE[5]:
     case PROMESA_STATE[6]:
-    case PROMESA_STATE[7]:
       Graph.Node[0].Color = 'green';
       Graph.Node[1].Color = 'green';
       Graph.Node[2].Color = 'green';
@@ -73,10 +75,19 @@ function Steps({ promesa }) {
         Graph.Node[5].Color = 'green';
       else Graph.Node[5].Color = 'yellow';
       break;
+    case PROMESA_STATE[7]:
+    case PROMESA_STATE[8]:
+      Graph.Node[0].Color = 'green';
+      Graph.Node[1].Color = 'green';
+      Graph.Node[2].Color = 'green';
+      Graph.Node[3].Color = 'green';
+      Graph.Node[4].Color = 'green';
+      Graph.Node[5].Color = 'green';
+      break;
     case PROMESA_STATE[13]:
     case PROMESA_STATE[14]:
       Graph.Node[0].Color = 'green';
-      Graph.Node[1].Color = 'green';
+      Graph.Node[1].Color = 'yellow';
       Graph.Node[2].Color = 'white';
       Graph.Node[3].Color = 'white';
       break;

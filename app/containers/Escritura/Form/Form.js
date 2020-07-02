@@ -6,11 +6,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
+import FileSaver from 'file-saver';
 
 import { Auth } from 'containers/App/helpers';
 import InitData from 'containers/Common/InitData';
 import ProjectPhases from 'containers/Common/ProjectPhases';
-import { isCreditPayment } from 'containers/App/helpers';
+// import { isCreditPayment } from 'containers/App/helpers';
+import { getEscrituraAction } from 'containers/App/constants';
+import { UserProject } from 'containers/Project/helper';
 import Log from 'components/Log';
 import History from 'components/History';
 import Button from 'components/Button';
@@ -45,7 +48,8 @@ import Notary from 'containers/Phases/Escritura/Notary';
 
 export function Form({ selector, project, dispatch }) 
 {  
-  // const [isHistoryOpen, setHistoryOpen] = useState(false);
+  const [isHistoryOpen, setHistoryOpen] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
   
   const entity_escritura = selector.escritura;
   const entity_promesa = selector.promesa;
@@ -56,6 +60,12 @@ export function Form({ selector, project, dispatch })
   
   const { EscrituraProyectoState } = project;
   const { EscrituraID } = entity_escritura;
+
+  const onDownloadPromesa = () => {
+    const url = entity_promesa.DocumentPromesa;
+    if(url !== '')
+      FileSaver.saveAs( url,'promesa');
+  }
 
   return (
     <>
@@ -84,33 +94,44 @@ export function Form({ selector, project, dispatch })
         >
           Historial
         </Button>
+        {UserProject.isPM() && (
+          <Button
+            className="col-auto mt-3 m-btn m-btn-pen"
+            onClick={() => setCanEdit(true)}
+          >
+            Modificación
+          </Button>
+        )}
       </div>      
       <div className="mt-2 d-flex align-items-end justify-content-between after-expands-2">
         <h4 className="font-21 color-regular mt-3 order-1">{project.Name}</h4>
       </div>      
       <h5 className="mb-3 font-18 d-flex align-items-center justify-content-between">
-        <span className="line-height-1 color-success">Ingreso Fechas de Presentación de Recepción Municipal</span>
+        <span className="line-height-1 color-success">
+          {getEscrituraAction(entity_escritura.EscrituraState)}
+        </span>
       </h5>
         <PhaseGeneral
           initialValues={entity_promesa}
-          canEdit={false}
+          canEdit={canEdit}
         />
         <PhaseClient
           payType={entity_promesa.PayType}
           client={entity_promesa.Cliente}
-          canEdit={false}
+          canEdit={canEdit}
         />
         <PhaseInmueble
           initialValues={entity_promesa}
-          canEdit={false}
+          canEdit={canEdit}
         />
         <PhaseFormaDePago
           initialValues={entity_promesa}
-          canEdit={false}
+          canEdit={canEdit}
         />
         <PhasePreCredito
           isCollapse={false}
           initialValues={entity_promesa}
+          canEdit={canEdit}
         />
         <PhaseDocument
           isCollapse={false}
@@ -127,6 +148,7 @@ export function Form({ selector, project, dispatch })
           proyectoState={EscrituraProyectoState}
           canEdit={ Auth.isES() }
           initialValues={entity_escritura}
+          onDownloadPromesa={onDownloadPromesa}
           onSubmit={(values)=>dispatch(checkPromesa(values, EscrituraID))}
         />
         <NotificacionComprado
@@ -175,14 +197,14 @@ export function Form({ selector, project, dispatch })
       
       {/* <Log logs={entity.Logs} limit={10} /> */}
 
-      {/* {entity.Logs && (
+      {entity_escritura.Logs && (
         <History
-          logs={entity.Logs}
+          logs={entity_escritura.Logs}
           onHide={()=>setHistoryOpen(false)}
           isOpen={isHistoryOpen}
           title={`${project.Name}`}
         />
-      )} */}
+      )}
     </>
   );
 }

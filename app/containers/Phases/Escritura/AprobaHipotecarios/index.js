@@ -81,7 +81,7 @@ function AprobaHipotecarios({initialValues, onSubmit}) {
                       name={`AprobacionCreditos.${index}.FormalCredit`}
                       options={[
                         { label: 'Asistente Comercial', value: '1' },
-                        { label: 'Compradoro', value: '0' },
+                        { label: 'Comprador', value: '0' },
                       ]}
                       itemClassName="pr-4"
                     />
@@ -103,6 +103,7 @@ function AprobaHipotecarios({initialValues, onSubmit}) {
                                 name={`AprobacionCreditos.${index}.ClientPersonalHealthStatement`}
                                 placeholder = "Examinar..."
                                 style={{width:"12em", height:"2.2em"}}
+                                required
                               />
                             </div>
                           </td>
@@ -156,6 +157,7 @@ function AprobaHipotecarios({initialValues, onSubmit}) {
                             type="file"
                             name={`AprobacionCreditos.${index}.AcFinancialInstitution`}
                             placeholder = "Examinar..."
+                            required
                           /> 
                         </FormGroup>
                       </div>
@@ -182,7 +184,7 @@ function AprobaHipotecarios({initialValues, onSubmit}) {
         </BoxContent>
         <BoxFooter>
           <Button type="submit">
-            Confirmo Notificación
+            Guardar
           </Button>
           <Button color="white" type="reset">
             Cancelar

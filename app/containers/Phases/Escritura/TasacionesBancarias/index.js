@@ -12,6 +12,9 @@ import {
   DropdownToggle,
 } from 'reactstrap';
 import { ESCRITURA_STATE } from 'containers/App/constants';
+import { UserProject } from 'containers/Project/helper';
+import { Auth } from 'containers/App/helpers';
+
 import Alert from 'components/Alert';
 import Button from 'components/Button';
 import { Box, BoxContent, BoxHeader,BoxFooter } from 'components/Box';
@@ -151,7 +154,7 @@ function TasacionesBancarias({ initialValues, onSubmit })
           </CollapseContent>
         </Collapse>
       </BoxContent>
-      { EscrituraState < ESCRITURA_STATE.Matrices_Escrit_I &&
+      { EscrituraState < ESCRITURA_STATE.Matrices_Escrit_I && Auth.isES() &&
         <BoxFooter>
           <div className="d-flex justify-content-end mr-5">
             <Button 
@@ -162,7 +165,7 @@ function TasacionesBancarias({ initialValues, onSubmit })
                 onSubmit(data);
               }}
             >
-              Aprova
+              Aprobado
             </Button>
           </div>
         </BoxFooter>

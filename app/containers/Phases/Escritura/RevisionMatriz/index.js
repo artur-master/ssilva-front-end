@@ -17,6 +17,7 @@ import Button from 'components/Button';
 import { Box, BoxContent, BoxHeader,BoxFooter } from 'components/Box';
 import { Collapse, CollapseHeader, CollapseContent } from 'components/Collapse';
 import { Label } from 'components/ExForm';
+import { UserProject } from 'containers/Project/helper';
 import ContentItem from './ContentItem';
 
 function RevisionMatriz({ initialValues, onSubmit }) 
@@ -34,6 +35,9 @@ function RevisionMatriz({ initialValues, onSubmit })
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [collapsed, setCollapsed] = useState([true, true, true]);
+
+  const canAprove = UserProject.isLegal();
+
   return (
     <Box collapse={!canEdit} isOpen={canEdit}>
       <BoxHeader>
@@ -76,6 +80,7 @@ function RevisionMatriz({ initialValues, onSubmit })
               initialValues={initialValues}
               name="StateBank"
               onSubmit={onSubmit}
+              canEdit = {canAprove}
             />
           </CollapseContent>
         </Collapse>
@@ -113,6 +118,7 @@ function RevisionMatriz({ initialValues, onSubmit })
               initialValues={initialValues}
               name="Santander"
               onSubmit={onSubmit}
+              canEdit = {canAprove}
             />
           </CollapseContent>
         </Collapse>
@@ -150,19 +156,25 @@ function RevisionMatriz({ initialValues, onSubmit })
               initialValues={initialValues}
               name="ChileBank"
               onSubmit={onSubmit}
+              canEdit = {canAprove}
             />
           </CollapseContent>
         </Collapse>
       </BoxContent>
-      <BoxFooter>
-        <div className="d-flex justify-content-end mr-5">
-          <Button onClick={()=>{
-            const data = new FormData();
-            data.append("EscrituraState", ESCRITURA_STATE.Matrices_Escrit_II);
-            onSubmit(data);
-          }}>Aprova</Button>
-        </div>
-      </BoxFooter>
+      { EscrituraState < ESCRITURA_STATE.Matrices_Escrit_II &&
+        <BoxFooter>
+          <div className="d-flex justify-content-end mr-5">
+            <Button
+              onClick={()=>{
+                const data = new FormData();
+                data.append("EscrituraState", ESCRITURA_STATE.Matrices_Escrit_II);
+                onSubmit(data);
+              }}
+              disabled={!canAprove}
+            >Guardar</Button>
+          </div>
+        </BoxFooter>
+      }
     </Box>
   );
 }

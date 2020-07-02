@@ -96,6 +96,8 @@ export const UserProject = {
     (isUserProjectType('Inmobiliario', project) && UserProject.in()),
   isVendor: (project = window.project || {}) =>
     isUserProjectType(USER_PROYECTO_TYPE[2], project),
+  isES: (project = window.project || {}) =>
+    isUserProjectType(USER_PROYECTO_TYPE[2], project),
 };
 
 export const isCollectedDatos = project =>

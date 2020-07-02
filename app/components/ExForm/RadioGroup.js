@@ -19,7 +19,7 @@ const RadioGroup = ({
         <FormikField
           validate={value => {
             if (
-              required &&
+              required && !readOnly &&
               (value === undefined || value === '' || value === null)
             )
               return 'Este campo es requerido';

@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ESCRITURA_STATE } from 'containers/App/constants';
+import { Auth } from 'containers/App/helpers';
 import moment from 'components/moment';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
@@ -57,7 +58,8 @@ function NotificacionComprado({ initialValues, proyectoState, onSubmit }) {
         {() => (
           <div className="d-flex align-items-center justify-content-between pr-2 mt-4">
             <Button type="submit"
-              disabled={ (proyectoState <= ESCRITURA_STATE.A_Comercial && EscrituraState >= ESCRITURA_STATE.A_Comercial) || 
+              disabled={!Auth.isES() ||
+                        (proyectoState <= ESCRITURA_STATE.A_Comercial && EscrituraState >= ESCRITURA_STATE.A_Comercial) || 
                         (proyectoState > ESCRITURA_STATE.A_Comercial && EscrituraState >= ESCRITURA_STATE.Apr_Creditos_I)}
             >
               { isNotifiStepOne
@@ -82,6 +84,7 @@ function NotificacionComprado({ initialValues, proyectoState, onSubmit }) {
                     name="NoticeToClientDate"
                     style={{ width: "8em", height: "2.2em" }}
                     required
+                    disabled={!Auth.isES()}
                   />
                 }
               </div>

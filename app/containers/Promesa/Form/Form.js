@@ -274,7 +274,6 @@ export function Form({ selector, dispatch }) {
   }
   // Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
-  const onHide = () => setHistoryOpen(false);
   const [canEdit, setCanEdit] = useState(false);
   // Added by Artur
   return (
@@ -366,7 +365,7 @@ export function Form({ selector, dispatch }) {
       {entity.Logs && (
         <History
           logs={entity.Logs}
-          onHide={onHide}
+          onHide={() => setHistoryOpen(false)}
           isOpen={isHistoryOpen}
           title={`${project.Name} / ${entity.Folio}`}
         />

@@ -64,9 +64,6 @@ export function Form({ selector, selectorCredit, dispatch }) {
   );
   //Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
-  const onHide = () => {
-    setHistoryOpen(false);
-  }
   //Added by Artur
   return (
     <>
@@ -88,6 +85,12 @@ export function Form({ selector, selectorCredit, dispatch }) {
             // setHistoryOpen(true)}
         >
           Historial
+        </Button>
+        <Button
+          className="col-auto mt-3 m-btn m-btn-pen"
+          onClick={onEdit}
+        >
+          Modificación
         </Button>
       </div>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">
@@ -123,7 +126,8 @@ export function Form({ selector, selectorCredit, dispatch }) {
       {/* Added by Artur */}
       {selector.reservation && (
         <History logs={selector.reservation.Logs}
-          onHide={onHide} isOpen={isHistoryOpen}
+          onHide={()=>setHistoryOpen(false)}
+          isOpen={isHistoryOpen}
           title={`${project.Name} / ${entity.Folio}`}
         />
       )}

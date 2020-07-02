@@ -241,6 +241,8 @@ export const ESCRITURA_STATE = {
   Notaria_II: 6.2,
   Notaria_III: 6.3,
   Notaria_IV: 6.4,
+  Notaria_IV_I: 6.41,
+  Notaria_IV_II: 6.42,
   Notaria_V: 6.5,
   Notaria_VI: 6.6,
   Notaria_VII: 6.7,
@@ -260,4 +262,58 @@ export const ESCRITURA_STATE = {
   Notaria_VIII_VIII: 6.88,
   Notaria_VIII_IX: 6.89,
   Success: 7
+}
+
+export const getEscrituraAction = (step) => {
+  switch(step){
+    case ESCRITURA_STATE.Recep_Mun:
+      return 'Ingreso Fechas de Presentación de Recepción Municipal';
+    case ESCRITURA_STATE.Fechas_Avisos_I:
+      return 'Revisión de Promesas a Escriturar';
+    case ESCRITURA_STATE.Fechas_Avisos_II:
+      return 'Notificación al Comprador';
+    case ESCRITURA_STATE.Apr_Creditos_I:
+      return 'Ingreso Fechas Escrituración';
+    case ESCRITURA_STATE.Apr_Creditos_II:
+      return 'Aprobación Créditos Hipotecarios';
+    case ESCRITURA_STATE.ETitulo_Tasacion:
+      return 'Ingreso Fechas de Envío Informes de Título'; //Aprobaciónes Informes de Título y Tasaciónes Bancarias
+    case ESCRITURA_STATE.Matrices_Escrit:
+    case ESCRITURA_STATE.Matrices_Escrit_I:
+    case ESCRITURA_STATE.Matrices_Escrit_II:
+      return 'Envío Matriz de Escritura';
+    case ESCRITURA_STATE.Rev_Escrit:
+    case ESCRITURA_STATE.Rev_Escrit_I:
+    case ESCRITURA_STATE.Rev_Escrit_II:
+      return 'Revisión Datos Matriz';
+    case ESCRITURA_STATE.Notaria_I:
+    case ESCRITURA_STATE.Notaria_II:
+    case ESCRITURA_STATE.Notaria_III:
+      return ' Chequeo Proceso de Firma';
+    case ESCRITURA_STATE.Notaria_IV:
+    case ESCRITURA_STATE.Notaria_IV_I:
+    case ESCRITURA_STATE.Notaria_IV_II:
+    case ESCRITURA_STATE.Notaria_V:
+      return 'Ingreso Pagos de Saldos';
+    case ESCRITURA_STATE.Notaria_VI:
+    case ESCRITURA_STATE.Notaria_VII:
+    case ESCRITURA_STATE.Notaria_VII_I:
+    case ESCRITURA_STATE.Notaria_VII_II:
+    case ESCRITURA_STATE.Notaria_VII_III:
+    case ESCRITURA_STATE.Notaria_VII_IV:
+    case ESCRITURA_STATE.Notaria_VII_V:
+    case ESCRITURA_STATE.Notaria_VIII:
+    case ESCRITURA_STATE.Notaria_VIII_I:
+    case ESCRITURA_STATE.Notaria_VIII_II:
+    case ESCRITURA_STATE.Notaria_VIII_III:
+    case ESCRITURA_STATE.Notaria_VIII_IV:
+    case ESCRITURA_STATE.Notaria_VIII_V:
+    case ESCRITURA_STATE.Notaria_VIII_VI:
+    case ESCRITURA_STATE.Notaria_VIII_VII:
+    case ESCRITURA_STATE.Notaria_VIII_VIII:
+    case ESCRITURA_STATE.Notaria_VIII_IX:
+      return 'Facturación';
+    default:
+      return 'Success';
+  }
 }

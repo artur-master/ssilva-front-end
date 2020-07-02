@@ -97,8 +97,8 @@ function Steps({ state }) {
           </div>
           <div className="mt-3 d-flex">
             <li className={`item w-100
-                      ${(state > ESCRITURA_STATE.A_Comercial && parseInt(state) == ESCRITURA_STATE.A_Comercial) ?
-                      "color-caution" : (parseInt(state) > ESCRITURA_STATE.A_Comercial) ? "color-success" : ""}`}
+                      ${(state >= ESCRITURA_STATE.A_Comercial && (parseInt(state) == ESCRITURA_STATE.A_Comercial || state === ESCRITURA_STATE.ETitulo_Tasacion)) ?
+                      "color-caution" : (parseInt(state) > ESCRITURA_STATE.ETitulo_Tasacion) ? "color-success" : ""}`}
             >
               <div className="number">
                 <span>3</span>

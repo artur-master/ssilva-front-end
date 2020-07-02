@@ -6,16 +6,19 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Field as FormikField, getIn } from 'formik';
 import { getFileName } from 'containers/App/helpers';
 
-function DocumentItem({ name, label, canUpload }) {
+function DocumentItem({ name, isCompany, canUpload }) {
+  let required = true;
+  if(name === "PowersCharacteristics")
+    required = isCompany;
   return (
     <FormikField
       name={name}
       validate={value => {
-        if (!value) return 'Este campo es requerido';
+        if (required && !value) return 'Este campo es requerido';
         return null;
       }}
     >
@@ -97,7 +100,7 @@ function DocumentItem({ name, label, canUpload }) {
 }
 
 DocumentItem.propTypes = {
-  label: PropTypes.string,
+  isCompany: PropTypes.bool,
   name: PropTypes.string,
   canUpload: PropTypes.bool,
 };

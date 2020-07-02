@@ -136,20 +136,31 @@ export function CommercialForm({
                         <Label style={{ width: '17.5em' }}>
                           {label}
                         </Label>
-                        { name == "ContadoAhorroPlusMaxDiscounts"
+                        { (name === "ContadoAhorroPlusMaxDiscounts")
                          ? <Field
-                            type="number"
-                            name={name}
-                            required="true"
-                            style={{ width: '10em' }}
+                              type="number"
+                              name={name}
+                              required="true"
+                              style={{ width: '10em' }}
                            />
+                         : (name === "ContadoAhorroPlus" )
+                         ? <Field
+                              type="select"
+                              name={name}
+                              required="true"
+                              style={{ width: '10em' }}
+                           >
+                            <option value="" />
+                            <option value="5">5 %</option>
+                            <option value="10">10 %</option>
+                           </Field>
                          : <Field
-                            type="number"
-                            name={name}
-                            maskOptions={{ prefix: '%' }}
-                            required="true"
-                            max={100}
-                            style={{ width: '10em' }}
+                              type="number"
+                              name={name}
+                              maskOptions={{ prefix: '%' }}
+                              required="true"
+                              max={100}
+                              style={{ width: '10em' }}
                            />
                         }
                       </FormGroup>
@@ -162,22 +173,34 @@ export function CommercialForm({
                         <Label style={{ width: '17.5em' }}>
                           {label}
                         </Label>
-                        { name == "CreditoAhorroPlusMaxDiscounts"
+
+                        { (name === "CreditoAhorroPlusMaxDiscounts")
                          ? <Field
-                            type="number"
-                            name={name}
-                            required="true"
-                            style={{ width: '10em' }}
+                              type="number"
+                              name={name}
+                              required="true"
+                              style={{ width: '10em' }}
                            />
+                         : (name === "CreditoAhorroPlus" )
+                         ? <Field
+                              type="select"
+                              name={name}
+                              required="true"
+                              style={{ width: '10em' }}
+                           >
+                            <option value="" />
+                            <option value="5">5 %</option>
+                            <option value="10">10 %</option>
+                           </Field>
                          : <Field
-                            type="number"
-                            name={name}
-                            maskOptions={{ prefix: '%' }}
-                            required="true"
-                            max={100}
-                            style={{ width: '10em' }}
+                              type="number"
+                              name={name}
+                              maskOptions={{ prefix: '%' }}
+                              required="true"
+                              max={100}
+                              style={{ width: '10em' }}
                            />
-                        }
+                        }                        
                       </FormGroup>
                     ))}
                   </div>

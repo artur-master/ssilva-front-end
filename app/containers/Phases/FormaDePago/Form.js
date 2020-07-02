@@ -87,28 +87,27 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
         <div className="w-50 d-flex justify-content-end">
           <Button
             onClick={() => {
-              let percentPromesa, percentAmount, percentAhorro, percentEscrituraContado, percentInstitucionFinanciera;
+              let percentPromesa = 20,
+                  percentAmount = 20,
+                  percentEscrituraContado = 30,
+                  percentInstitucionFinanciera = 25,
+                  percentAhorro = 5;
+
               if(isContadoType(values.PayType)) {
-                percentPromesa = defaultPercent.ContadoMontoPromesa || 20;
-                percentAmount = defaultPercent.ContadoMontoCuotas || 20;
-                percentEscrituraContado = defaultPercent.ContadoMontoEscrituraContado || 20;
-                percentAhorro = defaultPercent.ContadoAhorroPlus || 20;
+                percentPromesa = defaultPercent.ContadoMontoPromesa || percentPromesa;
+                percentAmount = defaultPercent.ContadoMontoCuotas || percentAmount;
+                percentEscrituraContado = defaultPercent.ContadoMontoEscrituraContado || percentEscrituraContado;
+                percentAhorro = defaultPercent.ContadoAhorroPlus || percentAhorro;
               }
               else if(isCreditType(values.PayType)) {
-                percentPromesa = defaultPercent.CreditoMontoPromesa || 20;
-                percentAmount = defaultPercent.CreditoMontoCuotas || 20;
-                percentEscrituraContado = defaultPercent.CreditoMontoEscrituraContado || 20;
-                percentAhorro = defaultPercent.CreditoAhorroPlus || 20;
-                percentInstitucionFinanciera = defaultPercent.CreditoMontoInstitucionFinanciera || 20;
-              }
-              else {
-                percentPromesa = 20;
-                percentAmount = 20;
-                percentEscrituraContado = 20;
-                percentInstitucionFinanciera = 20;
-                percentAhorro = 20;
+                percentPromesa = defaultPercent.CreditoMontoPromesa || percentPromesa;
+                percentAmount = defaultPercent.CreditoMontoCuotas || percentAmount;
+                percentEscrituraContado = defaultPercent.CreditoMontoEscrituraContado || percentEscrituraContado;
+                percentInstitucionFinanciera = defaultPercent.CreditoMontoInstitucionFinanciera || percentInstitucionFinanciera;
+                percentAhorro = defaultPercent.CreditoAhorroPlus || percentAhorro;
               }
 
+              console.log(percentPromesa, percentAmount, percentAhorro);
               handleChangePercent('PaymentFirmaPromesa', percentPromesa);
               handleChangePercent('Cuotas.0.Amount', percentAmount);
               handleChangePercent('AhorroPlus', percentAhorro);
@@ -509,10 +508,10 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                     if ( value < 0) return;
                     handleChangeUF('AhorroPlus', value);
                   }}
-                />
+                />                
               </td>
               <td>
-                <Input
+                {/* <Input
                   className="form-control form-control-sm"
                   type="number"
                   prefix="%"
@@ -526,7 +525,22 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                     if (value > 100 || value < 0) return;
                     handleChangePercent('AhorroPlus', value);
                   }}
-                />
+                /> */}
+                <Input
+                  type="select"
+                  className="form-control form-control-sm"
+                  value={
+                    percent.AhorroPlus ? percent.AhorroPlus : ''
+                  }
+                  onChange={evt => {
+                    const value = evt.currentTarget.value;
+                    handleChangePercent('AhorroPlus', value);
+                  }}
+                >
+                  <option value="" />
+                  <option value="5">5 %</option>
+                  <option value="10">10 %</option>
+                </Input>
               </td>
               <td>
                 <div className="search-filter">

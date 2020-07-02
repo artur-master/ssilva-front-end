@@ -31,6 +31,7 @@ export function PhaseTimeline({
   onCancel,
 }) {
   const step = getStepTimeline(entity);
+ 
   return (
     <Box collapse isOpen={isCollapse}>
       <BoxHeader>
