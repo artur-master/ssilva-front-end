@@ -72,14 +72,26 @@ function Notary({ initialValues, onSubmit })
 											<div className="mt-3 d-flex justify-content-end">
 												<Button
 													disabled={!form.values['StepOne']}
-													onClick={()=>onSubmit({EscrituraState: ESCRITURA_STATE.Notaria_II}, 1)}
+													onClick={()=>onSubmit({
+																		EscrituraState: ESCRITURA_STATE.Notaria_II,
+																		Notaria_I_Date: moment(new Date()).format('YYYY-MM-DD')
+																	}, 1)}
 												>Guardar</Button>
 												<Button className="m-btn-white" type="reset">Cancelar</Button>
 											</div>
 										)}
 									</div>
-								</li>
-								
+								</li>	
+								{(EscrituraState > ESCRITURA_STATE.Notaria_I) &&					
+									<span className="number d-block font-14-rem">
+										{moment(initialValues['Notaria_I_Date']).diff(
+											((EscrituraState == ESCRITURA_STATE.Notaria_II) 
+												? moment(new Date()) 
+												: moment(initialValues['Notaria_II_Date'])
+											), 'days'	
+										 )} d
+									</span>
+								}
 								<li className={(EscrituraState == ESCRITURA_STATE.Notaria_II) ? "active" : ""}>
 									<span className={`number ${EscrituraState > ESCRITURA_STATE.Notaria_II ? "success" : "mt-2"}`}>
 										{(EscrituraState > ESCRITURA_STATE.Notaria_II) ? <i className="icon icon-check" /> : "02"}
@@ -128,7 +140,8 @@ function Notary({ initialValues, onSubmit })
 													disabled={!form.values['StepOne'] || form.values['NoticeToClientSignDate']==""}
 													onClick={()=>onSubmit({
 														EscrituraState: ESCRITURA_STATE.Notaria_III,
-														NoticeToClientSignDate: moment(form.values['NoticeToClientSignDate']).format('YYYY-MM-DD')
+														NoticeToClientSignDate: moment(form.values['NoticeToClientSignDate']).format('YYYY-MM-DD'),
+														Notaria_II_Date: moment(new Date()).format('YYYY-MM-DD')
 													}, 1)}
 												>Guardar</Button>
 												<Button className="m-btn-white" type="reset">Cancelar</Button>
@@ -136,7 +149,16 @@ function Notary({ initialValues, onSubmit })
 										)}
 									</div>
 								</li>
-
+								{(EscrituraState > ESCRITURA_STATE.Notaria_II) &&					
+									<span className="number d-block font-14-rem">
+										{moment(initialValues['Notaria_II_Date']).diff(
+											((EscrituraState == ESCRITURA_STATE.Notaria_III) 
+												? moment(new Date()) 
+												: moment(initialValues['Notaria_III_Date'])
+											), 'days'	
+										 )} d
+									</span>
+								}
 								<li className={(EscrituraState == ESCRITURA_STATE.Notaria_III) ? "active" : ""}>
 									<span className={`number ${EscrituraState > ESCRITURA_STATE.Notaria_III ? "success" : ""}`}>
 										{(EscrituraState > ESCRITURA_STATE.Notaria_III) ? <i className="icon icon-check" /> : "03"}
@@ -201,7 +223,8 @@ function Notary({ initialValues, onSubmit })
 													onClick={()=>onSubmit({
 														EscrituraState: ESCRITURA_STATE.Notaria_IV_I,
 														BalanceFeeUF: form.values['BalanceFeeUF'],
-														BalanceFund: form.values['BalanceFund']
+														BalanceFund: form.values['BalanceFund'],
+														Notaria_III_Date: moment(new Date()).format('YYYY-MM-DD')
 													}, 1)}
 												>Guardar</Button>
 												<Button className="m-btn-white" type="reset">Cancelar</Button>
