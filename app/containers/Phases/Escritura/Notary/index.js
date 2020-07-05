@@ -114,6 +114,7 @@ function Notary({ initialValues, onSubmit })
 														name="NoticeToClientSignDate"
 														className="ml-3"
 														readOnly={!form.values['StepOne']}
+														required
 													/>) :
 													<span className="font-14-rem ml-3">
 														{moment(initialValues['NoticeToClientSignDate']).format("DD MMM YYYY")}
@@ -237,7 +238,7 @@ function Notary({ initialValues, onSubmit })
                             { label: 'Cheque', value: '0' },
                             { label: 'Vale Vista', value: '1' },
                             { label: 'Instrucciones', value: '2' },
-                            { label: 'Depósito a Plazo', value: '3' },
+                            // { label: 'Depósito a Plazo', value: '3' },
                             // { label: 'Tarjeta de Crédito', value: '4' },
                             // { label: 'Transferencia', value: '5' },
                           ]}
@@ -248,7 +249,7 @@ function Notary({ initialValues, onSubmit })
                     {(form.values['PaymentMethodBalance'] == 2) ?
                       <div className="row mt-4">
                         <span className="d-block font-14-rem col-md-12">
-                          <b>Observación</b>
+                          <b>Nº de instrucción</b>
                         </span>
                         <ExField
                           type="textarea"
@@ -257,7 +258,43 @@ function Notary({ initialValues, onSubmit })
                           name="InstructionObservacion"
                           readOnly={EscrituraState > ESCRITURA_STATE.Notaria_IV_II}
                         />
-                      </div> :
+												<div className="d-flex align-items-center col-md-6">
+													<span className="font-14-rem mr-2">
+														<b>Plazo para hacer cobro:</b>
+													</span> 
+													{initialValues['InstructionDate']
+                          ? <span className="font-14-rem color-regular">
+															{moment(initialValues['InstructionDate']).format("DD MMM YYYY")}
+                            </span>
+                          : <ExField
+															type="datepicker"
+															name="InstructionDate"
+															readOnly={EscrituraState > ESCRITURA_STATE.Notaria_IV_II}
+															required
+														/>
+													}
+												</div>
+												<div className="d-flex align-items-center col-md-6">
+													<span className="font-14-rem mr-2">
+														<b>Adjuntar archivo:</b>
+													</span>
+													{initialValues['ChequeFile']
+														? <Label>
+																<a href={initialValues['ChequeFile']} target='_blank'>
+																	{getFileName(initialValues['ChequeFile'])}
+																</a>
+															</Label>
+														:	<ExField
+																type="file"
+																name="InstructionFile"
+																readOnly={EscrituraState > ESCRITURA_STATE.Notaria_IV_II}
+																placeholder = "Examinar..."
+																style={{width:"12em", height:"2.2em"}}
+																required
+															/>
+													}
+												</div>
+											</div> :
                       <div className="row mt-4">
                         <div className="col-md-6 d-flex align-items-center mb-3">
                           <span className="font-14-rem color-regular mr-3 no-whitespace">
@@ -404,24 +441,24 @@ function Notary({ initialValues, onSubmit })
                           1);
                         }
                         else{
-                          if(form.values['PaymentMethodBalance'] == 2)
-                            onSubmit({
-                              EscrituraState: ESCRITURA_STATE.Notaria_V,
-                              PaymentMethodBalance: form.values['PaymentMethodBalance'],
-                              InstructionObservacion: form.values['InstructionObservacion']
-                            }, 1);
-                          else{
-                            const data = new FormData();
-                            data.append("EscrituraState", ESCRITURA_STATE.Notaria_V);
-                            data.append("PaymentMethodBalance", form.values['PaymentMethodBalance']);
-                            data.append("ChequeNumber", form.values['ChequeNumber']);
-                            if( form.values['ChequeFile'].name)
-                              data.append("ChequeFile", form.values['ChequeFile']);
-                            data.append("Valor", form.values['Valor']);
-                            data.append("FetchaPago", moment(form.values['FetchaPago']).format('YYYY-MM-DD HH:mm:SS'));
+													const data = new FormData();
+													data.append("EscrituraState", ESCRITURA_STATE.Notaria_V);
+													data.append("PaymentMethodBalance", form.values['PaymentMethodBalance']);
+													if(form.values['PaymentMethodBalance'] == 2){
+														data.append("InstructionObservacion", form.values['InstructionObservacion']);
+														if( form.values['InstructionFile'].name)
+															data.append("InstructionFile", form.values['InstructionFile']);
+														data.append("InstructionDate", moment(form.values['InstructionDate']).format('YYYY-MM-DD HH:mm:SS'));
+													}
+													else{
+														data.append("ChequeNumber", form.values['ChequeNumber']);
+														if( form.values['ChequeFile'].name)
+															data.append("ChequeFile", form.values['ChequeFile']);
+														data.append("Valor", form.values['Valor']);
+														data.append("FetchaPago", moment(form.values['FetchaPago']).format('YYYY-MM-DD HH:mm:SS'));
+													}
 
-                            onSubmit(data, 2);
-                          }
+													onSubmit(data, 2);
                         }
 											}}>
 												Guardar
@@ -462,6 +499,7 @@ function Notary({ initialValues, onSubmit })
 														type="datepicker"
 														name="StartDate"
 														className="ml-3"
+														required
 													/>
 												</div>
 											</div>
@@ -608,6 +646,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SendRealEstateSignDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_II)}
+																	required
 																/>
 															</div>
 														</div>
@@ -629,6 +668,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="RealEstateSignDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_II)}
+																	required
 																/>
 															</div>
 														</div>
@@ -696,6 +736,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SignNotaryDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_III)}
+																	required
 																/>
 															</div>
 														</div>
@@ -705,6 +746,7 @@ function Notary({ initialValues, onSubmit })
 																	type="checkbox"
 																	name="SignDeedCompensation"
 																	readOnly={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_III)}
+																	required
 																/>
 																<span
 																	className={`font-14-rem
@@ -723,6 +765,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SignDeedCompensationDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_III)}
+																	required
 																/>
 															</div>
 														</div>
@@ -732,12 +775,13 @@ function Notary({ initialValues, onSubmit })
 																	type="checkbox"
 																	name="SignSettelment"
 																	readOnly={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_III)}
+																	required
 																/>
 																<span
 																	className={`font-14-rem
 																		${EscrituraState<ESCRITURA_STATE.Notaria_VII_III?"color-white-gray":""}`
 																	}
-																>OK Firma Finiquito</span>
+																>OK Firma Escritura de Compensación y Finiquito (Promoción)</span>
 																<span className="font-14-rem color-white-gray ml-2">
 																	<em>Si es Necesario.</em>
 																</span>
@@ -750,6 +794,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SignSettelmentDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_III)}
+																	required
 																/>
 															</div>
 														</div>
@@ -759,6 +804,7 @@ function Notary({ initialValues, onSubmit })
 																	type="checkbox"
 																	name="SignPay"
 																	readOnly={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_III)}
+																	required
 																/>
 																<span
 																	className={`font-14-rem
@@ -777,6 +823,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SignPayDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_III)}
+																	required
 																/>
 															</div>
 														</div>
@@ -850,6 +897,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="IngresoAlzamientoDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_IV)}
+																	required
 																/>
 															</div>
 														</div>
@@ -877,6 +925,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SalidaAlzamientoDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_IV)}
+																	required
 																/>
 															</div>
 														</div>
@@ -944,6 +993,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="EnteranceFISignDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_V)}
+																	required
 																/>
 															</div>
 														</div>
@@ -968,6 +1018,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="ExitFISignDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_V)}
+																	required
 																/>
 															</div>
 														</div>
@@ -992,6 +1043,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="IngresoCierreCopiasDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_V)}
+																	required
 																/>
 															</div>
 														</div>
@@ -1016,6 +1068,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SalidaCierreCopiasDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VII_V)}
+																	required
 																/>
 															</div>
 														</div>
@@ -1095,6 +1148,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="CompensationSettlementDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_I)}
+																	required
 																/>
 															</div>
 														</div>														
@@ -1118,6 +1172,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="CompensationRealEstateDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_I)}
+																	required
 																/>
 															</div>
 														</div>														
@@ -1178,6 +1233,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="RealEstateConservatorDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_II)}
+																	required
 																/>
 															</div>
 														</div>
@@ -1199,6 +1255,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="CoverDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_II)}
+																	required
 																/>
 															</div>
 														</div>
@@ -1266,6 +1323,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SendCopiesToClientDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_III)}
+																	required
 																/>
 															</div>
 														</div>
@@ -1603,6 +1661,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="RetirementDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_VI)}
+																	required
 																/>
 															</div>
 														</div>
@@ -1624,6 +1683,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="SubscriptionDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_VI)}
+																	required
 																/>
 															</div>
 														</div>
@@ -1691,6 +1751,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="GuaranteeToClientDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_VII)}
+																	required
 																/>
 															</div>
 														</div>														
@@ -1748,6 +1809,7 @@ function Notary({ initialValues, onSubmit })
 																	type="datepicker"
 																	name="DeliveryPropertyDate"
 																	disabled={(EscrituraState!==ESCRITURA_STATE.Notaria_VIII_VIII)}
+																	required
 																/>
 															</div>
 														</div>														
