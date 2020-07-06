@@ -115,6 +115,7 @@ function ContentItem({ initialValues, name, onSubmit }) {
                           name={`${name}ReportFile`}
                           placeholder="Examinar..."
                           style={{ width: "9em", height: "2.2em" }}
+                          required
                         />
                       </div>
                     </td>

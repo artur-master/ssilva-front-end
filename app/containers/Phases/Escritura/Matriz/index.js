@@ -28,7 +28,7 @@ function Matriz({ initialValues, promesaDoc, onSubmit }) {
   return (
     <Box collapse={isCollapsed} isOpen={!isCollapsed}>
       <BoxHeader>
-        <b>MATRIZ DE ESCRITURA</b>
+        <b>BORRADOR DE ESCRITURA</b>
       </BoxHeader>
       <BoxContent className="p-3">
         <Alert type="warning">
@@ -83,7 +83,7 @@ function Matriz({ initialValues, promesaDoc, onSubmit }) {
                 <tbody>
                   <tr className="align-middle-group border-bottom no-whitespace">
                     <td className="pl-3">
-                      <Label>Matriz de Escritura Aprobada por Institución Financiera</Label>
+                      <Label>Borrador de Escritura Aprobada por Escrituración</Label>
                     </td>
                     <td className="text-right">
                       <div className="d-flex align-items-center justify-content-end">
@@ -98,7 +98,7 @@ function Matriz({ initialValues, promesaDoc, onSubmit }) {
                   </tr>
                   <tr className="align-middle-group border-bottom no-whitespace">
                     <td className="pl-3">
-                      <Label>Matriz de Instrucciones</Label>
+                      <Label>Borrador de Instrucciones</Label>
                       <span className="font-14-rem color-white-gray ml-2">
                         <em>En caso de que aplique.</em>
                       </span>
