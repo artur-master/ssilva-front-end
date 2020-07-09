@@ -58,7 +58,7 @@ function PhaseGeneralView({ values }) {
                 className="font-14-rem color-regular mr-3"
                 style={{ width: '10em' }}
               >
-                <b>Cómo se Enteró</b>
+                <b>Medio de Llegada</b>
               </span>
               <span className="font-14-rem color-regular">
                 {Cliente.FindingTypeID &&

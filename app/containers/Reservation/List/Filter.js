@@ -31,12 +31,12 @@ const Filter = ({ project, selector, searchReservations }) => {
           </Link>
         </div>
       )}
-      <Button
+      {/* <Button
         className="order-2 m-btn-white m-btn-warning icon icon-alert mr-2 order-3"
         onClick={() => searchReservations({ status: 'Cancelada' })}
       >
         Ver Atrasadas
-      </Button>
+      </Button> */}
       <UncontrolledButtonDropdown className="order-3 mr-2">
         <DropdownToggle caret className="m-btn m-btn-white dropdown-toggle m-1">
           Filtrar {reports[filter.status || 'All'].Label}

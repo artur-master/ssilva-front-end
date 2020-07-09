@@ -174,7 +174,7 @@ export function DetailForm({ onCancel, onContinue, form }) {
                 quotationUtils.CotizacionTypes[0].Name && (
                 <>
                   <FormGroup className="col-md-6 my-2">
-                    <Label style={{ width: '12em' }}>Cómo se Enteró</Label>
+                    <Label style={{ width: '12em' }}>Medio de Llegada</Label>
                     <ExField
                       type="select"
                       name="Cliente.FindingTypeID"

@@ -86,7 +86,7 @@ function PhaseGeneralForm({ initialValues, onHide, onUpdate, isOpen }) {
                   <>
                     {/*
                     <FormGroup className="col-md-6 my-2">
-                      <Label style={{ width: '10em' }}>Cómo se Enteró</Label>
+                      <Label style={{ width: '10em' }}>Medio de Llegada</Label>
                       <ExField
                         type="select"
                         name="Cliente.FindingTypeID"
