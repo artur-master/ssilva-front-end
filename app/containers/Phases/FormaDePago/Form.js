@@ -315,6 +315,70 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
           </tfoot>
         </table>
       </div>
+      <div className="payment-block">
+        <table className="table">
+          <tbody>
+            <tr>
+              <td>Monto Firma Escritura {isContadoType(values.PayType) && ('/ Contado')}</td>
+              <td>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  value={
+                    (values.PaymentFirmaEscritura)
+                      ? formatNumber(values.PaymentFirmaEscritura)
+                      : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value
+                    if (value < 0) return;
+                    handleChangeUF('PaymentFirmaEscritura', value);
+                  }}
+                />
+              </td>
+              <td>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  prefix="%"
+                  value={
+                    (percent.PaymentFirmaEscritura)
+                      ? formatNumber(percent.PaymentFirmaEscritura)
+                      : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if (value > 100 || value < 0) return;
+                    handleChangePercent('PaymentFirmaEscritura', value);
+                  }}
+                />
+              </td>
+              <td>
+                <div className="search-filter">
+                  <IntlFormatCurrency
+                    className="form-control form-control-sm"
+                    style={{ width: 120 }}
+                    value={(convert.PaymentFirmaEscritura)}
+                  />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td />
+              <td />
+              <td className="border-top">Sub Total</td>
+              <td className="border-top text-right">
+                <strong>
+                  <FormattedNumber value={(values.PaymentFirmaEscritura)} />
+                </strong>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
       {isCreditType(values.PayType) && (
         <div className="payment-block">
           <table className="table">
@@ -426,71 +490,7 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
           </table>
         </div>
       )}
-      <div className="payment-block">
-        <table className="table">
-          <tbody>
-            <tr>
-              <td>Monto Firma Escritura {isContadoType(values.PayType) && ('/ Contado')}</td>
-              <td>
-                <Input
-                  className="form-control form-control-sm"
-                  type="number"
-                  value={
-                    (values.PaymentFirmaEscritura)
-                      ? formatNumber(values.PaymentFirmaEscritura)
-                      : ''
-                  }
-                  onChange={evt => {
-                    let value = evt.currentTarget.value
-                    if (value < 0) return;
-                    handleChangeUF('PaymentFirmaEscritura', value);
-                  }}
-                />
-              </td>
-              <td>
-                <Input
-                  className="form-control form-control-sm"
-                  type="number"
-                  prefix="%"
-                  value={
-                    (percent.PaymentFirmaEscritura)
-                      ? formatNumber(percent.PaymentFirmaEscritura)
-                      : ''
-                  }
-                  onChange={evt => {
-                    let value = evt.currentTarget.value;
-                    if (value > 100 || value < 0) return;
-                    handleChangePercent('PaymentFirmaEscritura', value);
-                  }}
-                />
-              </td>
-              <td>
-                <div className="search-filter">
-                  <IntlFormatCurrency
-                    className="form-control form-control-sm"
-                    style={{ width: 120 }}
-                    value={(convert.PaymentFirmaEscritura)}
-                  />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td />
-              <td />
-              <td className="border-top">Sub Total</td>
-              <td className="border-top text-right">
-                <strong>
-                  <FormattedNumber value={(values.PaymentFirmaEscritura)} />
-                </strong>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-
+      
       <div className="payment-block">
         <table className="table">
           <tbody>
@@ -555,6 +555,71 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
           </tbody>
         </table>
       </div>
+      <div className="payment-block">
+        <table className="table">
+          <tbody>
+            <tr>
+              <td>Subsidio</td>
+              <td>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  value={
+                    values.Subsidio ? formatNumber(values.Subsidio) : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if ( value < 0) return;
+                    handleChangeUF('Subsidio', value);
+                  }}
+                />                
+              </td>
+              <td>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  prefix="%"
+                  value={
+                    percent.Subsidio
+                      ? formatNumber(percent.Subsidio)
+                      : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if (value > 100 || value < 0) return;
+                    handleChangePercent('Subsidio', value);
+                  }}
+                />
+                {/* <Input
+                  type="select"
+                  className="form-control form-control-sm"
+                  value={
+                    percent.AhorroPlus ? percent.AhorroPlus : ''
+                  }
+                  onChange={evt => {
+                    const value = evt.currentTarget.value;
+                    handleChangePercent('AhorroPlus', value);
+                  }}
+                >
+                  <option value="" />
+                  <option value="5">5 %</option>
+                  <option value="10">10 %</option>
+                </Input> */}
+              </td>
+              <td>
+                <div className="search-filter">
+                  <IntlFormatCurrency
+                    className="form-control form-control-sm"
+                    style={{ width: 120 }}
+                    value={convert.Subsidio || 0}
+                  />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       {moneyErr && (
         <div className="background-color-warning mt-3 px-2 font-18 rounded-lg">
           <table className="table table-responsive-md table-borderless m-0">

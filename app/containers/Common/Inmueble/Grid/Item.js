@@ -76,12 +76,12 @@ function GridItem({ entity = {}, focusChange, onSelect }) {
           <li className="font-14-rem w-100 d-flex justify-content-between align-items-center">
             <span>Venta:</span>
             <span>
-              {(entity.Price * (100 - entity.MaximunDiscount)) / 100} UF
+              {(entity.Price * (100 - entity.MaximumDiscount)) / 100} UF
             </span>
           </li>
           <li className="font-14-rem w-100 d-flex justify-content-between align-items-center">
             <span>Descuento:</span>
-            <span>{entity.MaximunDiscount}%</span>
+            <span>{entity.MaximumDiscount}%</span>
           </li>
           <hr className="my-1 opacity-0" />
           <li className="font-14-rem w-100 d-flex justify-content-between align-items-center">

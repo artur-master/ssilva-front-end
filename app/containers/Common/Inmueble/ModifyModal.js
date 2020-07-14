@@ -91,7 +91,7 @@ function ModifyModal({
                       Descuento Máximo
                     </Label>
                     <ExField
-                      name="MaximunDiscount"
+                      name="MaximumDiscount"
                       type="number"
                       maskOptions={{ prefix: '%' }}
                       style={{ width: '13em' }}

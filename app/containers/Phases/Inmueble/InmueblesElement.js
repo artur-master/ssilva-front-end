@@ -12,6 +12,7 @@ const InmueblesElement = ({ values, onSelect }) => {
       if (item.InmuebleInmuebleType === 'Required') acc.push(item.InmuebleBID);
       return acc;
     }, []);
+
     if(onSelect)
       onSelect(
         values.Inmuebles.filter(
@@ -45,7 +46,7 @@ const InmueblesElement = ({ values, onSelect }) => {
                           name={`Inmuebles.${index}.Discount`}
                           type="number"
                           min={0}
-                          max={inmueble.MaximumDiscount || 100}
+                          max={(inmueble.MaximumDiscount && inmueble.MaximumDiscount != 100) ? inmueble.MaximumDiscount: values.DiscountMaxPercent }
                           style={{ width: '11.5em' }}
                           // onChange={evt => {
                           //   // const maxDiscount = values.DiscountMaxPercent || 100;
@@ -63,7 +64,7 @@ const InmueblesElement = ({ values, onSelect }) => {
                         />
                       </div>
                       <span className="italic-gray">
-                        Límite {inmueble.MaximumDiscount || 100}%
+                        Límite {(inmueble.MaximumDiscount && inmueble.MaximumDiscount != 100) ? inmueble.MaximumDiscount: values.DiscountMaxPercent}%
                       </span>
                     </div>
                     {!inmueble.isRequiredRestriction && (
