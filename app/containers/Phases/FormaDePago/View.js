@@ -6,7 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedNumber } from 'react-intl';
 import moment from 'components/moment';
-import { calculates } from './helper';
+import { calculates, isContadoType } from './helper';
 
 export function PhaseFormaDePagoView({ values }) {
   const { paymentUtils } = window.preload;
@@ -101,7 +101,7 @@ export function PhaseFormaDePagoView({ values }) {
             {(values.PayType === paymentUtils[0].PayTypeID ||
               values.PayType === paymentUtils[0].Name) && (
               <tr>
-                <td>Monto Firma Escritura / Contado</td>
+                <td>Monto Firma Escritura {isContadoType(values.PayType) && ('/ Contado')}</td>
                 <td>
                   <FormattedNumber value={values.PaymentFirmaEscritura} />
                 </td>
@@ -118,6 +118,18 @@ export function PhaseFormaDePagoView({ values }) {
                 </td>
               </tr>
             )}
+            <tr>
+              <td>Pago con subsidio</td>
+              <td>
+                <FormattedNumber value={values.Subsidio || 0} />
+              </td>
+            </tr>
+            <tr>
+              <td>Libreta de Ahorro o Ahorro Previo</td>
+              <td>
+                <FormattedNumber value={values.Libreta || 0} />
+              </td>
+            </tr>
             <tr>
               <td>Ahorro Plus</td>
               <td>

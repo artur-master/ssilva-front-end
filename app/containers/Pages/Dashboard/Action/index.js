@@ -91,7 +91,7 @@ export function ActionPending({ selector }) {
                   setProyectoKey(event.target.value);
                 }}
               >
-                <option value="none" hidden="" disabled="">Selecciona un Proyecto...</option>
+                <option value="none" disabled>Selecciona un Proyecto...</option>
                 {projects && (
                   projects.map((project, index) => (
                     <option key={index} value={index}>{project.Name}</option>
@@ -128,7 +128,7 @@ export function ActionPending({ selector }) {
           <div className="d-flex align-items-center justify-content-between">
             <div className="btype shadow-sm flex-fill icon icon-select-arrows right-icon">
               <select className="form-control form-control-sm">
-                <option value="" hidden="" disabled="">Selecciona un Proyecto...</option>
+                <option value="" hidden="" disabled>Selecciona un Proyecto...</option>
                 {/* <option>Carlos Alfonso Cofre Veloz</option> */}
               </select>
             </div>

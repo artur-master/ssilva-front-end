@@ -83,10 +83,11 @@ export function* fetchRealEstate() {
 
 /* Aseguradoras y Bancos */
 export function* fetchInsurancesAndBanks() {
-  return yield all([
-    call(request, `${API_ROOT}/aseguradoras/`),
-    call(request, `${API_ROOT}/instituciones-financieras/`),
-  ]);
+  return yield call(request, `${API_ROOT}/empresas-proyectos/instituciones-financieras/`);
+  // return yield all([
+  //   call(request, `${API_ROOT}/empresas-proyectos/aseguradoras/`),
+  //   call(request, `${API_ROOT}/empresas-proyectos/instituciones-financieras/`),
+  // ]);
 }
 
 export function* fetchProjectPreloadData() {
@@ -132,6 +133,7 @@ export function* sagaFetchPreloadData() {
         inmueblesStates,
         inmueblesRestrictionTypes,
       ],
+      institucionFinanciera,
     ] = yield all([
       call(fetchLocal),
       call(fetchContactTypes),
@@ -140,6 +142,7 @@ export function* sagaFetchPreloadData() {
       call(fetchQuotationUtils),
       call(fetchPaymentUtils),
       call(fetchInmueblePreloadData),
+      call(fetchInsurancesAndBanks),
     ]);
     yield put(
       fetchPreloadDataSuccess({
@@ -158,6 +161,7 @@ export function* sagaFetchPreloadData() {
         inmueblesOrientations,
         inmueblesStates,
         inmueblesRestrictionTypes,
+        institucionFinanciera,
       }),
     );
   } catch (error) {

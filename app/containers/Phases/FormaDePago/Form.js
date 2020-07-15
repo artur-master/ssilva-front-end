@@ -22,14 +22,16 @@ import {
   updatePaymentValues,
 } from './helper';
 import { Auth } from 'containers/App/helpers';
+import InitData from 'containers/Common/InitData';
 
 // eslint-disable-next-line no-unused-vars
 function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
   const [openCuotas, setOpenCuotas] = useState(0);
   const { values, setValues } = form;
-  const { paymentUtils } = window.preload;
-  const { cost, cuota, pay, balance, 
-          moneyErr, percent, convert 
+
+  const { paymentUtils, institucionFinanciera } = window.preload;
+  const { cost, cuota, pay, balance, apartmentTotalCost, 
+          moneyErr, percent, convert
         } = calculates( values );
 
   const { dividend$, dividendUf } = simulateCalculation(values, values.tmpDate);
@@ -39,12 +41,17 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
   };
 
   const handleChangePercent = (payFor, val) => {
-    const value = (parseFloat(val || 0) / 100) * cost;
+    const value = (payFor==="AhorroPlus")
+                ? (parseFloat(val || 0) / 100) * apartmentTotalCost
+                : (parseFloat(val || 0) / 100) * cost;
+    
+    console.log(value);
     updatePaymentValues({ payFor, value, values, setValues });
   };
 
   return (
     <>
+      <InitData InstitucionFinanciera />
       <div className="d-flex align-items-center mb-3">
         <div className="w-50 border-bottom pb-3">
           <div className="row">
@@ -107,7 +114,6 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                 percentAhorro = defaultPercent.CreditoAhorroPlus || percentAhorro;
               }
 
-              console.log(percentPromesa, percentAmount, percentAhorro);
               handleChangePercent('PaymentFirmaPromesa', percentPromesa);
               handleChangePercent('Cuotas.0.Amount', percentAmount);
               handleChangePercent('AhorroPlus', percentAhorro);
@@ -495,71 +501,7 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
         <table className="table">
           <tbody>
             <tr>
-              <td>Ahorro Plus</td>
-              <td>
-                <Input
-                  className="form-control form-control-sm"
-                  type="number"
-                  value={
-                    values.AhorroPlus ? formatNumber(values.AhorroPlus) : ''
-                  }
-                  onChange={evt => {
-                    let value = evt.currentTarget.value;
-                    if ( value < 0) return;
-                    handleChangeUF('AhorroPlus', value);
-                  }}
-                />                
-              </td>
-              <td>
-                {/* <Input
-                  className="form-control form-control-sm"
-                  type="number"
-                  prefix="%"
-                  value={
-                    percent.AhorroPlus
-                      ? formatNumber(percent.AhorroPlus)
-                      : ''
-                  }
-                  onChange={evt => {
-                    let value = evt.currentTarget.value;
-                    if (value > 100 || value < 0) return;
-                    handleChangePercent('AhorroPlus', value);
-                  }}
-                /> */}
-                <Input
-                  type="select"
-                  className="form-control form-control-sm"
-                  value={
-                    percent.AhorroPlus ? percent.AhorroPlus : ''
-                  }
-                  onChange={evt => {
-                    const value = evt.currentTarget.value;
-                    handleChangePercent('AhorroPlus', value);
-                  }}
-                >
-                  <option value="" />
-                  <option value="5">5 %</option>
-                  <option value="10">10 %</option>
-                </Input>
-              </td>
-              <td>
-                <div className="search-filter">
-                  <IntlFormatCurrency
-                    className="form-control form-control-sm"
-                    style={{ width: 120 }}
-                    value={convert.AhorroPlus}
-                  />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className="payment-block">
-        <table className="table">
-          <tbody>
-            <tr>
-              <td>Subsidio</td>
+              <td>Pago con subsidio</td>
               <td>
                 <Input
                   className="form-control form-control-sm"
@@ -590,7 +532,93 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                     handleChangePercent('Subsidio', value);
                   }}
                 />
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Libreta de Ahorro o Ahorro Previo</td>
+              <td>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  value={
+                    values.Libreta ? formatNumber(values.Libreta) : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if ( value < 0) return;
+                    handleChangeUF('Libreta', value);
+                  }}
+                />                
+              </td>
+              <td>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  prefix="%"
+                  value={
+                    percent.Libreta ? formatNumber(percent.Libreta) : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if (value > 100 || value < 0) return;
+                    handleChangePercent('Libreta', value);
+                  }}
+                />
+              </td>
+              <td>
+                <Input
+                  type="select"
+                  className="form-control form-control-sm"
+                  value={values.InstitucionFinanciera}
+                  onChange={evt => {
+                    const value = evt.currentTarget.value;
+                    setValues({
+                      ...values,
+                      InstitucionFinanciera: value,
+                    });
+                  }}
+                >
+                  <option value="" disabled>Selecciona...</option>
+                  {institucionFinanciera.map(({InstitucionFinancieraID, Name})=>(
+                    <option value={InstitucionFinancieraID}>{Name}</option>
+                  ))}
+                </Input>
+              </td>
+            </tr>          
+          </tbody>
+        </table>      
+      </div>
+      
+      <div className="payment-block">
+        <table className="table">
+          <tbody>
+            <tr>
+              <td>Ahorro Plus</td>
+              <td>
                 {/* <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  value={
+                    values.AhorroPlus ? formatNumber(values.AhorroPlus) : ''
+                  }
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    if ( value < 0) return;
+                    handleChangeUF('AhorroPlus', value);
+                  }}
+                />*/}
+                <div className="search-filter">
+                  <span className="form-control form-control-sm" style={{ width: 120, height: 28 }}>
+                    {values.AhorroPlus
+                      ? formatNumber(values.AhorroPlus)
+                      : ''
+                    }
+                  </span>
+                </div>
+              </td>
+              <td>
+                <Input
                   type="select"
                   className="form-control form-control-sm"
                   value={
@@ -604,14 +632,14 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                   <option value="" />
                   <option value="5">5 %</option>
                   <option value="10">10 %</option>
-                </Input> */}
+                </Input>
               </td>
               <td>
                 <div className="search-filter">
                   <IntlFormatCurrency
                     className="form-control form-control-sm"
                     style={{ width: 120 }}
-                    value={convert.Subsidio || 0}
+                    value={convert.AhorroPlus}
                   />
                 </div>
               </td>
@@ -619,7 +647,7 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
           </tbody>
         </table>
       </div>
-
+      
       {moneyErr && (
         <div className="background-color-warning mt-3 px-2 font-18 rounded-lg">
           <table className="table table-responsive-md table-borderless m-0">

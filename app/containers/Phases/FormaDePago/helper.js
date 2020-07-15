@@ -7,7 +7,13 @@ export const calculates = values => {
     (acc, item) => acc + parseFloat(item.Amount || 0),
     0,
   );
+  
   const total = Inmuebles.reduce((acc, item) => acc + item.Price, 0);
+
+  const apartmentTotalCost = Inmuebles.filter(item=>
+      item.InmuebleType === "Departamento"
+    ).reduce((acc, item) => acc + (1 - (item.Discount || 0)/100)*item.Price, 0);
+    
   const discount = Inmuebles.reduce(
     (acc, item) => acc + ((item.Discount || 0) / 100) * item.Price,
     0,
@@ -22,7 +28,13 @@ export const calculates = values => {
   const PaymentFirmaEscritura = values.PaymentFirmaEscritura
     ? formatNumber(values.PaymentFirmaEscritura)
     : 0;
+
+  const Subsidio = values.Subsidio ? formatNumber(values.Subsidio) : 0;
+  const Libreta = values.Libreta ? formatNumber(values.Libreta) : 0;
+
   const AhorroPlus = values.AhorroPlus ? formatNumber(values.AhorroPlus) : 0;
+
+  const noApartmentCost = apartmentTotalCost ? (total - discount - apartmentTotalCost)*AhorroPlus/apartmentTotalCost : 0;
 
   const { uf, paymentUtils = [] } = window.preload || {};
   const isCredit =
@@ -33,15 +45,21 @@ export const calculates = values => {
     PaymentFirmaPromesa +
     PaymentFirmaEscritura +
     cuota +
+    Subsidio +
+    Libreta +
     AhorroPlus;
 
   const cost = total - discount;
   const balance = total - discount - pay;
-  const moneyErr = Math.abs(balance) > 0.1;
+  
+  const moneyErr = (Math.abs(balance - noApartmentCost) > 0.1) || (values.InstitucionFinanciera === "");
+  
   return {
     PaymentFirmaPromesa,
     PaymentInstitucionFinanciera,
     PaymentFirmaEscritura,
+    Subsidio,
+    Libreta,
     AhorroPlus,
     total,
     discount,
@@ -61,7 +79,9 @@ export const calculates = values => {
       PaymentFirmaEscritura:
         cost > 0 ? formatNumber((PaymentFirmaEscritura / cost) * 100) : 0,
       Cuotas: cost > 0 ? formatNumber((cuota / cost) * 100) : 0,
-      AhorroPlus: cost > 0 ? formatNumber((AhorroPlus / cost) * 100) : 0,
+      Subsidio: cost > 0 ? formatNumber((Subsidio / cost) * 100) : 0,
+      Libreta: cost > 0 ? formatNumber((Libreta / cost) * 100) : 0,
+      AhorroPlus: apartmentTotalCost > 0 ? formatNumber((AhorroPlus / apartmentTotalCost) * 100) : 0,
     },
     convert: {
       PaymentFirmaPromesa: uf
@@ -76,6 +96,7 @@ export const calculates = values => {
       Cuotas: uf ? formatNumber(cuota * uf.valor, 0) : 0,
       AhorroPlus: uf ? formatNumber(AhorroPlus * uf.valor, 0) : 0,
     },
+    apartmentTotalCost,
   };
 };
 
@@ -109,24 +130,23 @@ export const updatePaymentValues = ({ payFor, value, values, setValues }) => {
 
   const isCredit = isCreditType(values.PayType);
 
-  const { cost, cuota } = calculates(values);
-  const remove_value = (payFor==="PaymentFirmaEscritura") 
-                        ? values.PaymentFirmaEscritura
-                        : values.AhorroPlus;
+  // const { cost, cuota } = calculates(values);
+
   const PaymentInstitucionFinanciera = isCredit ? values.PaymentInstitucionFinanciera : 0;
-  const remainAmount = formatNumber(
-    cost - cuota - values.PaymentFirmaPromesa - PaymentInstitucionFinanciera - remove_value,
-  );
-  const PaymentFirmaEscritura = (payFor==="PaymentFirmaEscritura") ? values.PaymentFirmaEscritura : remainAmount;
-  const AhorroPlus = (payFor==="PaymentFirmaEscritura") ? remainAmount : values.AhorroPlus;
+  
+  // const PaymentFirmaEscritura = (payFor==="PaymentFirmaEscritura") ? values.PaymentFirmaEscritura : remainAmount;
+  // const AhorroPlus = (payFor==="PaymentFirmaEscritura") ? remainAmount : values.AhorroPlus;
+
+  const PaymentFirmaEscritura = values.PaymentFirmaEscritura;
+  const AhorroPlus = values.AhorroPlus;
+  
   setValues({
     ...values,
     PaymentInstitucionFinanciera:
       PaymentInstitucionFinanciera < 0 ? 0 : PaymentInstitucionFinanciera,
-    PaymentFirmaEscritura:
-      PaymentFirmaEscritura < 0 ? 0 : PaymentFirmaEscritura,
-    AhorroPlus:
-      AhorroPlus < 0 ? 0 : AhorroPlus,
+    // PaymentFirmaEscritura:
+    //   PaymentFirmaEscritura < 0 ? 0 : PaymentFirmaEscritura,
+    // AhorroPlus: AhorroPlus < 0 ? 0 : AhorroPlus,
   });
 };
 

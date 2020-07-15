@@ -111,6 +111,9 @@ export default function model({ project = {}, entity = {} }) {
     PaymentFirmaEscritura: entity.PaymentFirmaEscritura || 0,
     PaymentInstitucionFinanciera: entity.PaymentInstitucionFinanciera || 0,
     AhorroPlus: entity.AhorroPlus || 0,
+    Subsidio: entity.Subsidio || 0,
+    Libreta: entity.Libreta || 0,
+    InstitucionFinanciera: entity.InstitucionFinanciera || "",
     DateFirmaPromesa: entity.DateFirmaPromesa
       ? moment(entity.DateFirmaPromesa).format()
       : new Date(),

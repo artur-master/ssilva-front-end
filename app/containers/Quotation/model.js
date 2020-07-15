@@ -28,9 +28,13 @@ export default function model({ project = {}, entity = {} }) {
     PaymentFirmaEscritura: entity.PaymentFirmaEscritura || 0,
     PaymentInstitucionFinanciera: entity.PaymentInstitucionFinanciera || 0,
     AhorroPlus: entity.AhorroPlus || 0,
+    Subsidio: entity.Subsidio || 0,
+    Libreta: entity.Libreta || 0,
+    InstitucionFinanciera: entity.InstitucionFinanciera || "",
     DateFirmaPromesa: entity.DateFirmaPromesa || new Date(),
     DiscountMaxPercent: parseFloat(project.DiscountMaxPercent) || 100,
     step: 1,
+    MaxCuotas: project.MaxCuotas,
   };
   if (initialModel.Cuotas.length < 1)
     initialModel.Cuotas.push({
