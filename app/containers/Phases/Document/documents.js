@@ -130,7 +130,7 @@ export const getDocuments = entity => {
     });
   }
 
-  if (isCompany) {
+  if (isCompany && isCreditPayment(entity.PayType)) {
     baseDocuments = [
       ...baseDocuments,
       {
@@ -349,12 +349,12 @@ export const CodeudorDocuments = entity => {
 
   if (!isCompany) {
     baseDocuments = [
-      ...baseDocuments,
       {
         documentoName: 'Fotocopia Carnet',
         documentoType: 'DocumentCodeudorFotocopiaCarnet',
         required: true,
       },
+      ...baseDocuments,      
       {
         documentoName: 'Liquidacion 1',
         documentoType: 'DocumentCodeudorLiquidacion1',
@@ -386,6 +386,6 @@ export const requiredSendToControl=[
   'Document2DAI',
   'DocumentAcredittacionAhorros',
   'DocumentTituloProfesional',
-  'DocumentAcredittacionActivo',
-  'DocumentAcredittacionDeudas',
+  // 'DocumentAcredittacionActivo',
+  // 'DocumentAcredittacionDeudas',
 ]

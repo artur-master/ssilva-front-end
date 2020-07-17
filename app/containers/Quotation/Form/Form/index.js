@@ -53,6 +53,7 @@ export function PhaseCreationForm({
             Discount: inmueble.Discount === "" ? 0 : inmueble.Discount,
           }));
           values.Inmuebles = Inmuebles;
+          if(values.InstitucionFinancieraID === "") values.InstitucionFinancieraID=null;
 
           onSubmit(values, directAfterSubmitted);
         }

@@ -56,7 +56,7 @@ export function PhaseDocument({
     <ExForm initialValues={initialValues} onSubmit={onSave}>
       {form => (
         <>
-          {(Auth.isPM() || Auth.isVendor()) && (
+          {(Auth.isPM() || Auth.isVendor() || Auth.isAC()) && (
             <Garantia
               isCollapse={isCollapse}
               entity={entity}

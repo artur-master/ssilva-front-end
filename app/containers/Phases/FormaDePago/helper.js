@@ -52,7 +52,7 @@ export const calculates = values => {
   const cost = total - discount;
   const balance = total - discount - pay;
   
-  const moneyErr = (Math.abs(balance - noApartmentCost) > 0.1) || (values.InstitucionFinanciera === "");
+  const moneyErr = (Math.abs(balance - noApartmentCost) > 0.1) || (values.Libreta && values.Libreta!==0 && values.InstitucionFinancieraID === null);
   
   return {
     PaymentFirmaPromesa,

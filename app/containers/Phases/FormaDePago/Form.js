@@ -570,12 +570,12 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                 <Input
                   type="select"
                   className="form-control form-control-sm"
-                  value={values.InstitucionFinanciera}
+                  value={values.InstitucionFinancieraID}
                   onChange={evt => {
                     const value = evt.currentTarget.value;
                     setValues({
                       ...values,
-                      InstitucionFinanciera: value,
+                      InstitucionFinancieraID: value,
                     });
                   }}
                 >

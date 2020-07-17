@@ -113,7 +113,7 @@ export default function model({ project = {}, entity = {} }) {
     AhorroPlus: entity.AhorroPlus || 0,
     Subsidio: entity.Subsidio || 0,
     Libreta: entity.Libreta || 0,
-    InstitucionFinanciera: entity.InstitucionFinanciera || "",
+    InstitucionFinancieraID: entity.InstitucionFinancieraID || "",
     DateFirmaPromesa: entity.DateFirmaPromesa
       ? moment(entity.DateFirmaPromesa).format()
       : new Date(),
