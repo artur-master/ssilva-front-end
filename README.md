@@ -1,9 +1,4 @@
 # SSilva Frontend Development
-
-## Admin Account
-```
-user: 189806973
-pass: SSilva001
 ```
 
 ## Requirements
