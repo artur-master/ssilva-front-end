@@ -112,7 +112,10 @@ export default function model({ project = {}, entity = {} }) {
     PaymentInstitucionFinanciera: entity.PaymentInstitucionFinanciera || 0,
     AhorroPlus: entity.AhorroPlus || 0,
     Subsidio: entity.Subsidio || 0,
+    SubsidioType: entity.SubsidioType || "",
+    SubsidioCertificado: entity.SubsidioCertificado || "",
     Libreta: entity.Libreta || 0,
+    LibretaNumber: entity.LibretaNumber || "",    
     InstitucionFinancieraID: entity.InstitucionFinancieraID || "",
     DateFirmaPromesa: entity.DateFirmaPromesa
       ? moment(entity.DateFirmaPromesa).format()
@@ -125,7 +128,8 @@ export default function model({ project = {}, entity = {} }) {
       inmueble: false,
       forma: false,
     },
-    MaxCuotas: entity.MaxCuotas,
+    IsSubsidy: project.IsSubsidy || false,
+    MaxCuotas: project.MaxCuotas,
     sendControl: false,
   };
 }

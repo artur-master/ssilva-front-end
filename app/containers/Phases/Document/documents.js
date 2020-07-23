@@ -216,16 +216,17 @@ export const getDocuments = entity => {
     ];
 
     if(!entity.Cliente.Extra.Values.VariableSalary || 
-        entity.Cliente.Extra.Values.VariableSalary=="")
-      baseDocuments = [
-        ...baseDocuments,
-        {
-          documentoName: 'Últimos 3 liquidaciones',
-          documentoType: 'DocumentLiquidacion1',
-          required: true,
-        },
-      ];
-    else
+        entity.Cliente.Extra.Values.VariableSalary==""){
+      if(isCreditPayment(entity.PayType))
+        baseDocuments = [
+          ...baseDocuments,
+          {
+            documentoName: 'Últimos 3 liquidaciones',
+            documentoType: 'DocumentLiquidacion1',
+            required: true,
+          },
+        ];
+    } else
       baseDocuments = [
         ...baseDocuments,
         {

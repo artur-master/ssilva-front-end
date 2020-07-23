@@ -41,7 +41,10 @@ function CommercialView({ canEdit, selectorProject, selector, onEdit }) {
                     {name !== 'ComunaID' ? label : ''}
                   </Label>
                   <span className="font-14-rem ml-2">
-                    {view || project[name]}
+                    {name == "IsSubsidy"
+                      ? (<input type="checkbox" checked={project[name]} disabled />)
+                      : (view || project[name])
+                    }
                   </span>
                 </FormGroup>
               ))}

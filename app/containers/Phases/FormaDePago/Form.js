@@ -30,7 +30,7 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
   const { values, setValues } = form;
 
   const { paymentUtils, institucionFinanciera } = window.preload;
-  const { cost, cuota, pay, balance, apartmentTotalCost, 
+  const { cost, cuota, pay, balance, apartmentTotalCost,
           moneyErr, percent, convert
         } = calculates( values );
 
@@ -44,8 +44,7 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
     const value = (payFor==="AhorroPlus")
                 ? (parseFloat(val || 0) / 100) * apartmentTotalCost
                 : (parseFloat(val || 0) / 100) * cost;
-    
-    console.log(value);
+ 
     updatePaymentValues({ payFor, value, values, setValues });
   };
 
@@ -231,7 +230,6 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                 <Input
                   className="form-control form-control-sm"
                   type="number"
-                  readOnly={values.Cuotas.length > 1}
                   value={
                     values.Cuotas[0] ?
                       values.Cuotas[0].Amount
@@ -251,7 +249,6 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                   className="form-control form-control-sm"
                   type="number"
                   prefix="%"
-                  readOnly={values.Cuotas.length > 1}
                   value={
                     percent.Cuotas
                       ? formatNumber(percent.Cuotas)
@@ -260,6 +257,7 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                   onChange={evt => {
                     let value = evt.currentTarget.value;
                     if (value > 100 || value < 0) return;
+
                     handleChangePercent('Cuotas.0.Amount', value);
                   }}
                 />
@@ -496,47 +494,90 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
           </table>
         </div>
       )}
-      
+      {values.IsSubsidy && (
+        <div className="payment-block">
+          <table className="table">
+            <tbody>  
+              <tr>
+                <td style={{whiteSpace: 'nowrap'}}>Pago con subsidio</td>
+                <td>
+                  <Input
+                    className="form-control form-control-sm"
+                    type="number"
+                    value={
+                      values.Subsidio ? formatNumber(values.Subsidio) : ''
+                    }
+                    onChange={evt => {
+                      let value = evt.currentTarget.value;
+                      if ( value < 0) return;
+                      handleChangeUF('Subsidio', value);
+                    }}
+                  />                
+                </td>
+                <td>
+                  <Input
+                    className="form-control form-control-sm"
+                    type="number"
+                    prefix="%"
+                    value={
+                      percent.Subsidio
+                        ? formatNumber(percent.Subsidio)
+                        : ''
+                    }
+                    onChange={evt => {
+                      let value = evt.currentTarget.value;
+                      if (value > 100 || value < 0) return;
+                      handleChangePercent('Subsidio', value);
+                    }}
+                  />
+                </td>
+                <td>
+                  <div className="search-filter">
+                    <IntlFormatCurrency
+                      className="form-control form-control-sm"
+                      style={{ width: 120 }}
+                      value={convert.Subsidio}
+                    />
+                  </div>
+                </td>
+                <td>
+                    <Input
+                      className="form-control form-control-sm"
+                      value={values.SubsidioType}
+                      onChange={evt => {
+                        let value = evt.currentTarget.value;
+                        setValues({
+                          ...values,
+                          SubsidioType: value,
+                        });
+                      }}
+                      placeholder="Tipo de Subsidio"
+                    />
+                  </td>
+                  <td>
+                    <Input
+                      className="form-control form-control-sm"
+                      value={values.SubsidioCertificado}
+                      onChange={evt => {
+                        let value = evt.currentTarget.value;
+                        setValues({
+                          ...values,
+                          SubsidioCertificado: value,
+                        });
+                      }}
+                      placeholder="Nro. de Certificado"
+                    />
+                </td>
+              </tr>
+            </tbody>
+          </table>      
+        </div>
+      )}
       <div className="payment-block">
         <table className="table">
-          <tbody>
+          <tbody>            
             <tr>
-              <td>Pago con subsidio</td>
-              <td>
-                <Input
-                  className="form-control form-control-sm"
-                  type="number"
-                  value={
-                    values.Subsidio ? formatNumber(values.Subsidio) : ''
-                  }
-                  onChange={evt => {
-                    let value = evt.currentTarget.value;
-                    if ( value < 0) return;
-                    handleChangeUF('Subsidio', value);
-                  }}
-                />                
-              </td>
-              <td>
-                <Input
-                  className="form-control form-control-sm"
-                  type="number"
-                  prefix="%"
-                  value={
-                    percent.Subsidio
-                      ? formatNumber(percent.Subsidio)
-                      : ''
-                  }
-                  onChange={evt => {
-                    let value = evt.currentTarget.value;
-                    if (value > 100 || value < 0) return;
-                    handleChangePercent('Subsidio', value);
-                  }}
-                />
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Libreta de Ahorro o Ahorro Previo</td>
+              <td style={{whiteSpace:'nowrap'}}>Libreta de Ahorro o Ahorro Previo</td>
               <td>
                 <Input
                   className="form-control form-control-sm"
@@ -567,6 +608,15 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                 />
               </td>
               <td>
+                <div className="search-filter">
+                  <IntlFormatCurrency
+                    className="form-control form-control-sm"
+                    style={{ width: 120 }}
+                    value={convert.Libreta}
+                  />
+                </div>
+              </td>
+              <td>
                 <Input
                   type="select"
                   className="form-control form-control-sm"
@@ -585,7 +635,21 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                   ))}
                 </Input>
               </td>
-            </tr>          
+              <td >
+                <Input
+                  className="form-control form-control-sm"
+                  value={values.LibretaNumber}
+                  onChange={evt => {
+                    let value = evt.currentTarget.value;
+                    setValues({
+                      ...values,
+                      LibretaNumber: value,
+                    });
+                  }}
+                  placeholder="Nro. Libreta"
+                />
+              </td>
+            </tr>        
           </tbody>
         </table>      
       </div>
@@ -628,11 +692,21 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
                     const value = evt.currentTarget.value;
                     handleChangePercent('AhorroPlus', value);
                   }}
+                  disabled={apartmentTotalCost == 0}
                 >
                   <option value="" />
                   <option value="5">5 %</option>
                   <option value="10">10 %</option>
                 </Input>
+              </td>
+              <td style={{ width: '150px' }}>
+                <Input
+                  className="form-control form-control-sm"
+                  type="number"
+                  prefix="%"
+                  value={values.AhorroPlus ? formatNumber(values.AhorroPlus*100/pay): ''}
+                  readOnly
+                />
               </td>
               <td>
                 <div className="search-filter">

@@ -215,6 +215,7 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
     DiscountMaxPercent,
     // EntregaInmediata,
     InstitucionFinanciera,
+    IsSubsidy,
   } = form.values;
 
   return [
@@ -329,6 +330,12 @@ export const getCommercialFields = (form, { UsersInmobiliaria = [] } = {}) => {
       min: 0,
       max: 100,
     },
+    {
+      label: 'Tiene Subsidio?',
+      name: 'IsSubsidy',
+      view: `${IsSubsidy || false}`,
+      type: 'checkbox',
+    }
   ];
 };
 

@@ -33,6 +33,7 @@ export default function model({ project = {}, entity = {} }) {
     InstitucionFinancieraID: entity.InstitucionFinancieraID || "",
     DateFirmaPromesa: entity.DateFirmaPromesa || new Date(),
     DiscountMaxPercent: parseFloat(project.DiscountMaxPercent) || 100,
+    IsSubsidy: project.IsSubsidy || false,
     step: 1,
     MaxCuotas: project.MaxCuotas,
   };

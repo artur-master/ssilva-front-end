@@ -3,9 +3,10 @@
  * Reservation Upload Form
  *
  */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
+import { isCreditPayment } from 'containers/App/helpers';
 import Tab from 'components/Tab';
 import Button from 'components/Button';
 import Alert from 'components/Alert';
@@ -24,49 +25,40 @@ export function CarpetaDigital({
   onPrint,
   form,
 }) {
-  const { values } = form;
-  const [canPrint, setCanPrint] = useState(true);
+  const oferta_docments =  {
+    label: 'OFERTA',
+    content: (
+      <Offer
+        canUpload={canEdit}
+        canReview={canReview}
+        entity={entity}
+        onReview={onReview}
+      />
+    ),
+  }
 
-  useEffect(() => {
-    setCanPrint( true );
-  }, [values]);
-  
-  useEffect(() => {
-    setCanPrint( !(entity.ReservaID) );
-  }, []);
+  const credito_docments = {
+    label: 'CRÉDITO',
+    content: (
+      <Credit
+        canUpload={canEdit}
+        canReview={canReview}
+        entity={entity}
+        onReview={onReview}
+      />
+    ),
+  }
 
-  useEffect(() => {
-    if(entity.ReservaID)  setCanPrint( false );
-  }, [entity]);
+  const tabs = [oferta_docments];
 
-  const tabs = [
-    {
-      label: 'OFERTA',
-      content: (
-        <Offer
-          canUpload={canEdit}
-          canReview={canReview}
-          entity={entity}
-          onReview={onReview}
-        />
-      ),
-    },
-    {
-      label: 'CRÉDITO',
-      content: (
-        <Credit
-          canUpload={canEdit}
-          canReview={canReview}
-          entity={entity}
-          onReview={onReview}
-        />
-      ),
-    },
-    // {
-    //   label: 'PROMESA',
-    //   content: <Promise entity={entity} />,
-    // },
-  ];
+  if(isCreditPayment(entity.PayType)){
+    tabs.push( credito_docments );
+  }
+  // {
+  //   label: 'PROMESA',
+  //   content: <Promise entity={entity} />,
+  // },
+
   const codeudor_document = 
   {
     label: 'Codeudor',
@@ -80,7 +72,7 @@ export function CarpetaDigital({
     ),
   };
   if(entity.Codeudor)
-    tabs.push(codeudor_document)
+    tabs.push( codeudor_document )
 
   let pdfURL = `/proyectos/${entity.ProyectoID}/carpeta`;
   if(entity.ReservaID)

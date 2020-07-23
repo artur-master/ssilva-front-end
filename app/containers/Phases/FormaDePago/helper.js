@@ -33,8 +33,10 @@ export const calculates = values => {
   const Libreta = values.Libreta ? formatNumber(values.Libreta) : 0;
 
   const AhorroPlus = values.AhorroPlus ? formatNumber(values.AhorroPlus) : 0;
+  
+  const cost = total - discount;
 
-  const noApartmentCost = apartmentTotalCost ? (total - discount - apartmentTotalCost)*AhorroPlus/apartmentTotalCost : 0;
+  const noApartmentCost = apartmentTotalCost ? (cost - apartmentTotalCost)*AhorroPlus/apartmentTotalCost : 0;
 
   const { uf, paymentUtils = [] } = window.preload || {};
   const isCredit =
@@ -47,12 +49,12 @@ export const calculates = values => {
     cuota +
     Subsidio +
     Libreta +
-    AhorroPlus;
+    AhorroPlus +
+    noApartmentCost;
 
-  const cost = total - discount;
-  const balance = total - discount - pay;
+  const balance = cost - pay;
   
-  const moneyErr = (Math.abs(balance - noApartmentCost) > 0.1) || (values.Libreta && values.Libreta!==0 && values.InstitucionFinancieraID === null);
+  const moneyErr = (Math.abs(balance) > 0.1) || (values.Libreta && values.Libreta!==0 && values.InstitucionFinancieraID === "");
   
   return {
     PaymentFirmaPromesa,
@@ -94,6 +96,8 @@ export const calculates = values => {
         ? formatNumber(PaymentFirmaEscritura * uf.valor, 0)
         : 0,
       Cuotas: uf ? formatNumber(cuota * uf.valor, 0) : 0,
+      Subsidio: uf ? formatNumber(Subsidio * uf.valor, 0) : 0,
+      Libreta: uf ? formatNumber(Libreta * uf.valor, 0) : 0,
       AhorroPlus: uf ? formatNumber(AhorroPlus * uf.valor, 0) : 0,
     },
     apartmentTotalCost,
@@ -123,7 +127,8 @@ export const updatePaymentValues = ({ payFor, value, values, setValues }) => {
   if (payFor) {
     if (payFor === 'PayType') {
       _.set(values, payFor, value);
-    } else {
+    } else {      
+      if(payFor == "Cuotas.0.Amount") values.Cuotas=[values.Cuotas[0]];
       _.set(values, payFor, formatNumber(value));
     }
   }
