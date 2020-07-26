@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Button from 'components/Button';
+import Tab from 'components/Tab';
 import { Form as ExForm } from 'components/ExForm';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
 import { isContadoPayment } from 'containers/App/helpers';
 import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
+import CoPatrimony from './CoPatrimony';
 import Renta from './Renta';
 import Summary from './Summary';
 import { calculateRenta } from '../helper';
@@ -30,6 +32,16 @@ const PhasePreCreditoForm = ({
         const { total, discount } = calculates(values);
         moneyErr = Math.floor(total - discount) >= SumRenta;
       }
+
+      const PatrimonyTabs =  [{
+        label: 'Deudor', content: ( <Patrimony form={form} /> ),
+      }]
+    
+      if(values.Codeudor)
+        PatrimonyTabs.push({
+          label: 'Co-deudor', content: ( <CoPatrimony form={form} /> ),
+        });
+
       return (
         <>
           {!isContado && (
@@ -54,7 +66,7 @@ const PhasePreCreditoForm = ({
                       }}
                     />
                   )}
-                  {(step > 1 || values.ReservaID) && <Patrimony form={form} />}
+                  {(step > 1 || values.ReservaID) && <Tab tabs={PatrimonyTabs} />}
                 </div>
               </BoxContent>
               {values.Codeudor && <Summary form={form} />}

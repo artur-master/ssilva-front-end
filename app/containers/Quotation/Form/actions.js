@@ -25,6 +25,11 @@ export function saveQuotation(values, redirect = 'list') {
     type: SAVE_QUOTATION,
     values: {
       ...values,
+      InstitucionFinancieraID:
+        (values.InstitucionFinancieraID === "")
+          ? null
+          : values.InstitucionFinancieraID,
+          
       PaymentInstitucionFinanciera:
         values.PayType !== window.preload.paymentUtils[1].PayTypeID
           ? 0

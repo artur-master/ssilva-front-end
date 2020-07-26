@@ -6,8 +6,9 @@ import { stringToBoolean } from 'containers/App/helpers';
 import { Collapse, CollapseContent, CollapseHeader } from 'components/Collapse';
 
 const Labor = ({ group = 'Cliente', values }) => {
-  let Empleador = group === 'Codeudor' ? 'CoEmpleador' : 'Empleador';
   const { Extra, IsCompany } = values[group];
+
+  let Empleador = (group === 'Codeudor') ? 'CoEmpleador' : 'Empleador';
   if (IsCompany) Empleador = 'EmpresaCompradora';
 
   return (
@@ -21,7 +22,7 @@ const Labor = ({ group = 'Cliente', values }) => {
                 <b>¿QUÉ TIPO DE EMPLEO TIENE?</b>
               </span>
               <div className="col-12 col-md-6 mb-3 mt-3">
-                {Extra.Independent ? 'Independiente' : 'Contrato'}
+                {stringToBoolean(Extra.Independent) ? 'Independiente' : 'Contrato'}
               </div>
               <FormGroup className="col-12 col-md-6">
                 <Label className="w-50 ">Cargo Actual Cliente</Label>

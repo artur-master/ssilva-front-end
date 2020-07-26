@@ -54,7 +54,7 @@ export const calculates = values => {
 
   const balance = cost - pay;
   
-  const moneyErr = (Math.abs(balance) > 0.1) || (values.Libreta && values.Libreta!==0 && values.InstitucionFinancieraID === "");
+  const moneyErr = (Math.abs(balance) > 0.1) || (values.Libreta && values.Libreta!==0 && values.InstitucionFinancieraID === null);
   
   return {
     PaymentFirmaPromesa,

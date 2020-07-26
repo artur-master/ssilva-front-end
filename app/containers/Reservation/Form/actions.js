@@ -99,6 +99,23 @@ const prepareBeforeSave = newValues => {
       }
     });
   }
+  if (values.CoPatrimony) {
+    Object.keys(values.CoPatrimony).forEach(item => {
+      const CoPatrimony = values.CoPatrimony[item];
+      if (isObject(CoPatrimony)) {
+        if (CoPatrimony.PagosMensuales === '')
+          values.CoPatrimony[item] = {
+            PagosMensuales: 0,
+            Pasivos: 0,
+          };
+        values.CoPatrimony[item].Saldo =
+          values.CoPatrimony[item].Pasivos -
+          values.CoPatrimony[item].PagosMensuales;
+      } else if (CoPatrimony === '') {
+        values.CoPatrimony[item] = 0;
+      }
+    });
+  }
   values.Condition = (values.Condition || []).filter(
     condition => condition.Description.trim() !== '',
   );
@@ -108,6 +125,7 @@ const prepareBeforeSave = newValues => {
 export function saveReservation(newValues, documents = false) {
   newValues['Condition'] = documents['Condition'];
   const values = prepareBeforeSave(newValues);
+  if (values.InstitucionFinancieraID === "") values.InstitucionFinancieraID=null;
   return {
     type: SAVE_RESERVATION,
     values,

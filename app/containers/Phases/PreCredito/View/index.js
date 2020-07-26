@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Button from 'components/Button';
+import Tab from 'components/Tab';
 import { isContadoPayment, isCreditPayment } from 'containers/App/helpers';
 import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
+import CoPatrimony from './CoPatrimony';
 import Renta from './Renta';
 import PhasePreCreditoFormModal from '../Form/modal';
 import PhaseCredit from '../Credit';
@@ -36,6 +38,15 @@ const PhasePreCreditoView = ({
   const { moneyErr } = calculateRenta(initialValues);
   useInjectReducer({ key: 'credit', reducer });
   useInjectSaga({ key: 'credit', saga });
+
+  const PatrimonyTabs =  [{
+    label: 'Deudor', content: ( <Patrimony values={initialValues} /> ),
+  }]
+
+  if(initialValues.Codeudor)
+    PatrimonyTabs.push({
+      label: 'Co-deudor', content: ( <CoPatrimony values={initialValues} /> ),
+    });
 
   return (
     <>
@@ -83,7 +94,9 @@ const PhasePreCreditoView = ({
                 {initialValues.Codeudor && <Codeudor values={initialValues} />}
               </>
             )}
-            <Patrimony values={initialValues} />
+            {/* <Patrimony values={initialValues} /> */}
+            <Tab tabs={PatrimonyTabs} />
+
             {(initialValues.OfertaID || initialValues.PromesaID) && (
               <PhaseCredit
                 canEdit={canEditCredit}

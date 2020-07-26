@@ -8,12 +8,19 @@ import PropTypes from 'prop-types';
 import ExField from 'components/ExForm/ExField';
 import Alert from 'components/Alert';
 import Button from 'components/Button';
+import { Auth } from 'containers/App/helpers';
 
 function Conditions({ form, entity }) {
   const { Condition = [] } = entity;
   const [Conditions, setConditions] = useState();
   const [Issave, setIsave] = useState(false);
   
+  const onDismiss = () =>{
+      setIsave(true);
+      entity.Condition = Condition.filter(items => (items !== item));
+      setConditions(entity.Condition);
+  }
+
   useEffect(() => {
     setConditions(Condition);
   }, [entity]);
@@ -39,15 +46,11 @@ function Conditions({ form, entity }) {
           ))}
         </>
       )}
-      {Conditions && Conditions.map(
+      { Conditions && Conditions.map(
         (item, index) => (
           <Alert
             key={String(index)}
-            onDismiss={() => {
-              setIsave(true);
-              entity.Condition = Condition.filter(items => (items !== item));
-              setConditions(entity.Condition);
-            }}
+            onDismiss={Auth.isAC() ? false:onDismiss}
           >
             {item.Description}
           </Alert>

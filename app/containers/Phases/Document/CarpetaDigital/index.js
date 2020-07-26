@@ -61,7 +61,7 @@ export function CarpetaDigital({
 
   const codeudor_document = 
   {
-    label: 'Codeudor',
+    label: 'CODEUDOR',
     content: (
       <Codeudor
         canUpload={canEdit}

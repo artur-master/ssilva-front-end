@@ -125,7 +125,7 @@ export const getDocuments = entity => {
     baseDocuments.push({
       documentoName: 'Certificado Matrimonio',
       documentoType: 'DocumentCertificadoMatrimonio',
-      firmado: true,
+      // firmado: true,
       // required: true,
     });
   }
@@ -275,7 +275,6 @@ export const CodeudorDocuments = entity => {
     baseDocuments.push({
       documentoName: 'Certificado Matrimonio',
       documentoType: 'DocumentCodeudorCertificadoMatrimonio',
-      firmado: true,
     });
   }
   if (isCompany) {

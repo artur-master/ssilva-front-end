@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
+import Tab from 'components/Tab';
 import { Form as ExForm } from 'components/ExForm';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
 import { isContadoPayment } from 'containers/App/helpers';
@@ -9,6 +10,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from 'components/Modal';
 import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
+import CoPatrimony from './CoPatrimony';
 import Renta from './Renta';
 import Summary from './Summary';
 import { calculateRenta } from '../helper';
@@ -28,6 +30,16 @@ const PhasePreCreditoFormModal = ({
         const { total, discount } = calculates(values);
         moneyErr = Math.floor(total - discount) >= SumRenta;
       }
+
+      const PatrimonyTabs =  [{
+        label: 'Deudor', content: ( <Patrimony form={form} /> ),
+      }]
+    
+      if(values.Codeudor)
+        PatrimonyTabs.push({
+          label: 'Co-deudor', content: ( <CoPatrimony form={form} /> ),
+        });
+
       return (
         <Modal isOpen={isOpen} size="xl" scrollable>
           <ModalHeader>PRE APROBACIÓN DE CRÉDITO</ModalHeader>
@@ -52,7 +64,10 @@ const PhasePreCreditoFormModal = ({
                   )}
                 </>
               )}
-              <Patrimony form={form} />
+
+              {/* <Patrimony form={form} /> */}
+              <Tab tabs={PatrimonyTabs} />
+
               {values.Codeudor && <Summary form={form} />}
             </div>
           </ModalBody>

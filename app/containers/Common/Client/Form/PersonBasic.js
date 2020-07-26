@@ -54,7 +54,7 @@ function PersonBasic({ form, focusHide }) {
         </div>
 
         <div className="col-md-6">
-          {/* <FormGroup className="mt-3">
+          <FormGroup className="mt-3">
             <Label style={{ width: '11em' }}>Fecha de Nacimiento</Label>
             <div className="flex-fill">
               <ExField
@@ -63,10 +63,10 @@ function PersonBasic({ form, focusHide }) {
                 name="BirthDate"
               />
             </div>
-          </FormGroup> */}
+          </FormGroup>
           {shouldShowField('ComunaID', focusHide) && (
             <>
-              <FormGroup className="mt-3">
+              {/* <FormGroup className="mt-3">
                 <Label style={{ width: '11em' }}>Comuna donde reside</Label>
                 <ExField
                   type="comunas"
@@ -74,11 +74,11 @@ function PersonBasic({ form, focusHide }) {
                   name="ComunaID"
                   required
                 />
-              </FormGroup>
-              {/* <FormGroup className="mt-3">
+              </FormGroup> */}
+              <FormGroup className="mt-3">
                 <Label style={{ width: '11em' }}>Dirección</Label>
                 <ExField className="flex-fill" name="Address" required />
-              </FormGroup> */}
+              </FormGroup>
             </>
           )}
           <div className="row justify-content-between" />

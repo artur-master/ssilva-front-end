@@ -6,7 +6,8 @@ import {
 } from 'containers/App/helpers';
 import { calculates } from '../FormaDePago/helper';
 
-export const isValidLabor = ( Cliente, PayType ) => {
+export const isValidLabor = ( Values, PayType ) => {
+  const Cliente = Values.Cliente;
   const isCompany = stringToBoolean(Cliente.IsCompany);
   const isCredit = isCreditPayment(PayType);
 
@@ -16,9 +17,10 @@ export const isValidLabor = ( Cliente, PayType ) => {
     'Empleador.Extra.Phone',
     'Extra.Values.Honoraries',
   ];
+
   if (!isCompany && isCredit) {
     return !requiredFields.find(
-      field => getDescendantProp(Cliente, field) === '',
+      field => getDescendantProp(Values, field) === '',
     );
   }
   return true;

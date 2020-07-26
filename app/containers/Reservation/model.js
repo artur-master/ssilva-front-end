@@ -99,6 +99,20 @@ export default function model({ project = {}, entity = {} }) {
       RazonSocial: '',
       Extra: { Address: '', CurrentPosition: '', Phone: '' },
     },
+    CoPatrimony: entity.CoPatrimony || {
+        RealState: '',
+        Rent: '',
+        CreditoHipotecario: { Pasivos: '', PagosMensuales: '', Saldo: '' },
+        Vehicle: '',
+        DownPayment: '',
+        Other: '',
+        CreditCard: { Pasivos: '', PagosMensuales: '', Saldo: '' },
+        CreditoConsumo: { Pasivos: '', PagosMensuales: '', Saldo: '' },
+        PrestamoEmpleador: { Pasivos: '', PagosMensuales: '',Saldo: '' },
+        DeudaIndirecta: { Pasivos: '',PagosMensuales: '',Saldo: ''},
+        AnotherCredit: { Pasivos: '',PagosMensuales: '',Saldo: ''},
+        CreditoComercio: { Pasivos: '',PagosMensuales: '',Saldo: ''},
+      },
     CotizacionType:
       entity.CotizacionType ||
       window.preload.quotationUtils.CotizacionTypes[0].Name,
