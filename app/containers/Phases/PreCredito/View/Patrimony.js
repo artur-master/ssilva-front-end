@@ -7,7 +7,7 @@ import PureRadioGroup from 'components/ExForm/PureRadioGroup';
 import { Collapse, CollapseContent, CollapseHeader } from 'components/Collapse';
 import IntlFormatCurrency from 'components/IntlFormat/Currency';
 
-const Patrimony = ({ values }) => {
+const Patrimony = ({ values }) => {  
   const hasCredits = {
     RealState: !!values.Patrimony.RealState,
     CreditoHipotecario: !!values.Patrimony.CreditoHipotecario.PagosMensuales,
@@ -38,6 +38,7 @@ const Patrimony = ({ values }) => {
 
   return (
     <>
+    {!values.Cliente.IsCompany &&
       <Collapse>
         <CollapseHeader>Vivienda Actual</CollapseHeader>
         <CollapseContent>
@@ -52,6 +53,7 @@ const Patrimony = ({ values }) => {
           />
         </CollapseContent>
       </Collapse>
+    }
       <Collapse>
         <CollapseHeader>Patrimonio Activos</CollapseHeader>
         <CollapseContent>

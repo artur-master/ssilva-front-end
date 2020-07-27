@@ -28,7 +28,7 @@ const PhasePreCreditoFormModal = ({
       if (!isContado) {
         const { SumRenta } = calculateRenta(values);
         const { total, discount } = calculates(values);
-        moneyErr = Math.floor(total - discount) >= SumRenta;
+        moneyErr = values.Cliente.IsCompany ? false : Math.floor(total - discount) >= SumRenta;
       }
 
       const PatrimonyTabs =  [{

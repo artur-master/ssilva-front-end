@@ -61,6 +61,7 @@ const Patrimony = ({ form }) => {
 
   return (
     <>
+    {!values.Cliente.IsCompany &&
       <div className="row pb-3">
         <div className="col-12">
           <span className="w-50 border-bottom py-3 d-block">
@@ -79,7 +80,8 @@ const Patrimony = ({ form }) => {
           </div>
         </div>
       </div>
-      <div className="pb-3 mt-4 border-top">
+    }
+      <div className={`pb-3 ${values.Cliente.IsCompany?'':'mt-4 border-top'}`}>
         <span className="w-50 border-bottom py-3 d-block">
           <b>Patrimonio Activos</b>
         </span>

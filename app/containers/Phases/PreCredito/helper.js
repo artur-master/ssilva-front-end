@@ -50,7 +50,7 @@ export const calculateRenta = (reserva = {}) => {
     (parseInt(CoExtra.Values.Pension) || 0);
   const SumRenta = Renta + CoRenta;
   const { total, discount } = calculates(reserva);
-  const moneyErr = Math.floor(total - discount) >= SumRenta;
+  const moneyErr = Cliente.IsCompany ? false : Math.floor(total - discount) >= SumRenta;
   return {
     Renta,
     CoRenta,
