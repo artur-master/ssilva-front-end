@@ -12,6 +12,7 @@ export default function model({ project = {}, entity = {} }) {
 
   return {
     ReservaID: entity.ReservaID || null,
+    ReservaState: entity.ReservaState || null,
     ValueProductoFinanciero: entity.ValueProductoFinanciero || 0,
     Condition: entity.Condition || [],
     CotizacionID: entity.CotizacionID || null,

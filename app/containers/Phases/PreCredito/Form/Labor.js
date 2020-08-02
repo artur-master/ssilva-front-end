@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import { FormGroup, Label, Field as ExField } from 'components/ExForm';
 import RadioGroup from 'components/ExForm/RadioGroup';
 import { stringToBoolean } from 'containers/App/helpers';
+import { RESERVA_STATE } from 'containers/App/constants';
 
 const Labor = ({ group = 'Cliente', values }) => {
   const { Extra, IsCompany } = values[group];
+
   let Empleador = group === 'Codeudor' ? 'CoEmpleador' : 'Empleador';
   // if (IsCompany) Empleador = 'EmpresaCompradora';
   if (IsCompany) return null;
@@ -76,11 +78,11 @@ const Labor = ({ group = 'Cliente', values }) => {
       </span>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0">Nombre Empleador</Label>
-        <ExField className="w-50" name={`${Empleador}.RazonSocial`} required={stringToBoolean(Extra.Independent)}/>
+        <ExField className="w-50" name={`${Empleador}.RazonSocial`} required={stringToBoolean(Extra.Independent) || values.ReservaState === RESERVA_STATE[0]}/>
       </FormGroup>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0">RUT Empleador</Label>
-        <ExField className="w-50" name={`${Empleador}.Rut`}  required={stringToBoolean(Extra.Independent)}/>
+        <ExField className="w-50" name={`${Empleador}.Rut`}  required={stringToBoolean(Extra.Independent) || values.ReservaState === RESERVA_STATE[0]}/>
       </FormGroup>
       {!IsCompany && (
         <FormGroup className="col-12 col-md-6 d-flex mt-3">

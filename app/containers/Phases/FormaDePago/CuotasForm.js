@@ -19,7 +19,7 @@ import { calculates, updatePaymentValues } from './helper';
 // eslint-disable-next-line no-unused-vars
 function CuotasForm({ form, onHide, onView }) {
   const { values, setValues, setFieldValue } = form;
-  const { pay, balance, moneyErr } = calculates(values);
+  const { pay, balance, moneyErr, cuota } = calculates(values);
   const [numberCuotas, setNumberCuotas] = useState(values.Cuotas.length);
 
   useEffect(() => {
@@ -196,7 +196,7 @@ function CuotasForm({ form, onHide, onView }) {
                           <td>
                             <span>
                               <b>
-                                <FormattedNumber value={pay} />
+                                <FormattedNumber value={cuota} />
                               </b>
                             </span>
                           </td>
@@ -234,7 +234,7 @@ function CuotasForm({ form, onHide, onView }) {
                           <td>
                             <span>
                               <b>
-                                <FormattedNumber value={pay} />
+                                <FormattedNumber value={cuota} />
                               </b>
                             </span>
                           </td>

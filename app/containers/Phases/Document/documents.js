@@ -31,9 +31,23 @@ export const getDocuments = entity => {
     },
     //offerta
     {
+      documentoName: 'Cotizacion',
+      documentoType: 'DocumentCotizacion',
+      autoGenerate: true,
+      offerta: true,
+    },
+    {
       documentoName: 'Oferta',
       documentoType: 'DocumentOferta',
       autoGenerate: true,
+      offerta: true,
+    },
+    {
+      documentoName: 'Cotizacion Firmada',
+      accept: 'pdf',
+      documentoType: 'DocumentFirmadoCotizacion',
+      firmado: true,
+      required: true,
       offerta: true,
     },
     {
@@ -58,11 +72,6 @@ export const getDocuments = entity => {
     //   firmado: true,
     // },
     {
-      documentoName: 'Cotizacion',
-      documentoType: 'DocumentCotizacion',
-      autoGenerate: true,
-    },
-    {
       documentoName: 'Ficha Pre-aprobacion',
       documentoType: 'DocumentFichaPreAprobacion',
       autoGenerate: true,
@@ -71,13 +80,6 @@ export const getDocuments = entity => {
       documentoName: 'Simulación de crédito',
       documentoType: 'DocumentSimulador',
       autoGenerate: true,
-    },
-    {
-      documentoName: 'Cotizacion',
-      accept: 'pdf',
-      documentoType: 'DocumentFirmadoCotizacion',
-      firmado: true,
-      required: true,
     },
   ];
 
@@ -127,6 +129,7 @@ export const getDocuments = entity => {
       documentoType: 'DocumentCertificadoMatrimonio',
       // firmado: true,
       // required: true,
+      offerta: true,
     });
   }
 
@@ -200,6 +203,7 @@ export const getDocuments = entity => {
         documentoName: 'Fotocopia Cédula de Indentidad',
         documentoType: 'DocumentFotocopiaCarnet',
         required: true,
+        offerta: true,
       },
       // {
       //   documentoName: 'Cotizaciones AFP',
@@ -217,7 +221,7 @@ export const getDocuments = entity => {
 
     if(!entity.Cliente.Extra.Values.VariableSalary || 
         entity.Cliente.Extra.Values.VariableSalary==""){
-      if(isCreditPayment(entity.PayType))
+      if(isCreditPayment(entity.PayType) && !isIndependent)
         baseDocuments = [
           ...baseDocuments,
           {
@@ -226,15 +230,26 @@ export const getDocuments = entity => {
             required: true,
           },
         ];
-    } else
-      baseDocuments = [
-        ...baseDocuments,
-        {
-          documentoName: 'Últimos 6 liquidaciones',
-          documentoType: 'DocumentLiquidacion2',
-          required: true,
-        },
-      ];
+
+      if(isCreditPayment(entity.PayType))
+        baseDocuments = [
+          ...baseDocuments,
+          {
+            documentoName: 'Últimos 6 liquidaciones',
+            documentoType: 'DocumentLiquidacion2',
+            required: true,
+          },
+        ];
+    } 
+    // else
+    //   baseDocuments = [
+    //     ...baseDocuments,
+    //     {
+    //       documentoName: 'Últimos 6 liquidaciones',
+    //       documentoType: 'DocumentLiquidacion2',
+    //       required: true,
+    //     },
+    //   ];
   }
 
   return baseDocuments;
@@ -379,6 +394,10 @@ export const requiredSaveDocuments=[
   "DocumentPagoGarantia",
   "DocumentOfertaFirmada",
   "DocumentFirmadoCotizacion",
+  "DocumentFirmadoCotizacion",
+  "DocumentFirmadoFichaPreAprobacion",
+  "DocumentOfertaFirmada",
+  "DocumentPlanoFirmada",
 ];
 
 export const requiredSendToControl=[
@@ -386,6 +405,7 @@ export const requiredSendToControl=[
   'Document2DAI',
   'DocumentAcredittacionAhorros',
   'DocumentTituloProfesional',
+  'DocumentCertificadoMatrimonio',
   // 'DocumentAcredittacionActivo',
   // 'DocumentAcredittacionDeudas',
 ]

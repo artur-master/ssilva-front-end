@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
-import { FormGroup, Label } from 'components/ExForm';
+import { FormGroup, Label, Field } from 'components/ExForm';
 import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
 import { getGeneralFields, getPolizaFields, getMetasFields, getCuotasFields } from '../fields';
@@ -51,6 +51,13 @@ function GeneralView({ canEdit, selectorProject, selector, onEdit, isCollapse = 
                   </span>
                 </FormGroup>
               ))}
+              <div className="col-md-12 mt-3">
+                <Label>Cláusulas del Proyecto</Label>
+                {console.log(project['ProjectClauses'])}
+                <div class="btype shadow-sm mt-2">
+                  <textarea rows="5" class="form-control form-control-sm" readOnly value={project['ProjectClauses'] || ""} />
+                </div>
+              </div>
             </div>
           )}
         </BoxContent>

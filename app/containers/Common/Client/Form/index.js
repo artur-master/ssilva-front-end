@@ -67,7 +67,8 @@ function ClienteForm({ info, focusHide, selector, onHide, onSubmit }) {
               Form = isCompany ? CompanyBasic : PersonAdvance;
               break;
             default:
-              Form = isCompany ? CompanyBasic : PersonBasic;
+              // Form = isCompany ? CompanyBasic : PersonBasic;
+              Form = isCompany ? CompanyBasic : PersonAdvance;
           }
           
           if (form.values.UserID && form.values.Name === undefined)

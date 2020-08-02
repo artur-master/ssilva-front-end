@@ -49,8 +49,7 @@ export const calculates = values => {
     cuota +
     Subsidio +
     Libreta +
-    AhorroPlus +
-    noApartmentCost;
+    AhorroPlus;
 
   const balance = cost - pay;
   
@@ -135,22 +134,17 @@ export const updatePaymentValues = ({ payFor, value, values, setValues }) => {
 
   const isCredit = isCreditType(values.PayType);
 
-  // const { cost, cuota } = calculates(values);
+  const { cost, pay } = calculates(values);
 
   const PaymentInstitucionFinanciera = isCredit ? values.PaymentInstitucionFinanciera : 0;
   
-  // const PaymentFirmaEscritura = (payFor==="PaymentFirmaEscritura") ? values.PaymentFirmaEscritura : remainAmount;
-  // const AhorroPlus = (payFor==="PaymentFirmaEscritura") ? remainAmount : values.AhorroPlus;
-
-  const PaymentFirmaEscritura = values.PaymentFirmaEscritura;
-  const AhorroPlus = values.AhorroPlus;
-  
+  // const PaymentFirmaEscritura = (payFor==="AhorroPlus") ? values.PaymentFirmaEscritura + cost - pay : values.PaymentFirmaEscritura;
+  const PaymentFirmaPromesa = (payFor==="AhorroPlus") ? (values.PaymentFirmaPromesa + cost - pay) : (values.PaymentFirmaPromesa);
+console.log(cost, pay);
   setValues({
     ...values,
-    PaymentInstitucionFinanciera:
-      PaymentInstitucionFinanciera < 0 ? 0 : PaymentInstitucionFinanciera,
-    // PaymentFirmaEscritura:
-    //   PaymentFirmaEscritura < 0 ? 0 : PaymentFirmaEscritura,
+    PaymentInstitucionFinanciera: PaymentInstitucionFinanciera < 0 ? 0 : PaymentInstitucionFinanciera,
+    PaymentFirmaPromesa: PaymentFirmaPromesa < 0 ? 0 : formatNumber(PaymentFirmaPromesa),
     // AhorroPlus: AhorroPlus < 0 ? 0 : AhorroPlus,
   });
 };

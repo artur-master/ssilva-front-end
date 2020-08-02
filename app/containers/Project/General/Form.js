@@ -13,7 +13,6 @@ import WithLoading from 'components/WithLoading';
 import model from '../model';
 import { Is_EntregaInmediata } from '../helper'
 import { getGeneralFields, getPolizaFields, getMetasFields, getCuotasFields } from '../fields';
-import Aseguradora from 'containers/Common/Aseguradora';
 
 const SyncMessage = WithLoading();
 export function GeneralForm({ selector, selectorProject, onSubmit, onReset }) {
@@ -52,6 +51,10 @@ export function GeneralForm({ selector, selectorProject, onSubmit, onReset }) {
                       </FormGroup>
                     ),
                   )}
+                  <div className="col-md-12 mt-3">
+                    <Label>Cláusulas del Proyecto</Label>
+                    <Field name="ProjectClauses" type="textarea" rows={5} className="mt-3 mr-5"/>
+                  </div>
                 </div>
               </BoxContent>
             </Box>
