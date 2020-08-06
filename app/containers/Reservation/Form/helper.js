@@ -87,7 +87,7 @@ export const getActionTitle = (reservation = {}) => {
 };
 
 export const canSendToControl = (documents, PayType) => {
-  if(!documents || _.size(documents) == 0)  return false;
+  if(!documents || Object.keys(documents).length == 0)  return false;
   
   const flag = requiredSaveDocuments(PayType).find((value)=>documents[value]==="");
   return flag === undefined;
