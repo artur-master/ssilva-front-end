@@ -68,10 +68,9 @@ function DocumentItem({
 
             const state = entity ? (entity.ReservaState === "Pendiente información") : false;
             const requiredTypes = state ? requiredSendToControl : requiredSaveDocuments;
-
-            if (required && requiredTypes.includes(documentoType) &&
-               !Documentos[documentoType] && !value
-              ) return 'Este campo es requerido';
+console.log(requiredTypes, state);
+            if (required && requiredTypes.includes(documentoType) &&  !Documentos[documentoType] && !value ) 
+              return 'Este campo es requerido';
             return null;
           }}
         >
