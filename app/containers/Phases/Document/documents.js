@@ -61,7 +61,7 @@ export const getDocuments = entity => {
       documentoName: 'Plano',
       documentoType: 'DocumentPlanoFirmada',
       firmado: true,
-      // required: true,
+      required: true,
       offerta: true,
     },
     //offerta
@@ -390,22 +390,30 @@ export const CodeudorDocuments = entity => {
   return baseDocuments;
 }
 
-export const requiredSaveDocuments=[
-  "DocumentPagoGarantia",
-  "DocumentOfertaFirmada",
-  "DocumentFirmadoCotizacion",
-  "DocumentFirmadoCotizacion",
-  "DocumentFirmadoFichaPreAprobacion",
-  "DocumentOfertaFirmada",
-  "DocumentPlanoFirmada",
-];
+export const requiredSaveDocuments=(PayType)=>{
+  const base = [
+    "DocumentPagoGarantia",
+    "DocumentOfertaFirmada",
+    "DocumentFirmadoCotizacion",
+    "DocumentPlanoFirmada",
+  ]
+  
+  if (PayType == "Credito") base.push("DocumentFirmadoFichaPreAprobacion");
 
-export const requiredSendToControl=[
-  'Document6IVA',
-  'Document2DAI',
-  'DocumentAcredittacionAhorros',
-  'DocumentTituloProfesional',
-  'DocumentCertificadoMatrimonio',
-  // 'DocumentAcredittacionActivo',
-  // 'DocumentAcredittacionDeudas',
-]
+  return base;
+}
+export const requiredSendToControl=(PayType)=>{
+  const base = [
+    'Document6IVA',
+    'Document2DAI',
+    'DocumentAcredittacionAhorros',
+    'DocumentTituloProfesional',
+    'DocumentCertificadoMatrimonio',
+    // 'DocumentAcredittacionActivo',
+    // 'DocumentAcredittacionDeudas',
+  ]
+  
+  // if (PayType == "Credito") base.push("DocumentFirmadoFichaPreAprobacion");
+
+  return base;
+}

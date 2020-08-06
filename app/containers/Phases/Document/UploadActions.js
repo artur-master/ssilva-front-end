@@ -22,8 +22,8 @@ export function CarpetaDigitalUploadActions({
   const [withText, setWithText] = useState({ text: '', open: false });
   const { values } = form;
   const [canUpload, setCanUpload] = useState(false);
-
-  const canStC = canSendToControl(entity.Documents);
+  
+  const canStC = canSendToControl(entity.Documents, entity.PayType);
 
   useEffect(() => {
     setCanUpload(true);
@@ -48,7 +48,7 @@ export function CarpetaDigitalUploadActions({
             setCanUpload(false);
           }}
         >
-          { canStC ? 'Guardar': 'Crear Reserva' }
+          { entity.ReservaID ? 'Guardar': 'Crear Reserva' }
         </Button>
         {(Auth.isPM() || Auth.isVendor()) && (
           <Button

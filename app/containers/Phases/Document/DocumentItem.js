@@ -65,8 +65,9 @@ function DocumentItem({
         <FormikField
           name={documentoType}
           validate={value => {
-            const state = entity ? entity.sendControl : false;            
-            const requiredTypes = state ? requiredSendToControl : requiredSaveDocuments;
+
+            const state = entity ? entity.sendControl : false;
+            const requiredTypes = entity ? state ? requiredSendToControl(entity.PayType) : requiredSaveDocuments(entity.PayType) : [];
 
             if (required && requiredTypes.includes(documentoType) &&
                !Documentos[documentoType] && !value

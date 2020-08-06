@@ -113,13 +113,8 @@ export function Form({ project, selector, dispatch }) {
         step={step}
         dispatch={dispatch}
         onContinue={values => {
-          setStep(step + 1);
-          if (step === 2)
-            return dispatch(
-              saveReservation({ ...initialValues, ...values }),
-            );
-          if (step > 2)
-            return dispatch(updateReservation(values));
+          setStep(step + 1);          
+          dispatch(updateReservation(values));
         }}
       />
       {(step === 3 || entity.ReservaID) && (
@@ -165,15 +160,6 @@ export function Form({ project, selector, dispatch }) {
               return dispatch(printDocuments({ ...initialValues, ...entity }))
           }}
         />
-          {!canPrint && (
-            <AlertPopup
-              title="Faltan Datos"
-              isOpen={openAlert}
-              onHide={() => setOpenAlert(false)}
-            >
-              Por favor complete los datos faltantes 'Cheques'
-            </AlertPopup>
-          )}
         </>
       )}
       {/* {(entity.ReservaState === RESERVA_STATE[3]) && (

@@ -157,27 +157,20 @@ const downloadFile = async (url, fileName) => {
     FileSaver.saveAs( url,fileName );
 }
 
-// function* generateCheque(cheque) {
-//   const requestURL = `${API_ROOT}/ventas/generate-check/`;
-//   const response = yield call(request, requestURL, {
-//     method: 'POST',
-//     body: JSON.stringify(cheque),
-//   });
-//   FileSaver.saveAs(
-//     response,
-//     `cheque-${moment(cheque.Date).format('YYYY_MM_DD')}.pdf`,
-//   );
-//   return response;
-// }
-
 function* printDocuments(action) {
   try {    
-    downloadFile(action.values.Documents.DocumentCotizacion,'cotización.pdf');
-    downloadFile(action.values.Documents.DocumentFichaPreAprobacion,'ficha pre aprobación.pdf');
-    downloadFile(action.values.Documents.DocumentSimulador,'simulador de crédito.pdf');
-    downloadFile(action.values.Documents.DocumentOferta,'oferta.pdf');
+    const requestURL = `${API_ROOT}/ventas/generate-pdf-files/`;
+    const response = yield call(request, requestURL, {
+      method: 'POST',
+      body: JSON.stringify(action.values),
+    });
 
-    yield put(printDocumentsSuccess("success"));
+    downloadFile(response.Documents.DocumentCotizacion,'cotización.pdf');
+    downloadFile(response.Documents.DocumentOferta,'oferta.pdf');
+    downloadFile(response.Documents.DocumentFichaPreAprobacion,'ficha pre aprobación.pdf');
+    downloadFile(response.Documents.DocumentSimulador,'simulador de crédito.pdf');
+
+    yield put(printDocumentsSuccess(response));
     
   } catch (error) {
     yield put(printDocumentsError(error));

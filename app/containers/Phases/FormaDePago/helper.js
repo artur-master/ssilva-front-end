@@ -36,7 +36,7 @@ export const calculates = values => {
   
   const cost = total - discount;
 
-  const noApartmentCost = apartmentTotalCost ? (cost - apartmentTotalCost)*AhorroPlus/apartmentTotalCost : 0;
+  // const noApartmentCost = apartmentTotalCost ? (cost - apartmentTotalCost)*AhorroPlus/apartmentTotalCost : 0;
 
   const { uf, paymentUtils = [] } = window.preload || {};
   const isCredit =
@@ -140,7 +140,7 @@ export const updatePaymentValues = ({ payFor, value, values, setValues }) => {
   
   // const PaymentFirmaEscritura = (payFor==="AhorroPlus") ? values.PaymentFirmaEscritura + cost - pay : values.PaymentFirmaEscritura;
   const PaymentFirmaPromesa = (payFor==="AhorroPlus") ? (values.PaymentFirmaPromesa + cost - pay) : (values.PaymentFirmaPromesa);
-console.log(cost, pay);
+
   setValues({
     ...values,
     PaymentInstitucionFinanciera: PaymentInstitucionFinanciera < 0 ? 0 : PaymentInstitucionFinanciera,
