@@ -86,9 +86,9 @@ export const getActionTitle = (reservation = {}) => {
   return 'Crear reserva';
 };
 
-export const canSendToControl = (documents, PayType) => {
+export const canSendToControl = documents => {
   if(!documents || Object.keys(documents).length == 0)  return false;
   
-  const flag = requiredSaveDocuments(PayType).find((value)=>documents[value]==="");
+  const flag = requiredSaveDocuments.find((value)=>documents[value]==="");
   return flag === undefined;
 };

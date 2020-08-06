@@ -128,7 +128,7 @@ export const getDocuments = entity => {
       documentoName: 'Certificado Matrimonio',
       documentoType: 'DocumentCertificadoMatrimonio',
       // firmado: true,
-      // required: true,
+      required: true,
       offerta: true,
     });
   }
@@ -390,20 +390,15 @@ export const CodeudorDocuments = entity => {
   return baseDocuments;
 }
 
-export const requiredSaveDocuments=(PayType)=>{
-  const base = [
+export const requiredSaveDocuments = [
     "DocumentPagoGarantia",
     "DocumentOfertaFirmada",
     "DocumentFirmadoCotizacion",
     "DocumentPlanoFirmada",
-  ]
+    'DocumentFotocopiaCarnet'
+]
   
-  if (PayType == "Credito") base.push("DocumentFirmadoFichaPreAprobacion");
-
-  return base;
-}
-export const requiredSendToControl=(PayType)=>{
-  const base = [
+export const requiredSendToControl = [
     'Document6IVA',
     'Document2DAI',
     'DocumentAcredittacionAhorros',
@@ -411,9 +406,4 @@ export const requiredSendToControl=(PayType)=>{
     'DocumentCertificadoMatrimonio',
     // 'DocumentAcredittacionActivo',
     // 'DocumentAcredittacionDeudas',
-  ]
-  
-  // if (PayType == "Credito") base.push("DocumentFirmadoFichaPreAprobacion");
-
-  return base;
-}
+]

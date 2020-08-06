@@ -23,7 +23,7 @@ export function CarpetaDigitalUploadActions({
   const { values } = form;
   const [canUpload, setCanUpload] = useState(false);
   
-  const canStC = canSendToControl(entity.Documents, entity.PayType);
+  const canStC = canSendToControl(entity.Documents);
 
   useEffect(() => {
     setCanUpload(true);

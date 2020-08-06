@@ -66,8 +66,8 @@ function DocumentItem({
           name={documentoType}
           validate={value => {
 
-            const state = entity ? entity.sendControl : false;
-            const requiredTypes = entity ? state ? requiredSendToControl(entity.PayType) : requiredSaveDocuments(entity.PayType) : [];
+            const state = entity ? (entity.ReservaState === "Pendiente información") : false;
+            const requiredTypes = state ? requiredSendToControl : requiredSaveDocuments;
 
             if (required && requiredTypes.includes(documentoType) &&
                !Documentos[documentoType] && !value
