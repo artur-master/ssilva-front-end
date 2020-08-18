@@ -58,9 +58,11 @@ const CreditList = ({ selector, onSelect }) =>
             <Label style={{ minWidth: '12em' }} className="pt-0">
               Pre Aprobación
             </Label>
-            <a href={entity.DocumentPreApprobal} target="_blank">
-              Ver archivo
-            </a>
+            {entity.DocumentPreApprobal &&
+              <a href={entity.DocumentPreApprobal} target="_blank">
+                Ver archivo
+              </a>
+            }
           </FormGroup>
         </div>
         <div className="mt-4 mb-3">

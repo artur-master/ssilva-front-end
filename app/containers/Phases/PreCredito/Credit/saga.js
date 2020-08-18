@@ -27,19 +27,44 @@ function* sagaFetchIF(action) {
 
 function* registerIFAc(values) {
   if (values.length < 1) return { InstitucionFinancieras: [] };
-  return yield call(
-    request,
-    `${API_ROOT}/ventas/ofertas-register-instituciones-financieras/`,
-    {
-      method: 'post',
-      body: JSON.stringify(
-        values.map(value => {
-          delete value.DocumentCredit;
-          return value;
-        }),
-      ),
-    },
-  );
+  // return yield call(
+  //   request,
+  //   `${API_ROOT}/ventas/ofertas-register-instituciones-financieras/`,
+  //   {
+  //     method: 'post',
+  //     body: JSON.stringify(
+  //       values.map(value => {
+  //         delete value.DocumentCredit;
+  //         delete value.DocumentPreApprobal;
+  //         return value;
+  //       }),
+  //     ),
+  //   },
+  // );
+  const requestURL = `${API_ROOT}/ventas/ofertas-register-instituciones-financieras/`;
+  const requests = [];
+  for (let i = 0; i < values.length; i += 1) {
+    const data = new FormData();
+    Object.keys(values[i]).forEach(name => {
+      if(name !== 'DocumentCredit') data.append(name, values[i][name]);
+    });
+    requests.push(
+      yield call(request, requestURL, {
+        method: 'post',
+        body: data,
+        headers: {
+          'content-type': null,
+        },
+      }),
+    );
+  }
+  const responseComprador = yield all(requests);
+  return {
+    detail: responseComprador[0].detail,
+    InstitucionFinancieras: responseComprador.map(
+      item => item.InstitucionFinancieras,
+    ),
+  };
 }
 
 function* registerIFComprador(values) {

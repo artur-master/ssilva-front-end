@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { Auth } from 'containers/App/helpers';
 import DocumentCondition from '../Conditions';
-import { canSendToControl } from 'containers/Reservation/Form/helper';
+import { RESERVA_STATE } from 'containers/App/constants';
 
 export function CarpetaDigitalUploadActions({
   entity,
@@ -22,8 +22,8 @@ export function CarpetaDigitalUploadActions({
   const [withText, setWithText] = useState({ text: '', open: false });
   const { values } = form;
   const [canUpload, setCanUpload] = useState(false);
-  
-  const canStC = canSendToControl(entity.Documents);
+ 
+  const canStC = entity.ReservaState === RESERVA_STATE['0'];
 
   useEffect(() => {
     setCanUpload(true);

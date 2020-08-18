@@ -41,6 +41,8 @@ const PhasePreCreditoForm = ({
         PatrimonyTabs.push({
           label: 'Co-deudor', content: ( <CoPatrimony form={form} /> ),
         });
+//ARTUR
+console.log(moneyErr, isConfirmed);
 
       return (
         <>
@@ -85,9 +87,7 @@ const PhasePreCreditoForm = ({
                   submitForm();
                 }}
               >
-                {`${
-                  step === 2 ? 'Continuar' : 'Continuar y Agregar Patrimonio'
-                }`}
+                {step === 2 ? 'Continuar' : 'Continuar y Agregar Patrimonio'}
               </Button>
 
               <Button

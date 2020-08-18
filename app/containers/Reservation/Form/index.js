@@ -17,6 +17,7 @@ import InitData from 'containers/Common/InitData';
 import { Helmet } from 'react-helmet';
 import PageHeader from 'containers/Common/PageHeader';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
+import { UserProject } from 'containers/Project/helper';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
@@ -93,12 +94,14 @@ export function ReservationForm({
                 <i className="icon icon-z-info" title="This is Reserva."/>
               </span>
             </h4>
+            { !UserProject.isInmobiliario() &&
             <Button 
               className="col-auto mt-3 m-btn-white m-btn-history"
               onClick={()=> setHistoryOpen(true)}
             >
               Historial
             </Button>
+            }
           </div>
           <h5 className="mb-3 d-flex align-items-center justify-content-between">
             <span className="font-16-rem line-height-1 color-success">

@@ -6,6 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
+import { isCreditPayment } from 'containers/App/helpers';
 import Tab from 'components/Tab';
 import Alert from 'components/Alert';
 import Credit from 'containers/Phases/Document/CarpetaDigital/Credit';
@@ -20,6 +21,32 @@ export function CarpetaDigital({
   entity,
   onReview,
 }) {
+  const tabs = [
+    {
+      label: 'PROMESA',
+      content: <Promise entity={entity} />,
+    },
+    {
+      label: 'OFERTA',
+      content: <Offer canUpload={canEit} entity={entity} />,
+    },
+  ];
+
+  if(isCreditPayment(entity.PayType)){
+    tabs.unshift(
+      {
+        label: 'CRÉDITO',
+        content: (
+          <Credit
+            canUpload={canEit}
+            canReview={canReview}
+            entity={entity}
+            onReview={onReview}
+          />
+        ),
+      });
+  }
+
   return (
     <>
       <Box collapse isOpen={isCollapse}>
@@ -33,27 +60,7 @@ export function CarpetaDigital({
               Imprimir Documentos
             </Button>
             <Tab
-              tabs={[
-                {
-                  label: 'CRÉDITO',
-                  content: (
-                    <Credit
-                      canUpload={canEit}
-                      canReview={canReview}
-                      entity={entity}
-                      onReview={onReview}
-                    />
-                  ),
-                },
-                {
-                  label: 'PROMESA',
-                  content: <Promise entity={entity} />,
-                },
-                {
-                  label: 'OFERTA',
-                  content: <Offer canUpload={canEit} entity={entity} />,
-                },
-              ]}
+              tabs={tabs}
             />
           </div>
         </BoxContent>

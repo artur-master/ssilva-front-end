@@ -87,9 +87,10 @@ export const getActionTitle = (reservation = {}) => {
   return 'Crear reserva';
 };
 
-export const canSendToControl = documents => {
+export const canSendToControl = (documents, isCompany) => {
   if(!documents || Object.keys(documents).length == 0)  return false;
   
-  const flag = requiredSaveDocuments.find((value)=>documents[value]==="");
+  const flag = requiredSaveDocuments(isCompany).find((value)=>documents[value]==="");
+
   return flag === undefined;
 };

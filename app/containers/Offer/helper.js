@@ -203,7 +203,8 @@ export const canApproveModifyOffer = offer =>
 
 export const isValidData = offer => {
   const { moneyErr } = calculates(offer);
-  return isValidClient(offer) && !moneyErr && isValidLabor(offer.Cliente, offer.PayType);
+  
+  return isValidClient(offer) && !moneyErr && isValidLabor(offer, offer.PayType);
 };
 
 export const doQuery = (entities, query = {}) => {

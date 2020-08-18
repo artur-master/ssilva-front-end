@@ -46,7 +46,7 @@ export function Form({ project, selector, dispatch }) {
     inmueble: false,
     forma: false,
   });
-  const [canPrint, setCanPrint] = useState(true);
+  
   const isValid = isValidData(entity);
   const canEdit = canEditReservation(entity);
   const canConfirm = canConfirmReservation(entity);

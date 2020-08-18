@@ -161,7 +161,7 @@ function PersonAdvance({ form, focusHide = [] }) {
           </>
         )}
         <div className="col-md-6" />
-        {!focusHide.includes('Cargo') && (
+        { focusHide && !focusHide.includes('Cargo') && (
           <>
             <span className="col-lg-12 mt-3 font-14-rem color-main">
               <b>¿EN QUÉ TRABAJA?</b>
@@ -174,7 +174,7 @@ function PersonAdvance({ form, focusHide = [] }) {
             </div>
           </>
         )}
-        {!focusHide.includes('Other') && (
+        { focusHide && !focusHide.includes('Other') && (
           <>
             <span className="col-lg-12 mt-3 font-14-rem color-main">
               <b>OTROS</b>

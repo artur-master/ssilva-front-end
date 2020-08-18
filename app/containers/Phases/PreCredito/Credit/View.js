@@ -9,7 +9,7 @@ import Alert from 'components/Alert';
 
 const CreditView = ({ entity = {} }) => {
   if(!entity.PreAprobacionCreditoID) return null;
-  
+
   return (
     <Collapse isOpen>
       <CollapseHeader>CRÉDITOS PRE APROBADOS</CollapseHeader>
@@ -56,9 +56,11 @@ const CreditView = ({ entity = {} }) => {
                   <Label style={{ minWidth: '12em' }} className="pt-0">
                     Pre Aprobación
                   </Label>
+                  {entity.DocumentPreApprobal &&
                   <a href={entity.DocumentPreApprobal} target="_blank">
                     Ver archivo
                   </a>
+                  }
                 </FormGroup>
               </div>
               <div className="mt-4 mb-3">
