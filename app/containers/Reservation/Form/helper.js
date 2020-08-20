@@ -91,6 +91,6 @@ export const canSendToControl = (documents, isCompany) => {
   if(!documents || Object.keys(documents).length == 0)  return false;
   
   const flag = requiredSaveDocuments(isCompany).find((value)=>documents[value]==="");
-
+console.log(flag);
   return flag === undefined;
 };
