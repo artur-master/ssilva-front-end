@@ -46,7 +46,7 @@ function CuotasForm({ form, onHide, onView }) {
     Cuotas.forEach(cuota => {
       totalFee = Number(totalFee) + cuota.Amount;
     });
-    const fee = Number(totalFee / number);
+    const fee = Number(totalFee / number).toFixed(2);
     Cuotas = [];
     const existedNumber = Cuotas.length;
     if (number > 0) {
