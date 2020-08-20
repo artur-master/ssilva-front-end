@@ -26,12 +26,13 @@ const PhasePreCreditoForm = ({
     {form => {
       const { values, submitForm } = form;
       const isContado = isContadoPayment(values.PayType);
-      let moneyErr = false;
+      const { IsCompany=false } = values.Cliente;
+
+      let new_moneyErr = false;
       if (!isContado) {
-        const { SumRenta } = calculateRenta(values);
+        const { moneyErr, SumRenta } = calculateRenta(values);
         const { total, discount } = calculates(values);
-        moneyErr = Math.floor(total - discount) >= SumRenta;
-console.log(total, discount, Math.floor(total - discount), SumRenta);
+        new_moneyErr = moneyErr && Math.floor(total - discount) >= SumRenta;
       }
 
       const PatrimonyTabs =  [{
@@ -42,12 +43,10 @@ console.log(total, discount, Math.floor(total - discount), SumRenta);
         PatrimonyTabs.push({
           label: 'Co-deudor', content: ( <CoPatrimony form={form} /> ),
         });
-//ARTUR
-console.log("This is MoneyErr and isConfirmed:", moneyErr, isConfirmed);
 
       return (
         <>
-          {!isContado && (
+          {!isContado && !IsCompany && (
             <Box collapse isOpen={!values.ReservaID}>
               <BoxHeader>
                 <b>PRE APROBACIÓN DE CRÉDITO</b>
@@ -58,6 +57,7 @@ console.log("This is MoneyErr and isConfirmed:", moneyErr, isConfirmed);
                     <Labor values={values} group="Cliente" />
                     <Renta group="Cliente" form={form} />
                   </article>
+
                   {values.Codeudor && (
                     <Codeudor
                       form={form}
@@ -81,7 +81,7 @@ console.log("This is MoneyErr and isConfirmed:", moneyErr, isConfirmed);
                 <b>RESERVA </b>| Paso {step} de 3
               </span>
               <Button
-                disabled={moneyErr || !isConfirmed}
+                disabled={new_moneyErr || !isConfirmed}
                 className="order-3"
                 onClick={evt => {
                   evt.preventDefault();
