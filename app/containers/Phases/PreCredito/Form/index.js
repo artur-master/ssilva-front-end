@@ -31,6 +31,7 @@ const PhasePreCreditoForm = ({
         const { SumRenta } = calculateRenta(values);
         const { total, discount } = calculates(values);
         moneyErr = Math.floor(total - discount) >= SumRenta;
+console.log(total, discount, Math.floor(total - discount), SumRenta);
       }
 
       const PatrimonyTabs =  [{
