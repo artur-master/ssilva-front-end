@@ -65,10 +65,9 @@ function DocumentItem({
         <FormikField
           name={documentoType}
           validate={value => {
-
             const state = entity ? (entity.ReservaState === "Pendiente información") : false;
             const requiredTypes = state ? requiredSendToControl : entity ? requiredSaveDocuments(entity.Cliente.IsCompany) : [];
-console.log("this is for Validation:", state, requiredTypes, required, documentoType, Documentos[documentoType], value);
+console.log("this is for Validation:", entity, requiredTypes, required, documentoType, Documentos[documentoType], value);
             if (required && requiredTypes.includes(documentoType) &&  !Documentos[documentoType] && !value ) 
               return 'Este campo es requerido';
             return null;
