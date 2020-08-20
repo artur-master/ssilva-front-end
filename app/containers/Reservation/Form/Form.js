@@ -52,6 +52,7 @@ export function Form({ project, selector, dispatch }) {
   const canConfirm = canConfirmReservation(entity);
   const canUpload = canUploadReservation(entity);
   const canReview = canReviewReservation(entity);
+console.log("this is CanReview:", canReview);
   const initialValues = model({ project, entity });
 
   const handleConfirm = (data, confirm) => {
