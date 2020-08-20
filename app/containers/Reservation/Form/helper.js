@@ -38,14 +38,13 @@ export const isValidData = reservation => {
   return isValidClient(reservation) && !moneyErr && isValidLabor(reservation, reservation.PayType);
 };
 
-export const canReviewReservation = reservation => {
-  console.log("this is Auth:", Auth);
-  return !window.project
+export const canReviewReservation = reservation => 
+  !window.project
     ? false
     : UserProject.in(window.project) &&
-      Auth.hasOneOfPermissions(['Es asistente comercial']) &&
+      Auth.isAC() &&
       reservation.ReservaState === RESERVA_STATE[1];
-}
+
 export const canUploadReservation = reservation =>
   !window.project
     ? false
