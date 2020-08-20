@@ -42,7 +42,7 @@ const PhasePreCreditoForm = ({
           label: 'Co-deudor', content: ( <CoPatrimony form={form} /> ),
         });
 //ARTUR
-console.log(moneyErr, isConfirmed);
+console.log("This is MoneyErr and isConfirmed:", moneyErr, isConfirmed);
 
       return (
         <>

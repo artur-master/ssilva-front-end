@@ -32,7 +32,6 @@ export const Auth = {
 
   hasOneOfPermissions: permissions => {
     const userPermissions = Auth.get('user_permissions');
-console.log("This is userPermissions:", userPermissions);
     let hasPermission = false;
     userPermissions.forEach(permission => {
       if (permissions.includes(permission)) hasPermission = true;

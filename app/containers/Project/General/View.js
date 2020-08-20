@@ -53,7 +53,6 @@ function GeneralView({ canEdit, selectorProject, selector, onEdit, isCollapse = 
               ))}
               <div className="col-md-12 mt-3">
                 <Label>Cláusulas del Proyecto</Label>
-                {console.log(project['ProjectClauses'])}
                 <div class="btype shadow-sm mt-2">
                   <textarea rows="5" class="form-control form-control-sm" readOnly value={project['ProjectClauses'] || ""} />
                 </div>

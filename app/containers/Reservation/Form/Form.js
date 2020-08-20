@@ -134,6 +134,8 @@ export function Form({ project, selector, dispatch }) {
             else dispatch(push(`/proyectos/${project.ProyectoID}/reservas`));
           }}
           onSave={(documents) => {
+            console.log("This is SendtoControl:", initialValues.sendControl);
+            
             if (initialValues.sendControl){
               if (!isValid) return setOpenAlert(true);
               return dispatch(
