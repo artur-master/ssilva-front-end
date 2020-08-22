@@ -22,6 +22,7 @@ const ExClients = props => {
 
         const getInTouched = getIn(form.touched, field.name);
         const getInErrors = getIn(form.errors, field.name);
+
         return (
           <div style={style}>
             <Element

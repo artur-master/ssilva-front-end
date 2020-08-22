@@ -87,6 +87,7 @@ const Renta = ({ group = 'Cliente', form }) => {
         addCodeudor={evt => {
           evt.preventDefault();
           form.setFieldValue('Codeudor', {
+            UserID: "",
             Extra: {
               Values: {
                 Honoraries: '',

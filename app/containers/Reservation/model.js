@@ -26,6 +26,7 @@ export default function model({ project = {}, entity = {} }) {
     },
     Documents: entity.Documents || {},
     IsOwner: !(entity.Patrimony && entity.Patrimony.Rent),
+    CoIsOwner: !(entity.CoPatrimony && entity.CoPatrimony.Rent),
     Patrimony: entity.Patrimony || {
       RealState: '',
       Rent: '',

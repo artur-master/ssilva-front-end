@@ -7,6 +7,8 @@ export const getDocuments = entity => {
   const hasProfesion = (entity.Cliente.Ocupation.trim() !== "");
   const hasTieneDeposito = entity.Patrimony.DownPayment !== 0;
   const hasTieneCredito = entity.Patrimony.CreditoConsumo.PagosMensuales !== 0;
+  const hasVehicle = entity.Patrimony.Vehicle !== 0;
+  const isOwner = entity.Patrimony.Rent == 0;
 
   const totalActivos =
     entity.Patrimony.RealState +
@@ -64,13 +66,6 @@ export const getDocuments = entity => {
       required: true,
       offerta: true,
     },
-    //offerta
-    // {
-    //   documentoName: 'Cheques',
-    //   documentoType: 'DocumentFirmadoCheques',
-    //   accept: 'pdf',
-    //   firmado: true,
-    // },
     {
       documentoName: 'Ficha Pre-aprobacion',
       documentoType: 'DocumentFichaPreAprobacion',
@@ -93,107 +88,157 @@ export const getDocuments = entity => {
         firmado: true,
         required: true,
       },
-      // {
-      //   documentoName: 'Simulación de crédito',
-      //   documentoType: 'DocumentFirmadoSimulador',
-      //   accept: 'pdf',
-      //   // firmado: true,
-      //   required: true,
-      // },
     ];
 
     if(totalActivos>0)
-      baseDocuments = [
-        ...baseDocuments,
-        {
-          documentoName: 'Acreditación de Activo',
-          documentoType: 'DocumentAcredittacionActivo',
-          required: true,
-        },
-      ];
-    if(totalPasivos>0)
-      baseDocuments = [
-        ...baseDocuments,
-        {
-          documentoName: 'Acreditación de pago Deudas (crédito de consumo, deuda hipotecaria, pago de líneas de crédito, etc)',
-          documentoType: 'DocumentAcredittacionDeudas',
-          required: true,
-        },
-      ];
-    
+      baseDocuments.push({
+        documentoName: 'Acreditación de Activo',
+        documentoType: 'DocumentAcredittacionActivo',
+        required: true,
+      });
   }
 
   if (!isCompany && entity.Cliente.CivilStatus === 'Casado(a)') {
     baseDocuments.push({
       documentoName: 'Certificado Matrimonio',
       documentoType: 'DocumentCertificadoMatrimonio',
-      // firmado: true,
       required: true,
       offerta: true,
     });
   }
 
-  if (isCompany && isCreditPayment(entity.PayType)) {
-    baseDocuments = [
-      ...baseDocuments,
-      {
-        documentoName: 'Constitucion de Sociedad',
-        documentoType: 'DocumentConstitucionSociedad',
-        // firmado: true,
-        // required: true,
-      },
-      {
-        documentoName: 'Certificado de Vigencia de sociedad',
-        accept: 'pdf',
-        documentoType: 'DocumentCertificadoSociedad',
-        required: true,
-      },
-      {
-        documentoName: 'Carpeta Tributaria de Últimos Dos Años',
-        documentoType: 'DocumentCarpetaTributaria',
-        required: true,
-      },
-      {
-        documentoName: '3 Últimos Balances Timbrados',
-        documentoType: 'DocumentBalancesTimbrados',
-        required: true,
-      },
-    ];
-  }
-
-  if (isIndependent) {
-    baseDocuments = [
-      ...baseDocuments,
-      {
-        documentoName: '6 Últimas boletas de homorarios o pagos IVA',
-        documentoType: 'Document6IVA',
-        required: true,
-      },
-      {
-        documentoName: '2 Últimas declaraciones anuales de renta (DAI)',
-        documentoType: 'Document2DAI',
-        required: true,
-      },
-    ];
-    if (hasProfesion) {
-      baseDocuments.push({
-        documentoName: 'Fotocopia de Título Profesional',
-        documentoType: 'DocumentTituloProfesional',
-        required: true,
-      });
+  // Creditos
+  if ( isCreditPayment(entity.PayType) ) {
+    if (isCompany){ //Empresa Client
+      baseDocuments = [
+        ...baseDocuments,
+        {
+          documentoName: 'Constitucion de Sociedad',
+          documentoType: 'DocumentConstitucionSociedad',
+          // firmado: true,
+          required: true,
+        },
+        {
+          documentoName: 'Certificado de Vigencia de sociedad',
+          accept: 'pdf',
+          documentoType: 'DocumentCertificadoSociedad',
+          required: true,
+        },
+        {
+          documentoName: 'Carpeta Tributaria de Últimos Dos Años',
+          documentoType: 'DocumentCarpetaTributaria',
+          required: true,
+        },
+        {
+          documentoName: '3 Últimos Balances Timbrados',
+          documentoType: 'DocumentBalancesTimbrados',
+          required: true,
+        },
+      ];
     }
-    if (hasTieneDeposito)
-      baseDocuments.push({
-        documentoName: 'Acreditación de Ahorros',
-        documentoType: 'DocumentAcredittacionAhorros',
-        required: true,
-      });
-    // if (hasTieneCredito)
-    //   baseDocuments.push({
-    //     documentoName: 'Acreditación de pago Deudas',
-    //     documentoType: 'DocumentAcredittacionDeudas',
-    //     required: true,
-    //   });
+    else //Personal Client
+    {  
+      if (isIndependent) // Independente
+      { 
+        baseDocuments = [
+          ...baseDocuments,
+          {
+            documentoName: '6 Últimas boletas de homorarios o pagos IVA',
+            documentoType: 'Document6IVA',
+            required: true,
+          },
+          {
+            documentoName: '2 Últimas declaraciones anuales de renta (DAI)',
+            documentoType: 'Document2DAI',
+            required: true,
+          },
+        ];
+        
+        if (hasTieneDeposito) {
+          baseDocuments.push({
+            documentoName: 'Acreditación de Ahorros (Vale Vista, Libreta de ahorro subsidio, etc.)',
+            documentoType: 'DocumentAcredittacionAhorros',
+          });
+        }
+
+        if (hasProfesion) {
+          baseDocuments.push({
+            documentoName: 'Fotocopia de Título Profesional',
+            documentoType: 'DocumentTituloProfesional',
+          });
+        }
+
+        if (hasTieneCredito)
+          baseDocuments.push({
+            documentoName: 'Acreditación de pago Deudas (crédito de consumo, deuda hipotecaria, pago de líneas de crédito, etc.)',
+            documentoType: 'DocumentAcredittacionDeudas',
+          });
+      }
+      else // Contrato
+      {
+        if(!entity.Cliente.Extra.Values.LiquidIncome || entity.Cliente.Extra.Values.LiquidIncome=="") {
+          baseDocuments.push({
+            documentoName: '3 ultimas liquidaciones de sueldo para renta fija',
+            documentoType: 'DocumentLiquidacion1',
+            required: true,
+          });
+        }
+  
+        if(!entity.Cliente.Extra.Values.VariableSalary || entity.Cliente.Extra.Values.VariableSalary=="") {
+          baseDocuments.push({
+            documentoName: '6 ultimas liquidaciones de sueldo para renta variable',
+            documentoType: 'DocumentLiquidacion2',
+            required: true,
+          });
+        }
+  
+        baseDocuments = [
+          ...baseDocuments,
+          {
+            documentoName: '12 ultimas cotizaciones de AFP',
+            documentoType: 'DocumentCotizacionAFP',
+            required: true,
+          },
+          {
+            documentoName: 'Certificado de antigüedad laboral',
+            documentoType: 'DocumentCotizacionLaboral',
+            required: true,
+          }
+        ];
+  
+        if(totalPasivos>0) {
+          baseDocuments.push({
+            documentoName: 'Acreditación de cuotas de crédito de consumo, deuda hipotecaria y l- íneas de créditos si corresponde',
+            documentoType: 'DocumentAcredittacionCuotas',
+            required: true,
+          });
+        }
+  
+        if (hasProfesion) {
+          baseDocuments.push({
+            documentoName: 'Fotocopia de Título Profesional',
+            documentoType: 'DocumentTituloProfesional',
+            required: true,
+          });
+        }
+        
+        if (hasVehicle) {
+          baseDocuments.push({
+            documentoName: 'Vehículos (Fotocopia del permiso de circulación)',
+            documentoType: 'DocumentVehicle',
+            required: true,
+          });
+        }
+
+        if (isOwner) {
+          baseDocuments.push({
+            documentoName: 'Propiedades (Fotocopia de Escritura)',
+            documentoType: 'DocumentPhotoEscritura',
+            required: true,
+          });
+        }
+      }
+    }
   }
 
   if (!isCompany) {
@@ -204,67 +249,24 @@ export const getDocuments = entity => {
         documentoType: 'DocumentFotocopiaCarnet',
         required: true,
         offerta: true,
-      },
-      // {
-      //   documentoName: 'Cotizaciones AFP',
-      //   documentoType: 'DocumentCotizacionAFP',
-      //   required: true,
-      // },
-      // {
-      //   documentoName: 'PreAprobación De Crédito',
-      //   documentoType: 'DocumentPreApprobation',
-      //   accept: 'pdf',
-      //   firmado: true,
-      //   required: true,
-      // },      
+      },      
     ];
-
-    if(!entity.Cliente.Extra.Values.VariableSalary || 
-        entity.Cliente.Extra.Values.VariableSalary==""){
-      if(isCreditPayment(entity.PayType) && !isIndependent)
-        baseDocuments = [
-          ...baseDocuments,
-          {
-            documentoName: 'Últimos 3 liquidaciones',
-            documentoType: 'DocumentLiquidacion1',
-            required: true,
-          },
-        ];
-
-      if(isCreditPayment(entity.PayType))
-        baseDocuments = [
-          ...baseDocuments,
-          {
-            documentoName: 'Últimos 6 liquidaciones',
-            documentoType: 'DocumentLiquidacion2',
-            required: true,
-          },
-        ];
-    } 
-    // else
-    //   baseDocuments = [
-    //     ...baseDocuments,
-    //     {
-    //       documentoName: 'Últimos 6 liquidaciones',
-    //       documentoType: 'DocumentLiquidacion2',
-    //       required: true,
-    //     },
-    //   ];
   }
 
   return baseDocuments;
 };
+
 export const CodeudorDocuments = entity => {
   const isCompany = stringToBoolean(entity.Cliente.IsCompany);
   const isIndependent = stringToBoolean(entity.Cliente.Extra.Independent);
-  // const hasProfesion = stringToBoolean(entity.Cliente.Ocupation);
   const hasProfesion = (entity.Cliente.Ocupation.trim() !== "");
   const hasTieneDeposito = entity.Patrimony.DownPayment !== 0;
   const hasTieneCredito = entity.Patrimony.CreditoConsumo.PagosMensuales !== 0;
+  const hasVehicle = entity.Patrimony.Vehicle !== 0;
+  const isOwner = entity.Patrimony.Rent == 0;
 
   const totalActivos =
     entity.Patrimony.RealState +
-    // values.Patrimony.CreditoHipotecario.PagosMensuales +
     entity.Patrimony.Vehicle +
     entity.Patrimony.DownPayment +
     entity.Patrimony.Other;
@@ -277,64 +279,10 @@ export const CodeudorDocuments = entity => {
     entity.Patrimony.AnotherCredit.Pasivos +
     entity.Patrimony.CreditoComercio.Pasivos;
 
-  let baseDocuments = [
-    //offerta
-    {
-      documentoName: 'Cotizacion',
-      documentoType: 'DocumentCodeudorCotizacion',
-      autoGenerate: true,
-      offerta: true,
-    },
-    {
-      documentoName: 'Oferta',
-      documentoType: 'DocumentCodeudorOferta',
-      autoGenerate: true,
-      offerta: true,
-    },
-    {
-      documentoName: 'Cotizacion Firmada',
-      accept: 'pdf',
-      documentoType: 'DocumentCodeudorFirmadoCotizacion',
-      firmado: true,
-      required: true,
-      offerta: true,
-    },
-    {
-      documentoName: 'Oferta Firmada',
-      documentoType: 'DocumentCodeudorOfertaFirmada',
-      firmado: true,
-      required: true,
-      offerta: true,
-    },
-    {
-      documentoName: 'Plano',
-      documentoType: 'DocumentCodeudorPlanoFirmada',
-      firmado: true,
-      required: true,
-      offerta: true,
-    },
-    //offerta
-    // {
-    //   documentoName: 'Cheques',
-    //   documentoType: 'DocumentFirmadoCheques',
-    //   accept: 'pdf',
-    //   firmado: true,
-    // },
-    {
-      documentoName: 'Ficha Pre-aprobacion',
-      documentoType: 'DocumentCodeudorFichaPreAprobacion',
-      autoGenerate: true,
-    },
-    {
-      documentoName: 'Simulación de crédito',
-      documentoType: 'DocumentCodeudorSimulador',
-      autoGenerate: true,
-    },
-  ];
+  let baseDocuments = [];
 
   if(isCreditPayment(entity.PayType)) {
     baseDocuments = [
-      ...baseDocuments,
       {
         documentoName: 'Ficha Pre-aprobacion',
         documentoType: 'DocumentCodeudorFirmadoFichaPreAprobacion',
@@ -342,16 +290,9 @@ export const CodeudorDocuments = entity => {
         firmado: true,
         required: true,
       },
-      // {
-      //   documentoName: 'Simulación de crédito',
-      //   documentoType: 'DocumentFirmadoSimulador',
-      //   accept: 'pdf',
-      //   // firmado: true,
-      //   required: true,
-      // },
     ];
 
-    if(totalActivos>0)
+    if(totalActivos>0) {
       baseDocuments = [
         ...baseDocuments,
         {
@@ -360,89 +301,149 @@ export const CodeudorDocuments = entity => {
           required: true,
         },
       ];
-    if(totalPasivos>0)
-      baseDocuments = [
-        ...baseDocuments,
-        {
-          documentoName: 'Acreditación de pago Deudas (crédito de consumo, deuda hipotecaria, pago de líneas de crédito, etc)',
-          documentoType: 'DocumentCodeudorAcredittacionDeudas',
-          required: true,
-        },
-      ];
-    
+    }
   }
 
   if (!isCompany && entity.Cliente.CivilStatus === 'Casado(a)') {
     baseDocuments.push({
       documentoName: 'Certificado Matrimonio',
       documentoType: 'DocumentCodeudorCertificadoMatrimonio',
-      // firmado: true,
-      required: true,
-      offerta: true,
+      required: true
     });
   }
 
-  if (isCompany && isCreditPayment(entity.PayType)) {
-    baseDocuments = [
-      ...baseDocuments,
-      {
-        documentoName: 'Constitucion de Sociedad',
-        documentoType: 'DocumentCodeudorConstitucionSociedad',
-        // firmado: true,
-        // required: true,
-      },
-      {
-        documentoName: 'Certificado de Vigencia de sociedad',
-        accept: 'pdf',
-        documentoType: 'DocumentCodeudorCertificadoSociedad',
-        required: true,
-      },
-      {
-        documentoName: 'Carpeta Tributaria de Últimos Dos Años',
-        documentoType: 'DocumentCodeudorCarpetaTributaria',
-        required: true,
-      },
-      {
-        documentoName: '3 Últimos Balances Timbrados',
-        documentoType: 'DocumentCodeudorBalancesTimbrados',
-        required: true,
-      },
-    ];
-  }
-
-  if (isIndependent) {
-    baseDocuments = [
-      ...baseDocuments,
-      {
-        documentoName: '6 Últimas boletas de homorarios o pagos IVA',
-        documentoType: 'DocumentCodeudor6IVA',
-        required: true,
-      },
-      {
-        documentoName: '2 Últimas declaraciones anuales de renta (DAI)',
-        documentoType: 'DocumentCodeudor2DAI',
-        required: true,
-      },
-    ];
-    if (hasProfesion) {
-      baseDocuments.push({
-        documentoName: 'Fotocopia de Título Profesional',
-        documentoType: 'DocumentCodeudorTituloProfesional',
-        required: true,
-      });
+  // Creditos
+  if ( isCreditPayment(entity.PayType) ) {
+    if (isCompany){ //Empresa Client
+      baseDocuments = [
+        ...baseDocuments,
+        {
+          documentoName: 'Constitucion de Sociedad',
+          documentoType: 'DocumentCodeudorConstitucionSociedad',
+          required: true,
+        },
+        {
+          documentoName: 'Certificado de Vigencia de sociedad',
+          accept: 'pdf',
+          documentoType: 'DocumentCodeudorCertificadoSociedad',
+          required: true,
+        },
+        {
+          documentoName: 'Carpeta Tributaria de Últimos Dos Años',
+          documentoType: 'DocumentCodeudorCarpetaTributaria',
+          required: true,
+        },
+        {
+          documentoName: '3 Últimos Balances Timbrados',
+          documentoType: 'DocumentCodeudorBalancesTimbrados',
+          required: true,
+        },
+      ];
     }
-    if (hasTieneDeposito)
-      baseDocuments.push({
-        documentoName: 'Acreditación de Ahorros',
-        documentoType: 'DocumentCodeudorAcredittacionAhorros',
-        required: true,
-      });
-    // if (hasTieneCredito)
-    //   baseDocuments.push({
-    //     documentoName: 'Acreditación de pago Deudas',
-    //     documentoType: 'DocumentAcredittacionDeudas',
-    //     required: true,
-    //   });
+    else //Personal Client
+    {  
+      if (isIndependent) // Independente
+      { 
+        baseDocuments = [
+          ...baseDocuments,
+          {
+            documentoName: '6 Últimas boletas de homorarios o pagos IVA',
+            documentoType: 'DocumentCodeudor6IVA',
+            required: true,
+          },
+          {
+            documentoName: '2 Últimas declaraciones anuales de renta (DAI)',
+            documentoType: 'DocumentCodeudor2DAI',
+            required: true,
+          },
+        ];
+        
+        if (hasTieneDeposito) {
+          baseDocuments.push({
+            documentoName: 'Acreditación de Ahorros (Vale Vista, Libreta de ahorro subsidio, etc.)',
+            documentoType: 'DocumentCodeudorAcredittacionAhorros',
+          });
+        }
+
+        if (hasProfesion) {
+          baseDocuments.push({
+            documentoName: 'Fotocopia de Título Profesional',
+            documentoType: 'DocumentCodeudorTituloProfesional',
+          });
+        }
+
+        if (hasTieneCredito) {
+          baseDocuments.push({
+            documentoName: 'Acreditación de pago Deudas (crédito de consumo, deuda hipotecaria, pago de líneas de crédito, etc.)',
+            documentoType: 'DocumentCodeudorAcredittacionDeudas',
+          });
+        }
+      }
+      else // Contrato
+      {
+        if(!entity.Cliente.Extra.Values.LiquidIncome || entity.Cliente.Extra.Values.LiquidIncome=="") {
+          baseDocuments.push({
+            documentoName: '3 ultimas liquidaciones de sueldo para renta fija',
+            documentoType: 'DocumentCodeudorLiquidacion1',
+            required: true,
+          });
+        }
+
+        if(!entity.Cliente.Extra.Values.VariableSalary || entity.Cliente.Extra.Values.VariableSalary=="") {
+          baseDocuments.push({
+            documentoName: '6 ultimas liquidaciones de sueldo para renta variable',
+            documentoType: 'DocumentCodeudorLiquidacion2',
+            required: true,
+          });
+        }
+
+        baseDocuments = [
+          ...baseDocuments,
+          {
+            documentoName: '12 ultimas cotizaciones de AFP',
+            documentoType: 'DocumentCodeudorCotizacionAFP',
+            required: true,
+          },
+          {
+            documentoName: 'Certificado de antigüedad laboral',
+            documentoType: 'DocumentCodeudorCotizacionLaboral',
+            required: true,
+          }
+        ];
+
+        if(totalPasivos>0) {
+          baseDocuments.push({
+            documentoName: 'Acreditación de cuotas de crédito de consumo, deuda hipotecaria y l- íneas de créditos si corresponde',
+            documentoType: 'DocumentCodeudorAcredittacionCuotas',
+            required: true,
+          });
+        }
+
+        if (hasProfesion) {
+          baseDocuments.push({
+            documentoName: 'Fotocopia de Título Profesional',
+            documentoType: 'DocumentCodeudorTituloProfesional',
+            required: true,
+          });
+        }
+        
+        if (hasVehicle) {
+          baseDocuments.push({
+            documentoName: 'Vehículos (Fotocopia del permiso de circulación)',
+            documentoType: 'DocumentCodeudorVehicle',
+            required: true,
+          });
+        }
+
+        if (isOwner) {
+          baseDocuments.push({
+            documentoName: 'Propiedades (Fotocopia de Escritura)',
+            documentoType: 'DocumentCodeudorPhotoEscritura',
+            required: true,
+          });
+        }
+      }
+    }
   }
 
   if (!isCompany) {
@@ -451,209 +452,23 @@ export const CodeudorDocuments = entity => {
       {
         documentoName: 'Fotocopia Cédula de Indentidad',
         documentoType: 'DocumentCodeudorFotocopiaCarnet',
-        required: true,
-        offerta: true,
-      },
-      // {
-      //   documentoName: 'Cotizaciones AFP',
-      //   documentoType: 'DocumentCotizacionAFP',
-      //   required: true,
-      // },
-      // {
-      //   documentoName: 'PreAprobación De Crédito',
-      //   documentoType: 'DocumentPreApprobation',
-      //   accept: 'pdf',
-      //   firmado: true,
-      //   required: true,
-      // },      
+        required: true
+      }    
     ];
-
-    if(!entity.Cliente.Extra.Values.VariableSalary || 
-        entity.Cliente.Extra.Values.VariableSalary==""){
-      if(isCreditPayment(entity.PayType) && !isIndependent)
-        baseDocuments = [
-          ...baseDocuments,
-          {
-            documentoName: 'Últimos 3 liquidaciones',
-            documentoType: 'DocumentCodeudorLiquidacion1',
-            required: true,
-          },
-        ];
-
-      if(isCreditPayment(entity.PayType))
-        baseDocuments = [
-          ...baseDocuments,
-          {
-            documentoName: 'Últimos 6 liquidaciones',
-            documentoType: 'DocumentCodeudorLiquidacion2',
-            required: true,
-          },
-        ];
-    } 
-    // else
-    //   baseDocuments = [
-    //     ...baseDocuments,
-    //     {
-    //       documentoName: 'Últimos 6 liquidaciones',
-    //       documentoType: 'DocumentLiquidacion2',
-    //       required: true,
-    //     },
-    //   ];
   }
 
   return baseDocuments;
 };
 
-/*
-export const CodeudorDocuments = entity => {
-  const isCompany = stringToBoolean(entity.Cliente.IsCompany);
-  const isIndependent = stringToBoolean(entity.Cliente.Extra.Independent);
-  const hasProfesion = stringToBoolean(entity.Cliente.Ocupation);
-  const hasTieneDeposito = !!entity.Patrimony.DownPayment;
-  const hasTieneCredito = !!entity.Patrimony.CreditoConsumo.PagosMensuales;
-  let baseDocuments = [
-    // {
-    //   documentoName: 'Cheques',
-    //   documentoType: 'DocumentCodeudorFirmadoCheques',
-    //   accept: 'pdf',
-    //   firmado: true,
-    // },
-    {
-      documentoName: 'Ficha Pre-aprobacion',
-      documentoType: 'DocumentCodeudorFichaPreAprobacion',
-      autoGenerate: true,
-    },
-    {
-      documentoName: 'Simulación de crédito',
-      documentoType: 'DocumentCodeudorSimulador',
-      autoGenerate: true,
-    },
-    {
-      documentoName: 'Cotizacion',
-      accept: 'pdf',
-      documentoType: 'DocumentCodeudorCotizacion',
-      firmado: true,
-      required: true,
-    },
-  ];
-  if (!isCompany && entity.Cliente.CivilStatus !== 'Soltero(a)') {
-    baseDocuments.push({
-      documentoName: 'Certificado Matrimonio',
-      documentoType: 'DocumentCodeudorCertificadoMatrimonio',
-    });
-  }
-  if (isCompany) {
-    baseDocuments = [
-      ...baseDocuments,
-      // {
-      //   documentoName: 'Simulación de crédito',
-      //   documentoType: 'DocumentCodeudorFirmadoSimulador',
-      //   accept: 'pdf',
-      //   // firmado: true,
-      // },
-      {
-        documentoName: 'Constitucion Sociedad',
-        documentoType: 'DocumentCodeudorConstitucionSociedad',
-        firmado: true,
-        required: true,
-      },
-      {
-        documentoName: 'Certificado de Vigencia de sociedad',
-        accept: 'pdf',
-        documentoType: 'DocumentCodeudorCertificadoSociedad',
-        required: true,
-      },
-      {
-        documentoName: 'Carpeta Tributaria de Últimos Dos Años',
-        documentoType: 'DocumentCodeudorCarpetaTributaria',
-        required: true,
-      },
-      {
-        documentoName: '3 Últimos Balances Timbrados',
-        documentoType: 'DocumentCodeudorBalancesTimbrados',
-        required: true,
-      },
-    ];
-  }
-
-  if (isIndependent) {
-    baseDocuments = [
-      ...baseDocuments,
-      {
-        documentoName: '6 Últimas boletas de homorarios o pagos IVA',
-        documentoType: 'Document6IVACodeudor',
-        required: true,
-      },
-      {
-        documentoName: '2 Últimas declaraciones anuales de renta (DAI)',
-        documentoType: 'Document2DAICodeudor',
-        required: true,
-      },
-    ];
-    if (hasProfesion) {
-      baseDocuments.push({
-        documentoName: 'Fotocopia de Título Profesional',
-        documentoType: 'DocumentCodeudorTituloProfesional',
-        required: true,
-      });
-    }
-    if (hasTieneDeposito) {
-      baseDocuments.push({
-        documentoName: 'Acreditación de Ahorros',
-        documentoType: 'DocumentCodeudorAcredittacionAhorros',
-        required: true,
-      });
-    }
-    // if (hasTieneCredito)
-    //   baseDocuments.push({
-    //     documentoName: 'Acreditación de pago Deudas',
-    //     documentoType: 'DocumentCodeudorAcredittacionDeudas',
-    //     required: true,
-    //   });
-  }
-
-  if (!isCompany) {
-    baseDocuments = [
-      {
-        documentoName: 'Fotocopia Carnet',
-        documentoType: 'DocumentCodeudorFotocopiaCarnet',
-        required: true,
-      },
-      ...baseDocuments,      
-      {
-        documentoName: 'Liquidacion 1',
-        documentoType: 'DocumentCodeudorLiquidacion1',
-        required: true,
-      },
-      {
-        documentoName: 'Liquidacion 2',
-        documentoType: 'DocumentCodeudorLiquidacion2',
-        required: true,
-      },
-      {
-        documentoName: 'Liquidacion 3',
-        documentoType: 'DocumentCodeudorLiquidacion3',
-        required: true,
-      },
-    ];
-  }
-  return baseDocuments;
-}
-*/
-
-export const requiredSaveDocuments =(isCompany)=>{
-  const base = [
-    "DocumentPagoGarantia",
-    "DocumentOfertaFirmada",
-    "DocumentFirmadoCotizacion",
-    "DocumentPlanoFirmada",
-    'DocumentFirmadoFichaPreAprobacion'
-  ];
-
-  if(!isCompany) base.push('DocumentFotocopiaCarnet')
-
-  return base;
-}
+export const requiredSaveDocuments = [  
+  "DocumentPagoGarantia",
+  "DocumentOfertaFirmada",
+  "DocumentFirmadoCotizacion",
+  "DocumentPlanoFirmada",
+  'DocumentFirmadoFichaPreAprobacion',
+  'DocumentFotocopiaCarnet', 
+  'DocumentCotizacionAFP'
+]
   
 export const requiredSendToControl = [
     'Document6IVA',
@@ -661,6 +476,13 @@ export const requiredSendToControl = [
     'DocumentAcredittacionAhorros',
     'DocumentTituloProfesional',
     'DocumentCertificadoMatrimonio',
-    // 'DocumentAcredittacionActivo',
-    // 'DocumentAcredittacionDeudas',
+    'DocumentConstitucionSociedad',
+    'DocumentCertificadoSociedad',
+    'DocumentCarpetaTributaria',
+    'DocumentBalancesTimbrados',
+    'DocumentCotizacionLaboral',
+    'DocumentAcredittacionCuotas',
+    'DocumentVehicle',
+    'DocumentPhotoEscritura',
+
 ]

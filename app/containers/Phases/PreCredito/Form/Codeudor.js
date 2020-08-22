@@ -31,6 +31,7 @@ const Codeudor = ({ form, removeCodeudor }) => (
           canEdit={false}
           canAdd={!form.values.CodeudorID}
           name="Codeudor.UserID"
+          required
           onSelect={val => {
             form.setFieldValue('Codeudor', val);
             form.setFieldValue('CodeudorID', val.UserID);

@@ -114,7 +114,7 @@ export function Form({ project, selector, dispatch }) {
         step={step}
         dispatch={dispatch}
         onContinue={values => {
-          setStep(step + 1);          
+          setStep(step + 1);
           dispatch(updateReservation(values));
         }}
       />
@@ -134,7 +134,7 @@ export function Form({ project, selector, dispatch }) {
             else dispatch(push(`/proyectos/${project.ProyectoID}/reservas`));
           }}
           onSave={(documents) => {
-            console.log("This is SendtoControl:", initialValues.sendControl);
+            console.log("This is SendtoControl:", entity);
             
             if (initialValues.sendControl){
               if (!isValid) return setOpenAlert(true);

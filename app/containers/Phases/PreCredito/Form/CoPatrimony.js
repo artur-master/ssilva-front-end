@@ -41,21 +41,22 @@ const CoPatrimony = ({ form }) => {
   const handleChangeHasCredits = evt => {
     const hasValue = stringToBoolean(evt.currentTarget.value);
     const { name } = evt.currentTarget;
+    const new_name = name.slice(0, -2);
 
     if (!hasValue) {
-      if (isObject(values.CoPatrimony[name])) {
-        setFieldValue(`CoPatrimony.${name}`, {
+      if (isObject(values.CoPatrimony[new_name])) {
+        setFieldValue(`CoPatrimony.${new_name}`, {
           Pasivos: '',
           PagosMensuales: '',
         });
       } else {
-        setFieldValue(`CoPatrimony.${name}`, '');
+        setFieldValue(`CoPatrimony.${new_name}`, '');
       }
     }
 
     setHasCredits({
       ...hasCredits,
-      [name]: hasValue,
+      [new_name]: hasValue,
     });
   };
 
@@ -70,7 +71,7 @@ const CoPatrimony = ({ form }) => {
         <div className="col-12 col-md-6 mt-3">
           <div className="row">
             <RadioGroup
-              name="IsOwner"
+              name="CoIsOwner"
               options={[
                 { label: 'Propietario', value: '1' },
                 { label: 'Arriendo', value: '0' },
@@ -84,7 +85,7 @@ const CoPatrimony = ({ form }) => {
           <b>Patrimonio Activos</b>
         </span>
         <div className="mt-4 row">
-          {stringToBoolean(values.IsOwner) && (
+          {stringToBoolean(values.CoIsOwner) && (
             <>
               <span className="font-14-rem color-main d-block col-12">
                 <b>¿TIENE BIENES RAÍCES?</b>
@@ -95,7 +96,7 @@ const CoPatrimony = ({ form }) => {
                     { label: 'Si', value: 1 },
                     { label: 'No', value: 0 },
                   ]}
-                  name="RealState"
+                  name="RealState-1"
                   value={hasCredits.RealState}
                   onChange={handleChangeHasCredits}
                 />
@@ -118,7 +119,7 @@ const CoPatrimony = ({ form }) => {
               )}
             </>
           )}
-          {!stringToBoolean(values.IsOwner) && (
+          {!stringToBoolean(values.CoIsOwner) && (
             <>
               <span className="mt-3 font-14-rem color-main d-block col-12">
                 <b className="text-uppercase">¿Cuánto paga de arriendo?</b>
@@ -143,7 +144,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="Vehicle"
+              name="Vehicle-1"
               value={hasCredits.Vehicle}
               onChange={handleChangeHasCredits}
             />
@@ -173,7 +174,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="DownPayment"
+              name="DownPayment-1"
               value={hasCredits.DownPayment}
               onChange={handleChangeHasCredits}
             />
@@ -202,7 +203,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2 col-12">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="Other"
+              name="Other-1"
               value={hasCredits.Other}
               onChange={handleChangeHasCredits}
             />
@@ -248,7 +249,7 @@ const CoPatrimony = ({ form }) => {
         <span className="w-50 border-bottom py-3 d-block">
           <b>Patrimonio Pasivos</b>
         </span>
-        {stringToBoolean(values.IsOwner) && (
+        {stringToBoolean(values.CoIsOwner) && (
           <div className="mt-4 row">
             <span className="font-14-rem color-main d-block col-12">
               <b>¿TIENE CRÉDITO HIPOTECARIO?</b>
@@ -256,7 +257,7 @@ const CoPatrimony = ({ form }) => {
             <div className="mt-2 col-12">
               <PureRadioGroup
                 options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-                name="CreditoHipotecario"
+                name="CreditoHipotecario-1"
                 value={hasCredits.CreditoHipotecario}
                 onChange={handleChangeHasCredits}
               />
@@ -297,7 +298,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2 col-12">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="CreditCard"
+              name="CreditCard-1"
               value={hasCredits.CreditCard}
               onChange={handleChangeHasCredits}
             />
@@ -338,7 +339,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2 col-12">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="CreditoConsumo"
+              name="CreditoConsumo-1"
               value={hasCredits.CreditoConsumo}
               onChange={handleChangeHasCredits}
             />
@@ -381,7 +382,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2 col-12">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="PrestamoEmpleador"
+              name="PrestamoEmpleador-1"
               value={hasCredits.PrestamoEmpleador}
               onChange={handleChangeHasCredits}
             />
@@ -423,7 +424,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2 col-12">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="DeudaIndirecta"
+              name="DeudaIndirecta-1"
               value={hasCredits.DeudaIndirecta}
               onChange={handleChangeHasCredits}
             />
@@ -464,7 +465,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2 col-12">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="AnotherCredit"
+              name="AnotherCredit-1"
               value={hasCredits.AnotherCredit}
               onChange={handleChangeHasCredits}
             />
@@ -503,7 +504,7 @@ const CoPatrimony = ({ form }) => {
           <div className="mt-2 col-12">
             <PureRadioGroup
               options={[{ label: 'Si', value: 1 }, { label: 'No', value: 0 }]}
-              name="CreditoComercio"
+              name="CreditoComercio-1"
               value={hasCredits.CreditoComercio}
               onChange={handleChangeHasCredits}
             />

@@ -67,7 +67,7 @@ function DocumentItem({
           name={documentoType}
           validate={value => {
             const state = entity ? (entity.ReservaState == RESERVA_STATE[0]) : false;
-            const requiredTypes = state ? requiredSendToControl : entity ? requiredSaveDocuments(entity.Cliente.IsCompany) : [];
+            const requiredTypes = state ? requiredSendToControl : requiredSaveDocuments;
             if (required && requiredTypes.includes(documentoType) &&  !Documentos[documentoType] && !value ) 
               return 'Este campo es requerido';
             return null;

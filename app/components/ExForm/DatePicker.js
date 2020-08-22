@@ -17,6 +17,7 @@ export const DatePickerInput = ({
 }) => {
   useEffect(() => {
     const $el = $(`[name="${name}_date"]`);
+    
     const datepicker = $el
       .datepicker({
         language: 'es',
@@ -78,6 +79,7 @@ const DatePicker = ({ name, style={}, valueFormat = null, ...props }) => (
   >
     {({ field, form, meta }) => {
       const isInvalid = meta.touched && meta.error;
+      
       return (
         <div style={style} className={props.className}>
           <DatePickerInput

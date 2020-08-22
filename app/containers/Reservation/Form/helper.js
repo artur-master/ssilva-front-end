@@ -6,7 +6,6 @@ import { UserProject } from 'containers/Project/helper';
 import { isValidClient } from 'containers/Phases/Client/helper';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
 import { isValidLabor } from 'containers/Phases/PreCredito/helper';
-import { requiredSaveDocuments } from 'containers/Phases/Document/documents';
 
 export const currentResevationStep = (reservation = {}) => {
   const { ReservaID, ReservaState } = reservation;
@@ -85,12 +84,4 @@ export const getActionTitle = (reservation = {}) => {
     }
   }
   return 'Crear reserva';
-};
-
-export const canSendToControl = (documents, isCompany) => {
-  if(!documents || Object.keys(documents).length == 0)  return false;
-  
-  const flag = requiredSaveDocuments(isCompany).find((value)=>documents[value]==="");
-
-  return flag === undefined;
 };
