@@ -136,14 +136,14 @@ export function Form({ project, selector, dispatch }) {
           onSave={(documents) => {
             console.log("This is SendtoControl:", entity);
             
+            if (!isValid) return setOpenAlert(true);
             if (initialValues.sendControl){
-              if (!isValid) return setOpenAlert(true);
               return dispatch(
                 sendToControl({ ...initialValues, ...entity }, documents),
               );
             }
             else{
-              // if (!isValid) return setOpenAlert(true);            
+              // if (!isValid) return setOpenAlert(true);
               return dispatch(
                 saveReservation({ ...initialValues, ...entity }, documents),
               );
