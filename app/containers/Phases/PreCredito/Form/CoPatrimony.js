@@ -75,8 +75,8 @@ const CoPatrimony = ({ form, readOnly=false }) => {
               options={[
                 { label: 'Propietario', value: '1' },
                 { label: 'Arriendo', value: '0' },
-                disabled={readOnly}
-              ]}
+              ]}              
+              readOnly={readOnly}
             />
           </div>
         </div>

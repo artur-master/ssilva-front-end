@@ -8,7 +8,7 @@ import Renta from './Renta';
 import Labor from './Labor';
 import RentaSummary from './RentaSummary';
 
-const Codeudor = ({ form, removeCodeudor }) => (
+const Codeudor = ({ form, removeCodeudor, readOnly }) => (
   <>
     <div className="add-client my-4 row">
       <h4 className="col-12 font-16">
@@ -59,8 +59,8 @@ const Codeudor = ({ form, removeCodeudor }) => (
       </div>
     </div>
     <article className="person-record pt-3">
-      <Labor values={form.values} group="Codeudor" />
-      <Renta group="Codeudor" form={form} />
+      <Labor values={form.values} group="Codeudor" readOnly={readOnly}/>
+      <Renta group="Codeudor" form={form} readOnly={readOnly}/>
     </article>
   </>
 );
@@ -68,5 +68,6 @@ const Codeudor = ({ form, removeCodeudor }) => (
 Codeudor.propTypes = {
   form: PropTypes.object,
   removeCodeudor: PropTypes.func,
+  readOnly: PropTypes.bool,
 };
 export default Codeudor;

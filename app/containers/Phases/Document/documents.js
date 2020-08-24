@@ -257,9 +257,10 @@ export const getDocuments = entity => {
 };
 
 export const CodeudorDocuments = entity => {
-  const isCompany = stringToBoolean(entity.Cliente.IsCompany);
-  const isIndependent = stringToBoolean(entity.Cliente.Extra.Independent);
-  const hasProfesion = (entity.Cliente.Ocupation.trim() !== "");
+  console.log("this is CodeudoDocuments:", entity);
+  const isCompany = stringToBoolean(entity.Codeudor.IsCompany);
+  const isIndependent = stringToBoolean(entity.Codeudor.Extra.Independent);
+  const hasProfesion = (entity.Codeudor.Ocupation.trim() !== "");
   const hasTieneDeposito = entity.Patrimony.DownPayment !== 0;
   const hasTieneCredito = entity.Patrimony.CreditoConsumo.PagosMensuales !== 0;
   const hasVehicle = entity.Patrimony.Vehicle !== 0;
@@ -304,7 +305,7 @@ export const CodeudorDocuments = entity => {
     }
   }
 
-  if (!isCompany && entity.Cliente.CivilStatus === 'Casado(a)') {
+  if (!isCompany && entity.Codeudor.CivilStatus === 'Casado(a)') {
     baseDocuments.push({
       documentoName: 'Certificado Matrimonio',
       documentoType: 'DocumentCodeudorCertificadoMatrimonio',
@@ -381,7 +382,10 @@ export const CodeudorDocuments = entity => {
       }
       else // Contrato
       {
-        if(entity.Cliente.Extra.Values.LiquidIncome && entity.Cliente.Extra.Values.LiquidIncome != 0) {
+        console.log(entity.Codeudor.Extra.Values.LiquidIncome);
+        console.log(entity.Codeudor.Extra.Values.VariableSalary);
+
+        if(entity.Codeudor.Extra.Values.LiquidIncome && entity.Codeudor.Extra.Values.LiquidIncome != 0) {
           baseDocuments.push({
             documentoName: '3 ultimas liquidaciones de sueldo para renta fija',
             documentoType: 'DocumentCodeudorLiquidacion1',
@@ -389,7 +393,7 @@ export const CodeudorDocuments = entity => {
           });
         }
 
-        if(entity.Cliente.Extra.Values.VariableSalary && entity.Cliente.Extra.Values.VariableSalary != 0) {
+        if(entity.Codeudor.Extra.Values.VariableSalary && entity.Codeudor.Extra.Values.VariableSalary != 0) {
           baseDocuments.push({
             documentoName: '6 ultimas liquidaciones de sueldo para renta variable',
             documentoType: 'DocumentCodeudorLiquidacion2',
