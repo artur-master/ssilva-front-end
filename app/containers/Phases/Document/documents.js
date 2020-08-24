@@ -176,7 +176,7 @@ export const getDocuments = entity => {
       }
       else // Contrato
       {
-        if(entity.Cliente.Extra.Values.LiquidIncome) {
+        if(entity.Cliente.Extra.Values.LiquidIncome && entity.Cliente.Extra.Values.LiquidIncome != 0) {
           baseDocuments.push({
             documentoName: '3 ultimas liquidaciones de sueldo para renta fija',
             documentoType: 'DocumentLiquidacion1',
@@ -184,7 +184,7 @@ export const getDocuments = entity => {
           });
         }
   
-        if(entity.Cliente.Extra.Values.VariableSalary) {
+        if(entity.Cliente.Extra.Values.VariableSalary && entity.Cliente.Extra.Values.VariableSalary != 0) {
           baseDocuments.push({
             documentoName: '6 ultimas liquidaciones de sueldo para renta variable',
             documentoType: 'DocumentLiquidacion2',
@@ -381,7 +381,7 @@ export const CodeudorDocuments = entity => {
       }
       else // Contrato
       {
-        if(entity.Cliente.Extra.Values.LiquidIncome) {
+        if(entity.Cliente.Extra.Values.LiquidIncome && entity.Cliente.Extra.Values.LiquidIncome != 0) {
           baseDocuments.push({
             documentoName: '3 ultimas liquidaciones de sueldo para renta fija',
             documentoType: 'DocumentCodeudorLiquidacion1',
@@ -389,7 +389,7 @@ export const CodeudorDocuments = entity => {
           });
         }
 
-        if(entity.Cliente.Extra.Values.VariableSalary) {
+        if(entity.Cliente.Extra.Values.VariableSalary && entity.Cliente.Extra.Values.VariableSalary != 0) {
           baseDocuments.push({
             documentoName: '6 ultimas liquidaciones de sueldo para renta variable',
             documentoType: 'DocumentCodeudorLiquidacion2',
