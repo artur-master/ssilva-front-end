@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormGroup, Label, Field as ExField } from 'components/ExForm';
 import RentaSummary from './RentaSummary';
 
-const Renta = ({ group = 'Cliente', form }) => {
+const Renta = ({ group = 'Cliente', form, readOnly=false }) => {
   const { IsCompany } = form.values[group];
   if(IsCompany) return null;
   
@@ -26,6 +26,7 @@ const Renta = ({ group = 'Cliente', form }) => {
             name={`${group}.Extra.Values.LiquidIncome`}
             placeholder="$"
             type="number"
+            readOnly = {readOnly}
           />
         </FormGroup>
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
@@ -35,6 +36,7 @@ const Renta = ({ group = 'Cliente', form }) => {
             name={`${group}.Extra.Values.VariableSalary`}
             placeholder="$"
             type="number"
+            readOnly = {readOnly}
           />
         </FormGroup>
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
@@ -45,6 +47,7 @@ const Renta = ({ group = 'Cliente', form }) => {
             required
             placeholder="$"
             type="number"
+            readOnly = {readOnly}
           />
         </FormGroup>
       </div>
@@ -60,6 +63,7 @@ const Renta = ({ group = 'Cliente', form }) => {
             name={`${group}.Extra.Values.RealStateLeasing`}
             placeholder="$"
             type="number"
+            readOnly = {readOnly}
           />
         </FormGroup>
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
@@ -69,6 +73,7 @@ const Renta = ({ group = 'Cliente', form }) => {
             name={`${group}.Extra.Values.Retirements`}
             placeholder="$"
             type="number"
+            readOnly = {readOnly}
           />
         </FormGroup>
         <FormGroup className="col-12 offset-md-6 col-md-6 d-flex mt-3">
@@ -78,6 +83,7 @@ const Renta = ({ group = 'Cliente', form }) => {
             name={`${group}.Extra.Values.Pension`}
             placeholder="$"
             type="number"
+            readOnly = {readOnly}
           />
         </FormGroup>
       </div>
@@ -109,5 +115,6 @@ const Renta = ({ group = 'Cliente', form }) => {
 Renta.propTypes = {
   group: PropTypes.string,
   form: PropTypes.object,
+  readOnly: PropTypes.bool,
 };
 export default Renta;

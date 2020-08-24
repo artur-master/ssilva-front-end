@@ -8,7 +8,7 @@ import PureRadioGroup from 'components/ExForm/PureRadioGroup';
 import RadioGroup from 'components/ExForm/RadioGroup';
 import IntlFormatCurrency from 'components/IntlFormat/Currency';
 
-const CoPatrimony = ({ form }) => {
+const CoPatrimony = ({ form, readOnly=false }) => {
   const { values, setFieldValue } = form;
   const [hasCredits, setHasCredits] = useState({
     RealState: !!values.CoPatrimony.RealState,
@@ -75,6 +75,7 @@ const CoPatrimony = ({ form }) => {
               options={[
                 { label: 'Propietario', value: '1' },
                 { label: 'Arriendo', value: '0' },
+                disabled={readOnly}
               ]}
             />
           </div>
@@ -99,6 +100,7 @@ const CoPatrimony = ({ form }) => {
                   name="RealState-1"
                   value={hasCredits.RealState}
                   onChange={handleChangeHasCredits}
+                  disabled={readOnly}
                 />
               </div>
               {hasCredits.RealState && (
@@ -113,6 +115,7 @@ const CoPatrimony = ({ form }) => {
                       name="CoPatrimony.RealState"
                       type="currency"
                       required
+                      readOnly={readOnly}
                     />
                   </FormGroup>
                 </>
@@ -131,6 +134,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.Rent"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -147,6 +151,7 @@ const CoPatrimony = ({ form }) => {
               name="Vehicle-1"
               value={hasCredits.Vehicle}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           {hasCredits.Vehicle && (
@@ -161,6 +166,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.Vehicle"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -177,6 +183,7 @@ const CoPatrimony = ({ form }) => {
               name="DownPayment-1"
               value={hasCredits.DownPayment}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           {hasCredits.DownPayment && (
@@ -191,6 +198,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.DownPayment"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -206,6 +214,7 @@ const CoPatrimony = ({ form }) => {
               name="Other-1"
               value={hasCredits.Other}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           {hasCredits.Other && (
@@ -221,6 +230,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.Other"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -260,6 +270,7 @@ const CoPatrimony = ({ form }) => {
                 name="CreditoHipotecario-1"
                 value={hasCredits.CreditoHipotecario}
                 onChange={handleChangeHasCredits}
+                disabled={readOnly}
               />
             </div>
             {hasCredits.CreditoHipotecario && (
@@ -276,6 +287,7 @@ const CoPatrimony = ({ form }) => {
                     name="CoPatrimony.CreditoHipotecario.PagosMensuales"
                     type="currency"
                     required
+                    readOnly={readOnly}
                   />
                 </FormGroup>
                 <FormGroup className="col-12 col-md-6 mt-2">
@@ -285,6 +297,7 @@ const CoPatrimony = ({ form }) => {
                     name="CoPatrimony.CreditoHipotecario.Pasivos"
                     type="currency"
                     required
+                    readOnly={readOnly}
                   />
                 </FormGroup>
               </>
@@ -301,6 +314,7 @@ const CoPatrimony = ({ form }) => {
               name="CreditCard-1"
               value={hasCredits.CreditCard}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.CreditCard && (
@@ -317,6 +331,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.CreditCard.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -326,6 +341,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.CreditCard.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -342,6 +358,7 @@ const CoPatrimony = ({ form }) => {
               name="CreditoConsumo-1"
               value={hasCredits.CreditoConsumo}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.CreditoConsumo && (
@@ -359,6 +376,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.CreditoConsumo.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
 
@@ -369,6 +387,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.CreditoConsumo.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -385,6 +404,7 @@ const CoPatrimony = ({ form }) => {
               name="PrestamoEmpleador-1"
               value={hasCredits.PrestamoEmpleador}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.PrestamoEmpleador && (
@@ -402,6 +422,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.PrestamoEmpleador.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -411,6 +432,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.PrestamoEmpleador.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -427,6 +449,7 @@ const CoPatrimony = ({ form }) => {
               name="DeudaIndirecta-1"
               value={hasCredits.DeudaIndirecta}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.DeudaIndirecta && (
@@ -443,6 +466,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.DeudaIndirecta.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -452,6 +476,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.DeudaIndirecta.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -468,6 +493,7 @@ const CoPatrimony = ({ form }) => {
               name="AnotherCredit-1"
               value={hasCredits.AnotherCredit}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.AnotherCredit && (
@@ -482,6 +508,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.AnotherCredit.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -491,6 +518,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.AnotherCredit.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -507,6 +535,7 @@ const CoPatrimony = ({ form }) => {
               name="CreditoComercio-1"
               value={hasCredits.CreditoComercio}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.CreditoComercio && (
@@ -523,6 +552,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.CreditoComercio.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -532,6 +562,7 @@ const CoPatrimony = ({ form }) => {
                   name="CoPatrimony.CreditoComercio.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -562,5 +593,6 @@ const CoPatrimony = ({ form }) => {
 
 CoPatrimony.propTypes = {
   form: PropTypes.object,
+  readOnly: PropTypes.bool,
 };
 export default CoPatrimony;

@@ -36,12 +36,12 @@ const PhasePreCreditoForm = ({
       }
 
       const PatrimonyTabs =  [{
-        label: 'Deudor', content: ( <Patrimony form={form} /> ),
+        label: 'Deudor', content: ( <Patrimony form={form} readOnly={step == 3}/> ),
       }]
     
       if(values.Codeudor)
         PatrimonyTabs.push({
-          label: 'Co-deudor', content: ( <CoPatrimony form={form} /> ),
+          label: 'Co-deudor', content: ( <CoPatrimony form={form} readOnly={step == 3}/> ),
         });
 
       return (
@@ -54,8 +54,8 @@ const PhasePreCreditoForm = ({
               <BoxContent>
                 <div className="container-content bg-white pl-3 pr-3 pb-3">
                   <article className="person-record pt-3">
-                    <Labor values={values} group="Cliente" />
-                    <Renta group="Cliente" form={form} />
+                    <Labor values={values} group="Cliente" readOnly={step == 3}/>
+                    <Renta group="Cliente" form={form}  readOnly={step == 3}/>
                   </article>
 
                   {values.Codeudor && (
@@ -67,6 +67,7 @@ const PhasePreCreditoForm = ({
                         form.setFieldValue('CodeudorID', null);
                         form.setFieldValue('CoEmpleador', null);
                       }}
+                      readOnly={step == 3}
                     />
                   )}
                   {(step > 1 || values.ReservaID) && <Tab tabs={PatrimonyTabs} />}

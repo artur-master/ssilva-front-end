@@ -8,7 +8,7 @@ import PureRadioGroup from 'components/ExForm/PureRadioGroup';
 import RadioGroup from 'components/ExForm/RadioGroup';
 import IntlFormatCurrency from 'components/IntlFormat/Currency';
 
-const Patrimony = ({ form }) => {
+const Patrimony = ({ form, readOnly=false }) => {
   const { values, setFieldValue } = form;
   const [hasCredits, setHasCredits] = useState({
     RealState: !!values.Patrimony.RealState,
@@ -76,6 +76,7 @@ const Patrimony = ({ form }) => {
                 { label: 'Propietario', value: '1' },
                 { label: 'Arriendo', value: '0' },
               ]}
+              readOnly={readOnly}
             />
           </div>
         </div>
@@ -100,6 +101,7 @@ const Patrimony = ({ form }) => {
                   name="RealState"
                   value={hasCredits.RealState}
                   onChange={handleChangeHasCredits}
+                  disabled={readOnly}
                 />
               </div>
               {hasCredits.RealState && (
@@ -114,6 +116,7 @@ const Patrimony = ({ form }) => {
                       name="Patrimony.RealState"
                       type="currency"
                       required
+                      readOnly={readOnly}
                     />
                   </FormGroup>
                 </>
@@ -132,6 +135,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.Rent"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -148,6 +152,7 @@ const Patrimony = ({ form }) => {
               name="Vehicle"
               value={hasCredits.Vehicle}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           {hasCredits.Vehicle && (
@@ -162,6 +167,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.Vehicle"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -178,6 +184,7 @@ const Patrimony = ({ form }) => {
               name="DownPayment"
               value={hasCredits.DownPayment}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           {hasCredits.DownPayment && (
@@ -192,6 +199,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.DownPayment"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -207,6 +215,7 @@ const Patrimony = ({ form }) => {
               name="Other"
               value={hasCredits.Other}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           {hasCredits.Other && (
@@ -222,6 +231,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.Other"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -261,6 +271,7 @@ const Patrimony = ({ form }) => {
                 name="CreditoHipotecario"
                 value={hasCredits.CreditoHipotecario}
                 onChange={handleChangeHasCredits}
+                disabled={readOnly}
               />
             </div>
             {hasCredits.CreditoHipotecario && (
@@ -277,6 +288,7 @@ const Patrimony = ({ form }) => {
                     name="Patrimony.CreditoHipotecario.PagosMensuales"
                     type="currency"
                     required
+                    readOnly={readOnly}
                   />
                 </FormGroup>
                 <FormGroup className="col-12 col-md-6 mt-2">
@@ -286,6 +298,7 @@ const Patrimony = ({ form }) => {
                     name="Patrimony.CreditoHipotecario.Pasivos"
                     type="currency"
                     required
+                    readOnly={readOnly}
                   />
                 </FormGroup>
               </>
@@ -302,6 +315,7 @@ const Patrimony = ({ form }) => {
               name="CreditCard"
               value={hasCredits.CreditCard}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.CreditCard && (
@@ -318,6 +332,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.CreditCard.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -327,6 +342,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.CreditCard.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -343,6 +359,7 @@ const Patrimony = ({ form }) => {
               name="CreditoConsumo"
               value={hasCredits.CreditoConsumo}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.CreditoConsumo && (
@@ -360,6 +377,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.CreditoConsumo.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
 
@@ -370,6 +388,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.CreditoConsumo.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -386,6 +405,7 @@ const Patrimony = ({ form }) => {
               name="PrestamoEmpleador"
               value={hasCredits.PrestamoEmpleador}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.PrestamoEmpleador && (
@@ -403,6 +423,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.PrestamoEmpleador.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -412,6 +433,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.PrestamoEmpleador.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -428,6 +450,7 @@ const Patrimony = ({ form }) => {
               name="DeudaIndirecta"
               value={hasCredits.DeudaIndirecta}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.DeudaIndirecta && (
@@ -444,6 +467,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.DeudaIndirecta.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -453,6 +477,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.DeudaIndirecta.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -469,6 +494,7 @@ const Patrimony = ({ form }) => {
               name="AnotherCredit"
               value={hasCredits.AnotherCredit}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.AnotherCredit && (
@@ -483,6 +509,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.AnotherCredit.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -492,6 +519,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.AnotherCredit.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -508,6 +536,7 @@ const Patrimony = ({ form }) => {
               name="CreditoComercio"
               value={hasCredits.CreditoComercio}
               onChange={handleChangeHasCredits}
+              disabled={readOnly}
             />
           </div>
           { hasCredits.CreditoComercio && (
@@ -524,6 +553,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.CreditoComercio.PagosMensuales"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
               <FormGroup className="mt-2 col-12 col-md-6 ">
@@ -533,6 +563,7 @@ const Patrimony = ({ form }) => {
                   name="Patrimony.CreditoComercio.Pasivos"
                   type="currency"
                   required
+                  readOnly={readOnly}
                 />
               </FormGroup>
             </>
@@ -563,5 +594,6 @@ const Patrimony = ({ form }) => {
 
 Patrimony.propTypes = {
   form: PropTypes.object,
+  readOnly: PropTypes.bool,
 };
 export default Patrimony;

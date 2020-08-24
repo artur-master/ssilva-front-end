@@ -6,7 +6,7 @@ import RadioGroup from 'components/ExForm/RadioGroup';
 import { stringToBoolean } from 'containers/App/helpers';
 import { RESERVA_STATE } from 'containers/App/constants';
 
-const Labor = ({ group = 'Cliente', values }) => {
+const Labor = ({ group = 'Cliente', values, readOnly=false }) => {
   const { Extra, IsCompany } = values[group];
 
   let Empleador = group === 'Codeudor' ? 'CoEmpleador' : 'Empleador';
@@ -40,6 +40,7 @@ const Labor = ({ group = 'Cliente', values }) => {
                   { label: 'Independiente', value: 1 },
                   { label: 'Otro', value: 2 },
                 ]}
+                readOnly = {readOnly}
               />
             </div>
           </div>
@@ -48,6 +49,7 @@ const Labor = ({ group = 'Cliente', values }) => {
             <ExField
               className="w-50"
               name={`${Empleador}.Extra.CurrentPosition`}
+              readOnly = {readOnly}
             />
           </FormGroup>
           {!stringToBoolean(Extra.Independent) && (
@@ -61,6 +63,7 @@ const Labor = ({ group = 'Cliente', values }) => {
                   type="select"
                   name={`${Empleador}.Extra.Antiguedad`}
                   className="w-50"
+                  disabled = {readOnly}
                 >
                   <option value="">Selecciona...</option>
                   <option value="1">Menos de un año</option>
@@ -78,11 +81,11 @@ const Labor = ({ group = 'Cliente', values }) => {
       </span>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0">Nombre Empleador</Label>
-        <ExField className="w-50" name={`${Empleador}.RazonSocial`} required={values.ReservaState === RESERVA_STATE[0]}/>
+        <ExField className="w-50" name={`${Empleador}.RazonSocial`} required={values.ReservaState === RESERVA_STATE[0]} readOnly = {readOnly}/>
       </FormGroup>
       <FormGroup className="col-12 col-md-6 d-flex mt-3">
         <Label className="w-50 m-0">RUT Empleador</Label>
-        <ExField className="w-50" name={`${Empleador}.Rut`}  required={values.ReservaState === RESERVA_STATE[0]}/>
+        <ExField className="w-50" name={`${Empleador}.Rut`}  required={values.ReservaState === RESERVA_STATE[0]} readOnly = {readOnly}/>
       </FormGroup>
       {!IsCompany && (
         <FormGroup className="col-12 col-md-6 d-flex mt-3">
@@ -92,6 +95,7 @@ const Labor = ({ group = 'Cliente', values }) => {
             name={`${Empleador}.Extra.Phone`}
             required
             placeholder="+562"
+            readOnly = {readOnly}
           />
         </FormGroup>
       )}
@@ -104,6 +108,7 @@ const Labor = ({ group = 'Cliente', values }) => {
               ? 'EmpresaCompradora.Address'
               : `${Empleador}.Extra.Address`
           }`}
+          readOnly = {readOnly}
         />
       </FormGroup>
     </div>
@@ -113,5 +118,6 @@ const Labor = ({ group = 'Cliente', values }) => {
 Labor.propTypes = {
   group: PropTypes.string,
   values: PropTypes.object,
+  readOnly: PropTypes.bool,
 };
 export default Labor;
