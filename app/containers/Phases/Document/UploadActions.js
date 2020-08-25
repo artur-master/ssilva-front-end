@@ -45,7 +45,6 @@ export function CarpetaDigitalUploadActions({
           onClick={() => {
             form.values.Condition.push(...entity.Condition);
             onSave(form.values);
-            setCanUpload(false);
           }}
         >
           { entity.ReservaID ? 'Guardar': 'Crear Reserva' }

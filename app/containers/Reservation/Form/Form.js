@@ -61,6 +61,7 @@ export function Form({ project, selector, dispatch }) {
       [data]: confirm,
     });
   };
+
   return (
     <>
       {!isValid && (
