@@ -488,4 +488,8 @@ export const requiredSendToControl = [
     'DocumentAcredittacionCuotas',
     'DocumentVehicle',
     'DocumentPhotoEscritura',
+    'DocumentLiquidacion1',
+    'DocumentCodeudorLiquidacion1',
+    'DocumentLiquidacion2',
+    'DocumentCodeudorLiquidacion2',
 ]
