@@ -39,6 +39,7 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
       dispatch(fetchReservations(match.params.id));
     }
   }, []);
+
   return (
     <>
       <InitData Project={{ ProyectoID: match.params.id }} />
