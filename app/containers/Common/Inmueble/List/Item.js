@@ -55,7 +55,7 @@ function ListItem({ entity = {}, focusChange, onSelect, onModifyItem }) {
         )}
       </td>
       <td>{entity.IsNotUsoyGoce ? 'Uso y Goce' : ''}</td>
-      <td>{entity.Tipologia}</td>
+      {/* <td>{entity.Tipologia}</td> */}
       <td>
         <b>Valor UF</b>
       </td>

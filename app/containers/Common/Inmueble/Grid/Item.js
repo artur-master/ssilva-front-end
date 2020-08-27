@@ -49,7 +49,7 @@ function GridItem({ entity = {}, focusChange, onSelect }) {
               <b>{entity.Number}</b>
             </span>
             <div className="font-14-rem">{entity.InmuebleState}</div>
-            <div className="font-14-rem">{entity.Tipologia || '-'}</div>
+            {/* <div className="font-14-rem">{entity.Tipologia || '-'}</div> */}
           </div>
         </h5>
         <a
