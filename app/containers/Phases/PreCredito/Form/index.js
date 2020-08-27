@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import Tab from 'components/Tab';
 import { Form as ExForm } from 'components/ExForm';
 import { calculates } from 'containers/Phases/FormaDePago/helper';
-import { isContadoPayment } from 'containers/App/helpers';
+import { isCreditPayment } from 'containers/App/helpers';
 import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
@@ -25,11 +25,11 @@ const PhasePreCreditoForm = ({
   <ExForm initialValues={initialValues} onSubmit={onSubmit}>
     {form => {
       const { values, submitForm } = form;
-      const isContado = isContadoPayment(values.PayType);
+      const isCredit = isCreditPayment(values.PayType);
       const { IsCompany=false } = values.Cliente;
 
       let new_moneyErr = false;
-      if (!isContado) {
+      if (isCredit) {
         const { moneyErr, SumRenta } = calculateRenta(values);
         const { total, discount } = calculates(values);
         new_moneyErr = moneyErr && Math.floor(total - discount) >= SumRenta;
@@ -46,30 +46,32 @@ const PhasePreCreditoForm = ({
 
       return (
         <>
-          {!isContado && !IsCompany && (
+          { isCredit && (
             <Box collapse isOpen={!values.ReservaID}>
               <BoxHeader>
                 <b>PRE APROBACIÓN DE CRÉDITO</b>
               </BoxHeader>
               <BoxContent>
-                <div className="container-content bg-white pl-3 pr-3 pb-3">
-                  <article className="person-record pt-3">
-                    <Labor values={values} group="Cliente" readOnly={step == 3}/>
-                    <Renta group="Cliente" form={form}  readOnly={step == 3}/>
-                  </article>
+                <div className="container-content bg-white pl-3 pr-3 pb-3">                  
+                  {!IsCompany && ( <>
+                    <article className="person-record pt-3">
+                      <Labor values={values} group="Cliente" readOnly={step == 3}/>
+                      <Renta group="Cliente" form={form}  readOnly={step == 3}/>
+                    </article>
 
-                  {values.Codeudor && (
-                    <Codeudor
-                      form={form}
-                      removeCodeudor={evt => {
-                        evt.preventDefault();
-                        form.setFieldValue('Codeudor', null);
-                        form.setFieldValue('CodeudorID', null);
-                        form.setFieldValue('CoEmpleador', null);
-                      }}
-                      readOnly={step == 3}
-                    />
-                  )}
+                    {values.Codeudor && (
+                      <Codeudor
+                        form={form}
+                        removeCodeudor={evt => {
+                          evt.preventDefault();
+                          form.setFieldValue('Codeudor', null);
+                          form.setFieldValue('CodeudorID', null);
+                          form.setFieldValue('CoEmpleador', null);
+                        }}
+                        readOnly={step == 3}
+                      />
+                    )}
+                  </>)}
                   {(step > 1 || values.ReservaID) && <Tab tabs={PatrimonyTabs} />}
                 </div>
               </BoxContent>

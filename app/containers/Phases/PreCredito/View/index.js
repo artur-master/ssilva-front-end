@@ -36,6 +36,8 @@ const PhasePreCreditoView = ({
   const isCredit = isCreditPayment(initialValues.PayType);
   const isValid = isValidLabor(initialValues, initialValues.PayType);
   const { moneyErr } = calculateRenta(initialValues);
+  const { IsCompany=false } = initialValues.Cliente;
+
   useInjectReducer({ key: 'credit', reducer });
   useInjectSaga({ key: 'credit', saga });
 
@@ -87,7 +89,7 @@ const PhasePreCreditoView = ({
             )}
           </BoxHeader>
           <BoxContent className="p-0">
-            {!isContado && (
+            {!IsCompany && (
               <>
                 <Labor values={initialValues} group="Cliente" />
                 <Renta group="Cliente" values={initialValues} />

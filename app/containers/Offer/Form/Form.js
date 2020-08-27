@@ -85,12 +85,14 @@ export function Form({ selector, selectorCredit, dispatch }) {
         >
           Historial
         </Button>
-        <Button
-          className="col-auto mt-3 m-btn m-btn-pen"
-          onClick={onEdit}
-        >
-          Modificación
-        </Button>
+        {(UserProject.isPM() || UserProject.isVendor()) &&
+          <Button
+            className="col-auto mt-3 m-btn m-btn-pen"
+            onClick={onEdit}
+          >
+            Modificación
+          </Button>
+        }
       </div>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">
         <span className="font-16-rem line-height-1 color-success">

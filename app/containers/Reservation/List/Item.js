@@ -32,6 +32,7 @@ const Item = ({ project, reservation, offer, dispatch }) => {
     ReservaStateLabel,
     Date,
   } = reservation;
+
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   let dateAgo;
   if (ReservaState === 'Pendiente control') {
@@ -94,7 +95,7 @@ const Item = ({ project, reservation, offer, dispatch }) => {
             >
               Ver datos
             </DropdownItem>
-            {offer && (
+            {/* {offer && (
               <DropdownItem
                 tag="a"
                 onClick={() => {
@@ -109,7 +110,7 @@ const Item = ({ project, reservation, offer, dispatch }) => {
               >
                 Detalle Oferta
               </DropdownItem>)
-            }
+            } */}
             {canEditReservation(reservation) && (
               <DropdownItem
                 tag="a"
