@@ -1,8 +1,10 @@
 import { stringToBoolean, getDescendantProp } from 'containers/App/helpers';
 import { isContadoType } from '../FormaDePago/helper';
 
-export const isValidClient = ({ Cliente, PayType, CotizacionType }) => {
+export const isValidClient = ({ Cliente, Codeudor = null, PayType, CotizacionType }) => {
   const isCompany = stringToBoolean(Cliente.IsCompany);
+  const isCompany_Codeudor = Codeudor ? stringToBoolean(Codeudor.IsCompany) : false;
+
   const requiredOfCompany = [
     'Rut',
     'Name',
@@ -31,13 +33,15 @@ export const isValidClient = ({ Cliente, PayType, CotizacionType }) => {
   if (CotizacionType !== window.preload.quotationUtils.CotizacionTypes[1].Name)
     requiredOfPersonal.push('ComunaID');
 
-  if (isCompany) {
-    return !requiredOfCompany.find(
-      field => getDescendantProp(Cliente, field) === '',
-    );
-  }
+  const client_valid = isCompany  
+    ? !requiredOfCompany.find(field => getDescendantProp(Cliente, field) === '', )
+    : !requiredOfPersonal.find(field => getDescendantProp(Cliente, field) === '', );
+  
+  if( Codeudor == null ) return client_valid;
 
-  return !requiredOfPersonal.find(
-    field => getDescendantProp(Cliente, field) === '',
-  );
+  const codeudor_valid = isCompany_Codeudor
+    ? !requiredOfCompany.find(field => getDescendantProp(Codeudor, field) === '', )
+    : !requiredOfPersonal.find(field => getDescendantProp(Codeudor, field) === '', );
+
+  return client_valid && codeudor_valid;
 };

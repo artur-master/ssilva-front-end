@@ -24,7 +24,6 @@ function ModifyModal({
       >
         {({values}) => (<>
           {/* <ModalHeader> */}
-          {/* {console.log(values)} */}
           <div className="row background-color-caution" style={{ height: '3rem' }}>
             <div className="col-md-6 font-14-rem  d-flex align-items-center">
               <span className="color-main mx-3"><b>{values.InmuebleType} {values.Number}</b></span>

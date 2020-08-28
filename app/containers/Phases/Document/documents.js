@@ -470,7 +470,8 @@ export const requiredSaveDocuments = [
   "DocumentFirmadoCotizacion",
   "DocumentPlanoFirmada",
   'DocumentFirmadoFichaPreAprobacion',
-  'DocumentFotocopiaCarnet'
+  'DocumentFotocopiaCarnet',
+  'DocumentCotizacionAFP',
 ]
   
 export const requiredSendToControl = [

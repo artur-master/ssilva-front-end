@@ -21,7 +21,7 @@ import {
 import moment from 'components/moment';
 import { canEditReservation } from '../Form/helper';
 
-const Item = ({ project, reservation, offer, dispatch }) => {
+const Item = ({ project, reservation, dispatch }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const {
     Proyecto,
@@ -31,6 +31,8 @@ const Item = ({ project, reservation, offer, dispatch }) => {
     ReservaStateColor,
     ReservaStateLabel,
     Date,
+    OfertaID,
+    OfertaState
   } = reservation;
 
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
@@ -81,36 +83,30 @@ const Item = ({ project, reservation, offer, dispatch }) => {
         >
           <DropdownToggle tag="a" className="icon icon-dots main_color ml-1" />
           <DropdownMenu right positionFixed>
-            <DropdownItem
-              tag="a"
-              onClick={() => {
-                dispatch(
-                  push(
-                    `/proyectos/${project.ProyectoID}/reserva?ReservaID=${
-                      reservation.ReservaID
-                    }`,
-                  ),
-                );
-              }}
-            >
-              Ver datos
-            </DropdownItem>
-            {/* {offer && (
+            { !OfertaID && 
               <DropdownItem
                 tag="a"
                 onClick={() => {
                   dispatch(
-                    push(
-                      `/proyectos/${project.ProyectoID}/oferta?OfertaID=${
-                        offer.OfertaID
-                      }`,
-                    ),
+                    push(`/proyectos/${project.ProyectoID}/reserva?ReservaID=${reservation.ReservaID}`),
+                  );
+                }}
+              >
+                Ver datos
+              </DropdownItem>
+            }
+            { OfertaID && (
+              <DropdownItem
+                tag="a"
+                onClick={() => {
+                  dispatch(
+                    push(`/proyectos/${project.ProyectoID}/oferta?OfertaID=${OfertaID}`,),
                   );
                 }}
               >
                 Detalle Oferta
               </DropdownItem>)
-            } */}
+            }
             {canEditReservation(reservation) && (
               <DropdownItem
                 tag="a"

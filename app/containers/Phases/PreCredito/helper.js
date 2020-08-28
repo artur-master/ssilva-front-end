@@ -17,11 +17,10 @@ export const isValidLabor = ( Values, PayType ) => {
     'Empleador.Extra.Phone',
     'Extra.Values.Honoraries',
   ];
-
   if (!isCompany && isCredit) {
-    return !requiredFields.find(
-      field => getDescendantProp(Values, field) === '',
-    );
+    return requiredFields.find(
+      field => getDescendantProp(Values, field),
+    ) !== undefined;
   }
   return true;
 };

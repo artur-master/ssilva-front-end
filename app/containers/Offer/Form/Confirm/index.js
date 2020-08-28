@@ -52,8 +52,7 @@ export function OfferConfirm({ selector, dispatch }) {
         </h4>
         <Button
           className="col-auto mt-3 m-btn-white m-btn-history"
-          onClick={() => console.log(selector)}
-            // setHistoryOpen(true)}
+          onClick={() => setHistoryOpen(true)}
         >
           Historial
         </Button>
@@ -111,8 +110,8 @@ export function OfferConfirm({ selector, dispatch }) {
         onDelete={() => dispatch(deleteOffer(entity))}
       />
       {/* Added by Artur */}
-      {selector.reservation && (
-        <History logs={selector.reservation.Logs}
+      {selector.offer && (
+        <History logs={selector.offer.Logs}
           onHide={()=>setHistoryOpen(false)}
           isOpen={isHistoryOpen}
           title={`${project.Name} / ${entity.Folio}`}

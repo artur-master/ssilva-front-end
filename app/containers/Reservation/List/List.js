@@ -10,7 +10,7 @@ import Empty from 'components/Empty';
 import Item from './Item';
 import Thead from 'components/Table/Thead';
 
-const List = ({ project, reservations, query, onQuery, offers, dispatch }) => (
+const List = ({ project, reservations, query, onQuery, dispatch }) => (
   <Box className="mt-3 pb-3">
     {reservations && reservations.length < 1 && <Empty tag="h2" />}
     {reservations && reservations.length > 0 && (
@@ -33,7 +33,6 @@ const List = ({ project, reservations, query, onQuery, offers, dispatch }) => (
               key={reservation.ReservaID}
               reservation={reservation}
               project={project}
-              offer={(offers || []).find(offer => offer.Folio === reservation.Folio)}
               dispatch={dispatch}
             />
           ))}

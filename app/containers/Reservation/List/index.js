@@ -23,13 +23,12 @@ import reducer from './reducer';
 import saga from './saga';
 import { fetchReservations, searchReservations, queryReservations } from './actions';
 import { requiredData } from '../../Quotation/List/helper'
-import makeSelectOffers from 'containers/Offer/List/selectors';
 import List from './List';
 import Filter from './Filter';
 
 const SyncMessage = WithLoading();
 
-export function Reservations({ match, selectorProject, selector, offers, dispatch }) {
+export function Reservations({ match, selectorProject, selector, dispatch }) {
   const { project } = selectorProject;
   useInjectReducer({ key: 'reservations', reducer });
   useInjectSaga({ key: 'reservations', saga });
@@ -64,7 +63,7 @@ export function Reservations({ match, selectorProject, selector, offers, dispatc
           )}
           <List {...selector} project={project}
                 onQuery={query => {dispatch(queryReservations(query))}}
-                offers={offers.offers} dispatch={dispatch}
+                dispatch={dispatch}
           />
         </>
       )}
@@ -77,13 +76,11 @@ Reservations.propTypes = {
   selectorProject: PropTypes.object,
   selector: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
-  offers: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   selector: makeSelectReservations(),
   selectorProject: makeSelectInitProject(),
-  offers: makeSelectOffers(),
 });
 
 function mapDispatchToProps(dispatch) {
