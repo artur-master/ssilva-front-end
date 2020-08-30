@@ -48,6 +48,8 @@ export function Form({ selector, selectorCredit, dispatch }) {
   const onCancel = () =>
     dispatch(push(`/proyectos/${project.ProyectoID}/ofertas`));
 
+  const onWithdraw = () => console.log("onWithdraw");
+/*Commented by Artur
   const controlAction = (
     <ApproveConfeccionPromesa
       selector={selector}
@@ -62,6 +64,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
       onEdit={onEdit}
     />
   );
+*/
   //Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
   //Added by Artur
@@ -116,14 +119,29 @@ export function Form({ selector, selectorCredit, dispatch }) {
         isPendienteAprobacion={isPendienteAprobacion(initialValues)}
       />
       <PhaseDocument entity={initialValues} />
-      {canApproveConfeccionPromesa(initialValues) && controlAction}
-      {!canApproveConfeccionPromesa(initialValues) && (
-        <FormActions
-          canEdit={canEditOffer(entity)}
-          onCancel={onCancel}
+      {/* {canApproveConfeccionPromesa(initialValues) && controlAction} */}
+      {canApproveConfeccionPromesa(initialValues) && 
+        <ApproveConfeccionPromesa
+          selector={selector}
+          onControl={values =>
+            dispatch(
+              approveConfeccionPromesa({
+                ...values,
+                OfertaID: initialValues.OfertaID,
+              }),
+            )
+          }
           onEdit={onEdit}
         />
+      }
+      {!canApproveConfeccionPromesa(initialValues) && (
+        <FormActions
+          onCancel={onCancel}
+          onWithdraw={onWithdraw}
+          canWithdraw={UserProject.isPM()}
+        />
       )}
+
       {/* Added by Artur */}
       {selector.offer && (
         <History logs={selector.offer.Logs}

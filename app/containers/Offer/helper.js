@@ -228,8 +228,3 @@ export const doQuery = (entities, query = {}) => {
 
   return queriedEntities;
 };
-
-export const fetchAllPromesas = projectId => {
-  const requestURL = `${API_ROOT}/ventas/promesas/?q=${projectId}`;
-  return request(requestURL).then(res => res);
-};

@@ -5,6 +5,7 @@ import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Button from 'components/Button';
 import Tab from 'components/Tab';
 import { isContadoPayment, isCreditPayment } from 'containers/App/helpers';
+import { UserProject } from 'containers/Project/helper';
 import Labor from './Labor';
 import Codeudor from './Codeudor';
 import Patrimony from './Patrimony';
@@ -13,9 +14,7 @@ import Renta from './Renta';
 import PhasePreCreditoFormModal from '../Form/modal';
 import PhaseCredit from '../Credit';
 import { calculateRenta, isValidLabor } from '../helper';
-import {
-  downloadPreApprobation,
-} from '../Credit/actions';
+import { downloadPreApprobation, } from '../Credit/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import reducer from '../Credit/reducer';
@@ -99,7 +98,7 @@ const PhasePreCreditoView = ({
             {/* <Patrimony values={initialValues} /> */}
             <Tab tabs={PatrimonyTabs} />
 
-            {(initialValues.OfertaID || initialValues.PromesaID) && (
+            {(initialValues.OfertaID || initialValues.PromesaID) && !UserProject.isInmobiliario() && (
               <PhaseCredit
                 canEdit={canEditCredit}
                 EntityID={initialValues.OfertaID}

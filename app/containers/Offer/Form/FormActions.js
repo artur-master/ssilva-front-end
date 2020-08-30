@@ -6,14 +6,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 
-export function FormActions({ canEdit, onEdit, onCancel }) {
+export function FormActions({ onCancel, onWithdraw, canWithdraw=false }) {
   return (
     <div className="d-flex after-expands-2 align-items-center">
-      {/* {canEdit && (
-        <Button className="order-3 m-btn  mr-2 m-btn-pen" onClick={onEdit}>
-          Modificación
+      {canWithdraw && (
+        <Button className="order-3 m-btn-warning-02 d-inline" onClick={onWithdraw}>
+          Desistimiento
         </Button>
-      )} */}
+      )}
       <Button
         className="order-3 m-btn m-btn-white"
         type="submit"
@@ -26,9 +26,9 @@ export function FormActions({ canEdit, onEdit, onCancel }) {
 }
 
 FormActions.propTypes = {
-  canEdit: PropTypes.bool,
-  onEdit: PropTypes.func,
   onCancel: PropTypes.func,
+  canWithdraw: PropTypes.bool,
+  onWithdraw: PropTypes.func,
 };
 
 export default FormActions;

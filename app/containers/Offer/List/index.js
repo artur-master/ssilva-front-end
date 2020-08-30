@@ -27,7 +27,6 @@ import Filter from './Filter';
 import { Auth } from '../../App/helpers';
 import InList from './InList';
 import FiList from './FiList';
-import { fetchAllPromesas } from '../helper';
 import OfferGarantia from '../Form/FiForm/Garantia';
 
 const SyncMessage = WithLoading();
@@ -39,14 +38,13 @@ export function Offers({
   dispatch,
 }) {
   const { project } = selectorProject;
-  const [promesa, setPromesa] = useState({ promesa: [] });
+  // const [promesa, setPromesa] = useState({ promesa: [] });
   useInjectReducer({ key: 'offers', reducer });
   useInjectSaga({ key: 'offers', saga });
 
   useEffect(() => {
     if (match.params.id && !selector.loading) {
       dispatch(fetchOffers(match.params.id));
-      fetchAllPromesas(match.params.id).then(res => setPromesa(res));
     }
   }, []);
 
@@ -76,7 +74,6 @@ export function Offers({
                 {...selector}
                 project={project}
                 onQuery={query => dispatch(queryOffers(query))}
-                promesas={promesa}
                 dispatch={dispatch}
               />
             </>

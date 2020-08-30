@@ -10,10 +10,10 @@ import Empty from 'components/Empty';
 import Thead from 'components/Table/Thead';
 import Item from './Item';
 
-const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
+const List = ({ project, offers, onQuery, query, dispatch }) => (
   <Box className="mt-3 pb-3">
-    {offers && promesas && offers.length < 1 && promesas.length < 1 && <Empty tag="h2" />}
-    {((offers && offers.length > 0 ) || (promesas && promesas.length >0)) && (
+    {offers && offers.length < 1 && <Empty tag="h2" />}
+    {(offers && offers.length > 0 ) && (
       <table className="table table-responsive-sm table-fixed table-sm border-bottom">
         <Thead
           ths={[
@@ -44,25 +44,9 @@ const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
                 key={offer.OfertaID}
                 offer={offer}
                 project={project}
-                promesa={
-                  promesas.length &&
-                  (promesas || []).find(
-                    promesa => offer.Folio === promesa.Folio,
-                  )
-                }
                 dispatch={dispatch}
               />
             ))}
-          {promesas.length>0 &&
-            (promesas.map(promesa => (
-              <Item
-                key={promesa.PromesaID}
-                project={project}
-                promesa={promesas}
-                dispatch={dispatch}
-                offer={promesa}
-              />
-            )))}
         </tbody>
       </table>
     )}
@@ -71,7 +55,6 @@ const List = ({ project, offers, promesas, onQuery, query, dispatch }) => (
 
 List.propTypes = {
   offers: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  promesas: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   project: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dispatch: PropTypes.func,
 };
