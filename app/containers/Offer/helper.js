@@ -13,8 +13,6 @@ import { isValidLabor } from 'containers/Phases/PreCredito/helper';
 import { calculates, isCreditType } from 'containers/Phases/FormaDePago/helper';
 import { isValidClient } from 'containers/Phases/Client/helper';
 
-import request from 'utils/request';
-
 export const initReports = () =>
   OFERTA_STATE.reduce(
     (acc, state) => {

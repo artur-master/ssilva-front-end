@@ -15,16 +15,11 @@ export function Codeudor({ entity, canUpload, canReview, onReview }) {
   // skip the first document 'Transferencia/DocumentPagoGarantia'
   return (
     <List>
-      {documents
-        .map((document, index) => (
+      {documents.map((document, index) => (
           <DocumentItem
             key={document.documentoType}
             {...document}
-            required={
-              document.required ||
-              (document.documentoType === 'DocumentCertificadoMatrimonio' &&
-                entity.Cliente.CivilStatus === 'Casado(a)')
-            }
+            required={document.required}
             Documentos={entity.Documents || {}}
             className={index > 0 ? 'border-top' : ''}
             canUpload={canUpload}

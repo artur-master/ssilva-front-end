@@ -282,29 +282,6 @@ export const CodeudorDocuments = entity => {
 
   let baseDocuments = [];
 
-  if(isCreditPayment(entity.PayType)) {
-    baseDocuments = [
-      {
-        documentoName: 'Ficha Pre-aprobacion',
-        documentoType: 'DocumentCodeudorFirmadoFichaPreAprobacion',
-        accept: 'pdf',
-        firmado: true,
-        required: true,
-      },
-    ];
-
-    if(totalActivos>0) {
-      baseDocuments = [
-        ...baseDocuments,
-        {
-          documentoName: 'Acreditación de Activo',
-          documentoType: 'DocumentCodeudorAcredittacionActivo',
-          required: true,
-        },
-      ];
-    }
-  }
-
   if (!isCompany && entity.Codeudor.CivilStatus === 'Casado(a)') {
     baseDocuments.push({
       documentoName: 'Certificado Matrimonio',
@@ -315,6 +292,17 @@ export const CodeudorDocuments = entity => {
 
   // Creditos
   if ( isCreditPayment(entity.PayType) ) {
+    if(totalActivos>0) {
+      baseDocuments = [
+        ...baseDocuments,
+        {
+          documentoName: 'Acreditación de Activo',
+          documentoType: 'DocumentCodeudorAcredittacionActivo',
+          required: true,
+        },
+      ];
+    }
+
     if (isCompany){ //Empresa Client
       baseDocuments = [
         ...baseDocuments,
@@ -382,9 +370,6 @@ export const CodeudorDocuments = entity => {
       }
       else // Contrato
       {
-        console.log(entity.Codeudor.Extra.Values.LiquidIncome);
-        console.log(entity.Codeudor.Extra.Values.VariableSalary);
-
         if(entity.Codeudor.Extra.Values.LiquidIncome && entity.Codeudor.Extra.Values.LiquidIncome != 0) {
           baseDocuments.push({
             documentoName: '3 ultimas liquidaciones de sueldo para renta fija',
@@ -469,7 +454,7 @@ export const requiredSaveDocuments = [
   "DocumentOfertaFirmada",
   "DocumentFirmadoCotizacion",
   "DocumentPlanoFirmada",
-  'DocumentFirmadoFichaPreAprobacion', 'DocumentCodeudorFirmadoFichaPreAprobacion',
+  'DocumentFirmadoFichaPreAprobacion',
   'DocumentFotocopiaCarnet', 'DocumentCodeudorFotocopiaCarnet',
   'DocumentCotizacionAFP', 'DocumentCodeudorCotizacionAFP',
 ]
