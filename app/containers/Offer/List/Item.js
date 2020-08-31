@@ -20,6 +20,8 @@ import {
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
 import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
+import moment from 'components/moment';
+
 // import Button from 'components/Button';
 import { canEditOffer } from '../helper';
 
@@ -82,7 +84,7 @@ const Item = ({ project, offer, dispatch }) => {
         ))}
       </td>
       <td className="">Cliente: {clientFullname(Cliente)}</td>
-      <td>{Date}</td>
+      <td>{moment(Date).format('YYYY-MM-DD hh:mm')}</td>
       <td className="px-3">{responsible}</td>
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
