@@ -25,6 +25,7 @@ export function Codeudor({ entity, canUpload, canReview, onReview }) {
             canUpload={canUpload}
             canReview={canReview}
             onReview={onReview}
+            entity={entity}
           />
         ))}
     </List>

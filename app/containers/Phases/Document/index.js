@@ -10,7 +10,7 @@ import WithLoading from 'components/WithLoading';
 import { Auth } from 'containers/App/helpers';
 import Garantia from './Garantia';
 import CarpetaDigital from './CarpetaDigital';
-import { getDocuments } from './documents';
+import { getDocuments, CodeudorDocuments } from './documents';
 import CarpetaDigitalUploadActions from './UploadActions';
 import CarpetaDigitalReviewActions from './ReviewActions';
 
@@ -31,7 +31,9 @@ export function PhaseDocument({
   promesa,
 }) {
   const documents = getDocuments(entity);
-  const initialValues = documents.reduce(
+  const co_documents = CodeudorDocuments(entity);
+
+  const initialValues = documents.concat(co_documents).reduce(
     (acc, document) => {
       acc[document.documentoType] = null;
       return acc;
