@@ -258,6 +258,8 @@ export const getDocuments = entity => {
 
 export const CodeudorDocuments = entity => {
   console.log("this is CodeudoDocuments:", entity);
+  if (!entity.Codeudor) return [];
+  
   const isCompany = stringToBoolean(entity.Codeudor.IsCompany);
   const isIndependent = stringToBoolean(entity.Codeudor.Extra.Independent);
   const hasProfesion = (entity.Codeudor.Ocupation.trim() !== "");
