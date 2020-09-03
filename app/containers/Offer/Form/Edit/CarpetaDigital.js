@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import FileSaver from 'file-saver';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import Tab from 'components/Tab';
 import Alert from 'components/Alert';
@@ -23,6 +24,11 @@ export function CarpetaDigital({
 }) {
   const download = () =>{
     console.log("PJW");
+    const { Documents } = entity;
+    if (Documents.DocumentFirmadoCotizacion != "")
+      FileSaver.saveAs( Documents.DocumentFirmadoCotizacion,'Cotizacion');
+    if (Documents.DocumentOfertaFirmada != "")
+      FileSaver.saveAs( Documents.DocumentOfertaFirmada,'Oferta');
   }
   const tabs = [
     {

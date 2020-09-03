@@ -147,6 +147,9 @@ export const getActionTitle = (offer = {}) => {
   if (offer.OfertaState === OFERTA_STATE[4])
     return <span className="color-warning">Cancelar Oferta</span>;
 
+  if (offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[3])
+    return <span class="font-16-rem line-height-1 color-success">Rechazada</span>;
+
   if (offer.OfertaState === OFERTA_STATE[2])
     return <span className="color-warning">{offer.OfertaState}</span>;
 

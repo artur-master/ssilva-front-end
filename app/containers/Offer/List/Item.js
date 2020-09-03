@@ -38,8 +38,23 @@ const Item = ({ project, offer, dispatch }) => {
     AprobacionInmobiliariaState,
   } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
-
+  
   let responsible = '';
+  let State = OfertaStateFormat.map((state, index) => (
+    <span
+      key={String(index)}
+      className={`badge px-2 ${state.Color} ${
+        index > 0 ? 'rounded-0' : ''
+      } ${
+        index === 0 && OfertaStateFormat.length > 1
+          ? 'rounded-left rounded-0'
+          : ''
+      }`}
+    >
+      {state.Label.toUpperCase()}
+    </span>
+  ));
+
   switch (AprobacionInmobiliariaState) {
     case APROBACION_INMOBILIARIA_STATE[0]:
       responsible = 'JP';
@@ -49,6 +64,10 @@ const Item = ({ project, offer, dispatch }) => {
       break;
     case APROBACION_INMOBILIARIA_STATE[2]:
       responsible = 'FI';
+      break;
+    case APROBACION_INMOBILIARIA_STATE[3]:
+      responsible = '';
+      State = (<span className="badge px-2 badge-danger">RECHAZADA</span>);
       break;
     default:
       responsible = '';
@@ -88,20 +107,8 @@ const Item = ({ project, offer, dispatch }) => {
       <td className="px-3">{responsible}</td>
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
-          {OfertaStateFormat.map((state, index) => (
-            <span
-              key={String(index)}
-              className={`badge px-2 ${state.Color} ${
-                index > 0 ? 'rounded-0' : ''
-              } ${
-                index === 0 && OfertaStateFormat.length > 1
-                  ? 'rounded-left rounded-0'
-                  : ''
-              }`}
-            >
-              {state.Label.toUpperCase()}
-            </span>
-          ))}
+          { State }
+          
           {PromesaID && (
             <span className="badge px-2 badge-caution">PROMESA</span>
           )}

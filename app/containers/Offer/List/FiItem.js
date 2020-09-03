@@ -64,8 +64,7 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
         <div className=" d-flex justify-content-end align-items-center">
           {offer.OfertaState !== OFERTA_STATE[4] &&
             offer.RecepcionGarantiaState !== RECEPCION_GARANTIA_STATE[1] &&
-            !isPendienteContacto(offer) &&
-            (!success[offer.OfertaID] && (
+            !isPendienteContacto(offer) && !success[offer.OfertaID] && (
               <>
                 <SyncMessage error={error[offer.OfertaID]} />
                 <Button
@@ -75,7 +74,7 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
                   Recibí Garantía
                 </Button>
               </>
-            ))}
+            )}
           {isPendienteContacto(offer) && (
             <span className="badge px-2 badge-warning">Pendiente Contacto</span>
           )}

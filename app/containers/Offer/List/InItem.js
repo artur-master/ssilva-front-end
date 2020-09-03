@@ -36,7 +36,7 @@ const InItem = ({ project, numberIN, offer, dispatch }) => {
     State = (
       <span className="badge px-2 badge-warning">
         {Condition.length > 0 && 'CONTROL APROBADO CON OBS.'}
-        {Condition.length < 1 && 'Pendiente Aprobación'}
+        {Condition.length < 1 && 'Pendiente Aprobacion'}
       </span>
     );
   }
