@@ -29,9 +29,9 @@ const InItem = ({ project, numberIN, offer, dispatch }) => {
   const firmaIN = Object.keys(offer.AprobacionInmobiliaria || {}).length;
   let State = '';
   if (offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[3]) {
-    State = <span className="badge px-2 badge-danger">RECHAZADA</span>;
+    State = <span className="badge px-2 badge-danger">Oferta Rechazada</span>; //RECHAZADA
   } else if (offer.AprobacionInmobiliaria[Auth.get('user_id')]) {
-    State = <span className="badge px-2 badge-success">CONTROL APROBADO</span>;
+    State = <span className="badge px-2 badge-success">Oferta Aprobada</span>; //CONTROL APROBADO
   } else if (!offer.AprobacionInmobiliaria[Auth.get('user_id')]) {
     State = (
       <span className="badge px-2 badge-warning">
