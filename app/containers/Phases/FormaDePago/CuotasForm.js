@@ -40,11 +40,12 @@ function CuotasForm({ form, onHide, onView }) {
 
   const changeNumberCuotas = evt => {
     let { Cuotas = [] } = values;
+    
     const number = parseInt(evt.currentTarget.value, 10);
     const firstCuotas = Cuotas[0];
     let totalFee = 0;
     Cuotas.forEach(cuota => {
-      totalFee = Number(totalFee) + cuota.Amount;
+      totalFee = Number(totalFee) + Number(cuota.Amount);
     });
     const fee = Number(totalFee / number).toFixed(2);
     Cuotas = [];
