@@ -32,7 +32,7 @@ export function PhaseFormaDePagoView({ values }) {
         <table className="table">
           <thead>
             <tr>
-              <td>Crédito</td>
+              <td>{ values.PayType }</td>
               <td>UF</td>
             </tr>
           </thead>

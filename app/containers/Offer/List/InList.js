@@ -13,7 +13,7 @@ import Thead from 'components/Table/Thead';
 import { isPendienteContacto } from '../helper';
 
 const InList = ({ project = {}, offers, dispatch }) => {
-  const showOffers = offers;
+  const showOffers = offers.filter(offer=>!isPendienteContacto(offer));
   return (
     <Box className="mt-3 pt-3 pb-3">
       {showOffers.length < 1 && <Empty tag="h2" />}
