@@ -8,33 +8,77 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { isAprobacionInmobiliariaState } from '../../helper';
-import { APROBACION_INMOBILIARIA_STATE } from '../../../App/constants';
+import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
 
 function InSteps({ offer }) {
+  const { AprobacionInmobiliaria, AprobacionInmobiliariaState } = offer;
   const Graph = {
     Node: [
       { Label: 'V', Description: 'Oferta', Color: 'green' },
-      {
-        Label: 'I',
-        Description: 'Pendiente Aprobador Inmobiliario',
-        Color: 'orange',
-      },
     ],
   };
 
-  if (isAprobacionInmobiliariaState(offer))
-    Graph.Node[1] = {
-      Label: 'I',
-      Description: 'Aprobada Inmobiliario',
-      Color: 'green',
-    };
+  if(AprobacionInmobiliaria["Autorizador"]){
+    let Color = "";
+    const values = Object.values(AprobacionInmobiliaria["Autorizador"]);
 
-  if (offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[3])
-    Graph.Node[1] = {
+    if (values.includes(false)) Color = "red";
+    else if (values.includes(null)) Color = "orange";
+    else Color = "green";
+  
+    Graph.Node.push({
       Label: 'I',
-      Description: 'Aprobada Inmobiliario',
-      Color: 'red',
-    };
+      Description: 'Aproba Authorizador Inmobiliario',
+      Color,
+    });
+  }
+
+  if(AprobacionInmobiliaria["Representante"]){
+    let Color = "white";
+    const values = Object.values(AprobacionInmobiliaria["Representante"]);
+
+    if([APROBACION_INMOBILIARIA_STATE[1], APROBACION_INMOBILIARIA_STATE[4]].includes(AprobacionInmobiliariaState)) Color = "white";
+    else if (values.includes(false)) Color = "red";
+    else if (values.includes(null)) Color = "orange";
+    else Color = "green";
+
+    Graph.Node.push({
+      Label: 'II',
+      Description: 'Aproba Representante Inmobiliario',
+      Color,
+    });
+  }
+
+  if(AprobacionInmobiliaria["Aprobador"]){
+    let Color = "white";
+    const values = Object.values(AprobacionInmobiliaria["Aprobador"]);
+
+    if([APROBACION_INMOBILIARIA_STATE[1], APROBACION_INMOBILIARIA_STATE[4]].includes(AprobacionInmobiliariaState)) Color = "white";
+    else if (values.includes(false)) Color = "red";
+    else if (values.includes(null)) Color = "orange";
+    else Color = "green";
+
+    Graph.Node.push({
+      Label: 'II',
+      Description: 'Aproba Aprobador Inmobiliario',
+      Color,
+    });
+  }
+    
+
+  // if (isAprobacionInmobiliariaState(offer))
+  //   Graph.Node[1] = {
+  //     Label: 'I',
+  //     Description: 'Aprobada Inmobiliario',
+  //     Color: 'green',
+  //   };
+
+  // if (offer.AprobacionInmobiliariaState === APROBACION_INMOBILIARIA_STATE[3])
+  //   Graph.Node[1] = {
+  //     Label: 'I',
+  //     Description: 'Aprobada Inmobiliario',
+  //     Color: 'red',
+  //   };
 
   let colorStep = 0;
   return (

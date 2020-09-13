@@ -8,6 +8,7 @@ import { Collapse, CollapseContent, CollapseHeader } from 'components/Collapse';
 import IntlFormatCurrency from 'components/IntlFormat/Currency';
 
 const CoPatrimony = ({ values }) => {
+  if (!values.CoPatrimony) return null;
   const hasCredits = {
     RealState: !!values.CoPatrimony.RealState,
     CreditoHipotecario: !!values.CoPatrimony.CreditoHipotecario.PagosMensuales,

@@ -10,6 +10,7 @@ import IntlFormatCurrency from 'components/IntlFormat/Currency';
 
 const CoPatrimony = ({ form, readOnly=false }) => {
   const { values, setFieldValue } = form;
+  
   const [hasCredits, setHasCredits] = useState({
     RealState: !!values.CoPatrimony.RealState,
     CreditoHipotecario: !!values.CoPatrimony.CreditoHipotecario.PagosMensuales,

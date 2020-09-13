@@ -10,10 +10,11 @@ import Empty from 'components/Empty';
 import { countIN } from 'containers/Project/helper';
 import InItem from './InItem';
 import Thead from 'components/Table/Thead';
-import { isPendienteContacto } from '../helper';
+// import { isPendienteContacto } from '../helper';
+import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
 
 const InList = ({ project = {}, offers, dispatch }) => {
-  const showOffers = offers.filter(offer=>!isPendienteContacto(offer));
+  const showOffers = offers.filter(offer=>offer.AprobacionInmobiliariaState != APROBACION_INMOBILIARIA_STATE[0]);
   return (
     <Box className="mt-3 pt-3 pb-3">
       {showOffers.length < 1 && <Empty tag="h2" />}
