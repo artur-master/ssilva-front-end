@@ -52,7 +52,7 @@ export function CarpetaDigitalUploadActions({
         {(Auth.isPM() || Auth.isVendor()) && (
           <Button
             onClick={() => {
-              form.values.Condition.push(...entity.Condition);
+              // form.values.Condition.push(...entity.Condition);
               onSendControl(form.values);
             }}
             className="order-3 m-btn mr-2"
@@ -96,11 +96,11 @@ export function CarpetaDigitalUploadActions({
           </Button>
         )}
       </div>
-        {(entity && values && entity.Condition.length > 0 || values.Condition.length > 0) && ( 
-          <div className="p-0">
-            <DocumentCondition form={form} entity={entity} />
-          </div>
-        )}
+      {(entity && entity.Condition.length > 0) && ( 
+        <div className="p-0">
+          <DocumentCondition form={form} entity={entity} />
+        </div>
+      )}
       {withText.open && (
         <>
           <div className="mt-3">

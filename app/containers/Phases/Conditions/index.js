@@ -12,7 +12,8 @@ import { Auth } from 'containers/App/helpers';
 
 function Conditions({ form, entity }) {
   const { Condition = [] } = entity;
-  const [Conditions, setConditions] = useState();
+  console.log(form.values, "entity");
+  const [conditions, setConditions] = useState([]);
   const [Issave, setIsave] = useState(false);
   
   const onDismiss = () =>{
@@ -24,10 +25,12 @@ function Conditions({ form, entity }) {
   useEffect(() => {
     setConditions(Condition);
   }, [entity]);
+
   useEffect(() => {
     if(form.values.Condition.length > 0 )
       setIsave(true);
   }, [form.values.Condition]);
+
   return (
     <>
       {form && form.values.Condition.length > 0 && (
@@ -46,7 +49,7 @@ function Conditions({ form, entity }) {
           ))}
         </>
       )}
-      { Conditions && Conditions.map(
+      { conditions.map(
         (item, index) => (
           <Alert
             key={String(index)}
