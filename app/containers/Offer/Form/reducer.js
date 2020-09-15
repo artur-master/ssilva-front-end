@@ -72,8 +72,14 @@ const offerReducer = (state = initialState, action) =>
         draft.redirect = '';
         draft.reserva_id = null;
         break;
-      case CONFIRM_SUCCESS:
       case APPROVE_IN_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.success = action.response.detail;
+        draft.redirect = 'ofertas';
+        draft.reserva_id = action.response.reserva;
+        break;
+      case CONFIRM_SUCCESS:
       case APPROVE_CONFECCION_PROMESA_SUCCESS:
       case DELETE_OFFER_SUCCESS:
       case SAVE_OFFER_SUCCESS:

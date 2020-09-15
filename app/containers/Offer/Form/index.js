@@ -49,7 +49,8 @@ export function OfferForm({
   }, [location.search]);
 
   if (selector.redirect) {
-    if(selector.reserva_id && selector.reserva_id.AprobacionInmobiliariaState == "Rechazada")
+    if((selector.reserva_id && selector.reserva_id.AprobacionInmobiliariaState == "Rechazada")
+        || (selector.redirect === "ofertas"))
       return <Redirect to={`/proyectos/${project.ProyectoID}/ofertas`} />;
     return <Redirect to={`/proyectos/${project.ProyectoID}/reservas`} />;
   }
