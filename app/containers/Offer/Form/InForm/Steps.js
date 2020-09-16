@@ -33,22 +33,6 @@ function InSteps({ offer }) {
     });
   }
 
-  if(AprobacionInmobiliaria["Representante"]){
-    let Color = "white";
-    const values = Object.values(AprobacionInmobiliaria["Representante"]);
-
-    if([APROBACION_INMOBILIARIA_STATE[1], APROBACION_INMOBILIARIA_STATE[4]].includes(AprobacionInmobiliariaState)) Color = "white";
-    else if (values.includes(false)) Color = "red";
-    else if (values.includes(null)) Color = "orange";
-    else Color = "green";
-
-    Graph.Node.push({
-      Label: 'II',
-      Description: 'Aproba Representante Inmobiliario',
-      Color,
-    });
-  }
-
   if(AprobacionInmobiliaria["Aprobador"]){
     let Color = "white";
     const values = Object.values(AprobacionInmobiliaria["Aprobador"]);

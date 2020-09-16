@@ -8,6 +8,17 @@ import UserElement from 'containers/Common/User/Element';
 const UsersElement = ({ userInmobiliariaTypes, values }) => {
   const [userType, setUserType] = useState('');
 
+  const getUserInName = (userInmobiliariaType) => {
+    switch (userInmobiliariaType.Name) {
+      case "Aprobador":
+        return `${userInmobiliariaType.Name}(es)`;
+      case "Representante":
+        return `${userInmobiliariaType.Name}(s)`;
+      default:
+        return userInmobiliariaType.Name;
+    }
+  }
+
   return (
     <FieldArray
       name="UsersInmobiliaria"
@@ -40,34 +51,34 @@ const UsersElement = ({ userInmobiliariaTypes, values }) => {
                 >
                   <div className="col-md-6 border-bottom p-0 pb-3 d-flex justify-content-between align-items-center">
                     <span className="font-14-rem">
-                      <b>{`${userInmobiliariaType.Name}(${
-                        userInmobiliariaType.Name === 'Aprobador' ? 'es' : 's'
-                      })`}</b>
+                      <b>{getUserInName(userInmobiliariaType)}</b>
                     </span>
-                    <UserElement
-                      query={{
-                        roles: 'Inmobiliario',
-                        selected: users.map(user => user.UserID),
-                      }}
-                      onSelect={user => {
-                        push({
-                          ...user,
-                          UserInmobiliariaTypeName: userType,
-                        });
-                      }}
-                      component={({ openUserElement }) => (
-                        <div
-                          role="presentation"
-                          onClick={() => {
-                            setUserType(userInmobiliariaType.Name);
-                            openUserElement(true);
-                          }}
-                          className="font-14-rem color-main btn-plus"
-                        >
-                          <b>Agregar {userInmobiliariaType.Name}</b>
-                        </div>
-                      )}
-                    />
+                    { userInmobiliariaType.Name !== 'Autorizador' &&
+                      <UserElement
+                        query={{
+                          roles: 'Inmobiliario',
+                          selected: users.map(user => user.UserID),
+                        }}
+                        onSelect={user => {
+                          push({
+                            ...user,
+                            UserInmobiliariaTypeName: userType,
+                          });
+                        }}
+                        component={({ openUserElement }) => (
+                          <div
+                            role="presentation"
+                            onClick={() => {
+                              setUserType(userInmobiliariaType.Name);
+                              openUserElement(true);
+                            }}
+                            className="font-14-rem color-main btn-plus"
+                          >
+                            <b>Agregar {userInmobiliariaType.Name}</b>
+                          </div>
+                        )}
+                      />
+                    }
                   </div>
                   {users.map(user => (
                     <div

@@ -32,20 +32,12 @@ export function OfferInForm({ selector, dispatch }) {
       if(selector.offer.AprobacionInmobiliaria["Autorizador"]){
         return {Role: "Autorizador", State: selector.offer.AprobacionInmobiliaria["Autorizador"][userId] === null};
       }
-      else if(selector.offer.AprobacionInmobiliaria["Representante"]){
-        return {Role: "Representante", State: selector.offer.AprobacionInmobiliaria["Representante"][userId] === null}
-      }
       else if(selector.offer.AprobacionInmobiliaria["Aprobador"]){
         return {Role: "Aprobador", State: selector.offer.AprobacionInmobiliaria["Aprobador"][userId] === null}
       }
       else return {State: false};
     }
-    else if(selector.offer.AprobacionInmobiliariaState == APROBACION_INMOBILIARIA_STATE[5]) {
-      const re = selector.offer.AprobacionInmobiliaria["Representante"];
-      if(re && Object.keys(re).includes(userId)){
-        if(re[userId] === null) return {Role: "Representante", State: true};
-      }
-
+    else if(selector.offer.AprobacionInmobiliariaState == APROBACION_INMOBILIARIA_STATE[6]) {
       const ap = selector.offer.AprobacionInmobiliaria["Aprobador"];
       if(ap && Object.keys(ap).includes(userId)){
         if(ap[userId] === null) return {Role: "Aprobador", State: true};;
