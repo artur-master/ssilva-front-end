@@ -293,7 +293,6 @@ export const getPromesa = entity => {
 };
 
 export const countIN = () => {
-  console.log((window.project.UsersProyecto || []).filter(user => user.UserProyectoType === 'Autorizador' || user.UserProyectoType === 'Aprobador'), window.project.UsersProyecto)
   return (window.project.UsersProyecto || []).filter(
     user => user.UserProyectoType === 'Autorizador' || user.UserProyectoType === 'Aprobador',
   ).length; 
