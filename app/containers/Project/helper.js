@@ -292,10 +292,12 @@ export const getPromesa = entity => {
   return { maquetaWord, maquetaPdf, maquetaName };
 };
 
-export const countIN = () =>
-  (window.project.UsersProyecto || []).filter(
-    user => user.UserProyectoType === 'Aprobador',
-  ).length;
+export const countIN = () => {
+  console.log((window.project.UsersProyecto || []).filter(user => user.UserProyectoType === 'Autorizador' || user.UserProyectoType === 'Aprobador'), window.project.UsersProyecto)
+  return (window.project.UsersProyecto || []).filter(
+    user => user.UserProyectoType === 'Autorizador' || user.UserProyectoType === 'Aprobador',
+  ).length; 
+}
 
 export const Is_EntregaInmediata = () =>{
   const estato_obj = document.getElementsByName('EtapaStateID')[0];
