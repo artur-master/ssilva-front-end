@@ -194,7 +194,8 @@ export const canEditOffer = offer =>
     : !!(
       UserProject.in(window.project) &&
         (Auth.hasOneOfPermissions(['Es vendedor']) ||
-          Auth.hasOneOfPermissions(['Es asistente comercial'])) &&
+         Auth.hasOneOfPermissions(['Es asistente comercial']) ||
+         Auth.isPM() ) &&
         offer.OfertaState !== OFERTA_STATE[3] &&
         offer.OfertaState !== OFERTA_STATE[4]
     );

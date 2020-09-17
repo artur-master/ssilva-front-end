@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import { OFERTA_STATE } from 'containers/App/constants';
+import DocumentCondition from 'containers/Phases/Conditions';
+
 const SyncMessage = WithLoading();
 export function OfferConfirmActions({
   entity,
@@ -32,8 +34,8 @@ export function OfferConfirmActions({
                     //   // onConfirm('client', evt.currentTarget.checked);
                     // }}
                   />
-				  {/* eslint-disable-next-line */}
-				  <label />
+                  {/* eslint-disable-next-line */}
+                  <label />
                 </span>
               </div>
               <span>
@@ -83,6 +85,17 @@ export function OfferConfirmActions({
         </Button>
         <Button
           disabled={loading}
+          className="order-3 m-btn m-btn-white m-btn-plus mr-2"
+          // onClick={() => {            
+          //   const { Condition = [] } = form.values;
+          //   Condition.push({ Description: '' });
+          //   form.setFieldValue('Condition', Condition);
+          // }}
+        >
+          Agregar Observación
+        </Button>
+        <Button
+          disabled={loading}
           onClick={onDelete}
           className="order-3 m-btn"
           color="white"
@@ -90,6 +103,11 @@ export function OfferConfirmActions({
           Rechazar
         </Button>
       </div>
+      {(entity && entity.Condition.length > 0) && ( 
+        <div className="p-0">
+          <DocumentCondition entity={entity} />
+        </div>
+      )}
       <SyncMessage {...selector} />
     </>
   );

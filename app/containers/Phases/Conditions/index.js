@@ -12,13 +12,12 @@ import { Auth } from 'containers/App/helpers';
 
 function Conditions({ form, entity }) {
   const { Condition = [] } = entity;
-  console.log(form.values, "entity");
   const [conditions, setConditions] = useState([]);
   const [Issave, setIsave] = useState(false);
   
   const onDismiss = () =>{
       setIsave(true);
-      entity.Condition = Condition.filter(items => (items !== item));
+      // entity.Condition = Condition.filter(items => (items !== item));
       setConditions(entity.Condition);
   }
 
@@ -26,10 +25,11 @@ function Conditions({ form, entity }) {
     setConditions(Condition);
   }, [entity]);
 
-  useEffect(() => {
-    if(form.values.Condition.length > 0 )
-      setIsave(true);
-  }, [form.values.Condition]);
+  // useEffect(() => {
+  //   if(form.values.Condition.length > 0 )
+  //     setIsave(true);
+  // }, [form.values.Condition]);
+  // console.log(form.values);
 
   return (
     <>

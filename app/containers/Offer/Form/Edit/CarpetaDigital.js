@@ -17,13 +17,12 @@ import Button from 'components/Button';
 
 export function CarpetaDigital({
   isCollapse,
-  canEit,
+  canEdit,
   canReview,
   entity,
   onReview,
 }) {
   const download = () =>{
-    console.log("PJW");
     const { Documents } = entity;
     if (Documents.DocumentFirmadoCotizacion != "")
       FileSaver.saveAs( Documents.DocumentFirmadoCotizacion,'Cotizacion');
@@ -37,7 +36,7 @@ export function CarpetaDigital({
     },
     {
       label: 'OFERTA',
-      content: <Offer canUpload={canEit} entity={entity} />,
+      content: <Offer canUpload={canEdit} entity={entity} />,
     },
   ];
 
@@ -47,7 +46,7 @@ export function CarpetaDigital({
         label: 'CRÉDITO',
         content: (
           <Credit
-            canUpload={canEit}
+            canUpload={canEdit}
             canReview={canReview}
             entity={entity}
             onReview={onReview}
@@ -82,7 +81,7 @@ export function CarpetaDigital({
 
 CarpetaDigital.propTypes = {
   isCollapse: PropTypes.bool,
-  canEit: PropTypes.bool,
+  canEdit: PropTypes.bool,
   canReview: PropTypes.bool,
   entity: PropTypes.object,
   onReview: PropTypes.func,
