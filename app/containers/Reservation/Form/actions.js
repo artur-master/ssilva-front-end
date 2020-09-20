@@ -124,6 +124,7 @@ const prepareBeforeSave = newValues => {
 
 export function saveReservation(newValues, documents = false) {
   newValues['Condition'] = documents['Condition'];
+  if(documents['Comment']) newValues['Comment']=documents['Comment'];
   const values = prepareBeforeSave(newValues);
   
   if (values.InstitucionFinancieraID === "") values.InstitucionFinancieraID=null;
@@ -150,6 +151,7 @@ export function saveReservationSuccess(response) {
 
 export function sendToControl(newValues, documents = false) {
   newValues['Condition'] = documents['Condition'];
+  if(documents['Comment']) newValues['Comment']=documents['Comment'];
   const values = prepareBeforeSave(newValues);
   if (values.InstitucionFinancieraID === "") values.InstitucionFinancieraID=null;
   return {

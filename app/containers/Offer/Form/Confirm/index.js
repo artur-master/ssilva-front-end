@@ -90,11 +90,11 @@ export function OfferConfirm({ selector, dispatch }) {
         onCancel={() =>
           dispatch(push(`/proyectos/${project.ProyectoID}/ofertas`))
         }
-        onConfirm={() =>
+        onConfirm={(condtion) =>
           dispatch(
             confirmToClient({
               OfertaID: selector.offer.OfertaID,
-              Conditions: selector.offer.Condition,
+              Conditions: condtion,
             }),
           )
         }

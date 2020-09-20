@@ -25,6 +25,18 @@ export function CarpetaDigitalUploadActions({
  
   const canStC = entity.ReservaState === RESERVA_STATE['0'];
 
+  const checkComment = () => {
+    if (withText.open){
+      const with_text = withText.text.trim();
+      if(with_text == "") {
+        alert("Por favor agregue su comentario");
+        return false;
+      } else {
+        form.values.Comment = with_text;
+      }
+    }
+    return true;
+  }
   useEffect(() => {
     setCanUpload(true);
   }, [values]);
@@ -43,7 +55,7 @@ export function CarpetaDigitalUploadActions({
           disabled={!canUpload ? true : loading}
           className="order-3 m-btn mr-2"
           onClick={() => {
-            form.values.Condition.push(...entity.Condition);
+            if (checkComment() == false) return;
             onSave(form.values);
           }}
         >
@@ -52,7 +64,7 @@ export function CarpetaDigitalUploadActions({
         {(Auth.isPM() || Auth.isVendor()) && (
           <Button
             onClick={() => {
-              // form.values.Condition.push(...entity.Condition);
+              if (checkComment() == false) return;
               onSendControl(form.values);
             }}
             className="order-3 m-btn mr-2"
@@ -62,15 +74,13 @@ export function CarpetaDigitalUploadActions({
           </Button>
         )}
         <Button
-          disabled={loading}
+          disabled={loading || withText.open}
           className="order-3 m-btn m-btn-white m-btn-plus mr-2"
           onClick={() => {            
-            const { Condition = [] } = form.values;
-            Condition.push({ Description: '' });
-            form.setFieldValue('Condition', Condition);
+            setWithText({ text: "", open: true });
           }}
         >
-          Agregar Observación
+          Agregar Comentario
         </Button>
         {!entity.ReservaID && (
           <Button
@@ -88,24 +98,17 @@ export function CarpetaDigitalUploadActions({
           <Button
             disabled={loading}
             className="order-3 m-btn m-btn-white"
-            onClick={() => {
-              setWithText({ ...withText, open: true });
-            }}
+            onClick={() => onCancel(withText.open ? withText.text:"")}
           >
             Cancelar Reserva
           </Button>
         )}
       </div>
-      {(entity && entity.Condition.length > 0) && ( 
-        <div className="p-0">
-          <DocumentCondition form={form} entity={entity} />
-        </div>
-      )}
       {withText.open && (
         <>
           <div className="mt-3">
             <span className="d-block font-14-rem">
-              <b>Comentarios (En caso de Cancelar Reserva)</b>
+              <b>Comentarios</b>
             </span>
             <div className="pt-2">
               <textarea
@@ -122,9 +125,9 @@ export function CarpetaDigitalUploadActions({
             <Button
               disabled={loading}
               className="m-btn"
-              onClick={() => onCancel(withText.text)}
+              onClick={() => setWithText({ text: "", open: false })}
             >
-              Cancelar Reserva
+              Cancelar Comentario
             </Button>
           </div>
         </>

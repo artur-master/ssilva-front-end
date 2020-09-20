@@ -3,12 +3,12 @@
  * Offer Form
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
 import { OFERTA_STATE } from 'containers/App/constants';
-import DocumentCondition from 'containers/Phases/Conditions';
+import Condition from './Condition';
 
 const SyncMessage = WithLoading();
 export function OfferConfirmActions({
@@ -20,6 +20,29 @@ export function OfferConfirmActions({
   onDelete,
 }) {
   const { loading } = selector;
+  // entity.Condition = [{ Description: 'Observation 1' }, { Description: 'Observation 2' }];
+  const [condition, setCondition] = useState([]);
+
+  const onChangeCondition =(index, value)=> {
+    condition[index] = {Description: value};
+    setCondition([...condition]);
+  }
+  const onRemoveCondition =(index) => {
+    condition.splice(index, 1);
+    setCondition([...condition]); 
+  }
+  const onCheckCondition =()=> {
+    if(condition.length){
+      for(let i of condition){
+        if(i.Description.trim() == ""){
+          alert("Por favor agregue observación");
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   return (
     <>
       <div className="d-flex after-expands-2 align-items-center">
@@ -42,7 +65,6 @@ export function OfferConfirmActions({
                 <b>Revisé y confirmo Oferta</b>
               </span>
             </div>
-
             <div className="d-flex align-items-center mr-3 order-3">
               <div className="checkbox-01 checkbox-medium">
                 <span>
@@ -60,11 +82,13 @@ export function OfferConfirmActions({
                 <b>Contacté al cliente</b>
               </span>
             </div>
-
             <Button
               disabled={loading}
               className="order-3 m-btn mr-2"
-              onClick={onConfirm}
+              onClick={()=>{
+                if(onCheckCondition() == false) return;
+                onConfirm(condition);
+              }}
             >
               Continuar
             </Button>
@@ -86,11 +110,10 @@ export function OfferConfirmActions({
         <Button
           disabled={loading}
           className="order-3 m-btn m-btn-white m-btn-plus mr-2"
-          // onClick={() => {            
-          //   const { Condition = [] } = form.values;
-          //   Condition.push({ Description: '' });
-          //   form.setFieldValue('Condition', Condition);
-          // }}
+          onClick={() => {
+            if(onCheckCondition() == false) return;
+            setCondition([...condition, {Description: ""}]);
+          }}
         >
           Agregar Observación
         </Button>
@@ -103,11 +126,22 @@ export function OfferConfirmActions({
           Rechazar
         </Button>
       </div>
-      {(entity && entity.Condition.length > 0) && ( 
-        <div className="p-0">
-          <DocumentCondition entity={entity} />
+      { condition.length > 0 &&
+      <>
+        <div className="d-block text-left m font-14-rem mb-3">
+          <b>Neuva Observación</b>
         </div>
-      )}
+        { condition.map((item, index) => (
+          <Condition
+            key={String(index)}
+            className="w-100 d-block mb-3"
+            condition={item}
+            onChange={(value)=> onChangeCondition(index,value)}
+            onRemove={()=>onRemoveCondition(index)}
+          />
+        ))}
+       </>
+      }
       <SyncMessage {...selector} />
     </>
   );
