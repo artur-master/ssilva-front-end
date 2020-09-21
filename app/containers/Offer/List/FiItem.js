@@ -26,6 +26,7 @@ import { compose } from 'redux';
 import { recepcionGarantia } from 'containers/Offer/Form/FiForm/Garantia/actions';
 import makeSelectOfferGarantia from 'containers/Offer/Form/FiForm/Garantia/selectors';
 import WithLoading from 'components/WithLoading';
+import moment from 'components/moment';
 import {
   RECEPCION_GARANTIA_STATE,
   OFERTA_STATE,
@@ -59,7 +60,7 @@ const FiItem = ({ project, offer, selectorGarantia, dispatch }) => {
         ))}
       </td>
       <td className="">Cliente: {clientFullname(Cliente)}</td>
-      <td>{Date}</td>
+      <td>{moment(Date).format('YYYY-MM-DD HH:mm')}</td>
       <td className="px-3">
         <div className=" d-flex justify-content-end align-items-center">
           {offer.OfertaState !== OFERTA_STATE[4] &&
