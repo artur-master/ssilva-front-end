@@ -38,7 +38,7 @@ const Item = ({ project, offer, dispatch }) => {
     AprobacionInmobiliariaState,
   } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
-  
+
   let responsible = '';
   let State = OfertaStateFormat.map((state, index) => (
     <span
@@ -108,10 +108,6 @@ const Item = ({ project, offer, dispatch }) => {
       <td className="px-3">
         <div className="badge-group d-flex justify-content-end align-items-center rounded overflow-hidden">
           { State }
-          
-          {PromesaID && (
-            <span className="badge px-2 badge-caution">PROMESA</span>
-          )}
         </div>
       </td>
       <td className="font-21 px-3">

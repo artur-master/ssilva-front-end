@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ProjectPhases from 'containers/Common/ProjectPhases';
+import ProjectPhases from '../ProjectPhases';
 import { Auth } from 'containers/App/helpers';
 import { fetchProjectExist, fetchProjectMeta } from './helper';
 

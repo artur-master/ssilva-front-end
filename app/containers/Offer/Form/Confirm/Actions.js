@@ -18,6 +18,7 @@ export function OfferConfirmActions({
   onConfirm,
   onEdit,
   onDelete,
+  onWithdraw,
 }) {
   const { loading } = selector;
   // entity.Condition = [{ Description: 'Observation 1' }, { Description: 'Observation 2' }];
@@ -120,10 +121,13 @@ export function OfferConfirmActions({
         <Button
           disabled={loading}
           onClick={onDelete}
-          className="order-3 m-btn"
+          className="order-3 m-btn mr-2"
           color="white"
         >
           Rechazar
+        </Button>
+        <Button className="order-3 m-btn-warning-02 d-inline" onClick={onWithdraw}>
+          Desistimiento
         </Button>
       </div>
       { condition.length > 0 &&
@@ -154,6 +158,7 @@ OfferConfirmActions.propTypes = {
   onConfirm: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
+  onWithdraw: PropTypes.func,
 };
 
 export default OfferConfirmActions;

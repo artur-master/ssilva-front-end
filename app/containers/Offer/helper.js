@@ -52,6 +52,7 @@ export const formatOffer = offer => {
       Color: '',
     },
   ];
+
   switch (offer.OfertaState) {
     case OFERTA_STATE[0]:
       if (isPendienteContacto(offer)) {
@@ -93,19 +94,22 @@ export const formatOffer = offer => {
       }
       break;
     case 'Pendiente control':
-    case 'Pendiente legal':
+    case OFERTA_STATE[1]: //'Pendiente legal'
       OfertaStateFormat[0].Color = 'badge-caution';
       break;
-    case 'Rechazada por legal':
+    case OFERTA_STATE[2]: //'Rechazada por legal'
       OfertaStateFormat[0].Color = 'badge-danger';
       if (offer.AprobacionInmobiliariaState === 'Rechazada')
         OfertaStateFormat[0].Label = 'Rechazada IN';
       break;
-    case 'Cancelada':
+    case OFERTA_STATE[3]: //Promesa
+        OfertaStateFormat[0].Color = 'badge-info';
+        break;
+    case OFERTA_STATE[4]: //'Cancelada'
       OfertaStateFormat[0].Color = 'badge-warning';
       OfertaStateFormat[0].Label = 'Cancelada JP';
       break;
-    case 'Modificado':
+    case OFERTA_STATE[5]: //'Modificado'
       OfertaStateFormat[0].Color = 'badge-caution';
       break;
     default:

@@ -108,6 +108,7 @@ export function OfferConfirm({ selector, dispatch }) {
           )
         }
         onDelete={() => dispatch(deleteOffer(entity))}
+        onWithdraw={() => console.log("withdraw")}
       />
       {/* Added by Artur */}
       {selector.offer && (
