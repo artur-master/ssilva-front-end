@@ -15,15 +15,41 @@ export const isValidLabor = ( Values, PayType ) => {
     'Empleador.RazonSocial',
     'Empleador.Rut',
     'Empleador.Extra.Phone',
-    'Extra.Values.Honoraries',
+    // 'Extra.Values.Honoraries',
   ];
   if (!isCompany && isCredit) {
     return requiredFields.find(
-      field => getDescendantProp(Values, field),
-    ) !== undefined;
+      field => (getDescendantProp(Values, field) === "")
+    ) === undefined;
   }
   return true;
 };
+
+export const getInvalidLabor = ( Values ) => {
+  const Cliente = Values.Cliente;
+  const isCompany = stringToBoolean(Cliente.IsCompany);
+  const isCredit = isCreditPayment(Values.PayType);
+
+  const requiredFields = [
+    'Empleador.RazonSocial',
+    'Empleador.Rut',
+    'Empleador.Extra.Phone',
+    // 'Extra.Values.Honoraries',
+  ];
+
+  const inValidValues = [];
+  if (!isCompany && isCredit) {
+    requiredFields.forEach(
+      field => {
+        if(getDescendantProp(Values, field) === ""){
+          if(field === "Empleador.RazonSocial") inValidValues.push("Nombre Empleador");
+          else if(field === "Empleador.Rut") inValidValues.push("RUT Empleador");
+          else inValidValues.push("Teléfono Empleador");
+        }
+      });
+  }
+  return inValidValues;
+}
 
 export const calculateRenta = (reserva = {}) => {
   const Cliente = reserva.Cliente || {};

@@ -56,8 +56,7 @@ export function PhaseInmueble({
               </div>
             )}
             {!canVNEdit &&
-              ((canEdit ||
-                (UserProject.in(window.project) && Auth.isVendor())) && (
+              ((canEdit || (UserProject.in(window.project) && Auth.isVendor())) && (
                 <Button
                   color="white"
                   className="m-btn-pen order-3"
@@ -145,7 +144,7 @@ export function PhaseInmueble({
                 setFieldValue('Inmuebles', inmuebles)
               }
               values={values}
-              onHide={() => setOpen(false)}
+              onHide={() => {setFieldValue('Inmuebles', initialValues.Inmuebles); setOpen(false)}}
               onUpdate={() => {
                 setOpen(false);
                 submitForm();

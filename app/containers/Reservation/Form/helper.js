@@ -35,7 +35,6 @@ export const isValidData = reservation => {
   const { moneyErr } = calculates(reservation);
   const isValid = isValidClient(reservation) && !moneyErr;
   if(reservation.ReservaState){
-    console.log(isValidLabor(reservation, reservation.PayType), "this is IsValidData");
     return isValid && isValidLabor(reservation, reservation.PayType);
   }
   return isValid;

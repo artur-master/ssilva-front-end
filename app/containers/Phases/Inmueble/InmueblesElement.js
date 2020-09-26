@@ -73,7 +73,7 @@ const InmueblesElement = ({ values, onSelect }) => {
                         className="close close-absolute"
                         onClick={() => {
                           handleRemove(inmueble);
-                          remove(index);
+                          // remove(index);
                         }}
                       >
                         <span aria-hidden="true">×</span>

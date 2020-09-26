@@ -24,6 +24,7 @@ export const isValidClient = ({ Cliente, Codeudor = null, PayType, CotizacionTyp
     'Nationality',
     'Contact.0.Value',
   ];
+  
   if (!isContadoType(PayType)) {
     requiredOfPersonal.push(
       ...['Position', 'Extra.SalaryRank', 'Antiquity', 'TotalPatrimony'],

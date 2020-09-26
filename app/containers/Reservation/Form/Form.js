@@ -30,8 +30,8 @@ import {
   printDocuments,
 } from './actions';
 import AlertPopup from 'components/Alert/popup';
+import { getInvalidLabor } from 'containers/Phases/PreCredito/helper';
 import Log from 'components/Log';
-import { RESERVA_STATE } from 'containers/App/constants';
 
 export function Form({ project, selector, dispatch }) {
   const entity = selector.reservation;
@@ -71,6 +71,10 @@ export function Form({ project, selector, dispatch }) {
           onHide={() => setOpenAlert(false)}
         >
           Por favor complete los datos faltantes
+          <br/>
+          {getInvalidLabor(entity).map((value)=>
+            <>- {value} <br/></>
+          )}
         </AlertPopup>
       )}
       <PhaseGeneral
@@ -134,9 +138,7 @@ export function Form({ project, selector, dispatch }) {
               );
             else dispatch(push(`/proyectos/${project.ProyectoID}/reservas`));
           }}
-          onSave={(documents) => {
-            console.log("This is SendtoControl:", entity, documents);
-            
+          onSave={(documents) => {            
             if (!isValid) return setOpenAlert(true);
             if (initialValues.sendControl){
               return dispatch(

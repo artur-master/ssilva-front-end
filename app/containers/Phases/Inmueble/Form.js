@@ -100,7 +100,7 @@ function PhaseInmuebleForm({
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button className="ml-2" onClick={onUpdate}>
+          <Button className="ml-2" disabled={values.Inmuebles.length == 0} onClick={onUpdate}>
             Guardar
           </Button>
           <Button className="ml-2" color="white" onClick={onHide}>
