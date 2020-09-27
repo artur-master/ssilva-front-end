@@ -102,7 +102,7 @@ function* sagaSaveOffer(action) {
     const requestURL = `${API_ROOT}/ventas/ofertas/${values.OfertaID}/`;
     const response = yield call(request, requestURL, {
       method: 'PATCH',
-      body: JSON.stringify(action.values),
+      body: JSON.stringify({...values, Comment:documents.Comment}),
     });
     if (documents) {
       const resDocuments = yield call(sagaUploadVentasDocument, documents);

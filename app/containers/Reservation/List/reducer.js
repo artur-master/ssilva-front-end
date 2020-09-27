@@ -76,8 +76,13 @@ const reservationReducer = (state = initialState, action) =>
               ReservaStateLabel = 'En Proceso';
               break;
             case 'Pendiente control':
-              ReservaStateColor = 'badge-caution';
-              ReservaStateLabel = 'En Control';
+              if(reservation.OfertaID){                
+                ReservaStateColor = 'badge-info';
+                ReservaStateLabel = 'Modificación Oferta';
+              } else {
+                ReservaStateColor = 'badge-caution';
+                ReservaStateLabel = 'En Control';
+              }
               break;
             case 'Rechazada':
               ReservaStateColor = 'badge-danger';

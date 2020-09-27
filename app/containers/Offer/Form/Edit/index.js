@@ -107,7 +107,10 @@ export function OfferEditForm({ selector, dispatch }) {
                 dispatch(push(`/proyectos/${project.ProyectoID}/ofertas`))
               }
               onDelete={() => dispatch(deleteOffer(entity))}
-              onSave={() => form.submitForm()}
+              onSave={(comment) => {
+                form.setFieldValue("Comment", comment);
+                form.submitForm()
+              }}
               dispatch={dispatch}
               selector={selector}
             />

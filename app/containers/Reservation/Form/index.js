@@ -19,6 +19,7 @@ import PageHeader from 'containers/Common/PageHeader';
 import makeSelectInitProject from 'containers/Project/Init/selectors';
 import { UserProject } from 'containers/Project/helper';
 import ProjectPhases from 'containers/Common/ProjectPhases';
+import { RESERVA_STATE } from 'containers/App/constants';
 import WithLoading from 'components/WithLoading';
 import Button from 'components/Button';
 import makeSelectReservationForm from './selectors';
@@ -90,17 +91,17 @@ export function ReservationForm({
           <div className="row m-0">
             <h4 className="col p-0 font-21 mt-3">
               {project.Name} {Folio ? ` / ${Folio}` : ''}
-              <span className="general-phase">- Reserva
+              <span className="general-phase"> - {selector.reservation.ReservaState!=RESERVA_STATE[2] && selector.reservation.OfertaID ? 'Modificación Oferta' : 'Reserva'}
                 <i className="icon icon-z-info" title="This is Reserva."/>
               </span>
             </h4>
             { !UserProject.isInmobiliario() &&
-            <Button 
-              className="col-auto mt-3 m-btn-white m-btn-history"
-              onClick={()=> setHistoryOpen(true)}
-            >
-              Historial
-            </Button>
+              <Button 
+                className="col-auto mt-3 m-btn-white m-btn-history"
+                onClick={()=> setHistoryOpen(true)}
+              >
+                Historial
+              </Button>
             }
           </div>
           <h5 className="mb-3 d-flex align-items-center justify-content-between">
