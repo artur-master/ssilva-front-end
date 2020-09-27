@@ -19,7 +19,12 @@ import {
   matchRestrictionsFromAList,
 } from 'containers/Common/Inmueble/helper';
 import { clientFullname } from 'containers/Common/Client/helper';
-import { APROBACION_INMOBILIARIA_STATE } from 'containers/App/constants';
+import {
+  OFERTA_STATE,
+  APROBACION_INMOBILIARIA_STATE,
+  RECEPCION_GARANTIA_STATE
+} from 'containers/App/constants';
+import { isCreditType } from 'containers/Phases/FormaDePago/helper';
 import moment from 'components/moment';
 
 // import Button from 'components/Button';
@@ -36,6 +41,9 @@ const Item = ({ project, offer, dispatch }) => {
     Cliente,
     Date,
     AprobacionInmobiliariaState,
+    RecepcionGarantiaState,
+    PayType,
+    OfertaState,
   } = offer;
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
 
@@ -63,7 +71,14 @@ const Item = ({ project, offer, dispatch }) => {
       responsible = 'IN';
       break;
     case APROBACION_INMOBILIARIA_STATE[2]:
-      responsible = 'FI';
+      if(RecepcionGarantiaState === RECEPCION_GARANTIA_STATE[0])
+        responsible = 'FI';
+      else if(isCreditType(PayType) && OfertaState === OFERTA_STATE[0])
+        responsible = 'AC';
+      else if(OfertaState === OFERTA_STATE[1])
+        responsible = 'LG';
+      else
+        responsible = '';
       break;
     case APROBACION_INMOBILIARIA_STATE[3]:
       responsible = '';
