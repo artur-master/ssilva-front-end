@@ -36,6 +36,7 @@ export function PhaseConfeccionPromesa({
   const [init, setInit] = useState(true);
   const nameArray = maquetaWord.url.split("/");
   const fileName = nameArray[nameArray.length - 1];
+  
   return (
     <ExForm
       initialValues={{
@@ -296,9 +297,8 @@ export function PhaseConfeccionPromesa({
                 )}
               </BoxFooter>
             </Box>
-            <div className="py-3">
-              <SyncMassage {...selector} />
-            </div>
+            
+            <SyncMassage {...selector} />            
           </>
         )
       }}

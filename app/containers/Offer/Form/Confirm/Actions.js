@@ -133,7 +133,7 @@ export function OfferConfirmActions({
       { condition.length > 0 &&
       <>
         <div className="d-block text-left m font-14-rem mb-3">
-          <b>Neuva Observación</b>
+          <b>Nueva Observación</b>
         </div>
         { condition.map((item, index) => (
           <Condition

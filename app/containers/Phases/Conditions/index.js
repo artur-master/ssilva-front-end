@@ -36,7 +36,7 @@ function Conditions({ form, entity }) {
       {form && form.values.Condition.length > 0 && (
         <>
           <div className="d-block text-left m font-14-rem mb-3">
-            <b>Neuva Observación</b>
+            <b>Nueva Observación</b>
           </div>
           {form.values.Condition.map((item, index) => (
             <ExField

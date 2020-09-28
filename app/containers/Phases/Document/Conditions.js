@@ -16,7 +16,7 @@ function DocumentCondition({ form }) {
       {Condition.length > 0 && (
         <>
           <span className="d-block font-14-rem">
-            <b>Neuva Observación</b>
+            <b>Nueva Observación</b>
           </span>
           <ExField
             rows={5}

@@ -13,7 +13,7 @@ function PhaseObservationForm({ form }) {
   return (
     <>
       <div className="d-block text-left m font-14-rem mb-3">
-        <b>Neuva Observación</b>
+        <b>Nueva Observación</b>
       </div>
       <ExField rows={5} type="textarea" className="mb-3" name="NewCondition" />
       {/* {Condition.map((item, index) => (

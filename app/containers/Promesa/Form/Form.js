@@ -78,7 +78,7 @@ export function Form({ selector, dispatch }) {
     ) {
       // AC & PM approve confeccion
       if (
-        ((entity.PromesaState === PROMESA_STATE[9] || entity.PromesaState === PROMESA_STATE[11]) && UserProject.isAC()) ||
+        (([PROMESA_STATE[9], PROMESA_STATE[11]].includes(entity.PromesaState)) && UserProject.isAC()) ||
         (entity.PromesaState === PROMESA_STATE[11] && UserProject.isPM())
       )
         return (
@@ -129,7 +129,7 @@ export function Form({ selector, dispatch }) {
         );
       if (
         !(
-          entity.PromesaState === PROMESA_STATE[1] &&
+          (entity.PromesaState === PROMESA_STATE[1]) &&
           (UserProject.isVendor() || UserProject.isInmobiliario())
         )
       )
