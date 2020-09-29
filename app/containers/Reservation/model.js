@@ -83,7 +83,7 @@ export default function model({ project = {}, entity = {} }) {
       ...(entity.Cliente || {}),
       Extra: {
         Values: {
-          Honoraries:(((entity.Cliente || {}).Extra || {}).Values || {}).Honoraries || '',
+          Honoraries:(((entity.Cliente || {}).Extra || {}).Values || {}).Honoraries || null,
         },
         Independent: ((entity.Cliente || {}).Extra || {}).Independent || 0,
         ...((entity.Cliente || {}).Extra || {}),
