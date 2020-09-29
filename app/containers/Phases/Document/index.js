@@ -13,6 +13,7 @@ import CarpetaDigital from './CarpetaDigital';
 import { getDocuments, CodeudorDocuments } from './documents';
 import CarpetaDigitalUploadActions from './UploadActions';
 import CarpetaDigitalReviewActions from './ReviewActions';
+import CarpetaDigitalAproveActions from './AproveActions';
 
 const SyncMessage = WithLoading();
 
@@ -22,10 +23,12 @@ export function PhaseDocument({
   selector,
   canUpload,
   canReview,
+  canApprove,
   onSave,
   onSendControl,
   onCancel,
   onControlReview,
+  onAproveModification,
   onGarantia,
   onPrint,
   promesa,
@@ -106,6 +109,13 @@ export function PhaseDocument({
               onControlReview={onControlReview}
             />
           )}
+          {canApprove && (
+            <CarpetaDigitalAproveActions
+              selector={selector}
+              onAproveModification={onAproveModification}
+              onCancel={onCancel}
+            />
+          )}
           <div className="mt-3">
             <SyncMessage {...selector} />
           </div>
@@ -119,12 +129,14 @@ PhaseDocument.propTypes = {
   isCollapse: PropTypes.bool,
   canUpload: PropTypes.bool,
   canReview: PropTypes.bool,
+  canApprove: PropTypes.bool,
   entity: PropTypes.object,
   selector: PropTypes.object,
   onSave: PropTypes.func, // save reservar
   onSendControl: PropTypes.func, // send control
   onCancel: PropTypes.func, // cancel reservar
   onControlReview: PropTypes.func, // approve/reject
+  onAproveModification: PropTypes.func, //approve modification oferta
   onGarantia: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   promesa: PropTypes.bool,
 };

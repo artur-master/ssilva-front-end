@@ -87,6 +87,8 @@ export const RESERVA_STATE = [
   'Oferta',
   'Rechazada',
   'Cancelada',
+  'Modificación Oferta By JP',
+  'Modificación Oferta By VN',
 ];
 
 export const OFERTA_STATE = [

@@ -30,6 +30,9 @@ import {
   PRINT_DOCUMENTS,
   PRINT_DOCUMENTS_ERROR,
   PRINT_DOCUMENTS_SUCCESS,
+  APROVE_MODIFICATION,
+  APROVE_MODIFICATION_ERROR,
+  APROVE_MODIFICATION_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -284,6 +287,27 @@ export function printDocumentsError(error) {
 export function printDocumentsSuccess(response) {
   return {
     type: PRINT_DOCUMENTS_SUCCESS,
+    response,
+  };
+}
+
+export function aproveModification(ReservaID) {
+  return {
+    type: APROVE_MODIFICATION,
+    ReservaID,
+  };
+}
+
+export function aproveModificationError(error) {
+  return {
+    type: APROVE_MODIFICATION_ERROR,
+    error,
+  };
+}
+
+export function aproveModificationSuccess(response) {
+  return {
+    type: APROVE_MODIFICATION_SUCCESS,
     response,
   };
 }

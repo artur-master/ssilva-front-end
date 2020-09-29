@@ -45,7 +45,14 @@ export const canReviewReservation = reservation =>
     ? false
     : UserProject.in(window.project) &&
       Auth.isAC() &&
-      reservation.ReservaState === RESERVA_STATE[1];
+      [RESERVA_STATE[1], RESERVA_STATE[5]].includes(reservation.ReservaState);
+
+export const canApproveModification = reservation => 
+  !window.project
+    ? false
+    : UserProject.in(window.project) &&
+      Auth.isPM() &&
+      reservation.ReservaState == RESERVA_STATE[6];
 
 export const canUploadReservation = reservation =>
   !window.project

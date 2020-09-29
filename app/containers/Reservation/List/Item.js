@@ -31,13 +31,12 @@ const Item = ({ project, reservation, dispatch }) => {
     ReservaStateColor,
     ReservaStateLabel,
     Date,
-    OfertaID,
-    OfertaState
+    OfertaID
   } = reservation;
 
   const tmpInmuebles = matchRestrictionsFromAList(Inmuebles);
   let dateAgo;
-  if (ReservaState === 'Pendiente control') {
+  if (!OfertaID && ReservaState === 'Pendiente control') {
     dateAgo = moment.utc(Date).fromNow();
   }
 

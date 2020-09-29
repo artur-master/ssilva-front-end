@@ -11,6 +11,7 @@ import {
   CANCEL_RESERVATION,
   CONTROL_REVIEW,
   PRINT_DOCUMENTS,
+  APROVE_MODIFICATION,
 } from './constants';
 import {
   saveReservationError,
@@ -27,6 +28,8 @@ import {
   controlReviewSuccess,
   printDocumentsError,
   printDocumentsSuccess,
+  aproveModificationError,
+  aproveModificationSuccess,
 } from './actions';
 
 function* getQuotation(action) {
@@ -152,6 +155,21 @@ function* controlReview(action) {
   }
 }
 
+function* aproveModification(action) {
+  const requestURL = `${API_ROOT}/ventas/reservas-approve-moficiation-oferta/${
+    action.ReservaID
+  }/`;
+  try {
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(action.values),
+    });
+    yield put(aproveModificationSuccess(response));
+  } catch (error) {
+    yield put(aproveModificationError(error));
+  }
+}
+
 const downloadFile = async (url, fileName) => {
   if(url !== '')
     FileSaver.saveAs( url,fileName );
@@ -185,4 +203,5 @@ export default function* projectSaga() {
   yield takeLatest(GET_RESERVATION, getReservation);
   yield takeLatest(GET_QUOTATION, getQuotation);
   yield takeLatest(PRINT_DOCUMENTS, printDocuments);
+  yield takeLatest(APROVE_MODIFICATION, aproveModification);
 }

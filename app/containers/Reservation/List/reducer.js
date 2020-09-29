@@ -5,6 +5,7 @@
  */
 import Fuse from 'fuse.js';
 import produce from 'immer';
+import { RESERVA_STATE } from 'containers/App/constants';
 import {
   QUERY_RESERVATIONS,
   FETCH_RESERVATIONS,
@@ -67,29 +68,34 @@ const reservationReducer = (state = initialState, action) =>
           let ReservaStateLabel = reservation.ReservaState;
           let ReservaStateColor = '';
           switch (reservation.ReservaState) {
-            case 'Oferta':
-              ReservaStateColor = 'badge-info';
-              ReservaStateLabel = 'Oferta';
-              break;
-            case 'Pendiente información':
+            case RESERVA_STATE[0]: //'Pendiente información'
               ReservaStateColor = 'badge-success';
               ReservaStateLabel = 'En Proceso';
               break;
-            case 'Pendiente control':
-              if(reservation.OfertaID){                
-                ReservaStateColor = 'badge-info';
+            case RESERVA_STATE[1]: //'Pendiente control'
+              if(reservation.OfertaID){
+                ReservaStateColor = 'badge-caution';
                 ReservaStateLabel = 'Modificación Oferta';
-              } else {
+              }
+              else {
                 ReservaStateColor = 'badge-caution';
                 ReservaStateLabel = 'En Control';
               }
               break;
-            case 'Rechazada':
+            case RESERVA_STATE[2]: //'Oferta'
+              ReservaStateColor = 'badge-info';
+              ReservaStateLabel = 'Oferta';
+              break;
+            case RESERVA_STATE[3]: //'Rechazada'
               ReservaStateColor = 'badge-danger';
               break;
-            case 'Cancelada':
+            case RESERVA_STATE[4]: //'Cancelada'
               ReservaStateColor = 'badge-warning';
               break;
+            case RESERVA_STATE[5]: 
+            case RESERVA_STATE[6]: //'Modificación Oferta'
+              ReservaStateColor = 'badge-caution';
+              ReservaStateLabel = 'Modificación Oferta';
             default:
               ReservaStateColor = 'badge-caution';
               break;

@@ -58,3 +58,10 @@ export const PRINT_DOCUMENTS_ERROR =
   'app/containers/Reservation/Form/PRINT_DOCUMENTS_ERROR';
 export const PRINT_DOCUMENTS_SUCCESS =
   'app/containers/Reservation/Form/PRINT_DOCUMENTS_SUCCESS';
+
+export const APROVE_MODIFICATION =
+  'app/containers/Reservation/Form/APROVE_MODIFICATION';
+export const APROVE_MODIFICATION_ERROR =
+  'app/containers/Reservation/Form/APROVE_MODIFICATION_ERROR';
+export const APROVE_MODIFICATION_SUCCESS =
+  'app/containers/Reservation/Form/APROVE_MODIFICATION_SUCCESS';

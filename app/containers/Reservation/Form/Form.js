@@ -19,6 +19,7 @@ import {
   canEditReservation,
   canReviewReservation,
   canUploadReservation,
+  canApproveModification,
   isValidData
 } from './helper';
 import {
@@ -28,6 +29,7 @@ import {
   sendToControl,
   updateReservation,
   printDocuments,
+  aproveModification,
 } from './actions';
 import AlertPopup from 'components/Alert/popup';
 import { getInvalidLabor } from 'containers/Phases/PreCredito/helper';
@@ -52,6 +54,7 @@ export function Form({ project, selector, dispatch }) {
   const canConfirm = canConfirmReservation(entity);
   const canUpload = canUploadReservation(entity);
   const canReview = canReviewReservation(entity);
+  const canApprove = canApproveModification(entity);
 
   const initialValues = model({ project, entity });
 
@@ -130,6 +133,7 @@ export function Form({ project, selector, dispatch }) {
           entity={initialValues}
           canUpload={canUpload}
           canReview={canReview}
+          canApprove={canApprove}
           selector={selector}
           onCancel={Comment => {
             if (entity.ReservaID)
@@ -146,21 +150,16 @@ export function Form({ project, selector, dispatch }) {
               );
             }
             else{
-              // if (!isValid) return setOpenAlert(true);
               return dispatch(
                 saveReservation({ ...initialValues, ...entity }, documents),
               );
             }
           }}
-          // onSendControl={documents => {
-          //   if (!isValid) return setOpenAlert(true);
-          //   // entity.Condition = documents.Condition;
-          //   return dispatch(
-          //     sendToControl({ ...initialValues, ...entity }, documents),
-          //   );
-          // }}
           onControlReview={values =>
             dispatch(controlReview({ ...values, ReservaID: entity.ReservaID }))
+          }
+          onAproveModification={() => 
+            dispatch(aproveModification( entity.ReservaID ))
           }
           onPrint={() => {
               return dispatch(printDocuments({ ...initialValues, ...entity }))
@@ -168,17 +167,6 @@ export function Form({ project, selector, dispatch }) {
         />
         </>
       )}
-      {/* {(entity.ReservaState === RESERVA_STATE[3]) && (
-        <>
-          <strong>Comentarios</strong>
-          <textarea
-            className="w-100 d-block rounded-lg shadow-sm"
-            rows="2"
-            readOnly
-            value={entity.Logs[0].Comment}
-          />
-        </>
-      )} */}
       {entity.Logs && (
         <Log logs={entity.Logs} limit={10} />
       )}
