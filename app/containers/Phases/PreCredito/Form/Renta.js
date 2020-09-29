@@ -96,7 +96,7 @@ const Renta = ({ group = 'Cliente', form, readOnly=false }) => {
             UserID: "",
             Extra: {
               Values: {
-                Honoraries: '',
+                Honoraries: null,
               },
               Independent: false,
             },
