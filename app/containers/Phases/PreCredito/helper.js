@@ -17,9 +17,10 @@ export const isValidLabor = ( Values, PayType ) => {
     'Empleador.Extra.Phone',
     // 'Extra.Values.Honoraries',
   ];
+  
   if (!isCompany && isCredit) {
     return requiredFields.find(
-      field => (getDescendantProp(Values, field) === "")
+      field => ["", null].includes(getDescendantProp(Values, field))
     ) === undefined;
   }
   return true;
@@ -41,7 +42,7 @@ export const getInvalidLabor = ( Values ) => {
   if (!isCompany && isCredit) {
     requiredFields.forEach(
       field => {
-        if(getDescendantProp(Values, field) === ""){
+        if(["", null].includes(getDescendantProp(Values, field))){
           if(field === "Empleador.RazonSocial") inValidValues.push("Nombre Empleador");
           else if(field === "Empleador.Rut") inValidValues.push("RUT Empleador");
           else inValidValues.push("Teléfono Empleador");
