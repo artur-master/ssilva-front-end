@@ -161,6 +161,9 @@ export function Form({ project, selector, dispatch }) {
           onAproveModification={() => 
             dispatch(aproveModification( entity.ReservaID ))
           }
+          onCancelAprove={() => 
+            dispatch(push(`/proyectos/${project.ProyectoID}/reservas`))
+          }
           onPrint={() => {
               return dispatch(printDocuments({ ...initialValues, ...entity }))
           }}

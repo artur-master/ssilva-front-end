@@ -29,6 +29,7 @@ export function PhaseDocument({
   onCancel,
   onControlReview,
   onAproveModification,
+  onCancelAprove,
   onGarantia,
   onPrint,
   promesa,
@@ -107,6 +108,7 @@ export function PhaseDocument({
               selector={selector}
               entity={entity}
               onControlReview={onControlReview}
+              onCancel={onCancelAprove}
             />
           )}
           {canApprove && (
@@ -137,6 +139,7 @@ PhaseDocument.propTypes = {
   onCancel: PropTypes.func, // cancel reservar
   onControlReview: PropTypes.func, // approve/reject
   onAproveModification: PropTypes.func, //approve modification oferta
+  onCancelAprove: PropTypes.func, //cancel approve oferta
   onGarantia: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   promesa: PropTypes.bool,
 };
