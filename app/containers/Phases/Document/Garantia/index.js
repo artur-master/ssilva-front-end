@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader } from 'components/Box';
 import RadioGroup from 'components/ExForm/RadioGroup';
 import DocumentItem from '../DocumentItem';
-import Button from '../../../../components/Button';
+import Button from 'components/Button';
 
 export function Garantia({
   isCollapse,

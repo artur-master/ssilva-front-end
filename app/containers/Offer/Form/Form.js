@@ -12,7 +12,10 @@ import PhaseInmueble from 'containers/Phases/Inmueble';
 import PhaseFormaDePago from 'containers/Phases/FormaDePago';
 import PhasePreCredito from 'containers/Phases/PreCredito';
 import PhaseDocument from 'containers/Phases/Document';
-import { PRE_APROBACION_CREDITO_STATE } from 'containers/App/constants';
+import {
+  PRE_APROBACION_CREDITO_STATE,
+  OFERTA_STATE,
+} from 'containers/App/constants';
 import { UserProject } from 'containers/Project/helper';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import InitData from 'containers/Common/InitData';
@@ -27,7 +30,10 @@ import {
 } from '../helper';
 import Steps from './Steps';
 import ApproveConfeccionPromesa from './ApproveConfeccionPromesa';
-import { approveConfeccionPromesa } from './actions';
+import {
+  approveConfeccionPromesa,
+  withdrawOffer,
+} from './actions';
 import FormActions from './FormActions';
 import Button from 'components/Button';
 import History from 'components/History';
@@ -48,7 +54,9 @@ export function Form({ selector, selectorCredit, dispatch }) {
   const onCancel = () =>
     dispatch(push(`/proyectos/${project.ProyectoID}/ofertas`));
 
-  const onWithdraw = () => console.log("onWithdraw");
+  const onWithdraw = (comment) => dispatch(withdrawOffer({...entity, Comment: comment}));
+
+  const canApproveConfeccion = canApproveConfeccionPromesa(initialValues);
 /*Commented by Artur
   const controlAction = (
     <ApproveConfeccionPromesa
@@ -120,7 +128,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
       />
       <PhaseDocument entity={initialValues} />
       {/* {canApproveConfeccionPromesa(initialValues) && controlAction} */}
-      {canApproveConfeccionPromesa(initialValues) && 
+      {canApproveConfeccion && 
         <ApproveConfeccionPromesa
           selector={selector}
           onControl={values =>
@@ -134,11 +142,12 @@ export function Form({ selector, selectorCredit, dispatch }) {
           onEdit={onEdit}
         />
       }
-      {!canApproveConfeccionPromesa(initialValues) && (
+      {!canApproveConfeccion && entity.OfertaState !== OFERTA_STATE[6] && (
         <FormActions
+          selector={selector}
           onCancel={onCancel}
-          onWithdraw={onWithdraw}
           canWithdraw={UserProject.isPM()}
+          onWithdraw={onWithdraw}
         />
       )}
 

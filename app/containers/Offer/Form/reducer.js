@@ -29,6 +29,9 @@ import {
   APPROVE_MODIFY,
   APPROVE_MODIFY_ERROR,
   APPROVE_MODIFY_SUCCESS,
+  WITHDRAW_OFFER,
+  WITHDRAW_OFFER_ERROR,
+  WITHDRAW_OFFER_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -54,6 +57,7 @@ const offerReducer = (state = initialState, action) =>
       case DELETE_OFFER:
       case SAVE_OFFER:
       case APPROVE_MODIFY:
+      case WITHDRAW_OFFER:
         draft.loading = true;
         draft.error = false;
         draft.success = false;
@@ -66,6 +70,7 @@ const offerReducer = (state = initialState, action) =>
       case DELETE_OFFER_ERROR:
       case SAVE_OFFER_ERROR:
       case APPROVE_MODIFY_ERROR:
+      case WITHDRAW_OFFER_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.success = false;
@@ -73,6 +78,7 @@ const offerReducer = (state = initialState, action) =>
         draft.reserva_id = null;
         break;
       case APPROVE_IN_SUCCESS:
+      case WITHDRAW_OFFER_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = action.response.detail;

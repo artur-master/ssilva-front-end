@@ -28,6 +28,9 @@ import {
   APPROVE_MODIFY,
   APPROVE_MODIFY_ERROR,
   APPROVE_MODIFY_SUCCESS,
+  WITHDRAW_OFFER,
+  WITHDRAW_OFFER_ERROR,
+  WITHDRAW_OFFER_SUCCESS,
 } from './constants';
 
 export function resetContainer() {
@@ -187,6 +190,27 @@ export function approveModifyOfferError(error) {
 export function approveModifyOfferSuccess(response) {
   return {
     type: APPROVE_MODIFY_SUCCESS,
+    response,
+  };
+}
+
+export function withdrawOffer(values) {
+  return {
+    type: WITHDRAW_OFFER,
+    values,
+  };
+}
+
+export function withdrawOfferError(error) {
+  return {
+    type: WITHDRAW_OFFER_ERROR,
+    error,
+  };
+}
+
+export function withdrawOfferSuccess(response) {
+  return {
+    type: WITHDRAW_OFFER_SUCCESS,
     response,
   };
 }

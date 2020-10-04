@@ -13,6 +13,7 @@ import { isCreditPayment } from 'containers/App/helpers';
 import Credit from 'containers/Phases/Document/CarpetaDigital/Credit';
 import Promise from 'containers/Phases/Document/CarpetaDigital/Promise';
 import Offer from 'containers/Phases/Document/CarpetaDigital/Offer';
+import Historico from 'containers/Phases/Document/CarpetaDigital/Historico';
 import Button from 'components/Button';
 
 export function CarpetaDigital({
@@ -21,6 +22,7 @@ export function CarpetaDigital({
   canReview,
   entity,
   onReview,
+  modifyOffer=false,
 }) {
   const download = () =>{
     const { Documents } = entity;
@@ -53,7 +55,14 @@ export function CarpetaDigital({
           />
         ),
       });
-  }  
+  } 
+
+  if(modifyOffer) {
+    tabs.push({
+      label: 'HISTORICO',
+      content: <Historico entity={entity} />
+    })
+  }
 
   return (
     <>
@@ -66,7 +75,10 @@ export function CarpetaDigital({
             Debes descargar los documentos a modificar y volver a cargarlos firmados.
           </Alert>
           <div className="position-relative">
-            <Button className="m-btn-white m-btn-download m-btn-absolute-right-top" onClick={download}>
+            <Button
+              className="m-btn-white m-btn-download m-btn-absolute-right-top"
+              onClick={download}
+            >
               Descargar Documentos
             </Button>
             <Tab
@@ -85,6 +97,7 @@ CarpetaDigital.propTypes = {
   canReview: PropTypes.bool,
   entity: PropTypes.object,
   onReview: PropTypes.func,
+  modifyOffer: PropTypes.bool,
 };
 
 export default CarpetaDigital;

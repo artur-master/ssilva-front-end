@@ -98,6 +98,7 @@ export const OFERTA_STATE = [
   'Promesa',
   'Cancelada',
   'Modificado',
+  'Desistimiento',
 ];
 
 export const APROBACION_INMOBILIARIA_STATE = [
@@ -216,6 +217,7 @@ export const VENTA_LOG_TYPE = [
   'Register Desistimiento',
   'Aprobacion Desistimiento',
   'Envío promesa a cliente',
+  'Oferta Desistimiento',
 ];
 
 export const FACTURA_INMUEBLE_TYPE = [

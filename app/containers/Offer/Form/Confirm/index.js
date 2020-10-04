@@ -5,6 +5,8 @@
  */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Button from 'components/Button';
+import History from 'components/History';
 import PhaseGeneral from 'containers/Phases/General';
 import PhaseClient from 'containers/Phases/Client';
 import PhaseInmueble from 'containers/Phases/Inmueble';
@@ -14,14 +16,16 @@ import PhaseDocument from 'containers/Phases/Document';
 import { push } from 'connected-react-router';
 import ProjectPhases from 'containers/Common/ProjectPhases';
 import model from '../../model';
-import { deleteOffer, confirmToClient, updateOffer } from '../actions';
+import { getActionTitle } from '../../helper';
+import { 
+  deleteOffer, 
+  confirmToClient,
+  updateOffer,
+  withdrawOffer
+} from '../actions';
 import OfferConfirmObservation from './Observation';
 import OfferConfirmActions from './Actions';
 import Steps from '../Steps';
-import { getActionTitle } from '../../helper';
-
-import Button from 'components/Button';
-import History from 'components/History';
 
 export function OfferConfirm({ selector, dispatch }) {
   const { project = {} } = window;
@@ -107,8 +111,8 @@ export function OfferConfirm({ selector, dispatch }) {
             ),
           )
         }
-        onDelete={() => dispatch(deleteOffer(entity))}
-        onWithdraw={() => console.log("withdraw")}
+        onDelete={(comment) => dispatch(deleteOffer({...entity, Comment:comment}))}
+        onWithdraw={(comment) => dispatch(withdrawOffer({...entity, Comment:comment}))}
       />
       {/* Added by Artur */}
       {selector.offer && (

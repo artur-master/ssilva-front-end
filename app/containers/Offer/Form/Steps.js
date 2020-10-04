@@ -190,7 +190,7 @@ function Steps({ offer }) {
     Graph.Node[2].Color = 'green';
   }
 
-  if (OfertaState === OFERTA_STATE[4]) return null;
+  if ([OFERTA_STATE[4], OFERTA_STATE[6]].includes(OfertaState)) return null;
 
   let colorStep = 0;
   return (

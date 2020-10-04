@@ -78,7 +78,13 @@ export function OfferEditForm({ selector, dispatch }) {
         canEdit
         onUpdate={values => dispatch(updateOffer(values))}
       />
-      <PhasePreCredito isCollapse={false} initialValues={initialValues} />
+      <PhasePreCredito
+        isCollapse={false}
+        initialValues={initialValues}
+        canEdit
+        dispatch={dispatch}
+        onContinue={values => dispatch(updateOffer(values))}
+      />
       <ExForm
         initialValues={documents.reduce(
           (acc, document) => {
@@ -94,13 +100,20 @@ export function OfferEditForm({ selector, dispatch }) {
       >
         {form => (
           <>
-            <PhasesDocumentGarantia isCollapse={false} entity={entity} />
+            <PhasesDocumentGarantia 
+              isCollapse={false}
+              entity={entity}
+              canUpload={canEdit}
+              // onCancel
+              // onGarantia
+            />
             <CarpetaDigital
               isCollapse
               canEdit={canEdit}
               selector={selector}
               entity={initialValues}
               dispatch={dispatch}
+              modifyOffer={true}
             />
             <OfferEditActions
               onCancel={() =>

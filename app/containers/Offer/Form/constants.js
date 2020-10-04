@@ -50,3 +50,9 @@ export const APPROVE_MODIFY_ERROR =
   'app/containers/Offer/Form/APPROVE_MODIFY_ERROR';
 export const APPROVE_MODIFY_SUCCESS =
   'app/containers/Offer/Form/APPROVE_MODIFY_SUCCESS';
+
+export const WITHDRAW_OFFER = 'app/containers/Offer/Form/WITHDRAW_OFFER';
+export const WITHDRAW_OFFER_ERROR =
+  'app/containers/Offer/Form/WITHDRAW_OFFER_ERROR';
+export const WITHDRAW_OFFER_SUCCESS =
+  'app/containers/Offer/Form/WITHDRAW_OFFER_SUCCESS';

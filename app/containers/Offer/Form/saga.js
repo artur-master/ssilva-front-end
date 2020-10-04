@@ -10,6 +10,7 @@ import {
   DELETE_OFFER,
   SAVE_OFFER,
   APPROVE_MODIFY,
+  WITHDRAW_OFFER,
 } from './constants';
 import {
   approveInError,
@@ -24,6 +25,8 @@ import {
   deleteOfferError,
   saveOfferSuccess,
   saveOfferError,
+  withdrawOfferSuccess,
+  withdrawOfferError,
 } from './actions';
 
 function* getOffer(action) {
@@ -88,6 +91,7 @@ function* sagaDeleteOffer(action) {
   try {
     const response = yield call(request, requestURL, {
       method: 'PATCH',
+      body: JSON.stringify({Comment: action.values.Comment}),
     });
     yield put(deleteOfferSuccess(response));
   } catch (error) {
@@ -140,6 +144,23 @@ function* sagaApproveModifyOffer(action) {
   }
 }
 
+function* sagaWithdrawOffer(action) {
+  try {
+    const { values } = action;
+    const requestURL = `${API_ROOT}/ventas/ofertas-withdraw/${
+      values.OfertaID
+    }/`;
+    const response = yield call(request, requestURL, {
+      method: 'PATCH',
+      body: JSON.stringify(action.values),
+    });
+    
+    yield put(withdrawOfferSuccess(response));
+  } catch (error) {
+    yield put(withdrawOfferError(error));
+  }
+}
+
 export default function* projectSaga() {
   yield takeLatest(CONFIRM, sagaConfirm);
   yield takeLatest(APPROVE_IN, sagaApproveIn);
@@ -148,4 +169,5 @@ export default function* projectSaga() {
   yield takeLatest(DELETE_OFFER, sagaDeleteOffer);
   yield takeLatest(SAVE_OFFER, sagaSaveOffer);
   yield takeLatest(APPROVE_MODIFY, sagaApproveModifyOffer);
+  yield takeLatest(WITHDRAW_OFFER, sagaWithdrawOffer);
 }

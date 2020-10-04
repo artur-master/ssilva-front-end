@@ -23,6 +23,7 @@ export function OfferConfirmActions({
   const { loading } = selector;
   // entity.Condition = [{ Description: 'Observation 1' }, { Description: 'Observation 2' }];
   const [condition, setCondition] = useState([]);
+  const [withText, setWithText] = useState({ text: '', open: false, type: null, });
 
   const onChangeCondition =(index, value)=> {
     condition[index] = {Description: value};
@@ -96,15 +97,18 @@ export function OfferConfirmActions({
           </div>
         )}
         {entity.OfertaState === OFERTA_STATE[2] && (
-          <Button className="order-3 m-btn  mr-2 m-btn-pen" onClick={onEdit}>
+          <Button
+            className="order-3 m-btn mr-2 m-btn-pen"
+            onClick={onEdit}
+          >
             Modificación
           </Button>
         )}
         <Button
           disabled={loading}
-          onClick={onCancel}
           className="order-3 m-btn mr-2"
           color="white"
+          onClick={onCancel}
         >
           Cancerlar
         </Button>
@@ -118,19 +122,64 @@ export function OfferConfirmActions({
         >
           Agregar Observación
         </Button>
-        <Button
-          disabled={loading}
-          onClick={onDelete}
-          className="order-3 m-btn mr-2"
-          color="white"
-        >
-          Rechazar
-        </Button>
-        <Button className="order-3 m-btn-warning-02 d-inline" onClick={onWithdraw}>
-          Desistimiento
-        </Button>
+        {withText.type !== "Rechazar" && (
+          <Button
+            disabled={loading}
+            className="order-3 m-btn mr-2"
+            color="white"
+            onClick={()=>setWithText({ text: "", open: true, type: "Rechazar" })}
+          >
+            Rechazar
+          </Button>
+        )}
+        {withText.type !== "Desistimiento" && (
+          <Button
+            disabled={loading}
+            className="order-3 m-btn-warning-02 d-inline"
+            onClick={()=>setWithText({ text: "", open: true, type: "Desistimiento" })}
+          >
+            Desistimiento
+          </Button>
+        )}
       </div>
-      { condition.length > 0 &&
+      {withText.open && (
+        <>
+          <div className="mt-3">
+            <span className="d-block font-14-rem">
+              <b>Comentario</b>
+            </span>
+            <div className="pt-2">
+              <textarea
+                className="w-100 d-block rounded-lg shadow-sm"
+                rows="5"
+                onChange={evt =>
+                  setWithText({ ...withText, text: evt.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="py-3 text-right">
+            <Button
+              disabled={loading || withText.text.trim() == ""}
+              className="order-3 m-btn-warning-02 d-inline"
+              onClick={()=>{
+                const comment = withText.text.trim();
+                return (withText.type==="Desistimiento") ? onWithdraw(comment) : onDelete(comment);
+              }}
+            >
+              {withText.type}
+            </Button>
+            <Button
+              disabled={loading}
+              className="m-btn"
+              onClick={() => setWithText({ text: "", open: false, type: null })}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </>
+      )}
+      {condition.length > 0 &&
       <>
         <div className="d-block text-left m font-14-rem mb-3">
           <b>Nueva Observación</b>

@@ -112,6 +112,10 @@ export const formatOffer = offer => {
     case OFERTA_STATE[5]: //'Modificado'
       OfertaStateFormat[0].Color = 'badge-caution';
       break;
+    case OFERTA_STATE[6]: //'Desistimiento'
+      OfertaStateFormat[0].Color = 'badge-danger';
+      OfertaStateFormat[0].Label = 'Desistimiento';
+      break;
     default:
       OfertaStateFormat[0].Color = 'badge-caution';
       break;
