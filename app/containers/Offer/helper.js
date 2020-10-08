@@ -159,7 +159,10 @@ export const getActionTitle = (offer = {}) => {
     return <span class="font-16-rem line-height-1 color-success">Rechazada</span>;
 
   if (offer.OfertaState === OFERTA_STATE[2])
-    return <span className="color-warning">{offer.OfertaState}</span>;
+    return <span className="color-warning">Rechazada por legal</span>;
+  
+  if (offer.OfertaState === OFERTA_STATE[6])
+    return <span className="color-warning">Oferta Desistida</span>;
 
   if (Auth.isInmobiliario())
     return <span className="color-caution-03">Confirmar Oferta</span>;

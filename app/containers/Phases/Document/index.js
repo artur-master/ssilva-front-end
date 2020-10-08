@@ -54,7 +54,7 @@ export function PhaseDocument({
     }, {}),
   );
 
-  const isReview = !Object.keys(reviews).find(
+  const isReview = entity.OfertaID? true: !Object.keys(reviews).find(
     documentoType => !reviews[documentoType] && entity.Documents[documentoType],
   );
 

@@ -30,7 +30,7 @@ export function CarpetaDigital({
     content: (
       <Offer
         canUpload={canEdit}
-        canReview={canReview}
+        canReview={canReview && !entity.OfertaID}
         entity={entity}
         onReview={onReview}
       />
@@ -42,7 +42,7 @@ export function CarpetaDigital({
     content: (
       <Credit
         canUpload={canEdit}
-        canReview={canReview}
+        canReview={canReview && !entity.OfertaID}
         entity={entity}
         onReview={onReview}
       />
@@ -65,7 +65,7 @@ export function CarpetaDigital({
     content: (
       <Codeudor
         canUpload={canEdit}
-        canReview={canReview}
+        canReview={canReview && !entity.OfertaID}
         entity={entity}
         onReview={onReview}
       />
@@ -112,9 +112,7 @@ export function CarpetaDigital({
                   </span>
                   <Button className="font-14-rem no-whitespace m-btn m-btn-white m-btn-printer"
                     disabled={ false } 
-                    onClick={()=>{
-                      onPrint();
-                    }}
+                    onClick={ onPrint }
                   >
                     Imprimir Documentos
                   </Button>

@@ -73,9 +73,10 @@ export function Form({ selector, selectorCredit, dispatch }) {
     />
   );
 */
-  //Added by Artur
+
   const [isHistoryOpen, setHistoryOpen] = useState(false);
-  //Added by Artur
+  const isWithdrew = (entity.OfertaState === OFERTA_STATE[6]);
+
   return (
     <>
       <InitData User Client />
@@ -86,7 +87,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
       <div className="row m-0">
         <h4 className="col p-0 font-21 mt-3">
           {`${project.Name} / ${entity.Folio}`}
-          <span className="general-phase"> - Oferta
+          <span className="general-phase"> - {isWithdrew ? 'Oferta Desistida' : 'Oferta'}
             <i className="icon icon-z-info" title="This is Oferta."/>
           </span>
         </h4>
@@ -96,7 +97,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
         >
           Historial
         </Button>
-        {(UserProject.isPM() || UserProject.isVendor()) &&
+        { !isWithdrew && (UserProject.isPM() || UserProject.isVendor()) &&
           <Button
             className="col-auto mt-3 m-btn m-btn-pen"
             onClick={onEdit}
@@ -142,7 +143,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
           onEdit={onEdit}
         />
       }
-      {!canApproveConfeccion && entity.OfertaState !== OFERTA_STATE[6] && (
+      {!isWithdrew && !canApproveConfeccion && (
         <FormActions
           selector={selector}
           onCancel={onCancel}

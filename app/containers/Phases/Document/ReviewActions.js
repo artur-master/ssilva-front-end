@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
-import DocumentCondition from '../Conditions';
 
 export function CarpetaDigitalReviewActions({
   isReview,

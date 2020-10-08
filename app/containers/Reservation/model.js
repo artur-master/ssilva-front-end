@@ -147,5 +147,6 @@ export default function model({ project = {}, entity = {} }) {
     IsSubsidy: project.IsSubsidy || false,
     MaxCuotas: project.MaxCuotas,
     sendControl: false,
+    OfertaID: entity.OfertaID
   };
 }
