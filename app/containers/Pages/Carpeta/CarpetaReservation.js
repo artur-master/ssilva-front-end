@@ -39,13 +39,13 @@ export function CarpetaReservation({
   useEffect(() => {
     if (ReservaID) dispatch(getReservation(ReservaID));
   }, [ReservaID]);
-  
+
   let content1=[], content2=[], content3=[];
   if (documents) {
     content1 = [
       // {title:'copia del cheque o transferencia de la reserva', url: documents.DocumentFirmadoCheques},
-      {title:'Cédula de identidad del cliente', url: documents.DocumentCertificadoMatrimonio},
-      {title:'Cotización', url: documents.DocumentCotizacion},
+      {title:'Cédula de identidad del cliente', url: documents.DocumentFotocopiaCarnet},
+      {title:'Cotización', url: documents.DocumentFirmadoCotizacion},
       {title:'Oferta', url: documents.DocumentOfertaFirmada}
     ];
     content2 = [

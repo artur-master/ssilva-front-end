@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Document, Page } from 'react-pdf'
+import PDFViewer from 'pdf-viewer-reactjs'
 
 const PdfTab = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -32,16 +32,15 @@ const PdfTab = ({ tabs }) => {
           /* eslint-disable-next-line */
           <div id={index} key={index} className={activeTab === index ? "tab-pane active" : 'tab-pane'}>
             {tab.content.map((content, idx) => {
-              if (content.url && content.url !== '')
+              const url = content.url;
+              if (url && url !== "" && url.slice(-3) === "pdf" ){              
                 return (
                   <>
-                  <p>{content.title}</p>
-                  <Document file={{ url: content.url }}
-                    onLoadSuccess={console.log('success')}
-                  >
-                    <Page width={900} pageNumber={1} />
-                  </Document>
-                  </>);
+                    <p>{content.title}</p>
+                    <PDFViewer document={{ url }} />
+                  </>
+                );
+              }
               else return null;
             })}
           </div>
