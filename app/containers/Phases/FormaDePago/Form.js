@@ -115,9 +115,9 @@ function PhaseFormaDePagoForm({ defaultPercent = {}, form }) {
 
               handleChangePercent('PaymentFirmaPromesa', percentPromesa);
               handleChangePercent('Cuotas.0.Amount', percentAmount);
-              handleChangePercent('AhorroPlus', percentAhorro);
               handleChangePercent('PaymentFirmaEscritura', percentEscrituraContado);
               handleChangePercent('PaymentInstitucionFinanciera', percentInstitucionFinanciera);
+              handleChangePercent('AhorroPlus', percentAhorro);
               // percent.PaymentFirmaEscritura / percent.PaymentInstitucionFinanciera
             }}
             className="m-btn m-btn-white shadow-sm"

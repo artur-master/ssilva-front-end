@@ -37,7 +37,7 @@ const PdfTab = ({ tabs }) => {
                 return (
                   <>
                     <p>{content.title}</p>
-                    <PDFViewer document={{ url }} />
+                    <PDFViewer document={{ url }} scale={1.2} scaleStep={0.2} />
                   </>
                 );
               }
