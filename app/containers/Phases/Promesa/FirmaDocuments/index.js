@@ -74,6 +74,7 @@ export function PhaseFirmaDocumentsPromesa({
                       name="DocumentChequesFirma"
                       label="Cheques"
                       canUpload={canUpload}
+                      required
                     />
                   </div>
                   <div className="col-md-6  mb-2">
@@ -81,6 +82,7 @@ export function PhaseFirmaDocumentsPromesa({
                       name="DocumentPromesaFirma"
                       label="Promesa"
                       canUpload={canUpload}
+                      required
                     />
                   </div>
                   <div className="col-md-6  mb-2">
@@ -88,6 +90,7 @@ export function PhaseFirmaDocumentsPromesa({
                       name="DocumentPlantaFirma"
                       label="Planta"
                       canUpload={canUpload}
+                      required
                     />
                   </div>
                 </div>

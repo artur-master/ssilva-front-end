@@ -132,7 +132,7 @@ export function PhaseConfeccionPromesa({
                   </FormGroup>
                   <FormGroup className="align-items-center mt-3">
                     <Label className="mr-3" style={{ width: '25em' }}>
-                      Cláusula de desistimiento especial (sin multa, etc)
+                      Cláusula de desistimiento especial
                     </Label>
                     {!!form.values.HasDesistimientoEspecial && (
                       <ExField

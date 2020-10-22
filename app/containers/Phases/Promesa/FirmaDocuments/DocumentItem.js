@@ -6,12 +6,11 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Field as FormikField, getIn } from 'formik';
 import { getFileName } from 'containers/App/helpers';
 import { FormGroup, Label } from 'components/ExForm';
 
-function DocumentItem({ name, label, canUpload }) {
+function DocumentItem({ name, label, canUpload, required }) {
   return (
     <FormikField
       name={name}
@@ -45,6 +44,7 @@ function DocumentItem({ name, label, canUpload }) {
                     setFieldValue(field.name, event.target.files[0]);
                   }}
                   type="file"
+                  required = {required}
                 />
                 <label
                   className="custom-file-label font-14-rem shadow-sm text-nowrap overflow-hidden"
