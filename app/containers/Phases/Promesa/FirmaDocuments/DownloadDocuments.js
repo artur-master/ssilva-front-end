@@ -11,6 +11,7 @@ import CheckboxGroup from 'components/ExForm/CheckboxGroup';
 import { documentDownload } from 'containers/Promesa/helper'
 
 export function PhaseDownloadDocumentsPromesa({ documents = {} }) {
+  console.log(documents);
   const initialValues = {
     SelectedDocuments: [
       { label: 'Cheques', value: 'ChequesDocument'},

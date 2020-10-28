@@ -57,7 +57,7 @@ export function PhaseApproveConfeccionPromesa({ selector, entity, onSubmit }) {
           </div>
           <div className="d-flex align-items-center mt-3">
             <span className="font-14-rem mr-3">
-              <b>Cláusula de desistimiento especial</b>
+              <b>Otras clausulas especiales</b>
             </span>
             <span className="font-14-rem mx-2">
               {entity.DesistimientoEspecial}

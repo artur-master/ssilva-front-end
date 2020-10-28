@@ -132,7 +132,7 @@ export function PhaseConfeccionPromesa({
                   </FormGroup>
                   <FormGroup className="align-items-center mt-3">
                     <Label className="mr-3" style={{ width: '25em' }}>
-                      Cláusula de desistimiento especial
+                      Otras clausulas especiales
                     </Label>
                     {!!form.values.HasDesistimientoEspecial && (
                       <ExField
@@ -153,11 +153,8 @@ export function PhaseConfeccionPromesa({
                     </Label>
                     <ExField
                       name="ModificacionEnLaClausula"
-                      type="number"
-                      maskOptions={{ prefix: "%" }}
                       readOnly={!canUpload}
                       value={form.values.ModificacionEnLaClausula || ""}
-                      max={100}
                       // required={canUpload}
                     />
                   </FormGroup>
