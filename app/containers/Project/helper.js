@@ -134,7 +134,7 @@ export const canUploadDocument = (docType, project) => {
   }
   return (
     (isUserType && !isLegalApprove(project) && !isGeneralApprove(project))
-    // || (UserProject.isPM(project) && !isLegalApprove(project)) /* Commented by Artur - JP don't have to upload documents */
+    // || (UserProject.isPM(project) && !isLegalApprove(project)) /* JP don't have to upload documents */
   );
 };
 

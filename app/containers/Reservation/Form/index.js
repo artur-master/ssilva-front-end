@@ -58,9 +58,7 @@ export function ReservationForm({
     return () => dispatch(resetContainer());
   }, [location.search]);
 
-  //Added by Artur
   const [isHistoryOpen, setHistoryOpen] = useState(false);
-  //Added by Artur
 
   if (selector.success && selector.redirect) {
     return <Redirect to={`/proyectos/${project.ProyectoID}/reservas`} />;
@@ -91,7 +89,7 @@ export function ReservationForm({
           <div className="row m-0">
             <h4 className="col p-0 font-21 mt-3">
               {project.Name} {Folio ? ` / ${Folio}` : ''}
-              <span className="general-phase"> - {selector.reservation.ReservaState!=RESERVA_STATE[2] && selector.reservation.OfertaID ? 'Modificación Oferta' : 'Reserva'}
+              <span className="general-phase"> - {selector.reservation.ReservaState!=RESERVA_STATE[2] && selector.reservation.OfertaID ? 'ModificaciÃ³n Oferta' : 'Reserva'}
                 <i className="icon icon-z-info" title="This is Reserva."/>
               </span>
             </h4>
@@ -115,7 +113,6 @@ export function ReservationForm({
           {(ReservaID || CotizacionID) && Folio && (
             <Form project={project} selector={selector} dispatch={dispatch} />
           )}
-          {/* Added by Artur */}
           {selector.reservation && (
             <History logs={selector.reservation.Logs} 
                      onHide={()=>setHistoryOpen(false)}

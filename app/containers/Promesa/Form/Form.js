@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
+import { PROMESA_STATE } from 'containers/App/constants';
 import PhaseGeneral from 'containers/Phases/General';
 import PhaseClient from 'containers/Phases/Client';
 import PhaseInmueble from 'containers/Phases/Inmueble';
@@ -14,18 +15,18 @@ import PhasePreCredito from 'containers/Phases/PreCredito';
 import PhaseDocument from 'containers/Phases/Document';
 import { UserProject } from 'containers/Project/helper';
 import ProjectPhases from 'containers/Common/ProjectPhases';
+import FacturaButton from 'containers/Phases/Factura/Buttons';
+import Factura from 'containers/Phases/Factura';
 import InitData from 'containers/Common/InitData';
 import PhaseConfeccionPromesa from 'containers/Phases/Promesa/ConfeccionPromesa';
 import PhaseApproveConfeccionPromesa from 'containers/Phases/Promesa/ApproveConfeccionPromesa';
-import { PROMESA_STATE } from 'containers/App/constants';
+import PhaseControlNegociacionPromesa from 'containers/Phases/Promesa/ControlNegociacionPromesa';
 import PhaseFirmaOrNegociacionPromesa from 'containers/Phases/Promesa/FirmaOrNegociacion';
 import PhaseFirmaDocumentsPromesa from 'containers/Phases/Promesa/FirmaDocuments';
 import PhaseControlPromesa from 'containers/Phases/Promesa/ControlPromesa';
 import PhaseTimeline from 'containers/Phases/Promesa/Timeline';
 import PhaseReviewNegociacionPromesa from 'containers/Phases/Promesa/ReviewNegociacionPromesa';
 import PromesaObservation from 'containers/Phases/Promesa/Observation/index';
-import FacturaButton from 'containers/Phases/Factura/Buttons';
-import Factura from 'containers/Phases/Factura';
 import Desistimiento from 'containers/Phases/Promesa/Desistimiento';
 import PromesaRefundGarantia from 'containers/Phases/Promesa/RefundGarantia';
 import RefundGrantiaButton from 'containers/Phases/Promesa/RefundGarantia/Buttons';
@@ -127,6 +128,28 @@ export function Form({ selector, dispatch }) {
             }
           />
         );
+
+      if(entity.PromesaState === PROMESA_STATE[14] && UserProject.isInmobiliario())
+        return (
+          <PhaseControlNegociacionPromesa
+            entity={entity}
+            selector={selector}
+            onSubmit={values =>
+              dispatch(
+                controlNegociacion({
+                  PromesaID: entity.PromesaID,
+                  Comment: values.Comment || '',
+                  Resolution: values.Resolution,
+                  Condition: entity.Condition.map(condition => ({
+                    ...condition,
+                    IsApprove: true,
+                  })),
+                }),
+              )
+            }
+          />
+        );
+        
       if (
         !(
           (entity.PromesaState === PROMESA_STATE[1]) &&
@@ -272,10 +295,10 @@ export function Form({ selector, dispatch }) {
       stepsComponent = <Steps promesa={selector.promesa} />;
       subtitle = entity.PromesaState;
   }
-  // Added by Artur
+  
   const [isHistoryOpen, setHistoryOpen] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
-  // Added by Artur
+  
   return (
     <>
       <InitData User Client />
@@ -361,7 +384,7 @@ export function Form({ selector, dispatch }) {
       {blockPromesa()}
       <Desistimiento promesa={entity} />
       <Log logs={entity.Logs} limit={10} />
-      {/* Added by Artur */}
+      
       {entity.Logs && (
         <History
           logs={entity.Logs}

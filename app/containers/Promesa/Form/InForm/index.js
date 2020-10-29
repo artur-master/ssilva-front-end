@@ -14,6 +14,7 @@ import PromesaObservation from 'containers/Phases/Promesa/Observation/index';
 import PhaseControlNegociacionPromesa from 'containers/Phases/Promesa/ControlNegociacionPromesa';
 import Desistimiento from 'containers/Phases/Promesa/Desistimiento';
 import { controlNegociacion } from '../actions';
+
 export function InForm({ selector, dispatch }) {
   const { project = {} } = window;
   const entity = selector.promesa;

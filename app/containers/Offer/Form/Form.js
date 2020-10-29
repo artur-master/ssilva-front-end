@@ -6,6 +6,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
+import Button from 'components/Button';
+import History from 'components/History';
+import Log from 'components/Log';
 import PhaseGeneral from 'containers/Phases/General';
 import PhaseClient from 'containers/Phases/Client';
 import PhaseInmueble from 'containers/Phases/Inmueble';
@@ -35,8 +38,6 @@ import {
   withdrawOffer,
 } from './actions';
 import FormActions from './FormActions';
-import Button from 'components/Button';
-import History from 'components/History';
 
 export function Form({ selector, selectorCredit, dispatch }) {
   const { project = {} } = window;
@@ -57,7 +58,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
   const onWithdraw = (comment) => dispatch(withdrawOffer({...entity, Comment: comment}));
 
   const canApproveConfeccion = canApproveConfeccionPromesa(initialValues);
-/*Commented by Artur
+/*
   const controlAction = (
     <ApproveConfeccionPromesa
       selector={selector}
@@ -102,7 +103,7 @@ export function Form({ selector, selectorCredit, dispatch }) {
             className="col-auto mt-3 m-btn m-btn-pen"
             onClick={onEdit}
           >
-            Modificación
+            ModificaciÃ³n
           </Button>
         }
       </div>
@@ -152,13 +153,15 @@ export function Form({ selector, selectorCredit, dispatch }) {
         />
       )}
 
-      {/* Added by Artur */}
       {selector.offer && (
-        <History logs={selector.offer.Logs}
-          onHide={()=>setHistoryOpen(false)}
-          isOpen={isHistoryOpen}
-          title={`${project.Name} / ${entity.Folio}`}
-        />
+        <>
+          <Log logs={selector.offer.Logs} limit={10} />
+          <History logs={selector.offer.Logs}
+            onHide={()=>setHistoryOpen(false)}
+            isOpen={isHistoryOpen}
+            title={`${project.Name} / ${entity.Folio}`}
+          />
+        </>
       )}
     </>
   );

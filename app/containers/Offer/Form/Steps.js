@@ -169,7 +169,6 @@ function Steps({ offer }) {
         Description: 'Pendiente Aprobación',
         Color: isPendienteContacto(offer) ? 'white' : 'red',
       },
-      // Commented by Artur
       // {
       //   Label: 'LG',
       //   Description: 'Aprueba confeccion promesa',

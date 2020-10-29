@@ -42,7 +42,6 @@ function* getClient(action) {
   }
 }
 
-//added by Artur
 function* deleteClient(action) {
   const requestURL = `${API_ROOT}/ventas/clientes/${action.UserID}`;
   try {
@@ -54,7 +53,6 @@ function* deleteClient(action) {
     yield put(deleteClientError(error));
   }
 }
-//added by Artur
 
 function* saveClient(action) {
   const selector = yield select(makeSelectClient());

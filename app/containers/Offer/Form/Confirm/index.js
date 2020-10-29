@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import History from 'components/History';
+import Log from 'components/Log';
 import PhaseGeneral from 'containers/Phases/General';
 import PhaseClient from 'containers/Phases/Client';
 import PhaseInmueble from 'containers/Phases/Inmueble';
@@ -39,9 +40,9 @@ export function OfferConfirm({ selector, dispatch }) {
         }`,
       ),
   );
-  //Added by Artur
+  
   const [isHistoryOpen, setHistoryOpen] = useState(false);
-  //Added by Artur
+  
 
   return (
     <>
@@ -64,7 +65,7 @@ export function OfferConfirm({ selector, dispatch }) {
           className="col-auto mt-3 m-btn m-btn-pen"
           onClick={onEdit}
         >
-          Modificación
+          ModificaciÃ³n
         </Button>
       </div>
       <h5 className="mb-3 d-flex align-items-center justify-content-between">
@@ -114,13 +115,15 @@ export function OfferConfirm({ selector, dispatch }) {
         onDelete={(comment) => dispatch(deleteOffer({...entity, Comment:comment}))}
         onWithdraw={(comment) => dispatch(withdrawOffer({...entity, Comment:comment}))}
       />
-      {/* Added by Artur */}
+      <Log logs={selector.offer.Logs} limit={10} />
       {selector.offer && (
-        <History logs={selector.offer.Logs}
-          onHide={()=>setHistoryOpen(false)}
-          isOpen={isHistoryOpen}
-          title={`${project.Name} / ${entity.Folio}`}
-        />
+        <>          
+          <History logs={selector.offer.Logs}
+            onHide={()=>setHistoryOpen(false)}
+            isOpen={isHistoryOpen}
+            title={`${project.Name} / ${entity.Folio}`}
+          />
+        </>
       )}
     </>
   );

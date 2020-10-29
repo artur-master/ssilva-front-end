@@ -71,18 +71,6 @@ export function MarketingForm({
           if (len > 0) onSubmit(data);
         }
         setIsChanged(false);
-        /* Commented by Artur - start */
-        // Object.keys(values).forEach(
-        //   /* eslint-disable-next-line */
-        //   type => values[type] || delete values[type],
-        // );
-
-        // const data = new FormData();
-        // Object.keys(values).forEach(name => {
-        //   data.append(name, values[name]);
-        // });        
-        // onSubmit(data);
-        /* Commented by Artur - end */
       }}
     >
       {() => (

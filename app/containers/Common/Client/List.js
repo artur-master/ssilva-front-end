@@ -33,8 +33,7 @@ const List = ({
 }) => {
   const { clients, query = {} } = selector;
   const canManage = Auth.isAdmin() && canEdit;
-  // Auth.hasOneOfPermissions([PERMISSIONS[17], PERMISSIONS[18]]) && canEdit; 
-  // Commented by Artur
+  
   const { selected = [] } = query;
   const ths = [
     { field: 'Name', label: 'Nombres', sortable: true },
@@ -119,7 +118,7 @@ const List = ({
                       </UncontrolledDropdown>
                     </td>
                   )}
-                  {/*commented by Artur*/}
+                  
                   {onSelect && (
                     <td className="no-whitespace text-right" width="1%">
                       {selected.includes(client.UserID) && 'Seleccionada'}

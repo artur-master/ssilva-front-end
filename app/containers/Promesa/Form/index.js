@@ -21,7 +21,6 @@ import Form from './Form';
 import reducer from './reducer';
 import saga from './saga';
 import { getPromesa, resetContainer } from './actions';
-// import InForm from './InForm';
 const SyncMessage = WithLoading();
 
 export function PromesaForm({ selector, selectorProject, dispatch, location }) {
@@ -41,9 +40,6 @@ export function PromesaForm({ selector, selectorProject, dispatch, location }) {
     return <Redirect to={`/proyectos/${project.ProyectoID}/promesas`} />;
   }
   if (!project || !selector.promesa) return <SyncMessage loading />;
-
-  // if (UserProject.isInmobiliario())
-  //   return <InForm selector={selector} dispatch={dispatch} />;
 
   return <Form selector={selector} dispatch={dispatch} />;
 }

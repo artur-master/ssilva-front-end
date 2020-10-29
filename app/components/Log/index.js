@@ -23,6 +23,7 @@ const Log = ({ logs, logTypes = [], limit = 0 }) => {
     logTypes.length > 0
       ? logs.filter(log => logTypes.includes(log.VentaLogType) && log.Comment !=="")
       : logs.filter(log => !log.CommentBySystem && log.Comment !=="");
+  console.log(showLogs, "show logs");
   if (limit) showLogs = showLogs.slice(0, limit);
 
   if (showLogs.length > 0) {
