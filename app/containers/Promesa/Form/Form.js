@@ -140,6 +140,7 @@ export function Form({ selector, dispatch }) {
                   PromesaID: entity.PromesaID,
                   Comment: values.Comment || '',
                   Resolution: values.Resolution,
+                  Role: values.Role,
                   Condition: entity.Condition.map(condition => ({
                     ...condition,
                     IsApprove: true,

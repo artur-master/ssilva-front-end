@@ -23,7 +23,7 @@ export function CarpetaDigital({
   isReview,
   onReview,
   onPrint,
-  form,
+  promesa,
 }) {
   const oferta_docments =  {
     label: 'OFERTA',
@@ -54,10 +54,15 @@ export function CarpetaDigital({
   if(isCreditPayment(entity.PayType)){
     tabs.push( credito_docments );
   }
-  // {
-  //   label: 'PROMESA',
-  //   content: <Promise entity={entity} />,
-  // },
+
+  if(promesa) {
+    tabs.push(
+      {
+        label: 'PROMESA',
+        content: <Promise entity={entity} />,
+      },
+    )
+  }
 
   const codeudor_document = 
   {
@@ -141,6 +146,8 @@ CarpetaDigital.propTypes = {
   canReview: PropTypes.bool,
   entity: PropTypes.object,
   onReview: PropTypes.func,
+  onPrint: PropTypes.func,
+  promesa: PropTypes.bool,
 };
 
 export default CarpetaDigital;

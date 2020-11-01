@@ -273,6 +273,7 @@ export const pending = project => {
 
 export const getPromesa = entity => {
   const { Documentos = {} } = window.project;
+  
   let maquetaWord;
   let maquetaPdf;
   let maquetaName;
@@ -289,7 +290,12 @@ export const getPromesa = entity => {
     maquetaPdf = Documentos.credit_pdf;
     maquetaName = "Maqueta Promesa Crédito WORD";
   }
-  return { maquetaWord, maquetaPdf, maquetaName };
+  
+  let docPromesa = null;
+  if(entity.DocumentPromesaFirma) docPromesa = entity.DocumentPromesaFirma;
+  else if(entity.DocumentPromesa) docPromesa = entity.DocumentPromesa;
+
+  return { maquetaWord, maquetaPdf, maquetaName, docPromesa };
 };
 
 export const countIN = () => {

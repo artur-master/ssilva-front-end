@@ -8,13 +8,22 @@ import PropTypes from 'prop-types';
 import { Box, BoxContent, BoxHeader, BoxFooter } from 'components/Box';
 import Button from 'components/Button';
 import WithLoading from 'components/WithLoading';
-import { getFileName } from 'containers/App/helpers';
+import { Auth, getFileName } from 'containers/App/helpers';
 
 const SyncMassage = WithLoading();
 
 export function PhaseControlNegociacionPromesa({ selector, entity, onSubmit }) {
   const [withText, setWithText] = useState({ text: '', open: false });
 
+  const userId = Auth.get('user_id');
+  let stateIn = {State: false};;
+  if(Object.keys(entity.AprobacionInmobiliaria["Aprobador"]).includes(userId)){
+    stateIn = {Role: "Aprobador", State: entity.AprobacionInmobiliaria["Aprobador"][userId] === true};
+  }
+  if(Object.keys(entity.AprobacionInmobiliaria["Autorizador"]).includes(userId) && !stateIn.Role){
+    stateIn = {Role: "Autorizador", State: entity.AprobacionInmobiliaria["Autorizador"][userId] === true}
+  }
+  
   return (
     <>
       <Box>
@@ -39,10 +48,11 @@ export function PhaseControlNegociacionPromesa({ selector, entity, onSubmit }) {
         </BoxContent>
         <BoxFooter>
           <Button
-            disabled={selector.loading}
+            disabled={selector.loading || stateIn.State}
             onClick={() =>
               onSubmit({
                 Resolution: true,
+                Role: stateIn.Role,
               })
             }
           >
@@ -75,6 +85,7 @@ export function PhaseControlNegociacionPromesa({ selector, entity, onSubmit }) {
                   onSubmit({
                     Comment: withText.text.trim(),
                     Resolution: false,
+                    Role: stateIn.Role,
                   })
                 }
               >

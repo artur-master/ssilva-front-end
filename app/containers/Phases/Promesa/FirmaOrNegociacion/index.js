@@ -125,7 +125,7 @@ export function PhaseFirmaOrNegociacionPromesa({
                               }
                               form.setValues({
                                 Condition,
-                                NewCondition: '',
+                                NewCondition: newValue,
                                 currentAction: 'nego',
                                 Comment: '',
                                 DateEnvioPromesaToCliente: '',

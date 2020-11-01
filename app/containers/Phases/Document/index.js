@@ -83,6 +83,7 @@ export function PhaseDocument({
               setReviews({ ...reviews, [documentoType]: review })
             }
             onPrint={onPrint}
+            promesa={promesa}
           />
           {canUpload && (
             <CarpetaDigitalUploadActions
