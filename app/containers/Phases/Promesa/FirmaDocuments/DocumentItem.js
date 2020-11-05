@@ -15,7 +15,7 @@ function DocumentItem({ name, label, canUpload, required }) {
     <FormikField
       name={name}
       validate={value => {
-        if (!value) return 'Este campo es requerido';
+        if ( required && !value ) return 'Este campo es requerido';
         return null;
       }}
     >
@@ -44,7 +44,6 @@ function DocumentItem({ name, label, canUpload, required }) {
                     setFieldValue(field.name, event.target.files[0]);
                   }}
                   type="file"
-                  required = {required}
                 />
                 <label
                   className="custom-file-label font-14-rem shadow-sm text-nowrap overflow-hidden"

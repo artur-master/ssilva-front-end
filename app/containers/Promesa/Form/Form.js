@@ -269,7 +269,7 @@ export function Form({ selector, dispatch }) {
         }
         canUpload={
           UserProject.isVendor() &&
-          [PROMESA_STATE[1], PROMESA_STATE[12], PROMESA_STATE[20]].includes(
+          [PROMESA_STATE[1], PROMESA_STATE[20]].includes(
             entity.PromesaState,
           )
         }

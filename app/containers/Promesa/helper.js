@@ -124,8 +124,7 @@ export const isReadyData = ( project = {}) => {
 };
 
 export const documentDownload = (documents) => {
-  if(documents.length == 0) return false;
-  console.log(documents);
-  // FileSaver.saveAs( document.dvalue, fileName);
-  return true;
+  if (documents.Cheques !== "") FileSaver.saveAs( documents.Cheques, "Cheques");
+  if (documents.Promesa !== "") FileSaver.saveAs( documents.Promesa, "Promesa");
+  if (documents.Planta !== "") FileSaver.saveAs( documents.Planta, "Planta");
 }

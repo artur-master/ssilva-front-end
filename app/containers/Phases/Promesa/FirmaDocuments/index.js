@@ -28,6 +28,12 @@ export function PhaseFirmaDocumentsPromesa({
     DocumentPromesaFirma: entity.DocumentPromesaFirma,
     DocumentPlantaFirma: entity.DocumentPlantaFirma,
   };
+  
+  const documents = {
+    Cheques: entity.Documents.DocumentFirmadoCheques,
+    Promesa: entity.DocumentPromesa,
+    Planta: entity.Documents.DocumentPlanoFirmada,
+  };
 
   return (
     <>
@@ -38,11 +44,7 @@ export function PhaseFirmaDocumentsPromesa({
         {canUpload && (
           <BoxContent className="p-0 border-bottom">
             <PhaseDownloadDocumentsPromesa
-              documents={{
-                Cheques: entity.Documents.DocumentFirmadoCheques,
-                Promesa: entity.DocumentPromesa,
-                Planta: entity.Inmuebles,
-              }}
+              documents={documents}
             />
           </BoxContent>
         )}
@@ -50,13 +52,13 @@ export function PhaseFirmaDocumentsPromesa({
           {form => (
             <>
               <BoxContent>
-                {entity.DocumentChequesFirma &&
-                  (entity.DocumentPromesaFirma &&
-                    (entity.DocumentPlantaFirma && (
-                      <Alert type="success">
-                        Se enviará a Asistente Comercial para su aprobación.
-                      </Alert>
-                    )))}
+                { entity.DocumentChequesFirma &&
+                  entity.DocumentPromesaFirma &&
+                  entity.DocumentPlantaFirma && (
+                    <Alert type="success">
+                      Se enviará a Asistente Comercial para su aprobación.
+                    </Alert>
+                  )}
                 <div className="row m-0 p-0 mb-4">
                   <div className="col-lg-6 border-bottom p-0 pb-2 d-flex align-items-center">
                     <span className="font-16-rem">
@@ -74,7 +76,7 @@ export function PhaseFirmaDocumentsPromesa({
                       name="DocumentChequesFirma"
                       label="Cheques"
                       canUpload={canUpload}
-                      required
+                      required={documents.Cheques !== ""}
                     />
                   </div>
                   <div className="col-md-6  mb-2">
@@ -82,7 +84,7 @@ export function PhaseFirmaDocumentsPromesa({
                       name="DocumentPromesaFirma"
                       label="Promesa"
                       canUpload={canUpload}
-                      required
+                      required={documents.Promesa !== ""}
                     />
                   </div>
                   <div className="col-md-6  mb-2">
@@ -90,7 +92,7 @@ export function PhaseFirmaDocumentsPromesa({
                       name="DocumentPlantaFirma"
                       label="Planta"
                       canUpload={canUpload}
-                      required
+                      required={documents.Planta !== ""}
                     />
                   </div>
                 </div>
