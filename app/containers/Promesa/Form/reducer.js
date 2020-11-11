@@ -129,7 +129,6 @@ const promesaReducer = (state = initialState, action) =>
       case SEND_PROMESA_TO_CLIENTE_SUCCESS:
       case SIGN_IN_SUCCESS:
       case LEGALIZE_SUCCESS:
-      case SEND_COPY_SUCCESS:
       case GENERATE_FACTURA_SUCCESS:
         draft.loading = false;
         draft.error = false;
@@ -137,8 +136,9 @@ const promesaReducer = (state = initialState, action) =>
         draft.promesa = { ...draft.promesa, ...action.response.promesa };
         break;
       /* remove --> */
-
+      case SEND_COPY_SUCCESS:
       case UPLOAD_FIRMA_DOCUMENTS_PROMESA_SUCCESS:
+      case REJECT_CONFECCION_PROMESA_SUCCESS:
         draft.loading = false;
         draft.error = false;
         draft.success = action.response.detail;
@@ -150,12 +150,6 @@ const promesaReducer = (state = initialState, action) =>
       case UPDATE_PROMESA:
         draft.promesa = { ...draft.promesa, ...action.values };
         break;
-      
-      case REJECT_CONFECCION_PROMESA_SUCCESS:
-        draft.loading = false;
-        draft.error = false;
-        draft.success = action.response.detail;
-        draft.redirect='list';
     }
   });
 

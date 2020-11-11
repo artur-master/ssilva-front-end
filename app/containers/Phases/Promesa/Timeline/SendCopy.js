@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { Field, Form, FormGroup, Label } from 'components/ExForm';
 import moment from 'components/moment';
-import { PROMESA_STATE } from 'containers/App/constants';
 
 export function PhaseTimelineSendCopy({
   canEdit,
